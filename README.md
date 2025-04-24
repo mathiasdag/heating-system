@@ -7,9 +7,9 @@ This repository marks the initial foundation of the Värmeverket platform — a 
 Development began in April 2025. The project will be in active development throughout the year, with new features, integrations, and services rolled out in phases. Ongoing maintenance and improvement will follow to support long-term use and adaptability.
 
 The current focus is on:
-	•	A public information interface for residents and visitors
-	•	A flexible architecture to support future member functionality
-	•	Establishing clear design and code licensing practices to enable open collaboration and responsible reuse
+- A public information interface for residents and visitors
+- A flexible architecture to support future member functionality
+- Establishing clear design and code licensing practices to enable open collaboration and responsible reuse
 
 ## License
 

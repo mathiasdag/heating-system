@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload/types';
 import Feature from '../blocks/Feature';
+import Header from '../blocks/Header';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -32,6 +33,7 @@ const Pages: CollectionConfig = {
       required: false,
       blocks: [
         Feature,
+        Header,
         // Add more blocks here as needed
       ],
     },

@@ -1,10 +1,7 @@
-import { CollectionConfig } from 'payload/types';
+import { Block } from 'payload/types';
 
-const Header: CollectionConfig = {
+const Header: Block = {
   slug: 'header',
-  admin: {
-    useAsTitle: 'headline',
-  },
   fields: [
     {
       name: 'headline',

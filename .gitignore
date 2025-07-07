@@ -42,3 +42,6 @@ public/fonts/
 
 # Add the media/ directory to .gitignore
 media/
+
+# Add .env to .gitignore to prevent environment variables from being tracked by git.
+.env

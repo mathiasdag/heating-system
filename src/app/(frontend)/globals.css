@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+  font-size: 18px;
+  scroll-behavior: smooth;
+  line-height: 1.20; /* or your preferred value */
+}
+
+.uppercase {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.font-mono {
+  font-size: 0.9rem;
+}

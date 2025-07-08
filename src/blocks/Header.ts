@@ -21,7 +21,7 @@ const Header: Block = {
             { label: 'Image', value: 'image' },
             { label: 'Mux Video', value: 'mux' },
           ],
-          required: true,
+          required: false,
         },
         {
           name: 'image',
@@ -53,6 +53,9 @@ const Header: Block = {
       ],
       defaultValue: 'before',
       required: true,
+      admin: {
+        condition: (data: any) => Array.isArray(data?.assets) && data.assets.length > 0,
+      },
     },
   ],
 };

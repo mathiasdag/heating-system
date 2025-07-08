@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import FeatureBlock from '@/components/blocks/FeatureBlock'
+import HeaderBlock from '@/components/blocks/HeaderBlock'
 import React from 'react'
 
 export default async function HomePage() {
@@ -14,11 +15,13 @@ export default async function HomePage() {
   })
 
   return (
-    <div>
+    <div data-content-type="page">
       {page?.layout?.map((block: any, i: number) => {
         switch (block.blockType) {
           case 'feature':
             return <FeatureBlock key={i} {...block} />
+          case 'header':
+            return <HeaderBlock key={i} {...block} />
           // Add more cases for other block types
           default:
             return null

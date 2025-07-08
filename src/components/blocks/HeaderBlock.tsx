@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import { RichText } from '@payloadcms/richtext-lexical/react'
 
 interface Asset {
   type: 'image' | 'mux';
@@ -8,7 +9,7 @@ interface Asset {
 }
 
 interface HeaderBlockProps {
-  text: string;
+  text: any;
   assets?: Asset[];
   assetPosition?: 'before' | 'after';
 }
@@ -43,9 +44,9 @@ export default function HeaderBlock({ text, assets = [], assetPosition = 'before
   );
 
   return (
-    <div className="my-8">
+    <div className="my-36 px-4 text-center">
       {assetPosition === 'before' && renderAssets()}
-      <div className="prose max-w-none mb-4" dangerouslySetInnerHTML={{ __html: text }} />
+      <RichText data={text} />
       {assetPosition === 'after' && renderAssets()}
     </div>
   );

@@ -14,3 +14,19 @@
 .font-mono {
   font-size: 0.9rem;
 }
+
+[data-content-type="page"] h1 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1em;
+  font-size: clamp(3rem, 8vw, 8em);
+}
+
+[data-content-type="page"] h2 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1em;
+  font-size: clamp(2rem, 6vw, 6em);
+}

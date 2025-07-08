@@ -10,11 +10,21 @@ const sans = localFont({
   variable: '--font-sans',
   display: 'swap',
 })
-const customMono = localFont({
+
+const mono = localFont({
   src: [
     { path: '../../../public/fonts/MonumentGrotesk-Mono.woff2', weight: '400', style: 'normal' },
   ],
   variable: '--font-mono',
+  display: 'swap',
+})
+
+const display = localFont({
+  src: [
+    { path: '../../../public/fonts/HALColantTest-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../../../public/fonts/HALColantTest-Italic.woff2', weight: '400', style: 'italic' },
+  ],
+  variable: '--font-display',
   display: 'swap',
 })
 
@@ -27,7 +37,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
   const useCustomFonts = true
   const htmlClass = useCustomFonts
-    ? `${sans.variable} ${customMono.variable} font-sans bg-white`
+    ? `${sans.variable} ${mono.variable} ${display.variable} font-sans bg-white`
     : ''
   return (
     <html lang="en" className={htmlClass}>

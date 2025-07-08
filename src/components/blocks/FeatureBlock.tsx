@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { AppLink } from '../AppLink';
 
 interface FeatureBlockProps {
   image?: { url: string; alt?: string; width?: number; height?: number };
@@ -47,9 +48,9 @@ export default function FeatureBlock({ image, description, link }: FeatureBlockP
             {link.text} &rarr;
           </Link>
         ) : href && link?.text ? (
-          <a href={href} className="font-bold underline mt-2 inline-block" target="_blank" rel="noopener noreferrer">
+          <AppLink href={href} variant="secondary">
             {link.text} &rarr;
-          </a>
+          </AppLink>
         ) : null}
       </div>
     </div>

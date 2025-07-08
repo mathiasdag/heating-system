@@ -1,4 +1,4 @@
-import { Block } from 'payload/types';
+import type { Block } from 'payload';
 
 const Header: Block = {
   slug: 'header',

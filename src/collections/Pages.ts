@@ -1,4 +1,4 @@
-import { CollectionConfig } from 'payload/types';
+import type { CollectionConfig } from 'payload';
 import Feature from '../blocks/Feature';
 import Header from '../blocks/Header';
 import AnimatedFeature from '../blocks/AnimatedFeature';

@@ -1,4 +1,5 @@
-import { Block } from 'payload/types';
+import type { Block } from 'payload';
+import LinkGroup from './LinkGroup';
 
 const AnimatedFeature: Block = {
   slug: 'animated-feature',
@@ -24,15 +25,7 @@ const AnimatedFeature: Block = {
       relationTo: 'media',
       required: true,
     },
-    {
-      name: 'cta',
-      type: 'group',
-      fields: [
-        { name: 'text', type: 'text', required: false, defaultValue: 'CTA' },
-        { name: 'url', type: 'text', required: false },
-      ],
-      required: false,
-    },
+    LinkGroup,
   ],
 };
 

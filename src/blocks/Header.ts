@@ -4,18 +4,15 @@ const Header: Block = {
   slug: 'header',
   fields: [
     {
-      name: 'headline',
-      type: 'text',
+      name: 'text',
+      type: 'richText',
       required: true,
     },
     {
-      name: 'text',
-      type: 'richText',
-      required: false,
-    },
-    {
-      name: 'asset',
-      type: 'group',
+      name: 'assets',
+      type: 'array',
+      label: 'Assets',
+      minRows: 0,
       fields: [
         {
           name: 'type',
@@ -24,7 +21,7 @@ const Header: Block = {
             { label: 'Image', value: 'image' },
             { label: 'Mux Video', value: 'mux' },
           ],
-          required: false,
+          required: true,
         },
         {
           name: 'image',
@@ -45,6 +42,17 @@ const Header: Block = {
         },
       ],
       required: false,
+    },
+    {
+      name: 'assetPosition',
+      type: 'select',
+      label: 'Asset Position',
+      options: [
+        { label: 'Before Text', value: 'before' },
+        { label: 'After Text', value: 'after' },
+      ],
+      defaultValue: 'before',
+      required: true,
     },
   ],
 };

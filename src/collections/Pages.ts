@@ -23,11 +23,6 @@ const Pages: CollectionConfig = {
       },
     },
     {
-      name: 'content',
-      type: 'richText',
-      required: false,
-    },
-    {
       name: 'layout',
       type: 'blocks',
       required: false,

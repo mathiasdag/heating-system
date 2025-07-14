@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppLink } from '../AppLink';
+import Tag from '../Tag';
 
 interface Tag {
   id: string;
@@ -33,11 +34,11 @@ export const EventCard: React.FC<EventCardProps> = ({ tags, title, description, 
   }
 
   return (
-    <div className="flex flex-col justify-between bg-[#F4F3EE] rounded-xl p-8 w-80 min-w-[20rem] h-[28rem] shadow-sm mx-2">
+    <div className="flex flex-col justify-between bg-lightClay rounded-sm p-8 w-80 min-w-[20rem] h-[28rem] mx-2">
       <div>
         <div className="flex justify-center mb-4 gap-2 flex-wrap">
           {tags && tags.length > 0 && tags.map(tag => (
-            <span key={tag.id} className="border border-black rounded-full px-4 py-1 text-xs font-mono bg-white">{tag.name}</span>
+            <Tag key={tag.id} name={tag.name} />
           ))}
         </div>
         <h3 className="text-3xl font-serif font-bold text-center mb-2 leading-tight tracking-wide whitespace-pre-line">{title}</h3>

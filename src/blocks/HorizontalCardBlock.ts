@@ -16,10 +16,14 @@ const HorizontalCardBlock: Block = {
       minRows: 1,
       fields: [
         {
-          name: 'badge',
-          type: 'text',
+          name: 'tags',
+          type: 'relationship',
+          relationTo: 'tags',
+          hasMany: true,
           required: false,
-          defaultValue: 'Event',
+          admin: {
+            description: 'Select one or more tags to use as badges',
+          },
         },
         {
           name: 'title',

@@ -3,7 +3,7 @@
 :root {
   font-size: 18px;
   scroll-behavior: smooth;
-  line-height: 1.20; /* or your preferred value */
+  line-height: 1.25em; /* or your preferred value */
   letter-spacing: -0.005em;
 }
 
@@ -50,7 +50,7 @@ h2 {
   text-transform: uppercase;
   letter-spacing: 0.005em;
   line-height: 1em;
-  font-size: 1.75em;
+  font-size: 2em;
 }
 
 .bg-black { background-color: #0C0C0C !important; }
@@ -76,4 +76,26 @@ h2 {
 
 .aspect-window {
   aspect-ratio: 5 / 7;
+}
+
+/* Custom richtext unordered list with SVG check icon */
+.richtext-ul ul {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+.richtext-ul ul li {
+  position: relative;
+}
+
+.richtext-ul ul li::before {
+  content: '';
+  display: inline-block;
+  position: relative;
+  left: -0.8em;
+  top: 0.1em;
+  width: .8em;
+  height: .8em;
+  background: url('/icons/check.svg') no-repeat center center;
+  background-size: contain;
 }

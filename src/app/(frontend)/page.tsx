@@ -3,8 +3,8 @@ import config from '@/payload.config'
 import FeatureBlock from '@/components/blocks/FeatureBlock'
 import HeaderBlock from '@/components/blocks/HeaderBlock'
 import AnimatedFeatureBlock from '@/components/blocks/AnimatedFeatureBlock'
+import HorizontalCardBlock from '@/components/blocks/HorizontalCardBlock'
 import React from 'react'
-import type { CollectionSlug } from '@/payload-types'
 
 export default async function HomePage() {
   const payloadConfig = await config
@@ -12,7 +12,7 @@ export default async function HomePage() {
 
   // Fetch the homepage (by slug)
   const { docs: [page] = [] } = await payload.find({
-    collection: 'pages' as CollectionSlug,
+    collection: 'pages',
     where: { slug: { equals: 'hem' } },
   })
 
@@ -26,6 +26,8 @@ export default async function HomePage() {
             return <HeaderBlock key={i} {...block} />
           case 'animated-feature':
             return <AnimatedFeatureBlock key={i} {...block} />
+          case 'horizontal-card-block':
+            return <HorizontalCardBlock key={i} {...block} />
           // Add more cases for other block types
           default:
             return null

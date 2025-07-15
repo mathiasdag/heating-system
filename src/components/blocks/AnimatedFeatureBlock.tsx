@@ -79,7 +79,7 @@ const AnimatedFeatureBlock: React.FC<AnimatedFeatureBlockProps> = ({
         </motion.div>
       )}
       <div className="pt-8 mx-auto grid max-w-8xl">
-        <h2 className="">
+        <h2 className="font-display">
           {headline}
         </h2>
         {subheadline && (

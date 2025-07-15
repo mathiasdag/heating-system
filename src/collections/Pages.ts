@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload';
 import Feature from '../blocks/Feature';
 import Header from '../blocks/Header';
 import AnimatedFeature from '../blocks/AnimatedFeature';
+import HorizontalCardBlock from '../blocks/HorizontalCardBlock';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -31,6 +32,7 @@ const Pages: CollectionConfig = {
         Feature,
         Header,
         AnimatedFeature,
+        HorizontalCardBlock,
         // Add more blocks here as needed
       ],
     },

@@ -73,3 +73,7 @@ h2 {
 .border-offWhite { border-color: #EFEDE3 !important; }
 .border-orange { border-color: #E68456 !important; }
 .border-crayonBlack { border-color: #141514 !important; }
+
+.aspect-window {
+  aspect-ratio: 5 / 7;
+}

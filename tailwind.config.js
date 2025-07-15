@@ -27,8 +27,12 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      white: '#F8F7EF',
-      black: '#000000',
+      black: '#0C0C0C',
+      clay: '#EFEDE3',
+      lightClay: '#F9F7EC',
+      offWhite: '#EFEDE3',
+      orange: '#E68456',
+      crayonBlack: '#141514'
     },
     extend: {
       maxWidth: {
@@ -79,7 +83,10 @@ module.exports = {
         sans: ['var(--font-sans)'],
         mono: ['var(--font-mono)'],
         display: ['var(--font-display)']
-      }
+      },
+      aspectRatio: {
+        'window': '5 / 7',
+      },
     }
   },
   plugins: [require('@tailwindcss/typography')]

@@ -35,7 +35,7 @@ const LinkGroup: Field = {
       name: 'text',
       type: 'text',
       required: false,
-      defaultValue: 'Läs intervjun',
+      defaultValue: 'Läs mer',
     },
   ],
   admin: {

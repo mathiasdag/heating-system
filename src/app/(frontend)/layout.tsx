@@ -37,7 +37,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
   const useCustomFonts = true
   const htmlClass = useCustomFonts
-    ? `${sans.variable} ${mono.variable} ${display.variable} font-sans bg-white`
+    ? `${sans.variable} ${mono.variable} ${display.variable} font-sans bg-clay text-black`
     : ''
   return (
     <html lang="en" className={htmlClass}>

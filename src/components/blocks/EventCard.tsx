@@ -34,19 +34,19 @@ export const EventCard: React.FC<EventCardProps> = ({ tags, title, description, 
   }
 
   return (
-    <div className="flex flex-col justify-between bg-lightClay rounded-sm p-8 w-80 min-w-[20rem] h-[28rem] mx-2">
-      <div>
-        <div className="flex justify-center mb-4 gap-2 flex-wrap">
+    <div className="flex flex-col justify-between bg-lightClay rounded-sm p-6 w-68 aspect-window mx-2">
+      <div className="py-2">
+        <div className="flex justify-center mb-4 gap-[.15em] flex-wrap">
           {tags && tags.length > 0 && tags.map(tag => (
-            <Tag key={tag.id} name={tag.name} />
+            <Tag key={tag.id} name={tag.name} size="md" />
           ))}
         </div>
-        <h3 className="text-3xl font-serif font-bold text-center mb-2 leading-tight tracking-wide whitespace-pre-line">{title}</h3>
-        <p className="text-center font-mono text-base mb-6 whitespace-pre-line">{description}</p>
+        <h3 className="text-center font-display">{title}</h3>
+        <p className="text-center font-mono text-base mb-6 mt-8 whitespace-pre-line">{description}</p>
       </div>
       {href && link?.text && (
-        <AppLink href={href} variant="secondary" className="w-full mt-4 text-lg font-mono font-bold bg-[#E88342] hover:bg-[#d46e1c] text-black rounded px-4 py-3 flex items-center justify-center transition">
-          <span className="mr-2 text-xl font-bold">+</span> {link.text}
+        <AppLink href={href} variant="secondary" className="">
+          {link.text}
         </AppLink>
       )}
     </div>

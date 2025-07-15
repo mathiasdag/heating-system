@@ -3,6 +3,8 @@ import Feature from '../blocks/Feature';
 import Header from '../blocks/Header';
 import AnimatedFeature from '../blocks/AnimatedFeature';
 import HorizontalCardBlock from '../blocks/HorizontalCardBlock';
+import Video from '../blocks/Video';
+import CardGrid from '../blocks/CardGrid';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -33,6 +35,8 @@ const Pages: CollectionConfig = {
         Header,
         AnimatedFeature,
         HorizontalCardBlock,
+        Video, // Added Video block
+        CardGrid, // Added CardGrid block
         // Add more blocks here as needed
       ],
     },

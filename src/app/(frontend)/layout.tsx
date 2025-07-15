@@ -40,7 +40,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     ? `${sans.variable} ${mono.variable} ${display.variable} font-sans bg-clay text-black`
     : ''
   return (
-    <html lang="en" className={htmlClass}>
+    <html lang="sv" className={htmlClass}>
       <body>
         <main>{children}</main>
       </body>

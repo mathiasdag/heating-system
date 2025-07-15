@@ -5,6 +5,8 @@ import HeaderBlock from '@/components/blocks/HeaderBlock'
 import AnimatedFeatureBlock from '@/components/blocks/AnimatedFeatureBlock'
 import HorizontalCardBlock from '@/components/blocks/HorizontalCardBlock'
 import React from 'react'
+import VideoBlock from '@/components/blocks/VideoBlock';
+import CardGridBlock from '@/components/blocks/CardGridBlock';
 
 export default async function HomePage() {
   const payloadConfig = await config
@@ -28,6 +30,10 @@ export default async function HomePage() {
             return <AnimatedFeatureBlock key={i} {...block} />
           case 'horizontal-card-block':
             return <HorizontalCardBlock key={i} {...block} />
+          case 'video':
+            return <VideoBlock key={i} {...block} />
+          case 'card-grid':
+            return <CardGridBlock key={i} {...block} />
           // Add more cases for other block types
           default:
             return null

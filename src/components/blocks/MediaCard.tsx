@@ -1,8 +1,9 @@
 import React from 'react';
 import { AppLink } from '../AppLink';
 import Tag from '../Tag';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
-interface Tag {
+interface TagType {
   id: string;
   name: string;
   description?: string;
@@ -10,10 +11,11 @@ interface Tag {
   updatedAt?: string;
 }
 
-interface EventCardProps {
-  tags?: Tag[];
+interface MediaCardProps {
+  tags?: TagType[];
   title: string;
-  description: string;
+  body?: any;
+  image?: { url: string; alt?: string };
   link?: {
     type?: 'internal' | 'external';
     text?: string;
@@ -22,7 +24,7 @@ interface EventCardProps {
   };
 }
 
-export const EventCard: React.FC<EventCardProps> = ({ tags, title, description, link }) => {
+export const MediaCard: React.FC<MediaCardProps> = ({ tags, title, body, image, link }) => {
   // Determine the href for the CTA
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
@@ -34,15 +36,24 @@ export const EventCard: React.FC<EventCardProps> = ({ tags, title, description, 
   }
 
   return (
-    <div className="flex flex-col justify-between bg-lightClay rounded-sm p-6 w-68 aspect-window mx-2">
-      <div className="py-2">
+    <div className="flex flex-col justify-between bg-lightClay rounded-sm p-5 w-68 aspect-window mx-2">
+      {image && (
+        <img
+          src={image.url}
+          alt={image.alt || title}
+          className="mb-4 w-full h-40 object-cover rounded"
+        />
+      )}
+      <div className="py-3">
         <div className="flex justify-center mb-4 gap-[.15em] flex-wrap">
           {tags && tags.length > 0 && tags.map(tag => (
             <Tag key={tag.id} name={tag.name} size="md" />
           ))}
         </div>
-        <h3 className="text-center font-display">{title}</h3>
-        <p className="text-center font-mono text-base mb-6 mt-8 whitespace-pre-line">{description}</p>
+        <h3 className="text-center font-display break-words">{title}</h3>
+        <div className="text-center font-mono text-base mb-6 mt-8">
+          <RichText data={body} /> 
+        </div>
       </div>
       {href && link?.text && (
         <AppLink href={href} variant="secondary" className="">
@@ -53,4 +64,4 @@ export const EventCard: React.FC<EventCardProps> = ({ tags, title, description, 
   );
 };
 
-export default EventCard; 
+export default MediaCard; 

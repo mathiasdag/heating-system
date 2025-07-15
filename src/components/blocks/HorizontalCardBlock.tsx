@@ -1,6 +1,6 @@
 'use client'
-import React, { useRef, useState, useEffect } from 'react';
-import { EventCard } from './EventCard';
+import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
+import { MediaCard } from './MediaCard';
 import { AppLink } from '../AppLink';
 
 interface Card {
@@ -41,10 +41,43 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [activeIdx, setActiveIdx] = useState(0);
+
+  // Helper to calculate showDots and isScrollable
+  const calcLayout = () => {
+    if (!scrollContainerRef.current || !cardRefs.current[0]) return { showDots: false, isScrollable: false };
+    const container = scrollContainerRef.current;
+    const card = cardRefs.current[0];
+    const containerWidth = container.offsetWidth;
+    const cardWidth = card.offsetWidth;
+    // 24px = space-x-6 (1.5rem)
+    return {
+      showDots: containerWidth < (cardWidth * 2 + 24),
+      isScrollable: container.scrollWidth > container.clientWidth,
+    };
+  };
+
+  // Initial state: best guess (no SSR window, so fallback to false)
   const [showDots, setShowDots] = useState(false);
   const [isScrollable, setIsScrollable] = useState(true);
+  const [hasMeasured, setHasMeasured] = useState(false);
 
-  // Track which card is centered in the viewport
+  // useLayoutEffect to avoid flicker
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      const { showDots, isScrollable } = calcLayout();
+      setShowDots(showDots);
+      setIsScrollable(isScrollable);
+      setHasMeasured(true);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards.length]);
+
+  // Track which card is centered in the viewport (can stay in useEffect)
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
@@ -64,27 +97,14 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
       });
       setActiveIdx(active);
     };
-    const handleResize = () => {
-      if (!scrollContainerRef.current || !cardRefs.current[0]) return;
-      const container = scrollContainerRef.current;
-      const card = cardRefs.current[0];
-      const containerWidth = container.offsetWidth;
-      const cardWidth = card.offsetWidth;
-      // 24px = space-x-6 (1.5rem)
-      setShowDots(containerWidth < (cardWidth * 2 + 24));
-      setIsScrollable(container.scrollWidth > container.clientWidth);
-    };
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll, { passive: true });
       // Initial check
       handleScroll();
-      handleResize();
     }
-    window.addEventListener('resize', handleResize);
     return () => {
       if (container) container.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
     };
   }, [cards.length]);
 
@@ -112,7 +132,9 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
         ref={scrollContainerRef}
         className={
           `flex overflow-x-auto space-x-2 pb-4 scrollbar-none snap-x snap-mandatory scroll-smooth ` +
-          (isScrollable ? 'px-6' : 'justify-center')
+          (isScrollable ? 'px-6' : 'justify-center') +
+          ` transition-opacity duration-100` +
+          (hasMeasured ? ' opacity-100' : ' opacity-0')
         }
         role="list"
         tabIndex={0}
@@ -132,7 +154,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
             onKeyDown={e => handleKeyDown(e, idx)}
             aria-label={card.title}
           >
-            <EventCard {...card} />
+            <MediaCard {...card} />
           </div>
         ))}
       </div>

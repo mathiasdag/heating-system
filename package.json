@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mux/mux-player-react": "^3.5.1",
     "@payloadcms/db-mongodb": "^3.44.0",
     "@payloadcms/next": "^3.44.0",
     "@payloadcms/payload-cloud": "^3.44.0",

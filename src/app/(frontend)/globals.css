@@ -4,6 +4,7 @@
   font-size: 18px;
   scroll-behavior: smooth;
   line-height: 1.20; /* or your preferred value */
+  letter-spacing: -0.005em;
 }
 
 .uppercase {
@@ -23,8 +24,11 @@
   font-size: clamp(3rem, 8vw, 8em);
 }
 
-[data-content-type="page"] h2 {
-  font-family: var(--font-display);
+h2 {
+  font-size: 1.5em;
+}
+
+[data-content-type="page"] h2.font-display {
   text-transform: uppercase;
   letter-spacing: -0.01em;
   line-height: 1em;
@@ -37,3 +41,35 @@
   line-height: 1em;
   letter-spacing: -0.01em;
 }
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+[data-content-type="page"] h3.font-display {
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 1em;
+  font-size: 1.75em;
+}
+
+.bg-black { background-color: #0C0C0C !important; }
+.bg-clay { background-color: #EFEDE3 !important; }
+.bg-lightClay { background-color: #F9F7EC !important; }
+.bg-offWhite { background-color: #EFEDE3 !important; }
+.bg-orange { background-color: #E68456 !important; }
+.bg-crayonBlack { background-color: #141514 !important; }
+
+.text-black { color: #0C0C0C !important; }
+.text-clay { color: #EFEDE3 !important; }
+.text-lightClay { color: #F9F7EC !important; }
+.text-offWhite { color: #EFEDE3 !important; }
+.text-orange { color: #E68456 !important; }
+.text-crayonBlack { color: #141514 !important; }
+
+.border-black { border-color: #0C0C0C !important; }
+.border-clay { border-color: #EFEDE3 !important; }
+.border-lightClay { border-color: #F9F7EC !important; }
+.border-offWhite { border-color: #EFEDE3 !important; }
+.border-orange { border-color: #E68456 !important; }
+.border-crayonBlack { border-color: #141514 !important; }

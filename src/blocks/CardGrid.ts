@@ -1,5 +1,4 @@
 import type { Block } from 'payload';
-import LinkGroup from './LinkGroup';
 import CommonCard from './CommonCard';
 
 const CardGrid: Block = {
@@ -8,6 +7,11 @@ const CardGrid: Block = {
     {
       name: 'headline',
       type: 'text',
+      required: false,
+    },
+    {
+      name: 'description',
+      type: 'richText',
       required: false,
     },
     {

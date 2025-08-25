@@ -148,13 +148,15 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
             tabIndex={0}
             ref={el => { cardRefs.current[idx] = el; }}
             className={
-              `snap-center flex-shrink-0 focus:outline-none aspect-window ` +
+              `snap-center flex-shrink-0 focus:outline-none aspect-window  ` +
               (showDots && activeIdx !== idx ? 'opacity-80' : '')
             }
             onKeyDown={e => handleKeyDown(e, idx)}
             aria-label={card.title}
           >
+            <div className="flex flex-col justify-between bg-lightClay rounded-sm p-5 w-68 aspect-window mx-2">
             <MediaCard {...card} />
+            </div>
           </div>
         ))}
       </div>

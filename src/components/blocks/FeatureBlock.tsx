@@ -27,7 +27,7 @@ export default function FeatureBlock({ image, description, link }: FeatureBlockP
   }
 
   return (
-    <div className="grid grid-cols-16 p-4 gap-4">
+    <div className="grid grid-cols-16 p-4 my-20 gap-4">
       {image?.url && (
         <div className="col-start-1 col-end-12 md:col-end-9">
           <Image

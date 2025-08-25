@@ -10,7 +10,7 @@ interface AppLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 const baseStyles = {
-  primary: 'px-6 py-2 border border-black rounded bg-black text-white hover:bg-white hover:text-black transition font-mono',
+  primary: 'uppercase bg-black text-white mix-blend-multiply rounded-sm px-3 pt-[.6em] pb-2 inline-block text-center',
   secondary: 'uppercase bg-orange rounded-sm px-3 pt-[.6em] pb-2 inline-block text-center',
   outline: 'uppercase border border-black rounded-sm px-3 pt-[.6em] pb-2 inline-block',
 };

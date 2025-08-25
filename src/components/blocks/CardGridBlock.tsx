@@ -1,6 +1,10 @@
-import React from 'react';
+'use client'
+import React, { useEffect, useRef, useState } from 'react';
 import { AppLink } from '../AppLink';
 import { MediaCard } from './MediaCard';
+import { RichText } from '@payloadcms/richtext-lexical/react';
+import OrangeCardGrid from './OrangeCardGrid';
+import clsx from 'clsx'
 
 interface Card {
   title: string;
@@ -17,46 +21,70 @@ interface Card {
 
 interface CardGridBlockProps {
   headline?: string;
+  description?: any;
   cards: Card[];
   link?: Card['link']; // Optional block-level CTA
+  // Two variants only: "default" (horizontal scroll) and "orange" (grid with orange background)
   variant?: 'default' | 'orange';
+  buttonVariant?: 'primary' | 'secondary' | 'outline';
 }
 
-const CardGridBlock: React.FC<CardGridBlockProps> = ({ headline, cards, link, variant = 'default' }) => {
+const CardGridBlock: React.FC<CardGridBlockProps> = ({ headline, description, cards, link, variant = 'default' }) => {
+  // Default variant uses lightweight overflow detection to decide layout behavior
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  useEffect(() => {
+    function checkOverflow() {
+      const currentEl = scrollRef.current;
+      if (!currentEl) return;
+      setIsOverflowing(currentEl.scrollWidth > currentEl.clientWidth);
+    }
+    checkOverflow();
+    window.addEventListener('resize', checkOverflow);
+    return () => window.removeEventListener('resize', checkOverflow);
+  }, []);
+
+  // Orange variant: delegate to extracted component
+  if (variant === 'orange') {
+    return (
+      <OrangeCardGrid headline={headline} description={description} cards={cards} link={link} />
+    );
+  }
+
+  // Default variant: horizontal scroll list
   return (
-    <section className={`py-24 grid gap-8 ${variant === 'orange' ? ' bg-orange' : ''}`}>
+    <section className={`py-24 grid`}>
       {headline && (
-        <h2 className="text-center">{headline}</h2>
+        <h2 className="text-center mb-4">{headline}</h2>
       )}
-      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {cards.map((card, idx) => (
+      {description && (
+        <div className="font-mono text-center px-8 max-w-6xl mx-auto mb-4">
+          <RichText data={description} />
+        </div>
+      )}
+      <hr className="mx-4 my-2" />
+        <div className="relative">
           <div
-            key={idx}
-            className="flex flex-col border border-black rounded-lg bg-white p-6 h-full shadow-sm"
+            ref={scrollRef}
+            className={`flex gap-4 snap-x scrollbar-none snap-mandatory w-screen ${
+              isOverflowing ? 'overflow-x-auto scroll-smooth justify-start' : 'overflow-x-hidden justify-center'
+            }`}
           >
-            {(card.tags || card.image) ? (
-              <MediaCard {...card} />
-            ) : (
-              <>
-                <h3 className="text-xl font-bold mb-2 font-display">{card.title}</h3>
-                {card.description && (
-                  <p className="mb-4 text-base text-black/80">{card.description}</p>
-                )}
-                {card.link && (card.link.url || card.link.reference) && (
-                  <AppLink
-                    href={card.link.type === 'internal' && card.link.reference ? `/pages/${card.link.reference.slug}` : card.link.url || '#'}
-                    className="mt-auto inline-block px-4 py-2 bg-black text-white rounded hover:bg-orange transition"
-                    target={card.link.type === 'external' ? '_blank' : undefined}
-                    rel={card.link.type === 'external' ? 'noopener noreferrer' : undefined}
-                  >
-                    {card.link.text || 'Learn more'}
-                  </AppLink>
-                )}
-              </>
-            )}
+            {isOverflowing && <div className="snap-end grow-0 shrink-0 w-12 border-r" />}
+            {cards.map((card, idx) => (
+              <div
+                key={idx}
+                className={clsx("grow-0 shrink-0 w-[360px] border-r border-black px-5 pb-3 pt-5 snap-center grid justify-center", isOverflowing ? "last:border-r-0" : "first:border-l")}
+              >
+                <MediaCard {...card} buttonVariant={'primary'} />
+              </div>
+            ))}
+            {isOverflowing && <div className="snap-start grow-0 shrink-0 w-8" />}
           </div>
-        ))}
-      </div>
+        </div>
+        <hr className="mx-4 my-2" />
+
       {link && (link.url || link.reference) && (
         <div className="mt-8 text-center">
           <AppLink

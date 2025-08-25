@@ -22,9 +22,10 @@ interface MediaCardProps {
     url?: string;
     reference?: any;
   };
+  buttonVariant?: 'primary' | 'secondary' | 'outline'
 }
 
-export const MediaCard: React.FC<MediaCardProps> = ({ tags, title, body, image, link }) => {
+export const MediaCard: React.FC<MediaCardProps> = ({ tags, title, body, image, link, buttonVariant }) => {
   // Determine the href for the CTA
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
@@ -36,14 +37,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({ tags, title, body, image, 
   }
 
   return (
-    <div className="flex flex-col justify-between bg-lightClay rounded-sm p-5 w-68 aspect-window mx-2">
-      {image && (
-        <img
-          src={image.url}
-          alt={image.alt || title}
-          className="mb-4 w-full h-40 object-cover rounded"
-        />
-      )}
+    <>
       <div className="py-3">
         <div className="flex justify-center mb-4 gap-[.15em] flex-wrap">
           {tags && tags.length > 0 && tags.map(tag => (
@@ -51,16 +45,23 @@ export const MediaCard: React.FC<MediaCardProps> = ({ tags, title, body, image, 
           ))}
         </div>
         <h3 className="text-center font-display break-words">{title}</h3>
-        <div className="text-center font-mono text-base mb-6 mt-8">
+        {image && (
+        <img
+          src={image.url}
+          alt={image.alt || title}
+          className="mb-4 w-full h-40 object-cover rounded"
+        />
+      )}
+        <div className="text-center font-mono text-base mb-6 mt-8 richtext-ul">
           <RichText data={body} /> 
         </div>
       </div>
       {href && link?.text && (
-        <AppLink href={href} variant="secondary" className="">
+        <AppLink href={href} variant={buttonVariant} className="mx-auto">
           {link.text}
         </AppLink>
       )}
-    </div>
+    </>
   );
 };
 

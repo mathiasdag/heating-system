@@ -1,0 +1,138 @@
+'use client'
+import React, { useEffect, useState } from 'react';
+import { AppLink } from '../AppLink';
+import { MediaCard } from './MediaCard';
+import { RichText } from '@payloadcms/richtext-lexical/react';
+
+interface Card {
+  title: string;
+  description?: string;
+  image?: { url: string; alt?: string };
+  tags?: { id: string; name: string; description?: string }[];
+  link?: {
+    type: 'internal' | 'external';
+    reference?: { slug: string };
+    url?: string;
+    text?: string;
+  };
+}
+
+interface OrangeCardGridProps {
+  headline?: string;
+  description?: any;
+  cards: Card[];
+  link?: Card['link'];
+}
+
+function useHasHydrated() {
+  const [hasHydrated, setHasHydrated] = useState(false);
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
+  return hasHydrated;
+}
+
+function useResponsiveColumnCount() {
+  const [columnCount, setColumnCount] = useState(1);
+  useEffect(() => {
+    function updateColumns() {
+      if (window.innerWidth >= 1280) {
+        setColumnCount(3);
+      } else if (window.innerWidth >= 1024) {
+        setColumnCount(2);
+      } else {
+        setColumnCount(1);
+      }
+    }
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
+  return columnCount;
+}
+
+function chunkArray<T>(arr: T[], size: number): T[][] {
+  const result: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+}
+
+export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({ headline, description, cards, link }) => {
+  const hasHydrated = useHasHydrated();
+  const columnCount = useResponsiveColumnCount();
+
+  if (!hasHydrated) {
+    return (
+      <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-orange`}>
+        {headline && <h2 className="text-center">{headline}</h2>}
+        {description && (
+          <div className="font-mono text-center px-8 max-w-6xl mx-auto">
+            <RichText data={description} />
+          </div>
+        )}
+      </section>
+    );
+  }
+
+  const rows = chunkArray(cards, columnCount);
+  const lastRow = rows[rows.length - 1] || [];
+  const emptyCount = lastRow.length < columnCount ? columnCount - lastRow.length : 0;
+
+  return (
+    <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-orange`}>
+      {headline && (
+        <h2 className="text-center">{headline}</h2>
+      )}
+      {description && (
+        <div className="font-mono text-center px-8 max-w-6xl mx-auto">
+          <RichText data={description} />
+        </div>
+      )}
+      <div className="mt-4 py-2 border-black border-t border-b">
+        {rows.map((row, rowIdx) => (
+          <React.Fragment key={rowIdx}>
+            {rowIdx !== 0 && <div className="py-2 w-full"><div className="w-full border-t border-black" style={{ height: 0 }} /></div>}
+            <div className="max-w-sm lg:max-w-3xl xl:max-w-6xl mx-auto w-full">
+              <div className={`grid w-full px-6 lg:px-24 ${columnCount === 1 ? '' : columnCount === 2 ? 'lg:grid-cols-2' : 'xl:grid-cols-3'}`}>
+                {row.map((card, colIdx) => (
+                  <div
+                    key={colIdx}
+                    className="flex flex-col justify-between border-r first:border-l border-black px-5 pb-3 pt-5 aspect-window overflow-hidden"
+                  >
+                    <MediaCard {...card} buttonVariant={'primary'} />
+                  </div>
+                ))}
+                {rowIdx === rows.length - 1 && emptyCount > 0 &&
+                  Array.from({ length: emptyCount }).map((_, idx) => (
+                    <div
+                      key={`empty-${idx}`}
+                      className="border-r aspect-window pointer-events-none"
+                      aria-hidden="true"
+                    />
+                  ))}
+              </div>
+            </div>
+          </React.Fragment>
+        ))}
+      </div>
+      {link && (link.url || link.reference) && (
+        <div className="mt-8 text-center">
+          <AppLink
+            href={link.type === 'internal' && link.reference ? `/pages/${link.reference.slug}` : link.url || '#'}
+            className="inline-block px-6 py-3 bg-black text-white rounded font-bold hover:bg-orange transition"
+            target={link.type === 'external' ? '_blank' : undefined}
+            rel={link.type === 'external' ? 'noopener noreferrer' : undefined}
+          >
+            {link.text || 'See all'}
+          </AppLink>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default OrangeCardGrid;
+
+

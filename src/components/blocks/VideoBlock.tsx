@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import MuxPlayer from '@mux/mux-player-react';
 import type { MinResolutionValue } from '@mux/playback-core';
@@ -29,15 +29,21 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
   adaptiveResolution = true,
 }) => {
   const [aspectRatio, setAspectRatio] = useState<number>(DEFAULT_ASPECT_RATIO);
-  const [currentSource, setCurrentSource] = useState<VideoSource | undefined>(undefined);
+  const [currentSource, setCurrentSource] = useState<VideoSource | undefined>(
+    undefined
+  );
 
   // Determine the best source for the current screen size
   useEffect(() => {
     if (sources.length > 0) {
       const width = window.innerWidth;
       // Sort sources by minWidth descending, pick the first where minWidth <= width
-      const sorted = [...sources].sort((a, b) => (b.minWidth || 0) - (a.minWidth || 0));
-      const best = sorted.find(src => (src.minWidth || 0) <= width) || sorted[sorted.length - 1];
+      const sorted = [...sources].sort(
+        (a, b) => (b.minWidth || 0) - (a.minWidth || 0)
+      );
+      const best =
+        sorted.find(src => (src.minWidth || 0) <= width) ||
+        sorted[sorted.length - 1];
       setCurrentSource(best);
     } else {
       setCurrentSource(undefined);
@@ -58,24 +64,23 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
   }, [host, currentSource]);
 
   if (host === 'mux' && currentSource?.playbackId) {
-  return (
-      
-        <MuxPlayer
-          playbackId={currentSource.playbackId}
-          autoPlay={autoplay}
-          muted={autoplay}
-          loop={autoplay}
-          className="object-cover w-full h-full"
-          style={{
-            aspectRatio,
-            ...(controls === false ? { ['--controls' as any]: 'none' } : {})
-          }}
-          {...(!adaptiveResolution ? { playbackEngine: 'mse' } : {})}
-        />
-        );
+    return (
+      <MuxPlayer
+        playbackId={currentSource.playbackId}
+        autoPlay={autoplay}
+        muted={autoplay}
+        loop={autoplay}
+        className="object-cover w-full h-full"
+        style={{
+          aspectRatio,
+          ...(controls === false ? { ['--controls' as any]: 'none' } : {}),
+        }}
+        {...(!adaptiveResolution ? { playbackEngine: 'mse' } : {})}
+      />
+    );
 
-  return null
-}
+    return null;
+  }
 };
 
-export default VideoBlock; 
+export default VideoBlock;

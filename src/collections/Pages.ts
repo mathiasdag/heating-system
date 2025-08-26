@@ -1,10 +1,12 @@
 import type { CollectionConfig } from 'payload';
 import Feature from '../blocks/Feature';
 import Header from '../blocks/Header';
-import AnimatedFeature from '../blocks/AnimatedFeature';
+import Spotlight from '../blocks/BiggerFeature';
 import HorizontalCardBlock from '../blocks/HorizontalCardBlock';
 import Video from '../blocks/Video';
 import CardGrid from '../blocks/CardGrid';
+import Router from '../blocks/Router';
+import Carousel from '../blocks/Carousel';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -33,10 +35,12 @@ const Pages: CollectionConfig = {
       blocks: [
         Feature,
         Header,
-        AnimatedFeature,
+        Spotlight,
         HorizontalCardBlock,
         Video, // Added Video block
         CardGrid, // Added CardGrid block
+        Router, // Added Router block
+        Carousel, // Added Carousel block
         // Add more blocks here as needed
       ],
     },
@@ -73,4 +77,4 @@ const Pages: CollectionConfig = {
   },
 };
 
-export default Pages; 
+export default Pages;

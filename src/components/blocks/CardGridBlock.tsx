@@ -1,10 +1,10 @@
-'use client'
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { AppLink } from '../AppLink';
 import { MediaCard } from './MediaCard';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import OrangeCardGrid from './OrangeCardGrid';
-import clsx from 'clsx'
+import clsx from 'clsx';
 
 interface Card {
   title: string;
@@ -29,7 +29,13 @@ interface CardGridBlockProps {
   buttonVariant?: 'primary' | 'secondary' | 'outline';
 }
 
-const CardGridBlock: React.FC<CardGridBlockProps> = ({ headline, description, cards, link, variant = 'default' }) => {
+const CardGridBlock: React.FC<CardGridBlockProps> = ({
+  headline,
+  description,
+  cards,
+  link,
+  variant = 'default',
+}) => {
   // Default variant uses lightweight overflow detection to decide layout behavior
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -48,47 +54,61 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({ headline, description, ca
   // Orange variant: delegate to extracted component
   if (variant === 'orange') {
     return (
-      <OrangeCardGrid headline={headline} description={description} cards={cards} link={link} />
+      <OrangeCardGrid
+        headline={headline}
+        description={description}
+        cards={cards}
+        link={link}
+      />
     );
   }
 
   // Default variant: horizontal scroll list
   return (
     <section className={`py-24 grid`}>
-      {headline && (
-        <h2 className="text-center mb-4">{headline}</h2>
-      )}
+      {headline && <h2 className="text-center mb-4">{headline}</h2>}
       {description && (
         <div className="font-mono text-center px-8 max-w-6xl mx-auto mb-4">
           <RichText data={description} />
         </div>
       )}
       <hr className="mx-4 my-2" />
-        <div className="relative">
-          <div
-            ref={scrollRef}
-            className={`flex gap-4 snap-x scrollbar-none snap-mandatory w-screen ${
-              isOverflowing ? 'overflow-x-auto scroll-smooth justify-start' : 'overflow-x-hidden justify-center'
-            }`}
-          >
-            {isOverflowing && <div className="snap-end grow-0 shrink-0 w-12 border-r" />}
-            {cards.map((card, idx) => (
-              <div
-                key={idx}
-                className={clsx("grow-0 shrink-0 w-[360px] border-r border-black px-5 pb-3 pt-5 snap-center grid justify-center", isOverflowing ? "last:border-r-0" : "first:border-l")}
-              >
-                <MediaCard {...card} buttonVariant={'primary'} />
-              </div>
-            ))}
-            {isOverflowing && <div className="snap-start grow-0 shrink-0 w-8" />}
-          </div>
+      <div className="relative">
+        <div
+          ref={scrollRef}
+          className={`flex snap-x scrollbar-none snap-mandatory w-screen ${
+            isOverflowing
+              ? 'overflow-x-auto scroll-smooth justify-start'
+              : 'overflow-x-hidden justify-center'
+          }`}
+        >
+          {isOverflowing && (
+            <div className="snap-end grow-0 shrink-0 w-12 border-r" />
+          )}
+          {cards.map((card, idx) => (
+            <div
+              key={idx}
+              className={clsx(
+                'grow-0 shrink-0 w-[360px] sm:w-[400px] border-r border-black px-8 pb-8 pt-6 snap-center grid justify-center',
+                isOverflowing ? 'last:border-r-0' : 'first:border-l'
+              )}
+            >
+              <MediaCard {...card} buttonVariant={'primary'} />
+            </div>
+          ))}
+          {isOverflowing && <div className="snap-start grow-0 shrink-0 w-12" />}
         </div>
-        <hr className="mx-4 my-2" />
+      </div>
+      <hr className="mx-4 my-2" />
 
       {link && (link.url || link.reference) && (
         <div className="mt-8 text-center">
           <AppLink
-            href={link.type === 'internal' && link.reference ? `/pages/${link.reference.slug}` : link.url || '#'}
+            href={
+              link.type === 'internal' && link.reference
+                ? `/pages/${link.reference.slug}`
+                : link.url || '#'
+            }
             className="inline-block px-6 py-3 bg-black text-white rounded font-bold hover:bg-orange transition"
             target={link.type === 'external' ? '_blank' : undefined}
             rel={link.type === 'external' ? 'noopener noreferrer' : undefined}
@@ -101,4 +121,4 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({ headline, description, ca
   );
 };
 
-export default CardGridBlock; 
+export default CardGridBlock;

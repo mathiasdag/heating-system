@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { MediaCard } from './MediaCard';
 import { AppLink } from '../AppLink';
@@ -26,13 +26,18 @@ interface HorizontalCardBlockProps {
   };
 }
 
-const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, cards, link }) => {
+const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
+  headline,
+  cards,
+  link,
+}) => {
   // Determine the href for the CTA
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
-    href = typeof link.reference === 'object' && link.reference?.slug
-      ? `/pages/${link.reference.slug}`
-      : `/pages/${link.reference}`;
+    href =
+      typeof link.reference === 'object' && link.reference?.slug
+        ? `/pages/${link.reference.slug}`
+        : `/pages/${link.reference}`;
   } else if (link?.type === 'external') {
     href = link.url;
   }
@@ -44,14 +49,15 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
 
   // Helper to calculate showDots and isScrollable
   const calcLayout = () => {
-    if (!scrollContainerRef.current || !cardRefs.current[0]) return { showDots: false, isScrollable: false };
+    if (!scrollContainerRef.current || !cardRefs.current[0])
+      return { showDots: false, isScrollable: false };
     const container = scrollContainerRef.current;
     const card = cardRefs.current[0];
     const containerWidth = container.offsetWidth;
     const cardWidth = card.offsetWidth;
     // 24px = space-x-6 (1.5rem)
     return {
-      showDots: containerWidth < (cardWidth * 2 + 24),
+      showDots: containerWidth < cardWidth * 2 + 24,
       isScrollable: container.scrollWidth > container.clientWidth,
     };
   };
@@ -89,7 +95,10 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
         if (!card) return;
         const cardRect = card.getBoundingClientRect();
         // Center of card vs center of container
-        const diff = Math.abs((cardRect.left + cardRect.right) / 2 - (containerRect.left + containerRect.right) / 2);
+        const diff = Math.abs(
+          (cardRect.left + cardRect.right) / 2 -
+            (containerRect.left + containerRect.right) / 2
+        );
         if (diff < minDiff) {
           minDiff = diff;
           active = idx;
@@ -109,7 +118,10 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
   }, [cards.length]);
 
   // Keyboard navigation handler
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, idx: number) => {
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    idx: number
+  ) => {
     if (e.key === 'ArrowRight') {
       e.preventDefault();
       const next = cardRefs.current[idx + 1];
@@ -122,11 +134,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
   };
 
   return (
-    <section
-      className="py-12"
-      role="region"
-      aria-label={headline}
-    >
+    <section className="py-12" role="region" aria-label={headline}>
       <h2 className="text-center mb-10">{headline}</h2>
       <div
         ref={scrollContainerRef}
@@ -146,7 +154,9 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
             key={idx}
             role="listitem"
             tabIndex={0}
-            ref={el => { cardRefs.current[idx] = el; }}
+            ref={el => {
+              cardRefs.current[idx] = el;
+            }}
             className={
               `snap-center flex-shrink-0 focus:outline-none aspect-window  ` +
               (showDots && activeIdx !== idx ? 'opacity-80' : '')
@@ -155,7 +165,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
             aria-label={card.title}
           >
             <div className="flex flex-col justify-between bg-lightClay rounded-sm p-5 w-68 aspect-window mx-2">
-            <MediaCard {...card} />
+              <MediaCard {...card} />
             </div>
           </div>
         ))}
@@ -181,11 +191,16 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({ headline, car
       )}
       {/* Hide scrollbar for all browsers */}
       <style jsx global>{`
-        .scrollbar-none::-webkit-scrollbar { display: none; }
-        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+        .scrollbar-none::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-none {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
       `}</style>
     </section>
   );
 };
 
-export default HorizontalCardBlock; 
+export default HorizontalCardBlock;

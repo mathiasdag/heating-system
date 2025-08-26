@@ -29,7 +29,8 @@ const Header: Block = {
           relationTo: 'media',
           required: false,
           admin: {
-            condition: (data: any, siblingData: any) => siblingData?.type === 'image',
+            condition: (data: any, siblingData: any) =>
+              siblingData?.type === 'image',
           },
         },
         {
@@ -37,7 +38,8 @@ const Header: Block = {
           type: 'text', // Store Mux asset ID or playback ID
           required: false,
           admin: {
-            condition: (data: any, siblingData: any) => siblingData?.type === 'mux',
+            condition: (data: any, siblingData: any) =>
+              siblingData?.type === 'mux',
           },
         },
       ],
@@ -54,10 +56,11 @@ const Header: Block = {
       defaultValue: 'before',
       required: true,
       admin: {
-        condition: (data: any) => Array.isArray(data?.assets) && data.assets.length > 0,
+        condition: (data: any) =>
+          Array.isArray(data?.assets) && data.assets.length > 0,
       },
     },
   ],
 };
 
-export default Header; 
+export default Header;

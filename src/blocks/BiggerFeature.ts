@@ -1,8 +1,12 @@
 import type { Block } from 'payload';
 import LinkGroup from './LinkGroup';
 
-const AnimatedFeature: Block = {
-  slug: 'animated-feature',
+const BiggerFeature: Block = {
+  slug: 'spotlight',
+  labels: {
+    singular: 'Spotlight',
+    plural: 'Spotlights',
+  },
   fields: [
     {
       name: 'headline',
@@ -24,9 +28,13 @@ const AnimatedFeature: Block = {
       type: 'upload',
       relationTo: 'media',
       required: false,
+      admin: {
+        description:
+          'Optional. If provided, the feature includes media and subtle motion.',
+      },
     },
     LinkGroup,
   ],
 };
 
-export default AnimatedFeature;
+export default BiggerFeature;

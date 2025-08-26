@@ -7,6 +7,7 @@ This repository marks the initial foundation of the Värmeverket platform — a 
 Development began in April 2025. The project will be in active development throughout the year, with new features, integrations, and services rolled out in phases. Ongoing maintenance and improvement will follow to support long-term use and adaptability.
 
 The current focus is on:
+
 - A public information interface for residents and visitors
 - A flexible architecture to support future member functionality
 - Establishing clear design and code licensing practices to enable open collaboration and responsible reuse
@@ -20,11 +21,13 @@ This repository uses a **dual license**:
 All code is licensed under the **GNU Affero General Public License v3.0**.
 
 You can:
+
 - Use, copy, and modify the code freely
 - Contribute via pull requests
-- Deploy publicly — *if you also publish your modified source code*
+- Deploy publicly — _if you also publish your modified source code_
 
 You may **not**:
+
 - Use the software in a closed-source commercial product
 - White-label the platform without releasing the source
 
@@ -35,11 +38,13 @@ You may **not**:
 All graphics, branding, design tokens, typography, and creative materials are licensed under **Creative Commons Attribution-NonCommercial 4.0**.
 
 You may:
+
 - Share, remix, and adapt
 - Use in non-commercial projects
 
 You may **not**:
+
 - Sell or commercially reuse design assets
 - White-label the identity or visuals
 
-[Full license →](https://creativecommons.org/licenses/by-nc/4.0/) 
+[Full license →](https://creativecommons.org/licenses/by-nc/4.0/)

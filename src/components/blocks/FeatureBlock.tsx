@@ -14,14 +14,19 @@ interface FeatureBlockProps {
   };
 }
 
-export default function FeatureBlock({ image, description, link }: FeatureBlockProps) {
+export default function FeatureBlock({
+  image,
+  description,
+  link,
+}: FeatureBlockProps) {
   // Determine the href for the CTA
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
     // If populated, reference may be an object with a slug, or just an ID
-    href = typeof link.reference === 'object' && link.reference?.slug
-      ? `/pages/${link.reference.slug}`
-      : `/pages/${link.reference}`;
+    href =
+      typeof link.reference === 'object' && link.reference?.slug
+        ? `/pages/${link.reference.slug}`
+        : `/pages/${link.reference}`;
   } else if (link?.type === 'external') {
     href = link.url;
   }
@@ -55,4 +60,4 @@ export default function FeatureBlock({ image, description, link }: FeatureBlockP
       </div>
     </div>
   );
-} 
+}

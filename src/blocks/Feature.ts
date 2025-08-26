@@ -24,4 +24,4 @@ const Feature: Block = {
   ],
 };
 
-export default Feature; 
+export default Feature;

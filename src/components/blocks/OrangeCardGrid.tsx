@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import { AppLink } from '../AppLink';
 import { MediaCard } from './MediaCard';
@@ -59,7 +59,12 @@ function chunkArray<T>(arr: T[], size: number): T[][] {
   return result;
 }
 
-export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({ headline, description, cards, link }) => {
+export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
+  headline,
+  description,
+  cards,
+  link,
+}) => {
   const hasHydrated = useHasHydrated();
   const columnCount = useResponsiveColumnCount();
 
@@ -78,13 +83,12 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({ headline, descri
 
   const rows = chunkArray(cards, columnCount);
   const lastRow = rows[rows.length - 1] || [];
-  const emptyCount = lastRow.length < columnCount ? columnCount - lastRow.length : 0;
+  const emptyCount =
+    lastRow.length < columnCount ? columnCount - lastRow.length : 0;
 
   return (
     <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-orange`}>
-      {headline && (
-        <h2 className="text-center">{headline}</h2>
-      )}
+      {headline && <h2 className="text-center">{headline}</h2>}
       {description && (
         <div className="font-mono text-center px-8 max-w-6xl mx-auto">
           <RichText data={description} />
@@ -93,9 +97,18 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({ headline, descri
       <div className="mt-4 py-2 border-black border-t border-b">
         {rows.map((row, rowIdx) => (
           <React.Fragment key={rowIdx}>
-            {rowIdx !== 0 && <div className="py-2 w-full"><div className="w-full border-t border-black" style={{ height: 0 }} /></div>}
+            {rowIdx !== 0 && (
+              <div className="py-2 w-full">
+                <div
+                  className="w-full border-t border-black"
+                  style={{ height: 0 }}
+                />
+              </div>
+            )}
             <div className="max-w-sm lg:max-w-3xl xl:max-w-6xl mx-auto w-full">
-              <div className={`grid w-full px-6 lg:px-24 ${columnCount === 1 ? '' : columnCount === 2 ? 'lg:grid-cols-2' : 'xl:grid-cols-3'}`}>
+              <div
+                className={`grid w-full px-6 lg:px-24 ${columnCount === 1 ? '' : columnCount === 2 ? 'lg:grid-cols-2' : 'xl:grid-cols-3'}`}
+              >
                 {row.map((card, colIdx) => (
                   <div
                     key={colIdx}
@@ -104,7 +117,8 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({ headline, descri
                     <MediaCard {...card} buttonVariant={'primary'} />
                   </div>
                 ))}
-                {rowIdx === rows.length - 1 && emptyCount > 0 &&
+                {rowIdx === rows.length - 1 &&
+                  emptyCount > 0 &&
                   Array.from({ length: emptyCount }).map((_, idx) => (
                     <div
                       key={`empty-${idx}`}
@@ -120,7 +134,11 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({ headline, descri
       {link && (link.url || link.reference) && (
         <div className="mt-8 text-center">
           <AppLink
-            href={link.type === 'internal' && link.reference ? `/pages/${link.reference.slug}` : link.url || '#'}
+            href={
+              link.type === 'internal' && link.reference
+                ? `/pages/${link.reference.slug}`
+                : link.url || '#'
+            }
             className="inline-block px-6 py-3 bg-black text-white rounded font-bold hover:bg-orange transition"
             target={link.type === 'external' ? '_blank' : undefined}
             rel={link.type === 'external' ? 'noopener noreferrer' : undefined}
@@ -134,5 +152,3 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({ headline, descri
 };
 
 export default OrangeCardGrid;
-
-

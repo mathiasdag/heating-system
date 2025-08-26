@@ -12,7 +12,11 @@ const sizeClasses = {
 };
 
 const Tag: React.FC<TagProps> = ({ name, size = 'md' }) => (
-  <span className={`border border-black rounded-full leading-4 ${sizeClasses[size]}`}>{name}</span>
+  <span
+    className={`border border-black rounded-full leading-4 ${sizeClasses[size]}`}
+  >
+    {name}
+  </span>
 );
 
-export default Tag; 
+export default Tag;

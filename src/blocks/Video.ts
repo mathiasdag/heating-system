@@ -14,8 +14,8 @@ const Video: Block = {
         // Add more hosts here if needed
       ],
       admin: {
-        description: 'Select the video host. Currently only Mux is supported.'
-      }
+        description: 'Select the video host. Currently only Mux is supported.',
+      },
     },
     {
       name: 'sources',
@@ -23,7 +23,8 @@ const Video: Block = {
       label: 'Video Sources',
       minRows: 1,
       admin: {
-        description: 'Add one or more video sources for different screen sizes and/or qualities. The best match will be chosen automatically, or the user can select quality if adaptive resolution is off.'
+        description:
+          'Add one or more video sources for different screen sizes and/or qualities. The best match will be chosen automatically, or the user can select quality if adaptive resolution is off.',
       },
       fields: [
         {
@@ -38,8 +39,9 @@ const Video: Block = {
           label: 'Minimum Screen Width (px)',
           required: true,
           admin: {
-            description: 'Use 0 for mobile, 768 for tablet, 1200 for desktop, etc. The video with the highest minWidth less than or equal to the screen width will be used.'
-          }
+            description:
+              'Use 0 for mobile, 768 for tablet, 1200 for desktop, etc. The video with the highest minWidth less than or equal to the screen width will be used.',
+          },
         },
       ],
     },
@@ -49,8 +51,8 @@ const Video: Block = {
       label: 'Autoplay',
       defaultValue: false,
       admin: {
-        description: 'If enabled, video will autoplay, be muted, and loop.'
-      }
+        description: 'If enabled, video will autoplay, be muted, and loop.',
+      },
     },
     {
       name: 'controls',
@@ -58,8 +60,8 @@ const Video: Block = {
       label: 'Show Controls',
       defaultValue: false,
       admin: {
-        description: 'Show player controls (play, pause, etc.)'
-      }
+        description: 'Show player controls (play, pause, etc.)',
+      },
     },
     {
       name: 'adaptiveResolution',
@@ -67,10 +69,11 @@ const Video: Block = {
       label: 'Adaptive Resolution',
       defaultValue: true,
       admin: {
-        description: 'If unchecked, users can manually select video quality in the frontend.'
-      }
+        description:
+          'If unchecked, users can manually select video quality in the frontend.',
+      },
     },
   ],
 };
 
-export default Video; 
+export default Video;

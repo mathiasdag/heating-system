@@ -10,6 +10,7 @@ const LinkGroup: Field = {
       options: [
         { label: 'Internal', value: 'internal' },
         { label: 'External', value: 'external' },
+        { label: 'Copy', value: 'copy' },
       ],
       defaultValue: 'internal',
       required: true,
@@ -20,7 +21,8 @@ const LinkGroup: Field = {
       relationTo: 'pages',
       required: false,
       admin: {
-        condition: (data: any, siblingData: any) => siblingData?.type === 'internal',
+        condition: (data: any, siblingData: any) =>
+          siblingData?.type === 'internal',
       },
     },
     {
@@ -28,7 +30,8 @@ const LinkGroup: Field = {
       type: 'text',
       required: false,
       admin: {
-        condition: (data: any, siblingData: any) => siblingData?.type === 'external',
+        condition: (data: any, siblingData: any) =>
+          siblingData?.type === 'external',
       },
     },
     {
@@ -43,4 +46,4 @@ const LinkGroup: Field = {
   },
 };
 
-export default LinkGroup; 
+export default LinkGroup;

@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import {
   motion,
   useAnimation,
@@ -12,7 +11,7 @@ import {
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { AppLink } from '../AppLink';
 
-interface AnimatedFeatureBlockProps {
+interface BiggerFeatureBlockProps {
   headline?: string;
   subheadline?: string;
   description?: any;
@@ -25,7 +24,7 @@ interface AnimatedFeatureBlockProps {
   };
 }
 
-const AnimatedFeatureBlock: React.FC<AnimatedFeatureBlockProps> = ({
+const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
   headline,
   subheadline,
   description,
@@ -36,14 +35,10 @@ const AnimatedFeatureBlock: React.FC<AnimatedFeatureBlockProps> = ({
   const inView = useInView(ref, { once: true, margin: '-100px' });
   const controls = useAnimation();
 
-  // Parallax scroll effect for image
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
-  // We'll animate the image from the center of the section to just above the headline
-  // Estimate the vertical travel distance: half the section height minus some offset for the headline
-  // For simplicity, let's use 40% of the section height as the travel distance
   const travelY = '200vh';
   const y = useTransform(scrollYProgress, [0, 1], [travelY, '-100%']);
 
@@ -57,7 +52,6 @@ const AnimatedFeatureBlock: React.FC<AnimatedFeatureBlockProps> = ({
     }
   }, [inView, controls]);
 
-  // Determine the href for the CTA
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
     href =
@@ -68,17 +62,15 @@ const AnimatedFeatureBlock: React.FC<AnimatedFeatureBlockProps> = ({
     href = link.url;
   }
 
-  // Determine if image is landscape or portrait
   const isLandscape =
     image && image.width && image.height ? image.width >= image.height : true;
-  // Set Tailwind maxWidth classes based on orientation
   const imageClass = isLandscape
     ? 'rounded-sm w-full h-auto object-contain max-w-[320px] max-w-[50vw]'
     : 'rounded-sm w-full h-auto object-contain max-w-[240px] max-w-[33vw]';
 
   return (
     <section ref={ref} className="relative grid gap-8 py-16 px-4 text-center">
-      {image?.url && (
+      {image?.url ? (
         <motion.div style={{ y }} className="mx-auto z-10">
           <Image
             src={image.url}
@@ -89,15 +81,19 @@ const AnimatedFeatureBlock: React.FC<AnimatedFeatureBlockProps> = ({
             priority
           />
         </motion.div>
-      )}
+      ) : null}
       <div className="pt-8 mx-auto grid max-w-8xl">
-        <h2 className="font-display">{headline}</h2>
+        {headline ? <h2 className="font-display">{headline}</h2> : null}
         {subheadline && <div className="h2-style max-w-8xl">{subheadline}</div>}
       </div>
       <div className="font-mono max-w-5xl mx-auto">
-        <RichText data={description} />
+        {typeof description === 'string' || description == null ? (
+          <div className="whitespace-pre-line">{description}</div>
+        ) : (
+          <RichText data={description} />
+        )}
       </div>
-      <div className="">
+      <div>
         {href && link?.text ? (
           <AppLink href={href} variant="outline">
             {link.text}
@@ -108,4 +104,4 @@ const AnimatedFeatureBlock: React.FC<AnimatedFeatureBlockProps> = ({
   );
 };
 
-export default AnimatedFeatureBlock;
+export default BiggerFeatureBlock;

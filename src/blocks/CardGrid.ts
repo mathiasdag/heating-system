@@ -19,9 +19,7 @@ const CardGrid: Block = {
       type: 'array',
       label: 'Cards',
       minRows: 1,
-      fields: [
-        ...CommonCard.fields,
-      ],
+      fields: [...CommonCard.fields],
     },
     {
       name: 'variant',
@@ -37,4 +35,4 @@ const CardGrid: Block = {
   ],
 };
 
-export default CardGrid; 
+export default CardGrid;

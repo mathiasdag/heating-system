@@ -15,12 +15,10 @@ const HorizontalCardBlock: Block = {
       type: 'array',
       label: 'Cards',
       minRows: 1,
-      fields: [
-        ...CommonCard.fields,
-      ],
+      fields: [...CommonCard.fields],
     },
     LinkGroup, // CTA for the block
   ],
 };
 
-export default HorizontalCardBlock; 
+export default HorizontalCardBlock;

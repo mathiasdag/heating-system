@@ -19,4 +19,4 @@ export const Tags: CollectionConfig = {
   ],
 };
 
-export default Tags; 
+export default Tags;

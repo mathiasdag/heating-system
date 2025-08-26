@@ -1,7 +1,9 @@
 import React from 'react';
+import Image from 'next/image';
 import { AppLink } from '../AppLink';
 import Tag from '../Tag';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import clsx from 'clsx';
 
 interface TagType {
   id: string;
@@ -22,16 +24,24 @@ interface MediaCardProps {
     url?: string;
     reference?: any;
   };
-  buttonVariant?: 'primary' | 'secondary' | 'outline'
+  buttonVariant?: 'primary' | 'secondary' | 'outline';
 }
 
-export const MediaCard: React.FC<MediaCardProps> = ({ tags, title, body, image, link, buttonVariant }) => {
+export const MediaCard: React.FC<MediaCardProps> = ({
+  tags,
+  title,
+  body,
+  image,
+  link,
+  buttonVariant,
+}) => {
   // Determine the href for the CTA
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
-    href = typeof link.reference === 'object' && link.reference?.slug
-      ? `/pages/${link.reference.slug}`
-      : `/pages/${link.reference}`;
+    href =
+      typeof link.reference === 'object' && link.reference?.slug
+        ? `/pages/${link.reference.slug}`
+        : `/pages/${link.reference}`;
   } else if (link?.type === 'external') {
     href = link.url;
   }
@@ -40,24 +50,34 @@ export const MediaCard: React.FC<MediaCardProps> = ({ tags, title, body, image, 
     <>
       <div className="py-3">
         <div className="flex justify-center mb-4 gap-[.15em] flex-wrap">
-          {tags && tags.length > 0 && tags.map(tag => (
-            <Tag key={tag.id} name={tag.name} size="md" />
-          ))}
+          {tags &&
+            tags.length > 0 &&
+            tags.map(tag => <Tag key={tag.id} name={tag.name} size="md" />)}
         </div>
         <h3 className="text-center font-display break-words">{title}</h3>
         {image && (
-        <img
-          src={image.url}
-          alt={image.alt || title}
-          className="mb-4 w-full h-40 object-cover rounded"
-        />
-      )}
-        <div className="text-center font-mono text-base mb-6 mt-8 richtext-ul">
-          <RichText data={body} /> 
+          <div className="mb-0 mt-6 h-40 relative px-8 flex justify-center">
+            <Image
+              src={image.url}
+              alt={image.alt || title}
+              width={image.width}
+              height={image.height}
+              className="object-cover rounded h-full w-auto"
+              quality={75}
+              priority={false}
+            />
+          </div>
+        )}
+        <div className="text-center font-mono text-base mb-6 mt-6 richtext-ul">
+          <RichText data={body} />
         </div>
       </div>
       {href && link?.text && (
-        <AppLink href={href} variant={buttonVariant} className="mx-auto">
+        <AppLink
+          href={href}
+          variant={buttonVariant}
+          className={clsx('mx-auto', buttonVariant === 'primary' && 'w-full')}
+        >
           {link.text}
         </AppLink>
       )}
@@ -65,4 +85,4 @@ export const MediaCard: React.FC<MediaCardProps> = ({ tags, title, body, image, 
   );
 };
 
-export default MediaCard; 
+export default MediaCard;

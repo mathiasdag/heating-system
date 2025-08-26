@@ -1,50 +1,122 @@
+'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
-interface AppLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  href: string;
+interface AppActionProps {
+  href?: string;
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'minimal';
   asButton?: boolean;
   className?: string;
+  actionType?: 'link' | 'copy';
+  onCopy?: () => void;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  target?: string;
+  rel?: string;
 }
 
 const baseStyles = {
-  primary: 'uppercase bg-black text-white mix-blend-multiply rounded-sm px-3 pt-[.6em] pb-2 inline-block text-center',
-  secondary: 'uppercase bg-orange rounded-sm px-3 pt-[.6em] pb-2 inline-block text-center',
-  outline: 'uppercase border border-black rounded-sm px-3 pt-[.6em] pb-2 inline-block',
+  primary:
+    'uppercase bg-black text-white mix-blend-multiply rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+  secondary:
+    'uppercase bg-orange rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+  outline:
+    'uppercase border border-black rounded-sm px-3 pt-[.6em] pb-2 block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+  minimal: 'block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
 };
 
-export const AppLink: React.FC<AppLinkProps> = ({
+export const AppAction: React.FC<AppActionProps> = ({
   href,
   children,
   variant = 'primary',
   asButton = false,
   className = '',
+  actionType = 'link',
+  onCopy,
   ...rest
 }) => {
-  const isExternal = href.startsWith('http');
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleCopy = async () => {
+    if (href) {
+      try {
+        await navigator.clipboard.writeText(href);
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 2000);
+        onCopy?.();
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    }
+  };
+
   const style = baseStyles[variant] + ' ' + className;
 
+  // Handle copy action
+  if (actionType === 'copy') {
+    return (
+      <>
+        <button onClick={handleCopy} className={style} type="button">
+          <div className="flex items-center gap-3">
+            <svg
+              className="w-5 h-5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
+            </svg>
+            <div>{children}</div>
+          </div>
+        </button>
+        {showSuccess && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-in slide-in-from-right duration-300">
+            Copied to clipboard!
+          </div>
+        )}
+      </>
+    );
+  }
+
+  // Handle link actions
   if (asButton) {
     return (
-      <button className={style} {...rest}>
+      <button className={style} type="button">
         {children}
       </button>
     );
   }
 
+  if (!href) {
+    return null;
+  }
+
+  const isExternal = href.startsWith('http');
+
   if (isExternal) {
     return (
-      <a href={href} className={style} target="_blank" rel="noopener noreferrer" {...rest}>
+      <a
+        href={href}
+        className={style}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {children}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={style} {...rest}>
+    <Link href={href} className={style}>
       {children}
     </Link>
   );
-}; 
+};
+
+// Keep the old name for backward compatibility
+export const AppLink = AppAction;

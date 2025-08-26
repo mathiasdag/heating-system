@@ -34,4 +34,4 @@ const CommonCard: Block = {
   ],
 };
 
-export default CommonCard; 
+export default CommonCard;

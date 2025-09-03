@@ -21,7 +21,7 @@ const baseStyles = {
   secondary:
     'uppercase bg-orange rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   outline:
-    'uppercase border border-black rounded-sm px-3 pt-[.6em] pb-2 block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase border border-black rounded-sm px-3 pt-[.6em] pb-2 inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   minimal: 'block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
 };
 
@@ -59,7 +59,7 @@ export const AppAction: React.FC<AppActionProps> = ({
         <button onClick={handleCopy} className={style} type="button">
           <div className="flex items-center gap-3">
             <svg
-              className="w-5 h-5 flex-shrink-0"
+              className="w-5 h-5 shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -71,12 +71,12 @@ export const AppAction: React.FC<AppActionProps> = ({
                 d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
               />
             </svg>
-            <div>{children}</div>
+            <div className="truncate min-w-0">{children}</div>
           </div>
         </button>
         {showSuccess && (
           <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-in slide-in-from-right duration-300">
-            Copied to clipboard!
+            Kopierat!
           </div>
         )}
       </>

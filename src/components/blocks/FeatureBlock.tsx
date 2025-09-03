@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AppLink } from '../AppLink';
+import { DevIndicator } from '../DevIndicator';
 
 interface FeatureBlockProps {
   image?: { url: string; alt?: string; width?: number; height?: number };
@@ -32,7 +33,8 @@ export default function FeatureBlock({
   }
 
   return (
-    <div className="grid grid-cols-16 p-4 my-20 gap-4">
+    <div className="grid grid-cols-16 p-4 my-20 gap-4 relative">
+      <DevIndicator componentName="FeatureBlock" />
       {image?.url && (
         <div className="col-start-1 col-end-12 md:col-end-9">
           <Image

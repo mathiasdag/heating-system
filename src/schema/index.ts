@@ -8,3 +8,4 @@ import Tags from '../collections/Tags';
 export { Users, Media, Pages, Tags };
 
 export const collections: CollectionConfig[] = [Users, Media, Pages, Tags];
+

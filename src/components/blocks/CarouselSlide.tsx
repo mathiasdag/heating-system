@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { AppAction } from '../AppLink';
 import Tag from '../Tag';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import { DevIndicator } from '../DevIndicator';
 
 interface Tag {
   id: string;
@@ -46,6 +47,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
         <AppAction
           href={link.text} // Use text as the URL for copy actions
           actionType="copy"
+          variant="outline"
         >
           {link.text.toUpperCase()}
         </AppAction>
@@ -54,27 +56,8 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
     if (link.type === 'internal' && link.reference) {
       return (
-        <AppAction
-          href={`/${link.reference.slug}`}
-          className="flex items-center gap-3 px-6 py-3 border border-black rounded-lg hover:bg-black hover:text-white transition-colors duration-200 w-full"
-          variant="minimal"
-        >
-          <svg
-            className="w-5 h-5 flex-shrink-0"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 7l5 5m0 0l-5 5m5-5H6"
-            />
-          </svg>
-          <span className="font-mono text-sm truncate min-w-0">
-            {link.text.toUpperCase()}
-          </span>
+        <AppAction href={`/${link.reference.slug}`} variant="outline">
+          {link.text.toUpperCase()}
         </AppAction>
       );
     }
@@ -83,11 +66,11 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       return (
         <AppAction
           href={link.url}
-          className="flex items-center gap-3 px-6 py-3 border border-black rounded-lg hover:bg-black hover:text-white transition-colors duration-200 w-full"
+          className="flex items-center gap-3 px-4 md:px-6 py-3 border border-black rounded-lg hover:bg-black hover:text-white transition-colors duration-200 w-full min-w-0"
           variant="minimal"
         >
           <svg
-            className="w-5 h-5 flex-shrink-0"
+            className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -99,7 +82,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
               d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
             />
           </svg>
-          <span className="font-mono text-sm truncate min-w-0">
+          <span className="font-mono text-xs md:text-sm truncate min-w-0">
             {link.text.toUpperCase()}
           </span>
         </AppAction>
@@ -111,6 +94,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
   return (
     <div className="bg-lightClay rounded-2xl relative">
+      <DevIndicator componentName="CarouselSlide" />
       <div className="grid md:grid-cols-2 items-center">
         {/* Right Image - First on mobile */}
         {image && (
@@ -126,7 +110,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
         )}
 
         {/* Left Content - Second on mobile */}
-        <div className="space-y-6 p-12 order-2 md:order-1">
+        <div className="flex-1 space-y-4 px-8 pt-12 pb-16 md:px-12 md:py-16 order-2 md:order-1 min-w-0">
           {/* Tags */}
           {tags && tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
@@ -138,20 +122,18 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
           {/* Subheadline */}
           {subheadline && (
-            <h2 className="text-3xl md:text-4xl font-serif font-light">
-              {subheadline}
-            </h2>
+            <h3 className="text-2xl font-display uppercase">{subheadline}</h3>
           )}
 
           {/* Content */}
           {content && (
-            <div className="text-lg leading-relaxed">
+            <div className="font-mono">
               <RichText data={content} />
             </div>
           )}
 
           {/* Call to Action */}
-          <div className="space-y-4">{link && renderActionButton(link)}</div>
+          <div className="w-full mt-8">{link && renderActionButton(link)}</div>
         </div>
       </div>
     </div>

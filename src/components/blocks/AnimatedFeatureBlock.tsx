@@ -11,6 +11,7 @@ import {
 } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { AppLink } from '../AppLink';
+import { DevIndicator } from '../DevIndicator';
 
 interface AnimatedFeatureBlockProps {
   headline?: string;
@@ -78,6 +79,7 @@ const AnimatedFeatureBlock: React.FC<AnimatedFeatureBlockProps> = ({
 
   return (
     <section ref={ref} className="relative grid gap-8 py-16 px-4 text-center">
+      <DevIndicator componentName="AnimatedFeatureBlock" />
       {image?.url && (
         <motion.div style={{ y }} className="mx-auto z-10">
           <Image

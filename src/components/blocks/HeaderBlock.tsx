@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import { DevIndicator } from '../DevIndicator';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -51,7 +52,8 @@ export default function HeaderBlock({
   );
 
   return (
-    <div className="my-36 px-4 text-center">
+    <div className="my-36 px-4 text-center relative">
+      <DevIndicator componentName="HeaderBlock" />
       {assetPosition === 'before' && renderAssets()}
       <RichText data={text} />
       {assetPosition === 'after' && renderAssets()}

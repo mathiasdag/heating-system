@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { AppLink } from '../AppLink';
 import { MediaCard } from './MediaCard';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import { DevIndicator } from '../DevIndicator';
 
 interface Card {
   title: string;
@@ -87,7 +88,8 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
     lastRow.length < columnCount ? columnCount - lastRow.length : 0;
 
   return (
-    <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-orange`}>
+    <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-orange relative`}>
+      <DevIndicator componentName="OrangeCardGrid" />
       {headline && <h2 className="text-center">{headline}</h2>}
       {description && (
         <div className="font-mono text-center px-8 max-w-6xl mx-auto">

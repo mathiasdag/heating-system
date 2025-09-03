@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { DevIndicator } from '../DevIndicator';
 
 interface GenericCarouselProps {
   headline?: string;
@@ -35,7 +36,8 @@ const GenericCarousel: React.FC<GenericCarouselProps> = ({
   }
 
   return (
-    <section className={`py-24 px-4 ${className}`}>
+    <section className={`py-24 px-4 ${className} relative`}>
+      <DevIndicator componentName="GenericCarousel" />
       {/* Header Section */}
       <div className="max-w-6xl mx-auto text-center mb-16">
         {headline && (

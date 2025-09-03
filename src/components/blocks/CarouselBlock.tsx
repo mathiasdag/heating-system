@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CarouselSlide from './CarouselSlide';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import { DevIndicator } from '../DevIndicator';
 
 interface CarouselBlockProps {
   headline?: string;
@@ -81,7 +82,8 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
   }
 
   return (
-    <section className="py-24 px-4">
+    <section className="py-24 px-4 relative">
+      <DevIndicator componentName="CarouselBlock" position="top-left" />
       {/* Header Section */}
       {headline && <h2 className="text-center mb-4">{headline}</h2>}
       {description && (
@@ -104,11 +106,11 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
             <>
               <button
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white/80 rounded-full hover:bg-white transition-colors duration-200"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-2 border bg-black/80 text-white mix-blend-multiply border-black rounded-full"
                 aria-label="Previous slide"
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -123,11 +125,11 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
               </button>
               <button
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white/80 rounded-full hover:bg-white transition-colors duration-200"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-2 border bg-black/80 text-white mix-blend-multiply border-black rounded-full"
                 aria-label="Next slide"
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -155,10 +157,8 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors duration-200 ${
-                index === currentSlide
-                  ? 'bg-black'
-                  : 'bg-white border border-black hover:bg-gray-200'
+              className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                index === currentSlide ? 'bg-black' : 'border border-black'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />

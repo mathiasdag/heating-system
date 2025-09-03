@@ -2,6 +2,7 @@
 import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { MediaCard } from './MediaCard';
 import { AppLink } from '../AppLink';
+import { DevIndicator } from '../DevIndicator';
 
 interface Card {
   badge?: string;
@@ -134,7 +135,8 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
   };
 
   return (
-    <section className="py-12" role="region" aria-label={headline}>
+    <section className="py-12 relative" role="region" aria-label={headline}>
+      <DevIndicator componentName="HorizontalCardBlock" />
       <h2 className="text-center mb-10">{headline}</h2>
       <div
         ref={scrollContainerRef}

@@ -4,6 +4,7 @@ import { AppLink } from '../AppLink';
 import Tag from '../Tag';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
+import { DevIndicator } from '../DevIndicator';
 
 interface TagType {
   id: string;
@@ -48,7 +49,8 @@ export const MediaCard: React.FC<MediaCardProps> = ({
 
   return (
     <>
-      <div className="py-3">
+      <div className="py-3 relative">
+        <DevIndicator componentName="MediaCard" />
         <div className="flex justify-center mb-4 gap-[.15em] flex-wrap">
           {tags &&
             tags.length > 0 &&

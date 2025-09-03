@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import MuxPlayer from '@mux/mux-player-react';
 import type { MinResolutionValue } from '@mux/playback-core';
+import { DevIndicator } from '../DevIndicator';
 
 interface VideoSource {
   playbackId: string;
@@ -65,18 +66,21 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
 
   if (host === 'mux' && currentSource?.playbackId) {
     return (
-      <MuxPlayer
-        playbackId={currentSource.playbackId}
-        autoPlay={autoplay}
-        muted={autoplay}
-        loop={autoplay}
-        className="object-cover w-full h-full"
-        style={{
-          aspectRatio,
-          ...(controls === false ? { ['--controls' as any]: 'none' } : {}),
-        }}
-        {...(!adaptiveResolution ? { playbackEngine: 'mse' } : {})}
-      />
+      <div className="relative">
+        <DevIndicator componentName="VideoBlock" />
+        <MuxPlayer
+          playbackId={currentSource.playbackId}
+          autoPlay={autoplay}
+          muted={autoplay}
+          loop={autoplay}
+          className="object-cover w-full h-full"
+          style={{
+            aspectRatio,
+            ...(controls === false ? { ['--controls' as any]: 'none' } : {}),
+          }}
+          {...(!adaptiveResolution ? { playbackEngine: 'mse' } : {})}
+        />
+      </div>
     );
 
     return null;

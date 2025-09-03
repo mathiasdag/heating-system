@@ -18,7 +18,7 @@ interface MediaCardProps {
   tags?: TagType[];
   title: string;
   body?: any;
-  image?: { url: string; alt?: string };
+  image?: { url: string; alt?: string; width?: number; height?: number };
   link?: {
     type?: 'internal' | 'external';
     text?: string;
@@ -49,7 +49,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
 
   return (
     <>
-      <div className="py-3 relative">
+      <div className="py-3 md:py-4 md:px-2 lg:px-4 lg:py-6 relative">
         <DevIndicator componentName="MediaCard" />
         <div className="flex justify-center mb-4 gap-[.15em] flex-wrap">
           {tags &&
@@ -70,7 +70,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
             />
           </div>
         )}
-        <div className="text-center font-mono text-base mb-6 mt-6 richtext-ul">
+        <div className="text-center font-mono text-base mb-6 mt-6">
           <RichText data={body} />
         </div>
       </div>

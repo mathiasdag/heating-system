@@ -166,8 +166,8 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
             onKeyDown={e => handleKeyDown(e, idx)}
             aria-label={card.title}
           >
-            <div className="flex flex-col justify-between bg-lightClay rounded-sm p-5 w-68 aspect-window mx-2">
-              <MediaCard {...card} />
+            <div className="flex flex-col justify-between bg-lightClay rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2">
+              <MediaCard {...card} buttonVariant="primary" />
             </div>
           </div>
         ))}

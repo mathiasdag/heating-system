@@ -1,8 +1,43 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
+import Slider from 'react-slick';
 import CarouselSlide from './CarouselSlide';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+// Custom styles to override slick-carousel defaults
+const customStyles = `
+  .slick-slider {
+    position: relative;
+  }
+  
+  .slick-slide {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.3s ease;
+  }
+  
+  .slick-slide.slick-center {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .slick-dots {
+    bottom: -4em;
+  }
+  
+  .slick-dots li button:before {
+    font-size: .7rem;
+    width: .7rem;
+    height: .7rem;
+  }
+  
+  .slick-dots li.slick-active button:before {
+    opacity: 1;
+  }
+`;
 
 interface CarouselBlockProps {
   headline?: string;
@@ -15,76 +50,64 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
   description,
   slides = [],
 }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  // Minimum swipe distance (in px)
-  const minSwipeDistance = 50;
-
-  useEffect(() => {
-    // Detect touch device
-    const checkTouchDevice = () => {
-      setIsTouchDevice(
-        'ontouchstart' in window || navigator.maxTouchPoints > 0
-      );
-    };
-
-    checkTouchDevice();
-    window.addEventListener('resize', checkTouchDevice);
-
-    return () => window.removeEventListener('resize', checkTouchDevice);
-  }, []);
-
-  const currentSlideData = slides[currentSlide];
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide(prev => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide(prev => (prev - 1 + slides.length) % slides.length);
-  };
-
-  // Touch handlers for swipe
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      nextSlide();
-    }
-    if (isRightSwipe) {
-      prevSlide();
-    }
-  };
-
-  if (!currentSlideData) {
+  if (!slides.length) {
     return null;
   }
 
+  const sliderRef = React.useRef<Slider>(null);
+
+  const settings = {
+    dots: slides.length > 1,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: '10%',
+    arrows: false, // Disable default arrows
+    responsive: [
+      {
+        breakpoint: 1536,
+        settings: {
+          centerMode: true,
+          centerPadding: '10%',
+        },
+      },
+      {
+        breakpoint: 1280,
+        settings: {
+          centerMode: true,
+          centerPadding: '30%',
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          centerMode: true,
+          centerPadding: '20%',
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          centerMode: true,
+          centerPadding: '10%',
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          centerMode: false,
+          centerPadding: '10%',
+        },
+      },
+    ],
+  };
+
   return (
     <section className="py-24 px-4 relative">
+      <style dangerouslySetInnerHTML={{ __html: customStyles }} />
       <DevIndicator componentName="CarouselBlock" position="top-left" />
-      {/* Header Section */}
       {headline && <h2 className="text-center mb-4">{headline}</h2>}
       {description && (
         <div className="font-mono text-center px-8 max-w-6xl mx-auto mb-8">
@@ -93,78 +116,59 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
       )}
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto">
-        <div
-          ref={carouselRef}
-          className="relative"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
-          {/* Navigation Arrows - Only show on non-touch devices */}
-          {slides.length > 1 && !isTouchDevice && (
-            <>
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-2 border bg-black/80 text-white mix-blend-multiply border-black rounded-full"
-                aria-label="Previous slide"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-2 border bg-black/80 text-white mix-blend-multiply border-black rounded-full"
-                aria-label="Next slide"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </>
-          )}
-
-          {/* Render the current slide */}
-          <CarouselSlide {...currentSlideData} />
-        </div>
-      </div>
-
-      {/* Navigation Dots */}
-      {slides.length > 1 && (
-        <div className="flex justify-center mt-8 space-x-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                index === currentSlide ? 'bg-black' : 'border border-black'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
+      <div className="-mx-4 relative">
+        <Slider ref={sliderRef} {...settings}>
+          {slides.map((slide, index) => (
+            <div key={index} className="px-4 lg:px-6">
+              <CarouselSlide {...slide} />
+            </div>
           ))}
-        </div>
-      )}
+        </Slider>
+
+        {/* Custom navigation buttons positioned between slides */}
+        {slides.length > 1 && (
+          <>
+            <button
+              onClick={() => sliderRef.current?.slickPrev()}
+              className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 z-20 p-2 border bg-black/80 text-white mix-blend-multiply border-black rounded-full hover:bg-black transition-colors"
+              aria-label="Previous slide"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={() => sliderRef.current?.slickNext()}
+              className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 z-20 p-2 border bg-black/80 text-white mix-blend-multiply border-black rounded-full hover:bg-black transition-colors"
+              aria-label="Next slide"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </>
+        )}
+      </div>
     </section>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import localFont from 'next/font/local';
 import './globals.css';
+import NavigationWrapper from '@/components/NavigationWrapper';
 
 const sans = localFont({
   src: [
@@ -74,7 +75,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="sv" className={htmlClass}>
       <body>
-        <main>{children}</main>
+        <NavigationWrapper />
+        <main className="pt-16">{children}</main>
       </body>
     </html>
   );

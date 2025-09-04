@@ -1,10 +1,12 @@
 import type { CollectionConfig } from 'payload';
+import NavigationItem from '../blocks/NavigationItem';
+import LinkGroup from '../blocks/LinkGroup';
 
 const Navigation: CollectionConfig = {
   slug: 'navigation',
   admin: {
     useAsTitle: 'name',
-    group: 'Content',
+    description: 'Main navigation menu configuration',
   },
   access: {
     read: () => true,
@@ -19,156 +21,52 @@ const Navigation: CollectionConfig = {
       required: true,
       admin: {
         description:
-          'Internal name for this navigation (e.g., "Main Navigation")',
+          'Name for this navigation (e.g., "Main Navigation", "Footer Navigation")',
       },
     },
     {
-      name: 'menuItems',
-      type: 'array',
+      name: 'description',
+      type: 'text',
       required: false,
-      fields: [
-        {
-          name: 'label',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'link',
-          type: 'group',
-          fields: [
-            {
-              name: 'type',
-              type: 'select',
-              required: true,
-              options: [
-                { label: 'Internal Page', value: 'internal' },
-                { label: 'External URL', value: 'external' },
-                { label: 'Custom Action', value: 'custom' },
-              ],
-            },
-            {
-              name: 'reference',
-              type: 'relationship',
-              relationTo: 'pages',
-              required: false,
-              admin: {
-                condition: (data, siblingData) =>
-                  siblingData?.type === 'internal',
-              },
-            },
-            {
-              name: 'url',
-              type: 'text',
-              required: false,
-              admin: {
-                condition: (data, siblingData) =>
-                  siblingData?.type === 'external',
-                description: 'Full URL including https://',
-              },
-            },
-            {
-              name: 'action',
-              type: 'text',
-              required: false,
-              admin: {
-                condition: (data, siblingData) =>
-                  siblingData?.type === 'custom',
-                description: 'Custom action identifier',
-              },
-            },
-          ],
-        },
-        {
-          name: 'isActive',
-          type: 'checkbox',
-          defaultValue: false,
-          admin: {
-            description: 'Mark as active/important (shows in closed nav)',
-          },
-        },
-        {
-          name: 'children',
-          type: 'array',
-          required: false,
-          fields: [
-            {
-              name: 'label',
-              type: 'text',
-              required: true,
-            },
-            {
-              name: 'link',
-              type: 'group',
-              fields: [
-                {
-                  name: 'type',
-                  type: 'select',
-                  required: true,
-                  options: [
-                    { label: 'Internal Page', value: 'internal' },
-                    { label: 'External URL', value: 'external' },
-                    { label: 'Custom Action', value: 'custom' },
-                  ],
-                },
-                {
-                  name: 'reference',
-                  type: 'relationship',
-                  relationTo: 'pages',
-                  required: false,
-                  admin: {
-                    condition: (data, siblingData) =>
-                      siblingData?.type === 'internal',
-                  },
-                },
-                {
-                  name: 'url',
-                  type: 'text',
-                  required: false,
-                  admin: {
-                    condition: (data, siblingData) =>
-                      siblingData?.type === 'external',
-                    description: 'Full URL including https://',
-                  },
-                },
-                {
-                  name: 'action',
-                  type: 'text',
-                  required: false,
-                  admin: {
-                    condition: (data, siblingData) =>
-                      siblingData?.type === 'custom',
-                    description: 'Custom action identifier',
-                  },
-                },
-              ],
-            },
-            {
-              name: 'isActive',
-              type: 'checkbox',
-              defaultValue: false,
-              admin: {
-                description: 'Mark as active/important',
-              },
-            },
-          ],
-        },
-      ],
+      admin: {
+        description: 'Optional description of this navigation',
+      },
+    },
+    {
+      name: 'highlight',
+      type: 'group',
+      required: false,
+      admin: {
+        description: 'Highlighted item shown in closed navigation state',
+      },
+      fields: [...(LinkGroup as any).fields],
+    },
+    {
+      name: 'menuItems',
+      type: 'blocks',
+      required: true,
+      admin: {
+        description: 'Main menu items',
+      },
+      blocks: [NavigationItem],
     },
   ],
   hooks: {
     beforeValidate: [
-      ({ data }: any) => {
-        // Ensure menuItems is always an array
-        if (!data.menuItems) {
-          data.menuItems = [];
-        }
-        // Ensure children arrays are initialized
-        if (data.menuItems) {
-          data.menuItems.forEach((item: any) => {
+      ({ data }) => {
+        // Initialize children arrays for all nesting levels
+        const initializeChildren = (items: any[]) => {
+          if (!items) return;
+          items.forEach(item => {
             if (!item.children) {
               item.children = [];
             }
+            initializeChildren(item.children);
           });
+        };
+
+        if (data?.menuItems) {
+          initializeChildren(data.menuItems);
         }
         return data;
       },

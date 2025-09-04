@@ -1,5 +1,3 @@
-import type { CollectionConfig } from 'payload';
-
 import { Users } from '../collections/Users';
 import { Media } from '../collections/Media';
 import Pages from '../collections/Pages';
@@ -8,10 +6,4 @@ import Navigation from '../collections/Navigation';
 
 export { Users, Media, Pages, Tags, Navigation };
 
-export const collections: CollectionConfig[] = [
-  Users,
-  Media,
-  Pages,
-  Tags,
-  Navigation,
-];
+export const collections = [Users, Media, Pages, Tags, Navigation];

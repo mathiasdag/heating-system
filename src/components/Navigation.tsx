@@ -1,232 +1,218 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { OpenNavIcon, CloseIcon } from './icons';
-import { DevIndicator } from './DevIndicator';
+import React, { useState } from 'react';
+import { OpenNavIcon } from './icons/OpenNavIcon';
+import { CloseIcon } from './icons/CloseIcon';
+import { VarmeverketIcon } from './icons/VarmeverketIcon';
 
-interface NavigationLink {
-  type: 'internal' | 'external' | 'custom';
-  reference?: { slug: string };
+export interface NavigationLink {
+  type: 'internal' | 'external' | 'copy';
+  reference?: {
+    id: string;
+    title: string;
+    slug: string;
+  };
   url?: string;
-  action?: string;
+  text?: string;
 }
 
-interface MenuItem {
-  label: string;
+export interface MenuItem {
+  blockType: 'navigationItem';
   link: NavigationLink;
-  isActive?: boolean;
   children?: MenuItem[];
 }
 
-interface NavigationData {
-  id: string;
+export interface NavigationData {
+  _id: string;
   name: string;
+  description?: string;
+  highlight?: NavigationLink;
   menuItems: MenuItem[];
 }
 
 interface NavigationProps {
-  navigation?: NavigationData;
+  navigation: NavigationData;
 }
 
 const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const [activeSubmenus, setActiveSubmenus] = useState<Set<string>>(new Set());
 
-  // Close navigation on escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsOpen(false);
-        setActiveSubmenu(null);
-      }
-    };
-
+  const toggleNav = () => {
+    setIsOpen(!isOpen);
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
+      setActiveSubmenus(new Set());
+    }
+  };
+
+  const toggleSubmenu = (itemPath: string) => {
+    const newActiveSubmenus = new Set(activeSubmenus);
+    if (newActiveSubmenus.has(itemPath)) {
+      newActiveSubmenus.delete(itemPath);
     } else {
-      document.body.style.overflow = 'unset';
+      newActiveSubmenus.add(itemPath);
     }
+    setActiveSubmenus(newActiveSubmenus);
+  };
 
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
-
-  const getHref = (link: NavigationLink): string => {
-    if (link.type === 'internal' && link.reference) {
-      return `/${link.reference.slug}`;
-    }
-    if (link.type === 'external' && link.url) {
-      return link.url;
-    }
-    return '#';
+  const hasChildren = (item: MenuItem): boolean => {
+    return Boolean(item.children && item.children.length > 0);
   };
 
   const handleLinkClick = (link: NavigationLink) => {
-    if (link.type === 'custom') {
-      // Handle custom actions here
-      console.log('Custom action:', link.action);
+    if (link.type !== 'copy') {
+      setIsOpen(false);
+      setActiveSubmenus(new Set());
     }
-    setIsOpen(false);
-    setActiveSubmenu(null);
   };
 
-  const toggleSubmenu = (label: string) => {
-    setActiveSubmenu(activeSubmenu === label ? null : label);
+  const renderMenuItem = (
+    item: MenuItem,
+    level: number = 0,
+    parentPath: string = ''
+  ) => {
+    const itemText = item.link.text || 'Untitled';
+    const itemPath = parentPath ? `${parentPath}-${itemText}` : itemText;
+    const isSubmenuOpen = activeSubmenus.has(itemPath);
+    const hasSubmenu = hasChildren(item);
+
+    const itemClasses = `transition-all duration-200 ${
+      level === 0
+        ? 'text-lg font-medium'
+        : level === 1
+          ? 'text-base font-medium'
+          : level === 2
+            ? 'text-sm font-medium'
+            : 'text-sm'
+    } text-gray-900`;
+
+    const linkClasses = `block py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-gray-100`;
+
+    const renderLink = () => {
+      if (item.link.type === 'copy') {
+        return (
+          <button
+            onClick={() => handleLinkClick(item.link)}
+            className={linkClasses}
+          >
+            {itemText}
+          </button>
+        );
+      }
+
+      const href =
+        item.link.type === 'internal' && item.link.reference
+          ? `/${item.link.reference.slug}`
+          : item.link.url || '#';
+
+      return (
+        <a
+          href={href}
+          onClick={() => handleLinkClick(item.link)}
+          className={linkClasses}
+        >
+          {itemText}
+        </a>
+      );
+    };
+
+    return (
+      <div key={itemPath} className={itemClasses}>
+        <div className="flex items-center justify-between">
+          {renderLink()}
+          {hasSubmenu && (
+            <button
+              onClick={() => toggleSubmenu(itemPath)}
+              className="ml-2 p-1 rounded hover:bg-gray-200 transition-colors"
+            >
+              <span
+                className={`transform transition-transform duration-200 ${
+                  isSubmenuOpen ? 'rotate-180' : ''
+                }`}
+              >
+                ▼
+              </span>
+            </button>
+          )}
+        </div>
+        {hasSubmenu && (
+          <div
+            className={`mt-4 space-y-2 transition-all duration-300 ${
+              isSubmenuOpen
+                ? 'opacity-100 max-h-96 overflow-visible'
+                : 'opacity-0 max-h-0 overflow-hidden'
+            }`}
+          >
+            {item.children!.map((child, childIndex) =>
+              renderMenuItem(child, level + 1, itemPath)
+            )}
+          </div>
+        )}
+      </div>
+    );
   };
-
-  if (!navigation) return null;
-
-  // Get active menu items for closed state
-  const activeItems = navigation.menuItems.filter(item => item.isActive);
 
   return (
     <>
-      {/* Closed Navigation State */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo/Brand */}
-            <div className="flex-shrink-0">
-              <Link href="/" className="text-xl font-bold">
-                Värmeverket
-              </Link>
-            </div>
-
-            {/* Active Items (shown when nav is closed) */}
-            <div className="hidden md:flex items-center space-x-6">
-              {activeItems.map((item, index) => (
-                <Link
-                  key={index}
-                  href={getHref(item.link)}
-                  onClick={() => handleLinkClick(item.link)}
-                  className="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-
-            {/* Open Navigation Button */}
-            <button
-              onClick={() => setIsOpen(true)}
-              className="p-2 text-gray-900 hover:text-gray-600 transition-colors"
-              aria-label="Open navigation"
-            >
-              <OpenNavIcon size={24} />
-            </button>
-          </div>
+      {/* Closed Navigation */}
+      <nav>
+        <button
+          onClick={toggleNav}
+          className="fixed top-2 left-2 right-0 z-50 rounded-sm bg-black mix-blend-multiply cursor-pointer text-white w-[40px] h-[40px] flex items-center justify-center"
+          aria-label="Open navigation menu"
+        >
+          <OpenNavIcon className="w-4 h-4" />
+        </button>
+        {navigation.highlight && (
+          <a
+            href={
+              navigation.highlight.type === 'internal' &&
+              navigation.highlight.reference
+                ? `/${navigation.highlight.reference.slug}`
+                : navigation.highlight.url || '#'
+            }
+            onClick={() => handleLinkClick(navigation.highlight!)}
+            className="fixed top-2 left-12 z-50 rounded-sm bg-black mix-blend-multiply cursor-pointer text-lg text-white px-3 pt-[.125rem] h-[40px] flex items-center justify-center"
+          >
+            {navigation.highlight.text}
+          </a>
+        )}
+        <div className="fixed top-2 right-2 z-50 ">
+          <VarmeverketIcon size={120} className="text-black" />
         </div>
       </nav>
 
-      {/* Full Screen Navigation Overlay */}
+      {/* Full Screen Overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-white">
-          <DevIndicator componentName="Navigation" />
+          <div className="flex flex-col h-full">
+            {/* Header */}
+            <div className="flex justify-between items-center p-6 border-b border-gray-200">
+              <div>
+                <h1 className="text-2xl font-bold">Värmeverket</h1>
+                {navigation.description && (
+                  <p className="text-gray-600 mt-1">{navigation.description}</p>
+                )}
+              </div>
+              <button
+                onClick={toggleNav}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Close navigation menu"
+              >
+                <CloseIcon className="w-6 h-6" />
+              </button>
+            </div>
 
-          {/* Header */}
-          <div className="flex justify-between items-center p-6 border-b border-gray-200">
-            <Link
-              href="/"
-              className="text-2xl font-bold"
-              onClick={() => setIsOpen(false)}
-            >
-              Värmeverket
-            </Link>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2 text-gray-900 hover:text-gray-600 transition-colors"
-              aria-label="Close navigation"
-            >
-              <CloseIcon size={24} />
-            </button>
-          </div>
-
-          {/* Navigation Menu */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="max-w-4xl mx-auto p-6">
-              <nav className="space-y-8">
-                {navigation.menuItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className="border-b border-gray-100 pb-8 last:border-b-0"
-                  >
-                    {/* Main Menu Item */}
-                    <div className="flex items-center justify-between">
-                      <Link
-                        href={getHref(item.link)}
-                        onClick={() => handleLinkClick(item.link)}
-                        className={`text-2xl font-medium hover:text-gray-600 transition-colors ${
-                          item.isActive ? 'text-blue-600' : 'text-gray-900'
-                        }`}
-                      >
-                        {item.label}
-                        {item.isActive && (
-                          <span className="ml-2 text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                            Active
-                          </span>
-                        )}
-                      </Link>
-
-                      {/* Submenu Toggle */}
-                      {item.children && item.children.length > 0 && (
-                        <button
-                          onClick={() => toggleSubmenu(item.label)}
-                          className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
-                          aria-label={`Toggle ${item.label} submenu`}
-                        >
-                          <svg
-                            className={`w-5 h-5 transform transition-transform ${
-                              activeSubmenu === item.label ? 'rotate-180' : ''
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        </button>
-                      )}
+            {/* Navigation Content */}
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {navigation.menuItems.map((item, index) => (
+                    <div key={index} className="space-y-4">
+                      {renderMenuItem(item)}
                     </div>
-
-                    {/* Submenu */}
-                    {item.children && item.children.length > 0 && (
-                      <div
-                        className={`mt-4 space-y-2 transition-all duration-300 ${
-                          activeSubmenu === item.label
-                            ? 'opacity-100 max-h-96'
-                            : 'opacity-0 max-h-0 overflow-hidden'
-                        }`}
-                      >
-                        {item.children.map((child, childIndex) => (
-                          <Link
-                            key={childIndex}
-                            href={getHref(child.link)}
-                            onClick={() => handleLinkClick(child.link)}
-                            className={`block text-lg hover:text-gray-600 transition-colors ${
-                              child.isActive ? 'text-blue-600' : 'text-gray-700'
-                            }`}
-                          >
-                            {child.label}
-                            {child.isActive && (
-                              <span className="ml-2 text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                                Active
-                              </span>
-                            )}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </nav>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

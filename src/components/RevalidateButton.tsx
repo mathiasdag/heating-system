@@ -39,21 +39,19 @@ const RevalidateButton: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="">
       <button
         onClick={handleRevalidate}
         disabled={isLoading}
-        className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-lg shadow-lg transition-colors duration-200 flex items-center space-x-2"
+        className="fixed uppercase bottom-2 pt-[.125rem] h-[40px] right-2 z-50 bg-black/20 hover:bg-black/100 disabled:bg-black/20 text-white mix-blend-multiply px-3 rounded-sm"
       >
         {isLoading ? (
           <>
-            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             <span>Revalidating...</span>
           </>
         ) : (
           <>
-            <span>🔄</span>
-            <span>Revalidate Navigation</span>
+            <span>Revalidate</span>
           </>
         )}
       </button>

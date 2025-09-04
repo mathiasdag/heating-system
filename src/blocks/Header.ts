@@ -24,6 +24,21 @@ const Header: Block = {
           required: false,
         },
         {
+          name: 'placement',
+          type: 'select',
+          label: 'Placement',
+          options: [
+            { label: 'Before Text', value: 'before' },
+            { label: 'After Text', value: 'after' },
+          ],
+          defaultValue: 'before',
+          required: true,
+          admin: {
+            description:
+              'Choose where this asset should appear relative to the text content',
+          },
+        },
+        {
           name: 'image',
           type: 'upload',
           relationTo: 'media',
@@ -44,21 +59,6 @@ const Header: Block = {
         },
       ],
       required: false,
-    },
-    {
-      name: 'assetPosition',
-      type: 'select',
-      label: 'Asset Position',
-      options: [
-        { label: 'Before Text', value: 'before' },
-        { label: 'After Text', value: 'after' },
-      ],
-      defaultValue: 'before',
-      required: true,
-      admin: {
-        condition: (data: any) =>
-          Array.isArray(data?.assets) && data.assets.length > 0,
-      },
     },
   ],
 };

@@ -1,8 +1,44 @@
 'use client';
 import React, { useState } from 'react';
+import clsx from 'clsx';
 import { OpenNavIcon } from './icons/OpenNavIcon';
-import { CloseIcon } from './icons/CloseIcon';
+import { CloseNavIcon } from './icons/CloseNavIcon';
 import { VarmeverketIcon } from './icons/VarmeverketIcon';
+import { MarqueeText } from './MarqueeText';
+
+// Component for highlight link with marquee effect
+const HighlightLink: React.FC<{
+  link: NavigationLink;
+  onClick: (link: NavigationLink) => void;
+  linkClasses: string;
+}> = ({ link, onClick, linkClasses }) => {
+  const [isMarqueeing, setIsMarqueeing] = useState(false);
+
+  const href =
+    link.type === 'internal' && link.reference
+      ? `/${link.reference.slug}`
+      : link.url || '#';
+
+  return (
+    <a
+      href={href}
+      onClick={() => onClick(link)}
+      className={clsx(
+        linkClasses,
+        'fixed z-60 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-12 md:max-w-sm',
+        !isMarqueeing && 'px-[.6rem]'
+      )}
+    >
+      <MarqueeText
+        text={link.text || ''}
+        speed={30}
+        pauseOnHover={false}
+        spacing="mx-2"
+        onMarqueeStateChange={setIsMarqueeing}
+      />
+    </a>
+  );
+};
 
 export interface NavigationLink {
   type: 'internal' | 'external' | 'copy';
@@ -35,23 +71,15 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSubmenus, setActiveSubmenus] = useState<Set<string>>(new Set());
+
+  const linkClasses = clsx(
+    'rounded-sm bg-black mix-blend-multiply cursor-pointer',
+    'text-lg text-white pt-[.125rem] h-[40px]',
+    'flex items-center justify-center'
+  );
 
   const toggleNav = () => {
     setIsOpen(!isOpen);
-    if (isOpen) {
-      setActiveSubmenus(new Set());
-    }
-  };
-
-  const toggleSubmenu = (itemPath: string) => {
-    const newActiveSubmenus = new Set(activeSubmenus);
-    if (newActiveSubmenus.has(itemPath)) {
-      newActiveSubmenus.delete(itemPath);
-    } else {
-      newActiveSubmenus.add(itemPath);
-    }
-    setActiveSubmenus(newActiveSubmenus);
   };
 
   const hasChildren = (item: MenuItem): boolean => {
@@ -61,38 +89,19 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
   const handleLinkClick = (link: NavigationLink) => {
     if (link.type !== 'copy') {
       setIsOpen(false);
-      setActiveSubmenus(new Set());
     }
   };
 
-  const renderMenuItem = (
-    item: MenuItem,
-    level: number = 0,
-    parentPath: string = ''
-  ) => {
+  const renderMenuItem = (item: MenuItem, level: number = 0) => {
     const itemText = item.link.text || 'Untitled';
-    const itemPath = parentPath ? `${parentPath}-${itemText}` : itemText;
-    const isSubmenuOpen = activeSubmenus.has(itemPath);
     const hasSubmenu = hasChildren(item);
-
-    const itemClasses = `transition-all duration-200 ${
-      level === 0
-        ? 'text-lg font-medium'
-        : level === 1
-          ? 'text-base font-medium'
-          : level === 2
-            ? 'text-sm font-medium'
-            : 'text-sm'
-    } text-gray-900`;
-
-    const linkClasses = `block py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-gray-100`;
 
     const renderLink = () => {
       if (item.link.type === 'copy') {
         return (
           <button
             onClick={() => handleLinkClick(item.link)}
-            className={linkClasses}
+            className={clsx(linkClasses, 'px-[.6rem]')}
           >
             {itemText}
           </button>
@@ -108,7 +117,7 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
         <a
           href={href}
           onClick={() => handleLinkClick(item.link)}
-          className={linkClasses}
+          className={clsx(linkClasses, 'px-[.6rem]')}
         >
           {itemText}
         </a>
@@ -116,34 +125,12 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
     };
 
     return (
-      <div key={itemPath} className={itemClasses}>
-        <div className="flex items-center justify-between">
-          {renderLink()}
-          {hasSubmenu && (
-            <button
-              onClick={() => toggleSubmenu(itemPath)}
-              className="ml-2 p-1 rounded hover:bg-gray-200 transition-colors"
-            >
-              <span
-                className={`transform transition-transform duration-200 ${
-                  isSubmenuOpen ? 'rotate-180' : ''
-                }`}
-              >
-                ▼
-              </span>
-            </button>
-          )}
-        </div>
+      <div key={`${itemText}-${level}`} className="text-lg">
+        <div className="inline-block">{renderLink()}</div>
         {hasSubmenu && (
-          <div
-            className={`mt-4 space-y-2 transition-all duration-300 ${
-              isSubmenuOpen
-                ? 'opacity-100 max-h-96 overflow-visible'
-                : 'opacity-0 max-h-0 overflow-hidden'
-            }`}
-          >
+          <div className="ml-8 grid gap-1 mt-1">
             {item.children!.map((child, childIndex) =>
-              renderMenuItem(child, level + 1, itemPath)
+              renderMenuItem(child, level + 1)
             )}
           </div>
         )}
@@ -153,68 +140,51 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
 
   return (
     <>
-      {/* Closed Navigation */}
+      {/* Navigation */}
       <nav>
         <button
           onClick={toggleNav}
-          className="fixed top-2 left-2 right-0 z-50 rounded-sm bg-black mix-blend-multiply cursor-pointer text-white w-[40px] h-[40px] flex items-center justify-center"
-          aria-label="Open navigation menu"
+          className={clsx(
+            'fixed top-2 left-2 z-60 rounded-sm bg-black mix-blend-multiply',
+            'cursor-pointer text-white w-[40px] h-[40px]',
+            'flex items-center justify-center'
+          )}
+          aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
         >
-          <OpenNavIcon className="w-4 h-4" />
+          {isOpen ? (
+            <CloseNavIcon className="w-4 h-4" />
+          ) : (
+            <OpenNavIcon className="w-4 h-4" />
+          )}
         </button>
         {navigation.highlight && (
-          <a
-            href={
-              navigation.highlight.type === 'internal' &&
-              navigation.highlight.reference
-                ? `/${navigation.highlight.reference.slug}`
-                : navigation.highlight.url || '#'
-            }
-            onClick={() => handleLinkClick(navigation.highlight!)}
-            className="fixed top-2 left-12 z-50 rounded-sm bg-black mix-blend-multiply cursor-pointer text-lg text-white px-3 pt-[.125rem] h-[40px] flex items-center justify-center"
-          >
-            {navigation.highlight.text}
-          </a>
+          <HighlightLink
+            link={navigation.highlight}
+            onClick={handleLinkClick}
+            linkClasses={linkClasses}
+          />
         )}
-        <div className="fixed top-2 right-2 z-50 ">
-          <VarmeverketIcon size={120} className="text-black" />
+        <div
+          className={clsx(
+            'fixed top-2 right-2 z-60',
+            'flex items-center justify-center px-3'
+          )}
+        >
+          <VarmeverketIcon
+            size={120}
+            className="text-black w-22 sm:w-28 h-auto"
+          />
         </div>
       </nav>
 
       {/* Full Screen Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-white">
-          <div className="flex flex-col h-full">
-            {/* Header */}
-            <div className="flex justify-between items-center p-6 border-b border-gray-200">
-              <div>
-                <h1 className="text-2xl font-bold">Värmeverket</h1>
-                {navigation.description && (
-                  <p className="text-gray-600 mt-1">{navigation.description}</p>
-                )}
-              </div>
-              <button
-                onClick={toggleNav}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                aria-label="Close navigation menu"
-              >
-                <CloseIcon className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Navigation Content */}
-            <div className="flex-1 overflow-y-auto p-6">
-              <div className="max-w-4xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {navigation.menuItems.map((item, index) => (
-                    <div key={index} className="space-y-4">
-                      {renderMenuItem(item)}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="fixed inset-0 z-50 bg-orange">
+          <ul className="grid gap-1 ml-2 mt-12">
+            {navigation.menuItems.map((item, index) => (
+              <li key={index}>{renderMenuItem(item)}</li>
+            ))}
+          </ul>
         </div>
       )}
     </>

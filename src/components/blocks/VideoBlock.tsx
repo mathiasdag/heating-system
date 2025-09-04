@@ -82,9 +82,9 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
         />
       </div>
     );
-
-    return null;
   }
+
+  return null;
 };
 
 export default VideoBlock;

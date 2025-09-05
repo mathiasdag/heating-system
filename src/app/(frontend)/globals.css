@@ -1,4 +1,6 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   font-size: 18px;
@@ -13,7 +15,10 @@
 }
 
 .font-mono {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+}
+hr {
+  border-color: var(--color-black);
 }
 
 [data-content-type='page'] h1 {
@@ -24,8 +29,13 @@
   font-size: clamp(3rem, 8vw, 8em);
 }
 
-h2 {
-  font-size: 1.75em;
+h2.font-display {
+  font-size: 1.5rem;
+}
+
+h2.font-sans,
+.sans-headlines h2 {
+  font-size: 1.75rem;
   font-family: var(--font-sans);
 }
 
@@ -57,63 +67,6 @@ h2 {
   letter-spacing: 0.005em;
   line-height: 1em;
   font-size: 2em;
-}
-
-.bg-black {
-  background-color: #0c0c0c !important;
-}
-.bg-clay {
-  background-color: #efede3 !important;
-}
-.bg-lightClay {
-  background-color: #f9f7ec !important;
-}
-.bg-offWhite {
-  background-color: #efede3 !important;
-}
-.bg-orange {
-  background-color: #e68456 !important;
-}
-.bg-crayonBlack {
-  background-color: #141514 !important;
-}
-
-.text-black {
-  color: #0c0c0c !important;
-}
-.text-clay {
-  color: #efede3 !important;
-}
-.text-lightClay {
-  color: #f9f7ec !important;
-}
-.text-offWhite {
-  color: #efede3 !important;
-}
-.text-orange {
-  color: #e68456 !important;
-}
-.text-crayonBlack {
-  color: #141514 !important;
-}
-
-.border-black {
-  border-color: #0c0c0c !important;
-}
-.border-clay {
-  border-color: #efede3 !important;
-}
-.border-lightClay {
-  border-color: #f9f7ec !important;
-}
-.border-offWhite {
-  border-color: #efede3 !important;
-}
-.border-orange {
-  border-color: #e68456 !important;
-}
-.border-crayonBlack {
-  border-color: #141514 !important;
 }
 
 .font-ballPill {

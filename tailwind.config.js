@@ -22,20 +22,30 @@ module.exports = {
       pattern: /^max-w-(4xs|3xs|2xs|xs|sm|md|lg|xl|2xl|3xl|base)$/,
       variants: ['sm', 'md', 'lg', 'xl', '2xl'], // Responsive variants
     },
+    // Custom colors - ensure they're always included
+    {
+      pattern:
+        /^(bg|text|border)-(black|clay|lightClay|offWhite|orange|crayonBlack)$/,
+      variants: ['hover', 'focus', 'active'],
+    },
+    {
+      pattern: /^from-(black|clay|lightClay|offWhite|orange|crayonBlack)$/,
+    },
+    {
+      pattern: /^to-(black|clay|lightClay|offWhite|orange|crayonBlack)$/,
+    },
     'font-ballPill', // Add the custom font class to safelist
   ],
   theme: {
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      black: '#0C0C0C',
-      clay: '#EFEDE3',
-      lightClay: '#F9F7EC',
-      offWhite: '#EFEDE3',
-      orange: '#E68456',
-      crayonBlack: '#141514',
-    },
     extend: {
+      colors: {
+        black: '#0C0C0C',
+        clay: '#EFEDE3',
+        lightClay: '#F9F7EC',
+        offWhite: '#EFEDE3',
+        orange: '#E68456',
+        crayonBlack: '#141514',
+      },
       maxWidth: {
         '4xs': '8rem',
         '3xs': '12rem',
@@ -59,6 +69,7 @@ module.exports = {
         xs: ['0.65rem', { lineHeight: '1.15' }],
         sm: ['0.9rem', { lineHeight: '1.15' }],
         base: ['1rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }], // 24px
+        md: ['1.15rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
         lg: ['2rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
         xl: [
           'clamp(2rem, 5vw, 3.25rem)',

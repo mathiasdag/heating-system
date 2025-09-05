@@ -25,7 +25,7 @@ const HighlightLink: React.FC<{
       onClick={() => onClick(link)}
       className={clsx(
         linkClasses,
-        'fixed z-60 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-12 md:max-w-sm',
+        'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-12 md:max-w-sm',
         !isMarqueeing && 'px-[.6rem]'
       )}
     >
@@ -74,7 +74,7 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
 
   const linkClasses = clsx(
     'rounded-sm bg-black mix-blend-multiply cursor-pointer',
-    'text-lg text-white pt-[.125rem] h-[40px]',
+    'text-md text-white pt-[.125rem] h-[40px]',
     'flex items-center justify-center'
   );
 
@@ -125,7 +125,7 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
     };
 
     return (
-      <div key={`${itemText}-${level}`} className="text-lg">
+      <div key={`${itemText}-${level}`} className="text-md">
         <div className="inline-block">{renderLink()}</div>
         {hasSubmenu && (
           <div className="ml-8 grid gap-1 mt-1">
@@ -140,12 +140,23 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
 
   return (
     <>
+      {/* Full Screen Overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 z-30 bg-orange">
+          <ul className="grid gap-1 ml-2 mt-12">
+            {navigation.menuItems.map((item, index) => (
+              <li key={index}>{renderMenuItem(item)}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav>
         <button
           onClick={toggleNav}
           className={clsx(
-            'fixed top-2 left-2 z-60 rounded-sm bg-black mix-blend-multiply',
+            'fixed top-2 left-2 z-30 rounded-sm bg-black mix-blend-multiply',
             'cursor-pointer text-white w-[40px] h-[40px]',
             'flex items-center justify-center'
           )}
@@ -166,7 +177,7 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
         )}
         <div
           className={clsx(
-            'fixed top-2 right-2 z-60',
+            'fixed top-2 right-2 z-30',
             'flex items-center justify-center px-3'
           )}
         >
@@ -176,17 +187,6 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
           />
         </div>
       </nav>
-
-      {/* Full Screen Overlay */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 bg-orange">
-          <ul className="grid gap-1 ml-2 mt-12">
-            {navigation.menuItems.map((item, index) => (
-              <li key={index}>{renderMenuItem(item)}</li>
-            ))}
-          </ul>
-        </div>
-      )}
     </>
   );
 };

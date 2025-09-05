@@ -6,6 +6,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
 import { MarqueeText } from '../MarqueeText';
 import { BlinkHover } from '../BlinkHover';
+import { AppAction } from '../AppLink';
 import Tag from '../Tag';
 import Image from 'next/image';
 import clsx from 'clsx';
@@ -75,10 +76,12 @@ function ViewportItem({
       <div
         className={clsx(
           'fixed inset-0 flex items-center justify-center p-8 transition-opacity duration-300',
-          isActive && isViewportCovered ? 'opacity-100' : 'opacity-0'
+          isActive && isViewportCovered
+            ? 'opacity-100'
+            : 'opacity-0 pointer-events-none'
         )}
       >
-        <div className="max-w-2xl grid gap-4">
+        <div className="max-w-lg grid gap-4 text-center justify-items-center bg-orange p-8">
           {/* Featured Image */}
           {item.image && (
             <Image
@@ -86,13 +89,13 @@ function ViewportItem({
               alt={item.image.alt || item.title}
               width={216}
               height={216}
-              className="rounded-md w-auto h-auto"
+              className="rounded-md w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-52 lg:h-52"
             />
           )}
 
           {/* Tags */}
           {item.tags && item.tags.length > 0 && (
-            <div className="flex flex-wrap gap-[.15em] mb-4">
+            <div className="flex justify-center gap-[.15em] mt-2">
               {item.tags.map((tag, tagIndex) => (
                 <Tag key={tag.id || tagIndex} name={tag.name} size="md" />
               ))}
@@ -100,39 +103,38 @@ function ViewportItem({
           )}
 
           {/* Title */}
-          <h1 className="text-4xl font-serif mb-4">{item.title}</h1>
+          <h3 className="font-display">{item.title}</h3>
 
           {/* Content */}
           {item.body && (
-            <div className="mb-6">
+            <div className="mb-6 font-mono">
               <RichText data={item.body} />
             </div>
           )}
 
           {/* Call to Action */}
           {item.link?.text && (
-            <motion.button
-              className="px-6 py-3 font-medium transition-colors bg-black text-white hover:bg-gray-800"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                if (item.link?.type === 'external' && item.link?.url) {
-                  window.open(item.link.url, '_blank');
-                } else if (
-                  item.link?.type === 'internal' &&
-                  item.link?.reference
-                ) {
-                  const href =
-                    typeof item.link.reference === 'object' &&
-                    item.link.reference?.slug
+            <AppAction
+              href={
+                item.link?.type === 'external' && item.link?.url
+                  ? item.link.url
+                  : item.link?.type === 'internal' && item.link?.reference
+                    ? typeof item.link.reference === 'object' &&
+                      item.link.reference?.slug
                       ? `/${item.link.reference.slug}`
-                      : `/${item.link.reference}`;
-                  window.location.href = href;
-                }
-              }}
+                      : `/${item.link.reference}`
+                    : undefined
+              }
+              variant="primary"
+              target={item.link?.type === 'external' ? '_blank' : undefined}
+              rel={
+                item.link?.type === 'external'
+                  ? 'noopener noreferrer'
+                  : undefined
+              }
             >
               {item.link.text}
-            </motion.button>
+            </AppAction>
           )}
         </div>
       </div>
@@ -145,6 +147,7 @@ export default function ScrollLockedNavigationBlock({
   navigationSections,
 }: ScrollLockedNavigationProps) {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Get all navigation items flattened
@@ -174,6 +177,20 @@ export default function ScrollLockedNavigationBlock({
   // Track when the orange container covers the entire viewport
   const [isViewportCovered, setIsViewportCovered] = useState(false);
 
+  // Check screen size
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024); // lg breakpoint
+    };
+
+    checkScreenSize(); // Initial check
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
   React.useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -184,7 +201,7 @@ export default function ScrollLockedNavigationBlock({
 
       // Show ViewportItem only when orange container covers at least 75% of viewport
       const isFullyCovered =
-        containerRect.top <= 0 && containerRect.bottom >= viewportHeight * 0.75;
+        containerRect.top <= 0 && containerRect.bottom >= viewportHeight * 1;
 
       setIsViewportCovered(isFullyCovered);
     };
@@ -231,12 +248,13 @@ export default function ScrollLockedNavigationBlock({
   };
 
   return (
-    <div className="relative bg-orange">
+    <div className="relative bg-orange z-40" ref={containerRef}>
       <DevIndicator
         componentName="ScrollLockedNavigationBlock"
         data={{
           activeItemIndex,
           isViewportCovered,
+          isLargeScreen,
           totalItems: allNavigationItems.length,
         }}
       />
@@ -247,13 +265,7 @@ export default function ScrollLockedNavigationBlock({
       </div>
 
       {/* Main Container - No separate scroll */}
-      <div
-        ref={containerRef}
-        className={clsx(
-          'transition-opacity duration-300',
-          !isViewportCovered && 'opacity-0'
-        )}
-      >
+      <div>
         {allNavigationItems.map((item, index) => (
           <div key={`viewport-${index}`} data-item-index={index}>
             <ViewportItem
@@ -267,29 +279,33 @@ export default function ScrollLockedNavigationBlock({
         ))}
       </div>
 
-      {/* Fixed Navigation Menu */}
-      <div className="sticky inline-block left-0 bottom-16 px-4 pt-16">
-        {navigationSections.map((section, sectionIndex) => (
-          <div
-            key={`section-${sectionIndex}-${section.sectionId}`}
-            className="mb-8"
-          >
-            <h3 className="mb-4 font-sans uppercase">{section.sectionTitle}</h3>
-            <div className="inline-grid gap-[.15em]">
-              {section.navigationItems.map((navItem, navIndex) => {
-                const globalIndex = allNavigationItems.findIndex(
-                  globalItem => globalItem.title === navItem.title
-                );
-                return renderNavigationItem(
-                  navItem,
-                  globalIndex,
-                  section.sectionTitle
-                );
-              })}
+      {/* Fixed Navigation Menu - Only show on lg+ screens */}
+      {isLargeScreen && (
+        <div className="sticky inline-block left-0 bottom-16 px-4 pt-16">
+          {navigationSections.map((section, sectionIndex) => (
+            <div
+              key={`section-${sectionIndex}-${section.sectionId}`}
+              className="mb-8"
+            >
+              <h3 className="mb-4 font-sans uppercase">
+                {section.sectionTitle}
+              </h3>
+              <div className="inline-grid gap-[.15em]">
+                {section.navigationItems.map((navItem, navIndex) => {
+                  const globalIndex = allNavigationItems.findIndex(
+                    globalItem => globalItem.title === navItem.title
+                  );
+                  return renderNavigationItem(
+                    navItem,
+                    globalIndex,
+                    section.sectionTitle
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Bottom Marquee */}
       <div className="sticky bottom-0 left-0 top-16 right-0 z-20 py-1 uppercase">

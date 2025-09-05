@@ -87,7 +87,7 @@ export const MarqueeText: React.FC<MarqueeTextProps> = ({
       <div
         ref={containerRef}
         className={clsx(
-          'relative inline-flex items-center justify-center overflow-hidden',
+          'relative inline-flex items-center justify-center overflow-hidden select-none',
           className
         )}
       >
@@ -111,7 +111,7 @@ export const MarqueeText: React.FC<MarqueeTextProps> = ({
     <div
       ref={containerRef}
       className={clsx(
-        'relative inline-flex items-center justify-center overflow-hidden',
+        'relative inline-flex items-center justify-center overflow-hidden select-none',
         className
       )}
     >

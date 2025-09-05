@@ -20,7 +20,7 @@ export default function ListBlock({ header, items }: ListBlockProps) {
 
       {/* Header */}
       <div className="text-center mb-8 list-header">
-        <RichText data={header} className="font-mono mb-4" />
+        <RichText data={header} className="font-mono sans-headlines mb-4" />
       </div>
 
       {/* List Items */}

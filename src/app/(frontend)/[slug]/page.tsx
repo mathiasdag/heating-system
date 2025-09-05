@@ -11,6 +11,8 @@ import RouterBlock from '@/components/blocks/RouterBlock';
 import CarouselBlock from '@/components/blocks/CarouselBlock';
 import AnimatedFeatureBlock from '@/components/blocks/AnimatedFeatureBlock';
 import OrangeCardGrid from '@/components/blocks/OrangeCardGrid';
+import ListBlock from '@/components/blocks/ListBlock';
+import ScrollLockedNavigationBlock from '@/components/blocks/ScrollLockedNavigationBlock';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
@@ -25,7 +27,7 @@ export default async function DynamicPage({ params }: PageProps) {
 
   // Fetch the page by slug
   const { docs: [page] = [] } = await payload.find({
-    collection: 'pages',
+    collection: 'pages' as any,
     where: { slug: { equals: params.slug } },
   });
 
@@ -59,6 +61,10 @@ export default async function DynamicPage({ params }: PageProps) {
             return <AnimatedFeatureBlock key={i} {...block} />;
           case 'orange-card-grid':
             return <OrangeCardGrid key={i} {...block} />;
+          case 'list':
+            return <ListBlock key={i} {...block} />;
+          case 'scrollLockedNavigation':
+            return <ScrollLockedNavigationBlock key={i} {...block} />;
           // Add more cases for other block types as needed
           default:
             console.warn(`Unknown block type: ${block.blockType}`);

@@ -9,6 +9,8 @@ import VideoBlock from '@/components/blocks/VideoBlock';
 import CardGridBlock from '@/components/blocks/CardGridBlock';
 import RouterBlock from '@/components/blocks/RouterBlock';
 import CarouselBlock from '@/components/blocks/CarouselBlock';
+import ListBlock from '@/components/blocks/ListBlock';
+import ScrollLockedNavigationBlock from '@/components/blocks/ScrollLockedNavigationBlock';
 
 export default async function HomePage() {
   const payloadConfig = await config;
@@ -16,7 +18,7 @@ export default async function HomePage() {
 
   // Fetch the homepage (by slug)
   const { docs: [page] = [] } = await payload.find({
-    collection: 'pages',
+    collection: 'pages' as any,
     where: { slug: { equals: 'hem' } },
   });
 
@@ -41,6 +43,10 @@ export default async function HomePage() {
             return <RouterBlock key={i} {...block} />;
           case 'carousel':
             return <CarouselBlock key={i} {...block} />;
+          case 'list':
+            return <ListBlock key={i} {...block} />;
+          case 'scrollLockedNavigation':
+            return <ScrollLockedNavigationBlock key={i} {...block} />;
           // Add more cases for other block types
           default:
             return null;

@@ -25,7 +25,13 @@
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 1.75em;
+  font-family: var(--font-sans);
+}
+
+.list-header h2 {
+  margin-top: 1.6em;
+  margin-bottom: 0.8em;
 }
 
 [data-content-type='page'] h2.font-display {
@@ -138,4 +144,11 @@ h2 {
   height: 0.8em;
   background: url('/icons/check.svg') no-repeat center center;
   background-size: contain;
+}
+
+@media (min-width: 1024px) {
+  .rich-text p {
+    padding-left: 4em;
+    padding-right: 4em;
+  }
 }

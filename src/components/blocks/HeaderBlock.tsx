@@ -113,7 +113,10 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
       )}
 
       {/* Render rich text */}
-      <RichText data={text} className="font-mono grid gap-3" />
+      <RichText
+        data={text}
+        className="rich-text font-mono grid gap-3 max-w-7xl mx-auto"
+      />
 
       {/* After assets: full width for single, flex row for multiple */}
       {afterAssets.length > 0 && (

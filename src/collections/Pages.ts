@@ -7,6 +7,8 @@ import Video from '../blocks/Video';
 import CardGrid from '../blocks/CardGrid';
 import Router from '../blocks/Router';
 import Carousel from '../blocks/Carousel';
+import List from '../blocks/List';
+import ScrollLockedNavigation from '../blocks/ScrollLockedNavigation';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -41,6 +43,8 @@ const Pages: CollectionConfig = {
         CardGrid, // Added CardGrid block
         Router, // Added Router block
         Carousel, // Added Carousel block
+        List, // Added List block
+        ScrollLockedNavigation, // Added ScrollLockedNavigation block
         // Add more blocks here as needed
       ],
     },

@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
-import { useTheme } from '../hooks/useTheme';
+import { useThemeSafe } from '../hooks/useThemeSafe';
 
 interface ForceThemeProps {
   children: React.ReactNode;
@@ -12,17 +12,19 @@ interface ForceThemeProps {
  * This overrides the user's theme preference
  */
 export const ForceTheme: React.FC<ForceThemeProps> = ({ children, theme }) => {
-  const { setForcedTheme } = useTheme();
+  const themeContext = useThemeSafe();
 
   useEffect(() => {
+    if (!themeContext) return;
+    
     // Force the theme when component mounts
-    setForcedTheme(theme);
+    themeContext.setForcedTheme(theme);
     
     // Cleanup: remove forced theme when component unmounts
     return () => {
-      setForcedTheme(undefined);
+      themeContext.setForcedTheme(undefined);
     };
-  }, [theme, setForcedTheme]);
+  }, [theme, themeContext]);
 
   return <>{children}</>;
 };

@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { useTheme } from '../hooks/useTheme';
+import { useThemeSafe } from '../hooks/useThemeSafe';
 import { DevIndicator } from './DevIndicator';
 
 interface ThemeToggleProps {
@@ -14,7 +14,15 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   className = '',
   size = 'md',
 }) => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  // Safety check for ThemeProvider
+  const themeContext = useThemeSafe();
+  
+  if (!themeContext) {
+    // If ThemeProvider is not available, render nothing
+    return null;
+  }
+  
+  const { theme, setTheme, resolvedTheme } = themeContext;
 
   const sizeClasses = {
     sm: 'w-8 h-8',

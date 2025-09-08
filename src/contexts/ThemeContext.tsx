@@ -116,7 +116,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
-    return <div style={{ visibility: 'hidden' }}>{children}</div>;
+    return <div suppressHydrationWarning>{children}</div>;
   }
 
   return (

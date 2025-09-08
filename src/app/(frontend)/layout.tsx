@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import NavigationWrapper from '@/components/NavigationWrapper';
 import RevalidateButton from '@/components/RevalidateButton';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import { getPayload } from 'payload';
 import config from '@/payload.config';
 
@@ -106,14 +107,16 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const navigation = await getNavigation();
   const useCustomFonts = true;
   const htmlClass = useCustomFonts
-    ? `${sans.variable} ${mono.variable} ${display.variable} ${ballPill.variable} font-sans bg-clay text-black`
+    ? `${sans.variable} ${mono.variable} ${display.variable} ${ballPill.variable} font-sans bg-clay dark:bg-dark-bg text-black dark:text-dark-text`
     : '';
   return (
     <html lang="sv" className={htmlClass}>
       <body>
-        <NavigationWrapper navigation={navigation} />
-        <main className="pt-16">{children}</main>
-        <RevalidateButton />
+        <ThemeProvider defaultTheme="system" storageKey="varmeverket-theme">
+          <NavigationWrapper navigation={navigation} />
+          <main className="pt-16">{children}</main>
+          <RevalidateButton />
+        </ThemeProvider>
       </body>
     </html>
   );

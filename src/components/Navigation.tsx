@@ -5,6 +5,7 @@ import { OpenNavIcon } from './icons/OpenNavIcon';
 import { CloseNavIcon } from './icons/CloseNavIcon';
 import { VarmeverketIcon } from './icons/VarmeverketIcon';
 import { MarqueeText } from './MarqueeText';
+import { ThemeToggle } from './ThemeToggle';
 
 // Component for highlight link with marquee effect
 const HighlightLink: React.FC<{
@@ -178,12 +179,13 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
         <div
           className={clsx(
             'fixed top-2 right-2 z-30',
-            'flex items-center justify-center px-3'
+            'flex items-center justify-center px-3 gap-4'
           )}
         >
+          <ThemeToggle size="sm" />
           <VarmeverketIcon
             size={120}
-            className="text-black w-22 sm:w-28 h-auto"
+            className="text-black dark:text-dark-text w-20 sm:w-22 md:w-24 lg:w-28 h-auto"
           />
         </div>
       </nav>

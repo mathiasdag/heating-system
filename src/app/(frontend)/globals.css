@@ -9,6 +9,16 @@
   letter-spacing: -0.005em;
 }
 
+/* Dark mode base styles */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background-color: #0C0C0C;
+  color: #F9F7EC;
+}
+
 .uppercase {
   letter-spacing: 0.03em;
   text-transform: uppercase;

@@ -48,13 +48,14 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
           bg-white dark:bg-gray-800
           text-gray-700 dark:text-gray-300
           hover:bg-gray-50 dark:hover:bg-gray-700
-          transition-colors duration-200
+          transition-all duration-150 ease-out
+          transform hover:scale-105 active:scale-95
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
         `}
           aria-label="Theme toggle"
         >
           <svg
-            className={iconSizes[size]}
+            className={`${iconSizes[size]} transition-all duration-150 ease-out`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

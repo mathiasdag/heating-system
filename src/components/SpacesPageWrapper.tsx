@@ -6,7 +6,9 @@ interface SpacesPageWrapperProps {
 }
 
 function SpacesPageWrapper({ children }: SpacesPageWrapperProps) {
-  return <>{children}</>;
+  return (
+    <div className="transition-colors duration-150 ease-out">{children}</div>
+  );
 }
 
 export default withDarkMode(SpacesPageWrapper);

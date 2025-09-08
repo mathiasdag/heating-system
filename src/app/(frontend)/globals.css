@@ -14,6 +14,10 @@
   --color-text: #0c0c0c;
   --color-border: #0c0c0c;
   --color-accent: #e68456;
+
+  /* Theme transition duration */
+  --theme-transition-duration: 0.15s;
+  --theme-transition-easing: ease-out;
 }
 
 .dark {
@@ -25,6 +29,12 @@
   --color-text: #f9f7ec;
   --color-border: #333333;
   --color-accent: #351607;
+}
+
+/* Theme transition animations - background only */
+html {
+  transition: background-color var(--theme-transition-duration)
+    var(--theme-transition-easing);
 }
 
 .uppercase {

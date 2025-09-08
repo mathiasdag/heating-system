@@ -290,7 +290,7 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
           <Link href="/">
             <VarmeverketIcon
               size={120}
-              className="text-text w-20 sm:w-22 md:w-24 xl:w-28 h-auto"
+              className="text-text w-20 sm:w-22 md:w-24 2xl:w-28 h-auto"
             />
           </Link>
         </div>

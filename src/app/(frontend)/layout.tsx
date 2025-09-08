@@ -1,9 +1,9 @@
 import React from 'react';
 import localFont from 'next/font/local';
 import './globals.css';
-import NavigationWrapper from '@/components/NavigationWrapper';
+import ClientNavigation from '@/components/ClientNavigation';
 import RevalidateButton from '@/components/RevalidateButton';
-import { ThemeProvider } from '@/contexts/ThemeContext';
+import { ThemeProvider } from 'next-themes';
 import { getPayload } from 'payload';
 import config from '@/payload.config';
 
@@ -112,8 +112,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="sv" className={htmlClass}>
       <body>
-        <ThemeProvider defaultTheme="system" storageKey="varmeverket-theme">
-          <NavigationWrapper navigation={navigation} />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ClientNavigation navigation={navigation} />
           <main className="pt-16">{children}</main>
           <RevalidateButton />
         </ThemeProvider>

@@ -1,10 +1,10 @@
-import { useTheme as useThemeContext } from '../contexts/ThemeContext';
+import { useTheme as useNextTheme } from 'next-themes';
 
 /**
  * Hook to access theme state and controls
- * @returns Theme context with theme, resolvedTheme, setTheme, and forcedTheme
+ * @returns Theme context with theme, resolvedTheme, setTheme, and systemTheme
  */
-export const useTheme = useThemeContext;
+export const useTheme = useNextTheme;
 
 /**
  * Hook to check if current theme is dark

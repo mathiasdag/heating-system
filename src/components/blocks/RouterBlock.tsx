@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { AppLink } from '../AppLink';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
+import { BlockHeader } from './BlockHeader';
 
 interface NavigationLink {
   link: {
@@ -27,12 +27,7 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
   return (
     <section className="py-24 grid relative">
       <DevIndicator componentName="RouterBlock" />
-      {headline && <h2 className="text-center mb-4">{headline}</h2>}
-      {description && (
-        <div className="font-mono text-center px-8 max-w-6xl mx-auto mb-4">
-          <RichText data={description} />
-        </div>
-      )}
+      <BlockHeader headline={headline} description={description} />
       <hr className="mx-4 my-2" />
 
       <div className="relative flex justify-center items-center py-24">

@@ -2,10 +2,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AppLink } from '../AppLink';
 import { MediaCard } from './MediaCard';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 import OrangeCardGrid from './OrangeCardGrid';
 import clsx from 'clsx';
 import { DevIndicator } from '../DevIndicator';
+import { BlockHeader } from './BlockHeader';
 
 interface Card {
   title: string;
@@ -68,12 +68,7 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
   return (
     <section className={`py-24 grid relative`}>
       <DevIndicator componentName="CardGridBlock" />
-      {headline && <h2 className="text-center mb-4">{headline}</h2>}
-      {description && (
-        <div className="font-mono text-center px-8 max-w-6xl mx-auto mb-4">
-          <RichText data={description} />
-        </div>
-      )}
+      <BlockHeader headline={headline} description={description} />
       <hr className="mx-4 my-2" />
       <div className="relative">
         <div

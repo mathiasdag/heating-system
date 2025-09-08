@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { AppLink } from '../AppLink';
 import { MediaCard } from './MediaCard';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
+import { BlockHeader } from './BlockHeader';
 
 interface Card {
   title: string;
@@ -72,12 +72,7 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
   if (!hasHydrated) {
     return (
       <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-orange`}>
-        {headline && <h2 className="text-center">{headline}</h2>}
-        {description && (
-          <div className="font-mono text-center px-8 max-w-6xl mx-auto">
-            <RichText data={description} />
-          </div>
-        )}
+        <BlockHeader headline={headline} description={description} />
       </section>
     );
   }
@@ -88,15 +83,10 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
     lastRow.length < columnCount ? columnCount - lastRow.length : 0;
 
   return (
-    <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-orange relative`}>
+    <section className={`py-24 px-2 sm:px-4 grid bg-orange relative`}>
       <DevIndicator componentName="OrangeCardGrid" />
-      {headline && <h2 className="text-center">{headline}</h2>}
-      {description && (
-        <div className="font-mono text-center px-8 max-w-6xl mx-auto">
-          <RichText data={description} />
-        </div>
-      )}
-      <div className="mt-4 py-2 border-black border-t border-b">
+      <BlockHeader headline={headline} description={description} />
+      <div className="py-2 mt-2 border-black border-t border-b">
         {rows.map((row, rowIdx) => (
           <React.Fragment key={rowIdx}>
             {rowIdx !== 0 && (

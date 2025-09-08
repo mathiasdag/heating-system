@@ -2,8 +2,8 @@
 import React from 'react';
 import Slider from 'react-slick';
 import CarouselSlide from './CarouselSlide';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
+import { BlockHeader } from './BlockHeader';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -108,15 +108,10 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
     <section className="py-24 px-4 relative">
       <style dangerouslySetInnerHTML={{ __html: customStyles }} />
       <DevIndicator componentName="CarouselBlock" position="top-left" />
-      {headline && <h2 className="text-center mb-4">{headline}</h2>}
-      {description && (
-        <div className="font-mono text-center px-8 max-w-6xl mx-auto mb-8">
-          <RichText data={description} />
-        </div>
-      )}
+      <BlockHeader headline={headline} description={description} />
 
       {/* Main Content */}
-      <div className="-mx-4 relative">
+      <div className="-mx-4 relative mt-8">
         <Slider ref={sliderRef} {...settings}>
           {slides.map((slide, index) => (
             <div key={index} className="px-4 lg:px-6">

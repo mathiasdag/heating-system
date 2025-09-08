@@ -3,6 +3,7 @@ import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { MediaCard } from './MediaCard';
 import { AppLink } from '../AppLink';
 import { DevIndicator } from '../DevIndicator';
+import { BlockHeader } from './BlockHeader';
 
 interface Card {
   badge?: string;
@@ -81,7 +82,6 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards.length]);
 
   // Track which card is centered in the viewport (can stay in useEffect)
@@ -137,7 +137,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
   return (
     <section className="py-12 relative" role="region" aria-label={headline}>
       <DevIndicator componentName="HorizontalCardBlock" />
-      <h2 className="text-center mb-10">{headline}</h2>
+      <BlockHeader headline={headline} />
       <div
         ref={scrollContainerRef}
         className={

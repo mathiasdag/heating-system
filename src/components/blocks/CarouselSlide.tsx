@@ -66,7 +66,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       return (
         <AppAction
           href={link.url}
-          className="flex items-center gap-3 px-4 xl:px-6 py-3 border border-black rounded-lg hover:bg-black hover:text-white transition-colors duration-200 w-full min-w-0"
+          className="flex items-center gap-3 px-4 xl:px-6 py-3 border border-text rounded-lg hover:bg-text hover:text-white transition-colors duration-200 w-full min-w-0"
           variant="minimal"
         >
           <svg
@@ -95,7 +95,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   return (
     <div className="">
       <DevIndicator componentName="CarouselSlide" />
-      <div className="grid xl:grid-cols-2 items-center max-w-6xl mx-auto bg-lightClay rounded-2xl relative">
+      <div className="grid xl:grid-cols-2 items-center max-w-6xl mx-auto bg-surface rounded-2xl relative">
         {/* Right Image - First on mobile */}
         {image && (
           <div className="relative aspect-[4/3] xl:aspect-square xl:h-full order-1 xl:order-2">

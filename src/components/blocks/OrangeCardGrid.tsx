@@ -71,7 +71,7 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
 
   if (!hasHydrated) {
     return (
-      <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-orange`}>
+      <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-accent`}>
         <BlockHeader headline={headline} description={description} />
       </section>
     );
@@ -83,16 +83,16 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
     lastRow.length < columnCount ? columnCount - lastRow.length : 0;
 
   return (
-    <section className={`py-24 px-2 sm:px-4 grid bg-orange relative`}>
+    <section className={`py-24 px-2 sm:px-4 grid bg-accent relative`}>
       <DevIndicator componentName="OrangeCardGrid" />
       <BlockHeader headline={headline} description={description} />
-      <div className="py-2 mt-2 border-black border-t border-b">
+      <div className="py-2 mt-2 border-text border-t border-b">
         {rows.map((row, rowIdx) => (
           <React.Fragment key={rowIdx}>
             {rowIdx !== 0 && (
               <div className="py-2 w-full">
                 <div
-                  className="w-full border-t border-black"
+                  className="w-full border-t border-text"
                   style={{ height: 0 }}
                 />
               </div>
@@ -104,7 +104,7 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
                 {row.map((card, colIdx) => (
                   <div
                     key={colIdx}
-                    className="flex flex-col justify-between border-r first:border-l border-black px-5 pb-3 pt-5 aspect-window overflow-hidden"
+                    className="flex flex-col justify-between border-r first:border-l border-text px-5 pb-3 pt-5 aspect-window overflow-hidden"
                   >
                     <MediaCard {...card} buttonVariant={'primary'} />
                   </div>
@@ -131,7 +131,7 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
                 ? `/pages/${link.reference.slug}`
                 : link.url || '#'
             }
-            className="inline-block px-6 py-3 bg-black text-white rounded font-bold hover:bg-orange transition"
+            className="inline-block px-6 py-3 bg-text text-white rounded font-bold hover:bg-accent transition"
             target={link.type === 'external' ? '_blank' : undefined}
             rel={link.type === 'external' ? 'noopener noreferrer' : undefined}
           >

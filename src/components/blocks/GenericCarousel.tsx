@@ -115,8 +115,8 @@ const GenericCarousel: React.FC<GenericCarouselProps> = ({
               onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full transition-colors duration-200 ${
                 index === currentSlide
-                  ? 'bg-black'
-                  : 'bg-white border border-black hover:bg-gray-200'
+                  ? 'bg-text'
+                  : 'bg-white border border-text hover:bg-gray-200'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />

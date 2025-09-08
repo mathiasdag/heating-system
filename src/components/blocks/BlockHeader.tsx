@@ -27,7 +27,7 @@ export const BlockHeader: React.FC<BlockHeaderProps> = ({
         <h2
           className={clsx(
             'text-center text-md', // Default styles
-            !description ? 'mb-8' : 'mb-4',
+            !description ? 'mb-8' : 'mb-3',
             headlineClassName // Additional custom styles
           )}
         >

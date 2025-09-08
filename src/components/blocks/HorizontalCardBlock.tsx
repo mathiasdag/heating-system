@@ -166,7 +166,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
             onKeyDown={e => handleKeyDown(e, idx)}
             aria-label={card.title}
           >
-            <div className="flex flex-col justify-between bg-lightClay rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2">
+            <div className="flex flex-col justify-between bg-surface rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2">
               <MediaCard {...card} buttonVariant="primary" />
             </div>
           </div>
@@ -178,7 +178,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
           {cards.map((_, idx) => (
             <span
               key={idx}
-              className={`inline-block w-1.5 h-1.5 rounded-full transition-all duration-200 ${activeIdx === idx ? 'bg-black' : 'border'}`}
+              className={`inline-block w-1.5 h-1.5 rounded-full transition-all duration-200 ${activeIdx === idx ? 'bg-text' : 'border'}`}
               aria-label={activeIdx === idx ? 'Current card' : undefined}
             />
           ))}

@@ -7,6 +7,7 @@ import HorizontalCardBlock from '@/components/blocks/HorizontalCardBlock';
 import React from 'react';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import CardGridBlock from '@/components/blocks/CardGridBlock';
+import { OrangeCardGrid } from '@/components/blocks/OrangeCardGrid';
 import RouterBlock from '@/components/blocks/RouterBlock';
 import CarouselBlock from '@/components/blocks/CarouselBlock';
 import ListBlock from '@/components/blocks/ListBlock';
@@ -39,6 +40,8 @@ export default async function HomePage() {
             return <VideoBlock key={i} {...block} />;
           case 'card-grid':
             return <CardGridBlock key={i} {...block} />;
+          case 'orange-card-grid':
+            return <OrangeCardGrid key={i} {...block} />;
           case 'router':
             return <RouterBlock key={i} {...block} />;
           case 'carousel':

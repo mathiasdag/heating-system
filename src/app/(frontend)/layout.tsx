@@ -1,8 +1,9 @@
 import React from 'react';
 import localFont from 'next/font/local';
 import './globals.css';
-import ClientNavigation from '@/components/ClientNavigation';
+import NavigationWrapper from '@/components/NavigationWrapper';
 import RevalidateButton from '@/components/RevalidateButton';
+import { Footer } from '@/components/Footer';
 import { ThemeProvider } from 'next-themes';
 import { getPayload } from 'payload';
 import config from '@/payload.config';
@@ -107,14 +108,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const navigation = await getNavigation();
   const useCustomFonts = true;
   const htmlClass = useCustomFonts
-    ? `${sans.variable} ${mono.variable} ${display.variable} ${ballPill.variable} font-sans bg-clay dark:bg-dark-bg text-black dark:text-dark-text`
+    ? `${sans.variable} ${mono.variable} ${display.variable} ${ballPill.variable} font-sans bg-bg dark:bg-dark-bg text-text dark:text-dark-text`
     : '';
   return (
-    <html lang="sv" className={htmlClass}>
+    <html lang="sv" className={htmlClass} suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ClientNavigation navigation={navigation} />
-          <main className="pt-16">{children}</main>
+          <NavigationWrapper navigation={navigation} />
+          <main className="pt-16 min-h-screen">{children}</main>
+          <Footer />
           <RevalidateButton />
         </ThemeProvider>
       </body>

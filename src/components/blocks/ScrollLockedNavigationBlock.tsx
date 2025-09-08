@@ -81,7 +81,7 @@ function ViewportItem({
             : 'opacity-0 pointer-events-none'
         )}
       >
-        <div className="max-w-lg grid gap-4 text-center justify-items-center bg-orange p-8">
+        <div className="max-w-lg grid gap-4 text-center justify-items-center bg-accent p-8">
           {/* Featured Image */}
           {item.image && (
             <Image
@@ -174,7 +174,7 @@ export default function ScrollLockedNavigationBlock({
     setActiveItemIndex(index);
   };
 
-  // Track when the orange container covers the entire viewport
+  // Track when the accent container covers the entire viewport
   const [isViewportCovered, setIsViewportCovered] = useState(false);
 
   // Check screen size
@@ -199,7 +199,7 @@ export default function ScrollLockedNavigationBlock({
       const containerRect = container.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
 
-      // Show ViewportItem only when orange container covers at least 75% of viewport
+      // Show ViewportItem only when accent container covers at least 75% of viewport
       const isFullyCovered =
         containerRect.top <= 0 && containerRect.bottom >= viewportHeight * 1;
 
@@ -232,12 +232,12 @@ export default function ScrollLockedNavigationBlock({
         interval={100}
         target=".title"
       >
-        <div className="w-[44px] h-[42px] flex items-center justify-center pt-[.2em] border border-black rounded-sm">
+        <div className="w-[44px] h-[42px] flex items-center justify-center pt-[.2em] border border-text rounded-sm">
           {(index + 1).toString().padStart(2, '0')}
         </div>
         <div
           className={clsx(
-            'max-w-xs h-[42px] px-3 flex items-center pt-[.2em] border border-black rounded-sm overflow-hidden whitespace-nowrap truncate text-ellipsis',
+            'max-w-xs h-[42px] px-3 flex items-center pt-[.2em] border border-text rounded-sm overflow-hidden whitespace-nowrap truncate text-ellipsis',
             isActive && 'text-transparent'
           )}
         >
@@ -248,7 +248,7 @@ export default function ScrollLockedNavigationBlock({
   };
 
   return (
-    <div className="relative bg-orange z-40" ref={containerRef}>
+    <div className="relative bg-accent z-40" ref={containerRef}>
       <DevIndicator
         componentName="ScrollLockedNavigationBlock"
         data={{

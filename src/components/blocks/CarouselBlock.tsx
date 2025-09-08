@@ -125,7 +125,7 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
           <>
             <button
               onClick={() => sliderRef.current?.slickPrev()}
-              className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 z-20 p-2 border bg-black/80 text-white mix-blend-multiply border-black rounded-full hover:bg-black transition-colors"
+              className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 z-20 p-2 border bg-text/80 text-white mix-blend-multiply border-text rounded-full hover:bg-text transition-colors"
               aria-label="Previous slide"
             >
               <svg
@@ -144,7 +144,7 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
             </button>
             <button
               onClick={() => sliderRef.current?.slickNext()}
-              className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 z-20 p-2 border bg-black/80 text-white mix-blend-multiply border-black rounded-full hover:bg-black transition-colors"
+              className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 z-20 p-2 border bg-text/80 text-white mix-blend-multiply border-text rounded-full hover:bg-text transition-colors"
               aria-label="Next slide"
             >
               <svg

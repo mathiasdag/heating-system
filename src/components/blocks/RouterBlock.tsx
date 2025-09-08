@@ -32,7 +32,7 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
 
       <div className="relative flex justify-center items-center py-24">
         {/* Central vertical line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-black transform -translate-x-1/2"></div>
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-text transform -translate-x-1/2"></div>
 
         {/* Links stacked vertically */}
         <div className="relative z-10 flex flex-col items-center space-y-24">
@@ -50,7 +50,7 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
                 {href && (
                   <AppLink
                     href={href}
-                    className="text-4xl sm:text-6xl md:text-7xl font-ballPill uppercase bg-clay pt-2"
+                    className="text-4xl sm:text-6xl md:text-7xl font-ballPill uppercase bg-bg pt-2"
                     variant="minimal"
                   >
                     {link.link.text}

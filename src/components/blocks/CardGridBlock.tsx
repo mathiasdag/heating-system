@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AppLink } from '../AppLink';
 import { MediaCard } from './MediaCard';
-import OrangeCardGrid from './OrangeCardGrid';
 import clsx from 'clsx';
 import { DevIndicator } from '../DevIndicator';
 import { BlockHeader } from './BlockHeader';
@@ -25,8 +24,6 @@ interface CardGridBlockProps {
   description?: any;
   cards: Card[];
   link?: Card['link']; // Optional block-level CTA
-  // Two variants only: "default" (horizontal scroll) and "orange" (grid with orange background)
-  variant?: 'default' | 'orange';
   buttonVariant?: 'primary' | 'secondary' | 'outline';
 }
 
@@ -35,7 +32,6 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
   description,
   cards,
   link,
-  variant = 'default',
 }) => {
   // Default variant uses lightweight overflow detection to decide layout behavior
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -51,18 +47,6 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
     window.addEventListener('resize', checkOverflow);
     return () => window.removeEventListener('resize', checkOverflow);
   }, []);
-
-  // Orange variant: delegate to extracted component
-  if (variant === 'orange') {
-    return (
-      <OrangeCardGrid
-        headline={headline}
-        description={description}
-        cards={cards}
-        link={link}
-      />
-    );
-  }
 
   // Default variant: horizontal scroll list
   return (
@@ -86,7 +70,7 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
             <div
               key={idx}
               className={clsx(
-                'grow-0 shrink-0 w-[360px] sm:w-[400px] border-r border-black px-8 pb-8 pt-6 snap-center grid justify-center',
+                'grow-0 shrink-0 w-[360px] sm:w-[400px] border-r border-text px-8 pb-8 pt-6 snap-center grid justify-center',
                 isOverflowing ? 'last:border-r-0' : 'first:border-l'
               )}
             >
@@ -106,7 +90,7 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
                 ? `/pages/${link.reference.slug}`
                 : link.url || '#'
             }
-            className="inline-block px-6 py-3 bg-black text-white rounded font-bold hover:bg-orange transition"
+            className="inline-block px-6 py-3 bg-text text-white rounded font-bold hover:bg-accent transition"
             target={link.type === 'external' ? '_blank' : undefined}
             rel={link.type === 'external' ? 'noopener noreferrer' : undefined}
           >

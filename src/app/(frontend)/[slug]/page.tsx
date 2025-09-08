@@ -10,7 +10,7 @@ import CardGridBlock from '@/components/blocks/CardGridBlock';
 import RouterBlock from '@/components/blocks/RouterBlock';
 import CarouselBlock from '@/components/blocks/CarouselBlock';
 import AnimatedFeatureBlock from '@/components/blocks/AnimatedFeatureBlock';
-import OrangeCardGrid from '@/components/blocks/OrangeCardGrid';
+import { OrangeCardGrid } from '@/components/blocks/OrangeCardGrid';
 import ListBlock from '@/components/blocks/ListBlock';
 import ScrollLockedNavigationBlock from '@/components/blocks/ScrollLockedNavigationBlock';
 import { notFound } from 'next/navigation';
@@ -53,14 +53,14 @@ export default async function DynamicPage({ params }: PageProps) {
             return <VideoBlock key={i} {...block} />;
           case 'card-grid':
             return <CardGridBlock key={i} {...block} />;
+          case 'orange-card-grid':
+            return <OrangeCardGrid key={i} {...block} />;
           case 'router':
             return <RouterBlock key={i} {...block} />;
           case 'carousel':
             return <CarouselBlock key={i} {...block} />;
           case 'animated-feature-block':
             return <AnimatedFeatureBlock key={i} {...block} />;
-          case 'orange-card-grid':
-            return <OrangeCardGrid key={i} {...block} />;
           case 'list':
             return <ListBlock key={i} {...block} />;
           case 'scrollLockedNavigation':

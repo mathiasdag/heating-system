@@ -26,36 +26,27 @@ module.exports = {
     // Custom colors - ensure they're always included
     {
       pattern:
-        /^(bg|text|border)-(black|clay|lightClay|offWhite|orange|crayonBlack)$/,
+        /^(bg|text|border)-(text|bg|surface|offWhite|accent|border|crayonBlack)$/,
       variants: ['hover', 'focus', 'active'],
     },
     {
-      pattern: /^from-(black|clay|lightClay|offWhite|orange|crayonBlack)$/,
+      pattern: /^from-(text|bg|surface|offWhite|accent|border|crayonBlack)$/,
     },
     {
-      pattern: /^to-(black|clay|lightClay|offWhite|orange|crayonBlack)$/,
+      pattern: /^to-(text|bg|surface|offWhite|accent|border|crayonBlack)$/,
     },
     'font-ballPill', // Add the custom font class to safelist
   ],
   theme: {
     extend: {
       colors: {
-        black: '#0C0C0C',
-        clay: '#EFEDE3',
-        lightClay: '#F9F7EC',
-        offWhite: '#EFEDE3',
-        orange: '#E68456',
-        crayonBlack: '#141514',
-        // Dark mode colors
-        dark: {
-          bg: '#0C0C0C',
-          surface: '#1A1A1A',
-          surfaceHover: '#2A2A2A',
-          text: '#F9F7EC',
-          textSecondary: '#EFEDE3',
-          border: '#333333',
-          accent: '#E68456',
-        },
+        bg: 'var(--color-bg)',
+        surface: 'var(--color-surface)',
+        text: 'var(--color-text)',
+        border: 'var(--color-border)',
+        accent: 'var(--color-accent)',
+        offWhite: '#EFEDE3', // Off White
+        crayonBlack: '#141514', // Crayon Black
       },
       maxWidth: {
         '4xs': '8rem',

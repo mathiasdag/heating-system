@@ -17,11 +17,11 @@ interface AppActionProps {
 
 const baseStyles = {
   primary:
-    'uppercase bg-black text-white mix-blend-multiply rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-text text-white mix-blend-multiply rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   secondary:
-    'uppercase bg-orange rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-accent rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   outline:
-    'uppercase border border-black rounded-sm px-3 pt-[.6em] pb-2 inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase border border-text rounded-sm px-3 pt-[.6em] pb-2 inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   minimal: 'block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
 };
 

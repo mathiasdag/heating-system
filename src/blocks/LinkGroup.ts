@@ -18,7 +18,7 @@ const LinkGroup: Field = {
     {
       name: 'reference',
       type: 'relationship',
-      relationTo: 'pages',
+      relationTo: ['pages', 'spaces'],
       required: false,
       admin: {
         condition: (data: any, siblingData: any) =>

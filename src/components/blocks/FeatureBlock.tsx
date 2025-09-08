@@ -23,11 +23,23 @@ export default function FeatureBlock({
   // Determine the href for the CTA
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
-    // If populated, reference may be an object with a slug, or just an ID
-    href =
-      typeof link.reference === 'object' && link.reference?.slug
-        ? `/pages/${link.reference.slug}`
-        : `/pages/${link.reference}`;
+    // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
+    if (typeof link.reference === 'object' && link.reference?.value?.slug) {
+      href =
+        link.reference.relationTo === 'spaces'
+          ? `/spaces/${link.reference.value.slug}`
+          : `/${link.reference.value.slug}`;
+    }
+    // Handle direct object structure: { slug: "...", collection: "..." }
+    else if (typeof link.reference === 'object' && link.reference?.slug) {
+      href =
+        link.reference.collection === 'spaces'
+          ? `/spaces/${link.reference.slug}`
+          : `/${link.reference.slug}`;
+    } else {
+      // Fallback for unpopulated references (just ID)
+      href = `/${link.reference}`;
+    }
   } else if (link?.type === 'external') {
     href = link.url;
   }

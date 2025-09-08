@@ -19,6 +19,9 @@ const emojiSizeClasses = {
 
 // Function to check if a string contains only emojis
 const isOnlyEmoji = (str: string): boolean => {
+  // Check if str is defined and not null
+  if (!str || typeof str !== 'string') return false;
+
   // Remove whitespace and check if the string contains only emoji characters
   const trimmed = str.trim();
   if (trimmed.length === 0) return false;
@@ -31,6 +34,9 @@ const isOnlyEmoji = (str: string): boolean => {
 };
 
 const Tag: React.FC<TagProps> = ({ name, size = 'md' }) => {
+  // Handle undefined or null name
+  if (!name) return null;
+
   const isEmoji = isOnlyEmoji(name);
   const sizeClass = isEmoji ? emojiSizeClasses[size] : sizeClasses[size];
 

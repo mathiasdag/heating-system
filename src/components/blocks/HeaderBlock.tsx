@@ -108,7 +108,11 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
       {/* Render assets before text - centered with max height */}
       {beforeAssets.length > 0 && (
         <div className="flex gap-4 justify-center select-none mb-8">
-          {beforeAssets.map((asset, i) => renderBeforeAsset(asset, i))}
+          {beforeAssets.map((asset, i) => (
+            <React.Fragment key={i}>
+              {renderBeforeAsset(asset, i)}
+            </React.Fragment>
+          ))}
         </div>
       )}
 

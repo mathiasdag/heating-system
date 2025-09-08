@@ -54,7 +54,9 @@ export const MediaCard: React.FC<MediaCardProps> = ({
         <div className="flex justify-center mb-4 gap-[.15em] flex-wrap">
           {tags &&
             tags.length > 0 &&
-            tags.map(tag => <Tag key={tag.id} name={tag.name} size="md" />)}
+            tags.map((tag, index) => (
+              <Tag key={tag.id || index} name={tag.name} size="md" />
+            ))}
         </div>
         <h3 className="text-center font-display break-words">{title}</h3>
         {image && (

@@ -84,6 +84,7 @@ async function getNavigation() {
 
     const { docs: [navigation] = [] } = await payload.find({
       collection: 'navigation' as any,
+      depth: 3, // Populate nested navigation relationships
     });
 
     if (navigation) {
@@ -93,7 +94,8 @@ async function getNavigation() {
         (navigation as any).highlight?.text || 'None'
       );
       console.log('📋 Menu items:', (navigation as any).menuItems?.length || 0);
-      return navigation as any;
+      console.log('🔍 Navigation structure:', navigation);
+      return JSON.parse(JSON.stringify(navigation)) as any;
     }
 
     return null;

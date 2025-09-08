@@ -6,6 +6,7 @@ import { OpenNavIcon } from './icons/OpenNavIcon';
 import { CloseNavIcon } from './icons/CloseNavIcon';
 import { VarmeverketIcon } from './icons/VarmeverketIcon';
 import { MarqueeText } from './MarqueeText';
+import Link from 'next/link';
 
 // Component for highlight link with marquee effect
 const HighlightLink: React.FC<{
@@ -17,10 +18,49 @@ const HighlightLink: React.FC<{
 }> = ({ link, onClick, linkClasses, isDarkMode, mounted }) => {
   const [isMarqueeing, setIsMarqueeing] = useState(false);
 
-  const href =
-    link.type === 'internal' && link.reference
-      ? `/${link.reference.slug}`
-      : link.url || '#';
+  const href = (() => {
+    console.log('🔗 Link object:', link);
+
+    if (link.type === 'external') {
+      return link.url || '#';
+    }
+
+    if (link.type === 'internal' && link.reference) {
+      console.log('🔗 Reference object:', link.reference);
+
+      // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
+      if (typeof link.reference === 'object' && link.reference?.value?.slug) {
+        const url =
+          link.reference.relationTo === 'spaces'
+            ? `/spaces/${link.reference.value.slug}`
+            : `/${link.reference.value.slug}`;
+        console.log('🔗 Generated URL:', url);
+        return url;
+      }
+
+      // Handle direct object structure: { slug: "...", collection: "..." }
+      if (typeof link.reference === 'object' && link.reference?.slug) {
+        const url =
+          link.reference.collection === 'spaces'
+            ? `/spaces/${link.reference.slug}`
+            : `/${link.reference.slug}`;
+        console.log('🔗 Generated URL:', url);
+        return url;
+      }
+
+      // If reference is just an ID string
+      if (typeof link.reference === 'string') {
+        return `/${link.reference}`;
+      }
+
+      // Fallback to prevent [object Object] URLs
+      console.warn('Invalid reference object:', link.reference);
+      return '#';
+    }
+
+    console.log('🔗 No reference found, returning #');
+    return '#';
+  })();
 
   return (
     <a
@@ -83,6 +123,8 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  console.log(navigation);
+
   // Prevent hydration mismatch by only using theme after mount
   useEffect(() => {
     setMounted(true);
@@ -129,10 +171,44 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
         );
       }
 
-      const href =
-        item.link.type === 'internal' && item.link.reference
-          ? `/${item.link.reference.slug}`
-          : item.link.url || '#';
+      const href = (() => {
+        if (item.link.type === 'external') {
+          return item.link.url || '#';
+        }
+
+        if (item.link.type === 'internal' && item.link.reference) {
+          // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
+          if (
+            typeof item.link.reference === 'object' &&
+            item.link.reference?.value?.slug
+          ) {
+            return item.link.reference.relationTo === 'spaces'
+              ? `/spaces/${item.link.reference.value.slug}`
+              : `/${item.link.reference.value.slug}`;
+          }
+
+          // Handle direct object structure: { slug: "...", collection: "..." }
+          if (
+            typeof item.link.reference === 'object' &&
+            item.link.reference?.slug
+          ) {
+            return item.link.reference.collection === 'spaces'
+              ? `/spaces/${item.link.reference.slug}`
+              : `/${item.link.reference.slug}`;
+          }
+
+          // If reference is just an ID string
+          if (typeof item.link.reference === 'string') {
+            return `/${item.link.reference}`;
+          }
+
+          // Fallback to prevent [object Object] URLs
+          console.warn('Invalid reference object:', item.link.reference);
+          return '#';
+        }
+
+        return '#';
+      })();
 
       return (
         <a
@@ -211,10 +287,12 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
             'flex items-center justify-center px-3'
           )}
         >
-          <VarmeverketIcon
-            size={120}
-            className="text-text w-20 sm:w-22 md:w-24 lg:w-28 h-auto"
-          />
+          <Link href="/">
+            <VarmeverketIcon
+              size={120}
+              className="text-text w-20 sm:w-22 md:w-24 xl:w-28 h-auto"
+            />
+          </Link>
         </div>
       </nav>
     </>

@@ -114,8 +114,8 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
           {/* Tags */}
           {tags && tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
-              {tags.map(tag => (
-                <Tag key={tag.id} name={tag.name} size="sm" />
+              {tags.map((tag, index) => (
+                <Tag key={tag.id || index} name={tag.name} size="sm" />
               ))}
             </div>
           )}

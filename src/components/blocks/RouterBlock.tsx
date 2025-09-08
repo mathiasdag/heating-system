@@ -7,7 +7,7 @@ import { BlockHeader } from './BlockHeader';
 interface NavigationLink {
   link: {
     type: 'internal' | 'external';
-    reference?: { slug: string };
+    reference?: string | { slug: string; collection: string }; // ID or populated object
     url?: string;
     text: string;
   };
@@ -40,7 +40,29 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
             // Determine the href for the link
             let href: string | undefined = undefined;
             if (link.link.type === 'internal' && link.link.reference) {
-              href = `/${link.link.reference.slug}`;
+              // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
+              if (
+                typeof link.link.reference === 'object' &&
+                link.link.reference?.value?.slug
+              ) {
+                href =
+                  link.link.reference.relationTo === 'spaces'
+                    ? `/spaces/${link.link.reference.value.slug}`
+                    : `/${link.link.reference.value.slug}`;
+              }
+              // Handle direct object structure: { slug: "...", collection: "..." }
+              else if (
+                typeof link.link.reference === 'object' &&
+                link.link.reference?.slug
+              ) {
+                href =
+                  link.link.reference.collection === 'spaces'
+                    ? `/spaces/${link.link.reference.slug}`
+                    : `/${link.link.reference.slug}`;
+              } else {
+                // Fallback for unpopulated references (just ID)
+                href = `/${link.link.reference}`;
+              }
             } else if (link.link.type === 'external') {
               href = link.link.url;
             }

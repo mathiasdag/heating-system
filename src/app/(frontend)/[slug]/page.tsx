@@ -29,6 +29,7 @@ export default async function DynamicPage({ params }: PageProps) {
   const { docs: [page] = [] } = await payload.find({
     collection: 'pages' as any,
     where: { slug: { equals: params.slug } },
+    depth: 1, // Populate relationships to get collection info
   });
 
   // If page doesn't exist, return 404
@@ -39,32 +40,33 @@ export default async function DynamicPage({ params }: PageProps) {
   return (
     <div data-content-type="page">
       {page?.layout?.map((block: any, i: number) => {
+        const cleanBlock = JSON.parse(JSON.stringify(block));
         switch (block.blockType) {
           case 'feature':
-            return <FeatureBlock key={i} {...block} />;
+            return <FeatureBlock key={i} {...cleanBlock} />;
           case 'header':
-            return <HeaderBlock key={i} {...block} />;
+            return <HeaderBlock key={i} {...cleanBlock} />;
           case 'animated-feature':
           case 'spotlight':
-            return <BiggerFeatureBlock key={i} {...block} />;
+            return <BiggerFeatureBlock key={i} {...cleanBlock} />;
           case 'horizontal-card-block':
-            return <HorizontalCardBlock key={i} {...block} />;
+            return <HorizontalCardBlock key={i} {...cleanBlock} />;
           case 'video':
-            return <VideoBlock key={i} {...block} />;
+            return <VideoBlock key={i} {...cleanBlock} />;
           case 'card-grid':
-            return <CardGridBlock key={i} {...block} />;
+            return <CardGridBlock key={i} {...cleanBlock} />;
           case 'orange-card-grid':
-            return <OrangeCardGrid key={i} {...block} />;
+            return <OrangeCardGrid key={i} {...cleanBlock} />;
           case 'router':
-            return <RouterBlock key={i} {...block} />;
+            return <RouterBlock key={i} {...cleanBlock} />;
           case 'carousel':
-            return <CarouselBlock key={i} {...block} />;
+            return <CarouselBlock key={i} {...cleanBlock} />;
           case 'animated-feature-block':
-            return <AnimatedFeatureBlock key={i} {...block} />;
+            return <AnimatedFeatureBlock key={i} {...cleanBlock} />;
           case 'list':
-            return <ListBlock key={i} {...block} />;
+            return <ListBlock key={i} {...cleanBlock} />;
           case 'scrollLockedNavigation':
-            return <ScrollLockedNavigationBlock key={i} {...block} />;
+            return <ScrollLockedNavigationBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types as needed
           default:
             console.warn(`Unknown block type: ${block.blockType}`);

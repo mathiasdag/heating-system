@@ -1,19 +1,11 @@
 import type { Block } from 'payload';
 import CommonCard from './CommonCard';
+import { BlockHeaderFields } from './BlockHeaderFields';
 
 const CardGrid: Block = {
   slug: 'card-grid',
   fields: [
-    {
-      name: 'headline',
-      type: 'text',
-      required: false,
-    },
-    {
-      name: 'description',
-      type: 'richText',
-      required: false,
-    },
+    ...BlockHeaderFields, // Already optional by default
     {
       name: 'cards',
       type: 'array',

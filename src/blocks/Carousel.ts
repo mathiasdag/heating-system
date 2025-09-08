@@ -1,5 +1,6 @@
 import type { Block } from 'payload';
 import LinkGroup from './LinkGroup';
+import { BlockHeaderFields } from './BlockHeaderFields';
 
 const Carousel: Block = {
   slug: 'carousel',
@@ -8,11 +9,17 @@ const Carousel: Block = {
       name: 'headline',
       type: 'text',
       required: true,
+      admin: {
+        description: 'Optional headline for the block',
+      },
     },
     {
       name: 'description',
       type: 'richText',
       required: true,
+      admin: {
+        description: 'Optional rich text description for the block',
+      },
     },
     {
       name: 'slides',

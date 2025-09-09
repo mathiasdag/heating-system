@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload';
 import Feature from '../blocks/Feature';
 import List from '../blocks/List';
 import Text from '../blocks/Text';
+import SimpleCarousel from '../blocks/SimpleCarousel';
 
 const Spaces: CollectionConfig = {
   slug: 'spaces',
@@ -81,7 +82,7 @@ const Spaces: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       required: false,
-      blocks: [Feature, List, Text],
+      blocks: [Feature, List, Text, SimpleCarousel],
     },
     // Optional: SEO fields
     {

@@ -76,7 +76,7 @@ export default function HeaderBlock({ spaceData }: HeaderBlockProps) {
         <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-bg to-transparent" />
 
         {/* Content Overlay */}
-        <div className="relative h-full flex flex-col justify-center items-center text-center px-4">
+        <div className="relative h-full flex flex-col justify-center items-center text-center px-4 pb-4">
           {/* Space Title */}
           {spaceData.title && (
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-ballPill hyphens-auto break-words">

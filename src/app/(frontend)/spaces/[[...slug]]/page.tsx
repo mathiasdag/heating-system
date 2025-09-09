@@ -3,6 +3,7 @@ import config from '@/payload.config';
 import FeatureBlock from '@/components/blocks/FeatureBlock';
 import ListBlock from '@/components/blocks/ListBlock';
 import TextBlock from '@/components/blocks/TextBlock';
+import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import { HeaderBlock as SpacesHeaderBlock } from '@/components/blocks/spaces';
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -48,6 +49,8 @@ async function SpacePage({ params }: SpacePageProps) {
               return <ListBlock key={i} {...cleanBlock} />;
             case 'text':
               return <TextBlock key={i} {...cleanBlock} />;
+            case 'simpleCarousel':
+              return <SimpleCarouselBlock key={i} {...cleanBlock} />;
             default:
               console.warn(`Unknown block type: ${block.blockType}`);
               return null;

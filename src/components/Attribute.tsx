@@ -20,9 +20,9 @@ interface AttributeProps {
 }
 
 const sizeClasses = {
-  sm: 'text-xs px-2 py-1',
+  sm: 'text-sm px-[.3em] pt-[0.2em] pb-[.075em]',
   md: 'text-sm px-[.3em] pt-[0.2em] pb-[.075em]',
-  lg: 'text-base px-4 py-2',
+  lg: 'text-sm px-[.3em] pt-[0.2em] pb-[.075em]',
 };
 
 const iconMap = {

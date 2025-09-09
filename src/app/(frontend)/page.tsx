@@ -13,6 +13,7 @@ import CarouselBlock from '@/components/blocks/CarouselBlock';
 import ListBlock from '@/components/blocks/ListBlock';
 import ScrollLockedNavigationBlock from '@/components/blocks/ScrollLockedNavigationBlock';
 import TextBlock from '@/components/blocks/TextBlock';
+import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 
 export default async function HomePage() {
   const payloadConfig = await config;
@@ -55,6 +56,8 @@ export default async function HomePage() {
             return <ScrollLockedNavigationBlock key={i} {...cleanBlock} />;
           case 'text':
             return <TextBlock key={i} {...cleanBlock} />;
+          case 'simpleCarousel':
+            return <SimpleCarouselBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types
           default:
             return null;

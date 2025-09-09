@@ -19,26 +19,21 @@ export default function TextBlock({
   links = [],
 }: TextBlockProps) {
   return (
-    <div className="mb-16 mt-8 px-4">
+    <div className="py-16 px-4 text-center">
       <DevIndicator componentName="TextBlock" />
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-10xl mx-auto grid gap-4">
         {/* Headline */}
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
-          {headline}
-        </h2>
+        <h2 className="font-mono uppercase">{headline}</h2>
 
         {/* Content */}
-        <div className="mb-8">
-          <RichText
-            data={content}
-            className="rich-text text-lg leading-relaxed text-center"
-          />
+        <div className="">
+          <RichText data={content} className="rich-text text-lg" />
         </div>
 
         {/* Links */}
         {links.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 hidden">
             {links.map((link, index) => (
               <AppLink
                 key={index}

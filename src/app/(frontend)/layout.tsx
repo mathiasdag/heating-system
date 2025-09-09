@@ -117,7 +117,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NavigationWrapper navigation={navigation} />
-          <main className="pt-16 min-h-screen">{children}</main>
+          <main className="min-h-screen">{children}</main>
           <Footer />
           <RevalidateButton />
         </ThemeProvider>

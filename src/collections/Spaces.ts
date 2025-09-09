@@ -1,15 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import Feature from '../blocks/Feature';
-import Header from '../blocks/Header';
-import Spotlight from '../blocks/BiggerFeature';
-import HorizontalCardBlock from '../blocks/HorizontalCardBlock';
-import Video from '../blocks/Video';
-import CardGrid from '../blocks/CardGrid';
-import OrangeCardGrid from '../blocks/OrangeCardGrid';
-import Router from '../blocks/Router';
-import Carousel from '../blocks/Carousel';
 import List from '../blocks/List';
-import ScrollLockedNavigation from '../blocks/ScrollLockedNavigation';
+import Text from '../blocks/Text';
 
 const Spaces: CollectionConfig = {
   slug: 'spaces',
@@ -50,22 +42,46 @@ const Spaces: CollectionConfig = {
       },
     },
     {
+      name: 'heroAsset',
+      type: 'group',
+      label: 'Hero Asset',
+      fields: [
+        {
+          name: 'type',
+          type: 'select',
+          options: [
+            { label: 'Image', value: 'image' },
+            { label: 'Mux Video', value: 'mux' },
+          ],
+          required: false,
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          admin: {
+            condition: (data: unknown, siblingData: unknown) =>
+              (siblingData as { type?: string })?.type === 'image',
+          },
+        },
+        {
+          name: 'mux',
+          type: 'text', // Store Mux asset ID or playback ID
+          required: false,
+          admin: {
+            condition: (data: unknown, siblingData: unknown) =>
+              (siblingData as { type?: string })?.type === 'mux',
+          },
+        },
+      ],
+      required: false,
+    },
+    {
       name: 'layout',
       type: 'blocks',
       required: false,
-      blocks: [
-        Feature,
-        Header,
-        Spotlight,
-        HorizontalCardBlock,
-        Video,
-        CardGrid,
-        OrangeCardGrid,
-        Router,
-        Carousel,
-        List,
-        ScrollLockedNavigation,
-      ],
+      blocks: [Feature, List, Text],
     },
     // Optional: SEO fields
     {
@@ -87,9 +103,9 @@ const Spaces: CollectionConfig = {
   ],
   hooks: {
     beforeValidate: [
-      ({ data }: any) => {
-        if (data.title && !data.slug) {
-          data.slug = data.title
+      ({ data }) => {
+        if (data?.title && !data.slug) {
+          data.slug = String(data.title)
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)+/g, '');

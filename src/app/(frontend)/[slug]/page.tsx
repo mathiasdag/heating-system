@@ -13,6 +13,7 @@ import AnimatedFeatureBlock from '@/components/blocks/AnimatedFeatureBlock';
 import { OrangeCardGrid } from '@/components/blocks/OrangeCardGrid';
 import ListBlock from '@/components/blocks/ListBlock';
 import ScrollLockedNavigationBlock from '@/components/blocks/ScrollLockedNavigationBlock';
+import TextBlock from '@/components/blocks/TextBlock';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
@@ -67,6 +68,8 @@ export default async function DynamicPage({ params }: PageProps) {
             return <ListBlock key={i} {...cleanBlock} />;
           case 'scrollLockedNavigation':
             return <ScrollLockedNavigationBlock key={i} {...cleanBlock} />;
+          case 'text':
+            return <TextBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types as needed
           default:
             console.warn(`Unknown block type: ${block.blockType}`);

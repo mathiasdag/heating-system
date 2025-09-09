@@ -10,6 +10,7 @@ import Router from '../blocks/Router';
 import Carousel from '../blocks/Carousel';
 import List from '../blocks/List';
 import ScrollLockedNavigation from '../blocks/ScrollLockedNavigation';
+import Text from '../blocks/Text';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -47,6 +48,7 @@ const Pages: CollectionConfig = {
         Carousel, // Added Carousel block
         List, // Added List block
         ScrollLockedNavigation, // Added ScrollLockedNavigation block
+        Text, // Added Text block
         // Add more blocks here as needed
       ],
     },

@@ -7,6 +7,8 @@ export { OpenNavIcon } from './OpenNavIcon';
 export { CloseIcon } from './CloseIcon';
 export { CloseNavIcon } from './CloseNavIcon';
 export { VarmeverketIcon } from './VarmeverketIcon';
+export { CapacityIcon } from './CapacityIcon';
+export { AreaIcon } from './AreaIcon';
 
 // Icon name type for type safety
 export type IconName =
@@ -14,7 +16,9 @@ export type IconName =
   | 'open-nav'
   | 'close'
   | 'close-nav'
-  | 'varmeverket';
+  | 'varmeverket'
+  | 'capacity'
+  | 'area';
 
 // Icon mapping for dynamic usage
 import { CheckIcon } from './CheckIcon';
@@ -22,6 +26,8 @@ import { OpenNavIcon } from './OpenNavIcon';
 import { CloseIcon } from './CloseIcon';
 import { CloseNavIcon } from './CloseNavIcon';
 import { VarmeverketIcon } from './VarmeverketIcon';
+import { CapacityIcon } from './CapacityIcon';
+import { AreaIcon } from './AreaIcon';
 import { IconProps } from './Icon';
 
 export const ICONS: Record<IconName, React.ComponentType<IconProps>> = {
@@ -30,4 +36,6 @@ export const ICONS: Record<IconName, React.ComponentType<IconProps>> = {
   close: CloseIcon,
   'close-nav': CloseNavIcon,
   varmeverket: VarmeverketIcon,
+  capacity: CapacityIcon,
+  area: AreaIcon,
 };

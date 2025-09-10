@@ -33,11 +33,17 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
     HighlightGridBlockProps['highlights'][0] | null
   >(null);
 
+  // Debug logging to see what data we're getting
+  console.log('HighlightGridBlock - headline:', headline);
+  console.log('HighlightGridBlock - highlights:', highlights);
+  console.log('HighlightGridBlock - highlights length:', highlights?.length);
+
   return (
-    <div className="mb-16 mt-8 px-4 border-t border-b">
+    <div className="mt-8 relative">
       <DevIndicator componentName="HighlightGridBlock" />
 
-      <div className="max-w-7xl mx-auto">
+      <div className="">
+        <hr className="mx-4 my-2" />
         {/* Headline */}
         <div className="mb-12 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
@@ -54,8 +60,13 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {highlights.map(highlight => {
+              // Debug each highlight
+              console.log('Highlight item:', highlight);
+              console.log('Highlight featuredImage:', highlight?.featuredImage);
+              
               // Check if highlight has required data
               if (!highlight || !highlight.featuredImage) {
+                console.log('Skipping highlight - missing data:', { highlight, featuredImage: highlight?.featuredImage });
                 return null;
               }
 
@@ -118,6 +129,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
             onClose={() => setSelectedHighlight(null)}
           />
         )}
+        <hr className="mx-4 my-2" />
       </div>
     </div>
   );

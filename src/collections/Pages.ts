@@ -14,7 +14,7 @@ import Text from '../blocks/Text';
 import SimpleCarousel from '../blocks/SimpleCarousel';
 import AssetText from '../blocks/AssetText';
 import CTA from '../blocks/CTA';
-import Showcase from '../blocks/Showcase';
+import HighlightGrid from '../blocks/HighlightGrid';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -56,7 +56,7 @@ const Pages: CollectionConfig = {
         SimpleCarousel, // Added SimpleCarousel block
         AssetText, // Added AssetText block
         CTA, // Added CTA block
-        Showcase, // Added Showcase block
+        HighlightGrid, // Added HighlightGrid block
         // Add more blocks here as needed
       ],
     },
@@ -80,12 +80,16 @@ const Pages: CollectionConfig = {
   ],
   hooks: {
     beforeValidate: [
-      ({ data }: any) => {
-        if (data.title && !data.slug) {
-          data.slug = data.title
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)+/g, '');
+      ({ data, operation }: any) => {
+        if (data?.title) {
+          // Always generate slug from title for new documents
+          // For updates, only generate if slug is empty or if title changed significantly
+          if (operation === 'create' || !data.slug) {
+            data.slug = String(data.title)
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/(^-|-$)+/g, '');
+          }
         }
         return data;
       },

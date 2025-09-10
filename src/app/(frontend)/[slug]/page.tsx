@@ -17,7 +17,7 @@ import TextBlock from '@/components/blocks/TextBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import CTABlock from '@/components/blocks/CTABlock';
-import ShowcaseBlock from '@/components/blocks/ShowcaseBlock';
+import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
@@ -80,8 +80,8 @@ export default async function DynamicPage({ params }: PageProps) {
             return <AssetTextBlock key={i} {...cleanBlock} />;
           case 'cta':
             return <CTABlock key={i} {...cleanBlock} />;
-          case 'showcase':
-            return <ShowcaseBlock key={i} {...cleanBlock} />;
+          case 'highlightGrid':
+            return <HighlightGridBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types as needed
           default:
             console.warn(`Unknown block type: ${block.blockType}`);

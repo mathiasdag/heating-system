@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { DevIndicator } from '../DevIndicator';
-import ShowcaseOverlay from './ShowcaseOverlay';
+import HighlightOverlay from './HighlightOverlay';
 
-interface ShowcaseBlockProps {
+interface HighlightGridBlockProps {
   headline: string;
-  showcases: Array<{
+  highlights: Array<{
     id: string;
     title: string;
     slug: string;
@@ -24,16 +24,16 @@ interface ShowcaseBlockProps {
   }>;
 }
 
-const ShowcaseBlock: React.FC<ShowcaseBlockProps> = ({
+const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
   headline,
-  showcases,
+  highlights,
 }) => {
   const pathname = usePathname();
-  const [selectedShowcase, setSelectedShowcase] = useState<any>(null);
+  const [selectedHighlight, setSelectedHighlight] = useState<any>(null);
 
   return (
     <div className="mb-16 mt-8 px-4">
-      <DevIndicator componentName="ShowcaseBlock" />
+      <DevIndicator componentName="HighlightGridBlock" />
 
       <div className="max-w-7xl mx-auto">
         {/* Headline */}
@@ -44,20 +44,20 @@ const ShowcaseBlock: React.FC<ShowcaseBlockProps> = ({
           <div className="w-24 h-px bg-white mx-auto"></div>
         </div>
 
-        {/* Showcase Grid */}
+        {/* Highlight Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {showcases.map((showcase) => (
+          {highlights.map((highlight) => (
             <button
-              key={showcase.id}
-              onClick={() => setSelectedShowcase(showcase)}
+              key={highlight.id}
+              onClick={() => setSelectedHighlight(highlight)}
               className="group block text-left w-full"
             >
               <div className="relative overflow-hidden rounded-lg bg-gray-900">
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
-                    src={showcase.featuredImage.url}
-                    alt={showcase.featuredImage.alt || showcase.title}
+                    src={highlight.featuredImage.url}
+                    alt={highlight.featuredImage.alt || highlight.title}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
@@ -69,19 +69,19 @@ const ShowcaseBlock: React.FC<ShowcaseBlockProps> = ({
                 {/* Content */}
                 <div className="p-6">
                   <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-accent transition-colors">
-                    {showcase.title}
+                    {highlight.title}
                   </h3>
                   
-                  {(showcase.client || showcase.year) && (
+                  {(highlight.client || highlight.year) && (
                     <div className="flex items-center gap-2 text-sm text-gray-400">
-                      {showcase.client && (
-                        <span>{showcase.client}</span>
+                      {highlight.client && (
+                        <span>{highlight.client}</span>
                       )}
-                      {showcase.client && showcase.year && (
+                      {highlight.client && highlight.year && (
                         <span>•</span>
                       )}
-                      {showcase.year && (
-                        <span>{showcase.year}</span>
+                      {highlight.year && (
+                        <span>{highlight.year}</span>
                       )}
                     </div>
                   )}
@@ -91,12 +91,12 @@ const ShowcaseBlock: React.FC<ShowcaseBlockProps> = ({
           ))}
         </div>
 
-        {/* Showcase Overlay */}
-        {selectedShowcase && (
-          <ShowcaseOverlay
-            showcase={selectedShowcase}
+        {/* Highlight Overlay */}
+        {selectedHighlight && (
+          <HighlightOverlay
+            highlight={selectedHighlight}
             currentPath={pathname}
-            onClose={() => setSelectedShowcase(null)}
+            onClose={() => setSelectedHighlight(null)}
           />
         )}
       </div>
@@ -104,4 +104,4 @@ const ShowcaseBlock: React.FC<ShowcaseBlockProps> = ({
   );
 };
 
-export default ShowcaseBlock;
+export default HighlightGridBlock;

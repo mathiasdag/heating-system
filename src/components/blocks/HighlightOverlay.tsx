@@ -8,8 +8,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
 
-interface ShowcaseOverlayProps {
-  showcase: {
+interface HighlightOverlayProps {
+  highlight: {
     id: string;
     title: string;
     slug: string;
@@ -43,8 +43,8 @@ interface ShowcaseOverlayProps {
   onClose: () => void;
 }
 
-const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
-  showcase,
+const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
+  highlight,
   currentPath,
   onClose,
 }) => {
@@ -77,7 +77,7 @@ const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
         className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
         onClick={handleBackdropClick}
       >
-        <DevIndicator componentName="ShowcaseOverlay" />
+        <DevIndicator componentName="HighlightOverlay" />
 
         <div className="h-full overflow-y-auto">
           <div className="min-h-full flex items-center justify-center p-4">
@@ -92,8 +92,8 @@ const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
               {/* Header */}
               <div className="relative h-64 md:h-80">
                 <Image
-                  src={showcase.featuredImage.url}
-                  alt={showcase.featuredImage.alt || showcase.title}
+                  src={highlight.featuredImage.url}
+                  alt={highlight.featuredImage.alt || highlight.title}
                   fill
                   className="object-cover"
                   priority
@@ -125,24 +125,24 @@ const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
                 {/* Title and Meta */}
                 <div className="mb-6">
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                    {showcase.title}
+                    {highlight.title}
                   </h1>
                   
-                  {(showcase.client || showcase.year) && (
+                  {(highlight.client || highlight.year) && (
                     <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                      {showcase.client && (
-                        <span className="font-medium">{showcase.client}</span>
+                      {highlight.client && (
+                        <span className="font-medium">{highlight.client}</span>
                       )}
-                      {showcase.year && (
-                        <span>{showcase.year}</span>
+                      {highlight.year && (
+                        <span>{highlight.year}</span>
                       )}
                     </div>
                   )}
 
                   {/* Tags */}
-                  {showcase.tags && showcase.tags.length > 0 && (
+                  {highlight.tags && highlight.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2">
-                      {showcase.tags.map((tag) => (
+                      {highlight.tags.map((tag) => (
                         <span
                           key={tag.id}
                           className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
@@ -155,20 +155,20 @@ const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
                 </div>
 
                 {/* Description */}
-                {showcase.description && (
+                {highlight.description && (
                   <div className="mb-8">
-                    <RichText data={showcase.description} />
+                    <RichText data={highlight.description} />
                   </div>
                 )}
 
                 {/* Gallery */}
-                {showcase.gallery && showcase.gallery.length > 0 && (
+                {highlight.gallery && highlight.gallery.length > 0 && (
                   <div className="space-y-6">
                     <h3 className="text-lg font-semibold text-gray-900">
                       Gallery
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {showcase.gallery.map((item) => (
+                      {highlight.gallery.map((item) => (
                         <div key={item.id} className="space-y-2">
                           <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                             <Image
@@ -195,4 +195,4 @@ const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
   );
 };
 
-export default ShowcaseOverlay;
+export default HighlightOverlay;

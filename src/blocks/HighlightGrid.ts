@@ -1,7 +1,7 @@
 import type { Block } from 'payload';
 
-const Showcase: Block = {
-  slug: 'showcase',
+const HighlightGrid: Block = {
+  slug: 'highlightGrid',
   fields: [
     {
       name: 'headline',
@@ -9,13 +9,13 @@ const Showcase: Block = {
       required: true,
     },
     {
-      name: 'showcases',
+      name: 'highlights',
       type: 'relationship',
-      relationTo: 'showcases',
+      relationTo: 'showcases' as never,
       hasMany: true,
       required: true,
     },
   ],
 };
 
-export default Showcase;
+export default HighlightGrid;

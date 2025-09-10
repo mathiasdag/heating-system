@@ -46,7 +46,7 @@ const CTABlock: React.FC<CTABlockProps> = ({
         href={href}
         {...(link.type === 'copy' && { actionType: 'copy' })}
         variant="outline"
-        className="w-full hover:bg-white hover:text-black"
+        className="block w-full min-w-0 hover:bg-white hover:text-black"
       >
         {(link.text || '').toUpperCase()}
       </AppAction>
@@ -83,17 +83,14 @@ const CTABlock: React.FC<CTABlockProps> = ({
 
   // Default type
   return (
-    <div className="my-24 px-2 text-center relative sm:px-2 ">
+    <div className="my-24 px-2 text-center relative max-w-5xl mx-auto">
       <DevIndicator componentName="CTABlock (Default)" />
+      <div className="border border-white px-8 sm:px-12 py-8 rounded-xl grid gap-6">
+        <h2 className="text-md">{headline}</h2>
 
-      <div className="max-w-5xl mx-auto">
-        <div className="border border-white px-12 py-8 rounded-xl grid gap-6">
-          <h2 className="text-md">{headline}</h2>
+        {description && <RichText data={description} className="font-mono" />}
 
-          {description && <RichText data={description} className="font-mono" />}
-
-          <div className="flex justify-start">{renderLink()}</div>
-        </div>
+        {renderLink()}
       </div>
     </div>
   );

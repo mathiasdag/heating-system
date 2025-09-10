@@ -2,8 +2,6 @@
 
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
@@ -40,19 +38,20 @@ interface HighlightOverlayProps {
     }>;
   };
   currentPath: string;
+  onClose: () => void;
 }
 
 const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
   showcase,
   currentPath,
+  onClose,
 }) => {
-  const router = useRouter();
 
   // Handle escape key and prevent scroll
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        router.push(currentPath);
+        onClose();
       }
     };
 
@@ -65,11 +64,11 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     };
-  }, [router, currentPath]);
+  }, [onClose]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      router.push(currentPath);
+      onClose();
     }
   };
 
@@ -112,7 +111,7 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
 
                 {/* Close Button */}
                 <button
-                  onClick={() => router.push(currentPath)}
+                  onClick={onClose}
                   className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
                 >
                   <svg

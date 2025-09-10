@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { DevIndicator } from '../DevIndicator';
+import HighlightOverlay from './HighlightOverlay';
 
 interface HighlightGridBlockProps {
   headline: string;
@@ -31,13 +32,18 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
   highlights,
 }) => {
   const pathname = usePathname();
-  const router = useRouter();
+  const [selectedHighlight, setSelectedHighlight] = useState<
+    HighlightGridBlockProps['highlights'][0]['value'] | null
+  >(null);
 
   if (!highlights || highlights.length === 0) return null;
 
-  const handleShowcaseClick = (showcaseSlug: string) => {
-    // Navigate to the showcase URL - Next.js will handle the intercepting
-    router.push(`/showcase/${showcaseSlug}`);
+  const handleShowcaseClick = (highlightData: HighlightGridBlockProps['highlights'][0]['value']) => {
+    setSelectedHighlight(highlightData);
+  };
+
+  const handleClose = () => {
+    setSelectedHighlight(null);
   };
 
   return (
@@ -64,7 +70,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
             return (
               <button
                 key={highlightData.id}
-                onClick={() => handleShowcaseClick(highlightData.slug)}
+                onClick={() => handleShowcaseClick(highlightData)}
                 className="group text-left w-full"
               >
                 <div className="relative">
@@ -92,6 +98,15 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
           })}
         </div>
       </div>
+
+      {/* Showcase Overlay */}
+      {selectedHighlight && (
+        <HighlightOverlay 
+          showcase={selectedHighlight} 
+          currentPath={pathname}
+          onClose={handleClose}
+        />
+      )}
     </div>
   );
 };

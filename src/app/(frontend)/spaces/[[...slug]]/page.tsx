@@ -59,7 +59,6 @@ async function SpacePage({ params }: SpacePageProps) {
             case 'cta':
               return <CTABlock key={i} {...cleanBlock} />;
             case 'highlightGrid':
-              console.log('Rendering HighlightGridBlock with data:', cleanBlock);
               return <HighlightGridBlock key={i} {...cleanBlock} />;
             default:
               console.warn(`Unknown block type: ${block.blockType}`);

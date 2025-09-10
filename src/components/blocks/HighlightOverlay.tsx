@@ -9,7 +9,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
 
 interface HighlightOverlayProps {
-  highlight: {
+  showcase: {
     id: string;
     title: string;
     slug: string;
@@ -40,13 +40,11 @@ interface HighlightOverlayProps {
     }>;
   };
   currentPath: string;
-  onClose: () => void;
 }
 
 const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
-  highlight,
+  showcase,
   currentPath,
-  onClose,
 }) => {
   const router = useRouter();
 
@@ -54,17 +52,17 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose();
+        router.push(currentPath);
       }
     };
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
+  }, [router, currentPath]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      router.push(currentPath);
     }
   };
 
@@ -91,10 +89,10 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
             >
               {/* Header */}
               <div className="relative h-64 md:h-80">
-                {highlight.featuredImage?.url ? (
+                {showcase.featuredImage?.url ? (
                   <Image
-                    src={highlight.featuredImage.url}
-                    alt={highlight.featuredImage.alt || highlight.title}
+                    src={showcase.featuredImage.url}
+                    alt={showcase.featuredImage.alt || showcase.title}
                     fill
                     className="object-cover"
                     priority
@@ -107,7 +105,7 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
                 
                 {/* Close Button */}
                 <button
-                  onClick={onClose}
+                  onClick={() => router.push(currentPath)}
                   className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
                 >
                   <svg
@@ -131,24 +129,24 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
                 {/* Title and Meta */}
                 <div className="mb-6">
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                    {highlight.title}
+                    {showcase.title}
                   </h1>
                   
-                  {(highlight.client || highlight.year) && (
+                  {(showcase.client || showcase.year) && (
                     <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                      {highlight.client && (
-                        <span className="font-medium">{highlight.client}</span>
+                      {showcase.client && (
+                        <span className="font-medium">{showcase.client}</span>
                       )}
-                      {highlight.year && (
-                        <span>{highlight.year}</span>
+                      {showcase.year && (
+                        <span>{showcase.year}</span>
                       )}
                     </div>
                   )}
 
                   {/* Tags */}
-                  {highlight.tags && highlight.tags.length > 0 && (
+                  {showcase.tags && showcase.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2">
-                      {highlight.tags.map((tag) => (
+                      {showcase.tags.map((tag) => (
                         <span
                           key={tag.id}
                           className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
@@ -161,20 +159,20 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
                 </div>
 
                 {/* Description */}
-                {highlight.description && (
+                {showcase.description && (
                   <div className="mb-8">
-                    <RichText data={highlight.description} />
+                    <RichText data={showcase.description} />
                   </div>
                 )}
 
                 {/* Gallery */}
-                {highlight.gallery && highlight.gallery.length > 0 && (
+                {showcase.gallery && showcase.gallery.length > 0 && (
                   <div className="space-y-6">
                     <h3 className="text-lg font-semibold text-gray-900">
                       Gallery
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {highlight.gallery.map((item) => (
+                      {showcase.gallery.map((item) => (
                         <div key={item.id} className="space-y-2">
                           <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                             <Image

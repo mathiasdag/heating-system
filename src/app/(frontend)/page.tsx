@@ -26,7 +26,7 @@ export default async function HomePage() {
   const { docs: [page] = [] } = await payload.find({
     collection: 'pages' as any,
     where: { slug: { equals: 'hem' } },
-    depth: 1, // Populate relationships to get collection info
+    depth: 2, // Increased depth to populate relationship data within blocks
   });
 
   return (

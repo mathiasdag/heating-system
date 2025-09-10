@@ -14,7 +14,7 @@ interface HighlightOverlayProps {
     title: string;
     slug: string;
     description?: any;
-    featuredImage: {
+    featuredImage?: {
       id: string;
       url: string;
       alt?: string;
@@ -91,13 +91,19 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
             >
               {/* Header */}
               <div className="relative h-64 md:h-80">
-                <Image
-                  src={highlight.featuredImage.url}
-                  alt={highlight.featuredImage.alt || highlight.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
+                {highlight.featuredImage?.url ? (
+                  <Image
+                    src={highlight.featuredImage.url}
+                    alt={highlight.featuredImage.alt || highlight.title}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500">No image available</span>
+                  </div>
+                )}
                 
                 {/* Close Button */}
                 <button

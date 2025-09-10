@@ -29,7 +29,7 @@ async function SpacePage({ params }: SpacePageProps) {
   const { docs: [space] = [] } = await payload.find({
     collection: 'spaces' as any,
     where: { slug: { equals: slug } },
-    depth: 1, // Populate relationships to get collection info
+    depth: 2, // Increased depth to populate relationship data within blocks
   });
 
   // If space doesn't exist, return 404
@@ -41,7 +41,7 @@ async function SpacePage({ params }: SpacePageProps) {
     <SpacesPageWrapper>
       <div data-content-type="space">
         {/* Hero Section */}
-        <SpacesHeaderBlock spaceData={space} text={null} />
+        <SpacesHeaderBlock spaceData={space} />
 
         {space?.layout?.map((block: any, i: number) => {
           const cleanBlock = JSON.parse(JSON.stringify(block));

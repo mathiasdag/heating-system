@@ -34,7 +34,7 @@ export default async function DynamicPage({ params }: PageProps) {
   const { docs: [page] = [] } = await payload.find({
     collection: 'pages' as any,
     where: { slug: { equals: params.slug } },
-    depth: 1, // Populate relationships to get collection info
+    depth: 2, // Increased depth to populate relationship data within blocks
   });
 
   // If page doesn't exist, return 404

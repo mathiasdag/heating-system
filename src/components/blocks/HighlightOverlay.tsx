@@ -48,21 +48,38 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
 }) => {
   const router = useRouter();
 
-  // Handle escape key
+  const handleClose = () => {
+    // Restore scroll position
+    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+    if (savedScrollPosition) {
+      window.scrollTo(0, parseInt(savedScrollPosition));
+      sessionStorage.removeItem('scrollPosition');
+    }
+    router.push(currentPath);
+  };
+
+  // Handle escape key and prevent scroll
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        router.push(currentPath);
+        handleClose();
       }
     };
 
+    // Prevent body scroll when overlay is open
+    document.body.style.overflow = 'hidden';
+    
     document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
   }, [router, currentPath]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      router.push(currentPath);
+      handleClose();
     }
   };
 
@@ -105,7 +122,7 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
                 
                 {/* Close Button */}
                 <button
-                  onClick={() => router.push(currentPath)}
+                  onClick={handleClose}
                   className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
                 >
                   <svg

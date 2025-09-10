@@ -2,14 +2,14 @@ import { ReactNode } from 'react';
 
 interface LayoutProps {
   children: ReactNode;
-  showcase: ReactNode;
+  modal: ReactNode;
 }
 
-export default function Layout({ children, showcase }: LayoutProps) {
+export default function Layout({ children, modal }: LayoutProps) {
   return (
     <>
       {children}
-      {showcase}
+      {modal || null}
     </>
   );
 }

@@ -3,23 +3,20 @@ import config from '@/payload.config';
 import { notFound } from 'next/navigation';
 import HighlightOverlay from '@/components/blocks/HighlightOverlay';
 
-interface ShowcaseModalProps {
+interface ShowcasePageProps {
   params: {
-    slug: string[];
-  };
-  searchParams: {
-    showcase?: string;
+    showcaseSlug: string;
   };
 }
 
-async function ShowcaseModal({ params, searchParams }: ShowcaseModalProps) {
+async function ShowcasePage({ params }: ShowcasePageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
 
-  const showcaseSlug = searchParams.showcase;
+  const { showcaseSlug } = params;
 
   if (!showcaseSlug) {
-    return null;
+    notFound();
   }
 
   // Fetch the showcase
@@ -33,10 +30,13 @@ async function ShowcaseModal({ params, searchParams }: ShowcaseModalProps) {
     notFound();
   }
 
-  const slug = params.slug ? params.slug.join('/') : '';
-  const currentPath = `/spaces/${slug}`;
-
-  return <HighlightOverlay showcase={showcase} currentPath={currentPath} />;
+  // For now, we'll just show the overlay as a full page
+  // In the future, you might want to add a proper layout here
+  return (
+    <div className="min-h-screen bg-white">
+      <HighlightOverlay showcase={showcase} currentPath="/" />
+    </div>
+  );
 }
 
-export default ShowcaseModal;
+export default ShowcasePage;

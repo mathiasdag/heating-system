@@ -14,7 +14,7 @@ import SpacesPageWrapper from '@/components/SpacesPageWrapper';
 
 interface SpacePageProps {
   params: {
-    slug?: string[];
+    slug: string;
   };
 }
 
@@ -22,8 +22,7 @@ async function SpacePage({ params }: SpacePageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
 
-  // Build the slug from the array
-  const slug = params.slug ? params.slug.join('/') : '';
+  const { slug } = params;
 
   // Fetch the space by slug
   const { docs: [space] = [] } = await payload.find({

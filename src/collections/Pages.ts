@@ -14,6 +14,7 @@ import Text from '../blocks/Text';
 import SimpleCarousel from '../blocks/SimpleCarousel';
 import AssetText from '../blocks/AssetText';
 import CTA from '../blocks/CTA';
+import Showcase from '../blocks/Showcase';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -55,6 +56,7 @@ const Pages: CollectionConfig = {
         SimpleCarousel, // Added SimpleCarousel block
         AssetText, // Added AssetText block
         CTA, // Added CTA block
+        Showcase, // Added Showcase block
         // Add more blocks here as needed
       ],
     },

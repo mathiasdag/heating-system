@@ -5,6 +5,7 @@ import Text from '../blocks/Text';
 import SimpleCarousel from '../blocks/SimpleCarousel';
 import AssetText from '../blocks/AssetText';
 import CTA from '../blocks/CTA';
+import Showcase from '../blocks/Showcase';
 
 const Spaces: CollectionConfig = {
   slug: 'spaces',
@@ -84,7 +85,7 @@ const Spaces: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       required: false,
-      blocks: [Feature, List, Text, SimpleCarousel, AssetText, CTA],
+      blocks: [Feature, List, Text, SimpleCarousel, AssetText, CTA, Showcase],
     },
     // Optional: SEO fields
     {

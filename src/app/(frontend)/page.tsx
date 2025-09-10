@@ -16,6 +16,7 @@ import TextBlock from '@/components/blocks/TextBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import CTABlock from '@/components/blocks/CTABlock';
+import ShowcaseBlock from '@/components/blocks/ShowcaseBlock';
 
 export default async function HomePage() {
   const payloadConfig = await config;
@@ -64,6 +65,8 @@ export default async function HomePage() {
             return <AssetTextBlock key={i} {...cleanBlock} />;
           case 'cta':
             return <CTABlock key={i} {...cleanBlock} />;
+          case 'showcase':
+            return <ShowcaseBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types
           default:
             return null;

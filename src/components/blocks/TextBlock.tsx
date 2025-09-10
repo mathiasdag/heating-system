@@ -19,7 +19,7 @@ export default function TextBlock({
   links = [],
 }: TextBlockProps) {
   return (
-    <div className="py-16 px-4 text-center">
+    <div className="py-16 px-4 lg:px-16 text-center">
       <DevIndicator componentName="TextBlock" />
 
       <div className="max-w-10xl mx-auto grid gap-4">

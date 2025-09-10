@@ -57,7 +57,7 @@ export const AppAction: React.FC<AppActionProps> = ({
     return (
       <>
         <button onClick={handleCopy} className={style} type="button">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 justify-center">
             <svg
               className="w-5 h-5 shrink-0"
               fill="none"

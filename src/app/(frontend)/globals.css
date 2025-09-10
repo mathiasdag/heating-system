@@ -20,6 +20,24 @@
   --theme-transition-easing: ease-out;
 }
 
+@media (min-width: 1024px) {
+  :root {
+    font-size: 19px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    font-size: 22px;
+  }
+}
+
 .dark {
   color-scheme: dark;
 
@@ -129,8 +147,18 @@ h2.font-sans,
 }
 
 @media (min-width: 1024px) {
-  .rich-text p {
+  [data-content-type='page'] .rich-text p {
     padding-left: 4em;
     padding-right: 4em;
   }
+}
+
+[data-content-type='space'] .rich-text h2 {
+  margin-top: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+[data-content-type='space'] .rich-text h2:first-child {
+  margin-top: 0em;
 }

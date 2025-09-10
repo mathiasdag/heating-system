@@ -102,6 +102,9 @@ module.exports = {
       aspectRatio: {
         window: '5 / 7',
       },
+      animation: {
+        spin: 'spin 5s linear infinite reverse',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

@@ -65,7 +65,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   const isTextLeft = textPosition === 'left';
 
   return (
-    <div className="mb-16 mt-8 px-4 relative">
+    <div className="mb-16 mt-8 px-2 relative">
       <DevIndicator componentName="AssetTextBlock" />
 
       <div className="">

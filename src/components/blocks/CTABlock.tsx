@@ -55,7 +55,7 @@ const CTABlock: React.FC<CTABlockProps> = ({
 
   if (ctaType === 'rotating') {
     return (
-      <div className="mt-32 mb-24 px-4">
+      <div className="mt-32 mb-24 px-2">
         <DevIndicator componentName="CTABlock (Rotating)" />
 
         <div className="max-w-4xl mx-auto text-center">
@@ -83,7 +83,7 @@ const CTABlock: React.FC<CTABlockProps> = ({
 
   // Default type
   return (
-    <div className="my-24 px-4 text-center relative sm:px-8 ">
+    <div className="my-24 px-2 text-center relative sm:px-2 ">
       <DevIndicator componentName="CTABlock (Default)" />
 
       <div className="max-w-5xl mx-auto">

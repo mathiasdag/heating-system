@@ -9,18 +9,21 @@ import HighlightOverlay from './HighlightOverlay';
 interface HighlightGridBlockProps {
   headline: string;
   highlights: Array<{
-    id: string;
-    title: string;
-    slug: string;
-    featuredImage?: {
+    relationTo: string;
+    value: {
       id: string;
-      url: string;
-      alt?: string;
-      width?: number;
-      height?: number;
+      title: string;
+      slug: string;
+      featuredImage?: {
+        id: string;
+        url: string;
+        alt?: string;
+        width?: number;
+        height?: number;
+      };
+      client?: string;
+      year?: number;
     };
-    client?: string;
-    year?: number;
   }>;
 }
 
@@ -30,7 +33,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
 }) => {
   const pathname = usePathname();
   const [selectedHighlight, setSelectedHighlight] = useState<
-    HighlightGridBlockProps['highlights'][0] | null
+    HighlightGridBlockProps['highlights'][0]['value'] | null
   >(null);
 
   // Debug logging to see what data we're getting
@@ -43,7 +46,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
       <DevIndicator componentName="HighlightGridBlock" />
 
       <div className="">
-        <hr className="mx-4 my-2" />
+        <hr className="mx-2 my-2" />
         {/* Headline */}
         <div className="mb-12 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
@@ -60,31 +63,41 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {highlights.map(highlight => {
+              // Extract the actual highlight data from the relationship structure
+              const highlightData = highlight.value;
+
               // Debug each highlight
               console.log('Highlight item:', highlight);
-              console.log('Highlight featuredImage:', highlight?.featuredImage);
-              
+              console.log('Highlight data:', highlightData);
+              console.log(
+                'Highlight featuredImage:',
+                highlightData?.featuredImage
+              );
+
               // Check if highlight has required data
-              if (!highlight || !highlight.featuredImage) {
-                console.log('Skipping highlight - missing data:', { highlight, featuredImage: highlight?.featuredImage });
+              if (!highlightData || !highlightData.featuredImage) {
+                console.log('Skipping highlight - missing data:', {
+                  highlightData,
+                  featuredImage: highlightData?.featuredImage,
+                });
                 return null;
               }
 
               return (
                 <button
-                  key={highlight.id}
-                  onClick={() => setSelectedHighlight(highlight)}
+                  key={highlightData.id}
+                  onClick={() => setSelectedHighlight(highlightData)}
                   className="group block text-left w-full"
                 >
                   <div className="relative overflow-hidden rounded-lg bg-gray-900">
                     {/* Image */}
                     <div className="relative aspect-[4/3] overflow-hidden">
-                      {highlight.featuredImage?.url ? (
+                      {highlightData.featuredImage?.url ? (
                         <Image
-                          src={highlight.featuredImage.url}
+                          src={highlightData.featuredImage.url}
                           alt={
-                            highlight.featuredImage.alt ||
-                            highlight.title ||
+                            highlightData.featuredImage.alt ||
+                            highlightData.title ||
                             'Highlight image'
                           }
                           fill
@@ -103,14 +116,20 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
                     {/* Content */}
                     <div className="p-6">
                       <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-accent transition-colors">
-                        {highlight.title}
+                        {highlightData.title}
                       </h3>
 
-                      {(highlight.client || highlight.year) && (
+                      {(highlightData.client || highlightData.year) && (
                         <div className="flex items-center gap-2 text-sm text-gray-400">
-                          {highlight.client && <span>{highlight.client}</span>}
-                          {highlight.client && highlight.year && <span>•</span>}
-                          {highlight.year && <span>{highlight.year}</span>}
+                          {highlightData.client && (
+                            <span>{highlightData.client}</span>
+                          )}
+                          {highlightData.client && highlightData.year && (
+                            <span>•</span>
+                          )}
+                          {highlightData.year && (
+                            <span>{highlightData.year}</span>
+                          )}
                         </div>
                       )}
                     </div>
@@ -129,7 +148,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
             onClose={() => setSelectedHighlight(null)}
           />
         )}
-        <hr className="mx-4 my-2" />
+        <hr className="mx-2 my-2" />
       </div>
     </div>
   );

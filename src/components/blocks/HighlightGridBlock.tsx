@@ -31,6 +31,9 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
   const pathname = usePathname();
   const [selectedHighlight, setSelectedHighlight] = useState<any>(null);
 
+  // Debug logging
+  console.log('HighlightGridBlock props:', { headline, highlights });
+
   return (
     <div className="mb-16 mt-8 px-4">
       <DevIndicator componentName="HighlightGridBlock" />
@@ -45,26 +48,47 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
         </div>
 
         {/* Highlight Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {highlights.map((highlight) => (
-            <button
-              key={highlight.id}
-              onClick={() => setSelectedHighlight(highlight)}
-              className="group block text-left w-full"
-            >
-              <div className="relative overflow-hidden rounded-lg bg-gray-900">
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={highlight.featuredImage.url}
-                    alt={highlight.featuredImage.alt || highlight.title}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                </div>
+        {!highlights || highlights.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-gray-400">No highlights available</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {highlights.map((highlight) => {
+            // Debug each highlight
+            console.log('Highlight item:', highlight);
+            
+            // Check if highlight has required data
+            if (!highlight || !highlight.featuredImage) {
+              console.warn('Highlight missing featuredImage:', highlight);
+              return null;
+            }
+
+            return (
+              <button
+                key={highlight.id}
+                onClick={() => setSelectedHighlight(highlight)}
+                className="group block text-left w-full"
+              >
+                <div className="relative overflow-hidden rounded-lg bg-gray-900">
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    {highlight.featuredImage?.url ? (
+                      <Image
+                        src={highlight.featuredImage.url}
+                        alt={highlight.featuredImage.alt || highlight.title || 'Highlight image'}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                        <span className="text-gray-400">No image</span>
+                      </div>
+                    )}
+                    
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                  </div>
 
                 {/* Content */}
                 <div className="p-6">
@@ -88,8 +112,10 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
                 </div>
               </div>
             </button>
-          ))}
-        </div>
+            );
+          })}
+          </div>
+        )}
 
         {/* Highlight Overlay */}
         {selectedHighlight && (

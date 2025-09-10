@@ -88,13 +88,6 @@ async function getNavigation() {
     });
 
     if (navigation) {
-      console.log('🔄 Layout: Fetched navigation data using getPayload');
-      console.log(
-        '📋 Highlight:',
-        (navigation as any).highlight?.text || 'None'
-      );
-      console.log('📋 Menu items:', (navigation as any).menuItems?.length || 0);
-      console.log('🔍 Navigation structure:', navigation);
       return JSON.parse(JSON.stringify(navigation)) as any;
     }
 

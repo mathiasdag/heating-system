@@ -34,7 +34,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
   >(null);
 
   return (
-    <div className="mb-16 mt-8 px-4">
+    <div className="mb-16 mt-8 px-4 border-t border-b">
       <DevIndicator componentName="HighlightGridBlock" />
 
       <div className="max-w-7xl mx-auto">

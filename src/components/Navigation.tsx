@@ -19,14 +19,11 @@ const HighlightLink: React.FC<{
   const [isMarqueeing, setIsMarqueeing] = useState(false);
 
   const href = (() => {
-    console.log('🔗 Link object:', link);
-
     if (link.type === 'external') {
       return link.url || '#';
     }
 
     if (link.type === 'internal' && link.reference) {
-      console.log('🔗 Reference object:', link.reference);
 
       // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
       if (typeof link.reference === 'object' && link.reference?.value?.slug) {
@@ -34,7 +31,6 @@ const HighlightLink: React.FC<{
           link.reference.relationTo === 'spaces'
             ? `/spaces/${link.reference.value.slug}`
             : `/${link.reference.value.slug}`;
-        console.log('🔗 Generated URL:', url);
         return url;
       }
 
@@ -44,7 +40,6 @@ const HighlightLink: React.FC<{
           link.reference.collection === 'spaces'
             ? `/spaces/${link.reference.slug}`
             : `/${link.reference.slug}`;
-        console.log('🔗 Generated URL:', url);
         return url;
       }
 
@@ -54,11 +49,9 @@ const HighlightLink: React.FC<{
       }
 
       // Fallback to prevent [object Object] URLs
-      console.warn('Invalid reference object:', link.reference);
       return '#';
     }
 
-    console.log('🔗 No reference found, returning #');
     return '#';
   })();
 
@@ -122,8 +115,6 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
-  console.log(navigation);
 
   // Prevent hydration mismatch by only using theme after mount
   useEffect(() => {

@@ -48,29 +48,19 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleClose = () => {
-    // Restore scroll position
-    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
-    if (savedScrollPosition) {
-      window.scrollTo(0, parseInt(savedScrollPosition));
-      sessionStorage.removeItem('scrollPosition');
-    }
-    router.push(currentPath);
-  };
-
   // Handle escape key and prevent scroll
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        handleClose();
+        router.push(currentPath);
       }
     };
 
     // Prevent body scroll when overlay is open
     document.body.style.overflow = 'hidden';
-    
+
     document.addEventListener('keydown', handleEscape);
-    
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
@@ -79,7 +69,7 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      handleClose();
+      router.push(currentPath);
     }
   };
 
@@ -102,7 +92,7 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               className="w-full max-w-4xl bg-white rounded-lg overflow-hidden shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
+              onClick={e => e.stopPropagation()}
             >
               {/* Header */}
               <div className="relative h-64 md:h-80">
@@ -119,10 +109,10 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
                     <span className="text-gray-500">No image available</span>
                   </div>
                 )}
-                
+
                 {/* Close Button */}
                 <button
-                  onClick={handleClose}
+                  onClick={() => router.push(currentPath)}
                   className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
                 >
                   <svg
@@ -148,22 +138,20 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
                   <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                     {showcase.title}
                   </h1>
-                  
+
                   {(showcase.client || showcase.year) && (
                     <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
                       {showcase.client && (
                         <span className="font-medium">{showcase.client}</span>
                       )}
-                      {showcase.year && (
-                        <span>{showcase.year}</span>
-                      )}
+                      {showcase.year && <span>{showcase.year}</span>}
                     </div>
                   )}
 
                   {/* Tags */}
                   {showcase.tags && showcase.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2">
-                      {showcase.tags.map((tag) => (
+                      {showcase.tags.map(tag => (
                         <span
                           key={tag.id}
                           className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
@@ -189,7 +177,7 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
                       Gallery
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {showcase.gallery.map((item) => (
+                      {showcase.gallery.map(item => (
                         <div key={item.id} className="space-y-2">
                           <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                             <Image
@@ -200,7 +188,9 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
                             />
                           </div>
                           {item.caption && (
-                            <p className="text-sm text-gray-600">{item.caption}</p>
+                            <p className="text-sm text-gray-600">
+                              {item.caption}
+                            </p>
                           )}
                         </div>
                       ))}

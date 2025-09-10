@@ -36,11 +36,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
   if (!highlights || highlights.length === 0) return null;
 
   const handleShowcaseClick = (showcaseSlug: string) => {
-    // Store current scroll position
-    const scrollY = window.scrollY;
-    sessionStorage.setItem('scrollPosition', scrollY.toString());
-    
-    // Navigate to the showcase URL
+    // Navigate to the showcase URL - Next.js will handle the intercepting
     router.push(`/showcase/${showcaseSlug}`);
   };
 

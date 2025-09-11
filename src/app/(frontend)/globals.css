@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-size: 18px;
+  font-size: 17px;
   scroll-behavior: smooth;
   line-height: 1.25em; /* or your preferred value */
   letter-spacing: -0.005em;
@@ -22,19 +22,19 @@
 
 @media (min-width: 1024px) {
   :root {
-    font-size: 19px;
+    font-size: 18px;
   }
 }
 
 @media (min-width: 1280px) {
   :root {
-    font-size: 20px;
+    font-size: 19px;
   }
 }
 
 @media (min-width: 1536px) {
   :root {
-    font-size: 22px;
+    font-size: 20px;
   }
 }
 
@@ -72,8 +72,21 @@ hr {
   font-family: var(--font-display);
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  line-height: 1em;
+  line-height: 0.95em;
   font-size: clamp(3rem, 8vw, 8em);
+}
+
+[data-content-type='article'] h1 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95em;
+  font-size: clamp(3rem, 6vw, 8em);
+}
+
+[data-content-type='article'] .rich-text p {
+  max-width: 120ch;
+  margin: 0 auto;
 }
 
 h2.font-display {

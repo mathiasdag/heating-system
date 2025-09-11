@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { DevIndicator } from '../DevIndicator';
 import HighlightOverlay from './HighlightOverlay';
+import { AnimatePresence } from 'framer-motion';
 
 interface HighlightGridBlockProps {
   headline: string;
@@ -38,7 +39,9 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
 
   if (!highlights || highlights.length === 0) return null;
 
-  const handleShowcaseClick = (highlightData: HighlightGridBlockProps['highlights'][0]['value']) => {
+  const handleShowcaseClick = (
+    highlightData: HighlightGridBlockProps['highlights'][0]['value']
+  ) => {
     setSelectedHighlight(highlightData);
   };
 
@@ -59,7 +62,16 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
         </h2>
 
         {/* Highlight Grid */}
-        <div className="flex gap-2 justify-center bg-bg py-2 relative">
+        <div
+          className="flex gap-2 justify-center bg-bg pt-2 pb-1 relative overflow-x-auto scrollbar-none scroll-smooth"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',
+            scrollSnapType: 'x mandatory',
+          }}
+        >
+          <div className="basis-[1px] shrink-0 h-4"></div>
           {highlights.map(highlight => {
             // Extract the actual highlight data from the relationship structure
             const highlightData = highlight.value;
@@ -71,11 +83,12 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
               <button
                 key={highlightData.id}
                 onClick={() => handleShowcaseClick(highlightData)}
-                className="group text-left w-full"
+                className="basis-64 grow shrink-0 text-left w-full max-w-80"
+                style={{ scrollSnapAlign: 'center' }}
               >
                 <div className="relative">
                   {/* Image */}
-                  <div className="relative aspect-[4/6] max-w-64 overflow-hidden">
+                  <div className="relative aspect-[4/6] overflow-hidden">
                     <Image
                       src={highlightData.featuredImage.url}
                       alt={
@@ -89,24 +102,27 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
                   </div>
 
                   {/* Content */}
-                  <div className="py-1">
+                  <div className="pt-1 leading-4">
                     <h3 className="uppercase">{highlightData.title}</h3>
                   </div>
                 </div>
               </button>
             );
           })}
+          <div className="basis-[1px] shrink-0 h-4"></div>
         </div>
       </div>
 
       {/* Showcase Overlay */}
-      {selectedHighlight && (
-        <HighlightOverlay 
-          showcase={selectedHighlight} 
-          currentPath={pathname}
-          onClose={handleClose}
-        />
-      )}
+      <AnimatePresence>
+        {selectedHighlight && (
+          <HighlightOverlay
+            showcase={selectedHighlight}
+            currentPath={pathname}
+            onClose={handleClose}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

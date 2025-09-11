@@ -7,8 +7,9 @@ import Tags from '../collections/Tags';
 import Navigation from '../collections/Navigation';
 import Spaces from '../collections/Spaces';
 import Showcases from '../collections/Showcases';
+import Articles from '../collections/Articles';
 
-export { Users, Media, Pages, Tags, Navigation, Spaces, Showcases };
+export { Users, Media, Pages, Tags, Navigation, Spaces, Showcases, Articles };
 
 export const collections: CollectionConfig[] = [
   Users,
@@ -18,4 +19,5 @@ export const collections: CollectionConfig[] = [
   Navigation,
   Spaces,
   Showcases,
+  Articles,
 ];

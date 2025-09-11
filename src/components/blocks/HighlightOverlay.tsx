@@ -1,17 +1,16 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { RichText } from '@payloadcms/richtext-lexical/react';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { DevIndicator } from '../DevIndicator';
+import ShowcaseCarousel from './ShowcaseCarousel';
 
 interface HighlightOverlayProps {
   showcase: {
     id: string;
     title: string;
     slug: string;
-    description?: any;
+    description?: unknown;
     featuredImage?: {
       id: string;
       url: string;
@@ -19,9 +18,10 @@ interface HighlightOverlayProps {
       width?: number;
       height?: number;
     };
-    gallery?: Array<{
+    assets?: Array<{
       id: string;
-      image: {
+      blockType: 'imageWithCaption' | 'videoWithCaption' | 'text';
+      image?: {
         id: string;
         url: string;
         alt?: string;
@@ -29,6 +29,12 @@ interface HighlightOverlayProps {
         height?: number;
       };
       caption?: string;
+      host?: string;
+      playbackId?: string;
+      autoplay?: boolean;
+      controls?: boolean;
+      title?: string;
+      content?: unknown;
     }>;
     client?: string;
     year?: number;
@@ -37,20 +43,32 @@ interface HighlightOverlayProps {
       tag: string;
     }>;
   };
-  currentPath: string;
   onClose: () => void;
 }
 
 const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
   showcase,
-  currentPath,
   onClose,
 }) => {
+  const [currentAssetIndex, setCurrentAssetIndex] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [currentAsset, setCurrentAsset] = useState<any>(null);
 
+  // Debug logging
+  console.log('HighlightOverlay received showcase:', showcase);
+  console.log('Showcase assets:', showcase.assets);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleCurrentAssetChange = (index: number, asset: any) => {
+    setCurrentAssetIndex(index);
+    setCurrentAsset(asset);
+  };
   // Handle escape key and prevent scroll
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
+      console.log('HighlightOverlay: Key pressed:', e.key);
       if (e.key === 'Escape') {
+        console.log('HighlightOverlay: Escape pressed - closing overlay');
         onClose();
       }
     };
@@ -66,142 +84,44 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
     };
   }, [onClose]);
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
-        onClick={handleBackdropClick}
-      >
-        <DevIndicator componentName="HighlightOverlay" />
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 bg-bg select-none"
+    >
+      <DevIndicator componentName="HighlightOverlay" />
 
-        <div className="h-full overflow-y-auto">
-          <div className="min-h-full flex items-center justify-center p-4">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="w-full max-w-4xl bg-white rounded-lg overflow-hidden shadow-2xl"
-              onClick={e => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="relative h-64 md:h-80">
-                {showcase.featuredImage?.url ? (
-                  <Image
-                    src={showcase.featuredImage.url}
-                    alt={showcase.featuredImage.alt || showcase.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500">No image available</span>
-                  </div>
-                )}
-
-                {/* Close Button */}
-                <button
-                  onClick={onClose}
-                  className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="m18 6-12 12" />
-                    <path d="m6 6 12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 md:p-8">
-                {/* Title and Meta */}
-                <div className="mb-6">
-                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                    {showcase.title}
-                  </h1>
-
-                  {(showcase.client || showcase.year) && (
-                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                      {showcase.client && (
-                        <span className="font-medium">{showcase.client}</span>
-                      )}
-                      {showcase.year && <span>{showcase.year}</span>}
-                    </div>
-                  )}
-
-                  {/* Tags */}
-                  {showcase.tags && showcase.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {showcase.tags.map(tag => (
-                        <span
-                          key={tag.id}
-                          className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
-                        >
-                          {tag.tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Description */}
-                {showcase.description && (
-                  <div className="mb-8">
-                    <RichText data={showcase.description} />
-                  </div>
-                )}
-
-                {/* Gallery */}
-                {showcase.gallery && showcase.gallery.length > 0 && (
-                  <div className="space-y-6">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      Gallery
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {showcase.gallery.map(item => (
-                        <div key={item.id} className="space-y-2">
-                          <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                            <Image
-                              src={item.image.url}
-                              alt={item.image.alt || item.caption || ''}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          {item.caption && (
-                            <p className="text-sm text-gray-600">
-                              {item.caption}
-                            </p>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </motion.div>
+      <div className="absolute top-0 left-0 p-2 flex gap-x-3  z-10">
+        <span className="uppercase">{showcase.title}</span>
+        <span>({showcase.year})</span>
+        {showcase.assets && showcase.assets.length > 0 && (
+          <div className="flex gap-x-3 fixed bottom-2 left-2 sm:static">
+            <span>
+              {currentAssetIndex + 1}/{showcase.assets.length}
+            </span>
+            {(currentAsset?.caption ||
+              (currentAsset?.blockType === 'text' && currentAsset?.title)) && (
+              <span>{currentAsset.caption || currentAsset.title}</span>
+            )}
           </div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+        )}
+      </div>
+
+      <button onClick={onClose} className="absolute top-0 right-0 p-2 z-20">
+        Stäng
+      </button>
+
+      {/* Content */}
+      {/* Assets Carousel */}
+      {showcase.assets && showcase.assets.length > 0 && (
+        <ShowcaseCarousel
+          assets={showcase.assets}
+          onCurrentAssetChange={handleCurrentAssetChange}
+        />
+      )}
+    </motion.div>
   );
 };
 

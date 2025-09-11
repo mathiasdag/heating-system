@@ -70,6 +70,13 @@ const CTABlock: React.FC<CTABlockProps> = ({
               }`}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
+              onClick={() => {
+                if (link.type === 'copy') {
+                  navigator.clipboard.writeText(link.text || '');
+                } else {
+                  window.location.href = getLinkHref();
+                }
+              }}
             >
               <div className="text-lg transform -rotate-90 p-24">
                 {link.text}

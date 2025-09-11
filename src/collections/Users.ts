@@ -8,6 +8,23 @@ export const Users: CollectionConfig = {
   auth: true,
   fields: [
     // Email added by default
-    // Add more fields as needed
+    {
+      name: 'firstName',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'lastName',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'bylineDescription',
+      type: 'textarea',
+      required: false,
+      admin: {
+        description: 'A brief description or bio for use in article bylines',
+      },
+    },
   ],
 };

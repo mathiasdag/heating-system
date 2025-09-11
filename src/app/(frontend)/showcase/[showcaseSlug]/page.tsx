@@ -1,7 +1,7 @@
 import { getPayload } from 'payload';
 import config from '@/payload.config';
 import { notFound } from 'next/navigation';
-import HighlightOverlay from '@/components/blocks/HighlightOverlay';
+import ShowcasePageWrapper from '@/components/ShowcasePageWrapper';
 
 interface ShowcasePageProps {
   params: {
@@ -23,7 +23,7 @@ async function ShowcasePage({ params }: ShowcasePageProps) {
   const { docs: [showcase] = [] } = await payload.find({
     collection: 'showcases' as any,
     where: { slug: { equals: showcaseSlug } },
-    depth: 1,
+    depth: 2, // Increased depth to populate blocks properly
   });
 
   if (!showcase) {
@@ -34,7 +34,7 @@ async function ShowcasePage({ params }: ShowcasePageProps) {
   // In the future, you might want to add a proper layout here
   return (
     <div className="min-h-screen bg-white">
-      <HighlightOverlay showcase={showcase} currentPath="/" />
+      <ShowcasePageWrapper showcase={showcase} />
     </div>
   );
 }

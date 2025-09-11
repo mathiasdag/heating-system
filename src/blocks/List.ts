@@ -3,6 +3,10 @@ import ListItem from './ListItem';
 
 const List: Block = {
   slug: 'list',
+  labels: {
+    singular: 'List',
+    plural: 'Lists',
+  },
   fields: [
     {
       name: 'header',

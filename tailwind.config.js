@@ -72,7 +72,7 @@ module.exports = {
         sm: ['0.9rem', { lineHeight: '1.15' }],
         base: ['1rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }], // 24px
         md: ['1.2rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
-        lg: ['2rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
+        lg: ['1.5rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
         xl: [
           'clamp(2rem, 5vw, 3.25rem)',
           { lineHeight: '1.1', letterSpacing: '-0.02em' },

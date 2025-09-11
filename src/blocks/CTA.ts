@@ -3,6 +3,10 @@ import LinkGroup from './LinkGroup';
 
 const CTA: Block = {
   slug: 'cta',
+  labels: {
+    singular: 'Call to Action',
+    plural: 'Call to Action Blocks',
+  },
   fields: [
     {
       name: 'headline',

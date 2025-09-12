@@ -81,6 +81,10 @@ module.exports = {
           'clamp(2.5rem, 10vw, 8rem)',
           { lineHeight: '1', letterSpacing: '-0.02em' },
         ],
+        vvCustom: [
+          'clamp(2rem, 10vw, 8rem)',
+          { lineHeight: '1', letterSpacing: '-0.02em' },
+        ],
       },
       screens: {
         xs: '480px',

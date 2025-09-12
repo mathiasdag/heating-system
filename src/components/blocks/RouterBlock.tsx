@@ -3,14 +3,10 @@ import React from 'react';
 import { AppLink } from '../AppLink';
 import { DevIndicator } from '../DevIndicator';
 import { BlockHeader } from './BlockHeader';
+import { routeLink, type LinkGroup } from '../../utils/linkRouter';
 
 interface NavigationLink {
-  link: {
-    type: 'internal' | 'external';
-    reference?: string | { slug: string; collection: string }; // ID or populated object
-    url?: string;
-    text: string;
-  };
+  link: LinkGroup;
 }
 
 interface RouterBlockProps {
@@ -37,41 +33,15 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
         {/* Links stacked vertically */}
         <div className="relative z-10 flex flex-col items-center space-y-24">
           {links.map((link, idx) => {
-            // Determine the href for the link
-            let href: string | undefined = undefined;
-            if (link.link.type === 'internal' && link.link.reference) {
-              // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
-              if (
-                typeof link.link.reference === 'object' &&
-                link.link.reference?.value?.slug
-              ) {
-                href =
-                  link.link.reference.relationTo === 'spaces'
-                    ? `/spaces/${link.link.reference.value.slug}`
-                    : `/${link.link.reference.value.slug}`;
-              }
-              // Handle direct object structure: { slug: "...", collection: "..." }
-              else if (
-                typeof link.link.reference === 'object' &&
-                link.link.reference?.slug
-              ) {
-                href =
-                  link.link.reference.collection === 'spaces'
-                    ? `/spaces/${link.link.reference.slug}`
-                    : `/${link.link.reference.slug}`;
-              } else {
-                // Fallback for unpopulated references (just ID)
-                href = `/${link.link.reference}`;
-              }
-            } else if (link.link.type === 'external') {
-              href = link.link.url;
-            }
+            // Use the link router to resolve the link
+            const linkResult = routeLink(link.link);
+            const href = linkResult.href;
 
             return (
               <div key={idx} className="text-center">
                 {href && (
                   <AppLink
-                    href={href}
+                    link={link.link}
                     className="text-4xl sm:text-6xl md:text-7xl font-ballPill uppercase bg-bg pt-2"
                     variant="minimal"
                   >

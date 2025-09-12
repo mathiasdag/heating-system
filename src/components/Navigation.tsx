@@ -7,6 +7,7 @@ import { CloseNavIcon } from './icons/CloseNavIcon';
 import { VarmeverketIcon } from './icons/VarmeverketIcon';
 import { MarqueeText } from './MarqueeText';
 import Link from 'next/link';
+import { routeLink, type LinkGroup } from '../utils/linkRouter';
 
 // Component for highlight link with marquee effect
 const HighlightLink: React.FC<{
@@ -18,41 +19,8 @@ const HighlightLink: React.FC<{
 }> = ({ link, onClick, linkClasses, isDarkMode, mounted }) => {
   const [isMarqueeing, setIsMarqueeing] = useState(false);
 
-  const href = (() => {
-    if (link.type === 'external') {
-      return link.url || '#';
-    }
-
-    if (link.type === 'internal' && link.reference) {
-      // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
-      if (typeof link.reference === 'object' && link.reference?.value?.slug) {
-        const url =
-          link.reference.relationTo === 'spaces'
-            ? `/spaces/${link.reference.value.slug}`
-            : `/${link.reference.value.slug}`;
-        return url;
-      }
-
-      // Handle direct object structure: { slug: "...", collection: "..." }
-      if (typeof link.reference === 'object' && link.reference?.slug) {
-        const url =
-          link.reference.collection === 'spaces'
-            ? `/spaces/${link.reference.slug}`
-            : `/${link.reference.slug}`;
-        return url;
-      }
-
-      // If reference is just an ID string
-      if (typeof link.reference === 'string') {
-        return `/${link.reference}`;
-      }
-
-      // Fallback to prevent [object Object] URLs
-      return '#';
-    }
-
-    return '#';
-  })();
+  const linkResult = routeLink(link);
+  const href = linkResult.href || '#';
 
   return (
     <a
@@ -81,15 +49,8 @@ const HighlightLink: React.FC<{
   );
 };
 
-export interface NavigationLink {
-  type: 'internal' | 'external' | 'copy';
-  reference?: {
-    id: string;
-    title: string;
-    slug: string;
-  };
-  url?: string;
-  text?: string;
+export interface NavigationLink extends LinkGroup {
+  reference?: any; // Payload reference object - can be various shapes
 }
 
 export interface MenuItem {
@@ -161,44 +122,8 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
         );
       }
 
-      const href = (() => {
-        if (item.link.type === 'external') {
-          return item.link.url || '#';
-        }
-
-        if (item.link.type === 'internal' && item.link.reference) {
-          // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
-          if (
-            typeof item.link.reference === 'object' &&
-            item.link.reference?.value?.slug
-          ) {
-            return item.link.reference.relationTo === 'spaces'
-              ? `/spaces/${item.link.reference.value.slug}`
-              : `/${item.link.reference.value.slug}`;
-          }
-
-          // Handle direct object structure: { slug: "...", collection: "..." }
-          if (
-            typeof item.link.reference === 'object' &&
-            item.link.reference?.slug
-          ) {
-            return item.link.reference.collection === 'spaces'
-              ? `/spaces/${item.link.reference.slug}`
-              : `/${item.link.reference.slug}`;
-          }
-
-          // If reference is just an ID string
-          if (typeof item.link.reference === 'string') {
-            return `/${item.link.reference}`;
-          }
-
-          // Fallback to prevent [object Object] URLs
-          console.warn('Invalid reference object:', item.link.reference);
-          return '#';
-        }
-
-        return '#';
-      })();
+      const linkResult = routeLink(item.link);
+      const href = linkResult.href || '#';
 
       return (
         <a

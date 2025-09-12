@@ -5,6 +5,7 @@ import { AppAction } from '../AppLink';
 import Tag from '../Tag';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
+import { routeLink, type LinkGroup } from '../../utils/linkRouter';
 
 interface Tag {
   id: string;
@@ -42,30 +43,12 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   link,
 }) => {
   const renderActionButton = (link: LinkGroup) => {
-    if (link.type === 'copy') {
+    const linkResult = routeLink(link);
+    
+    if (linkResult.isExternal) {
       return (
         <AppAction
-          href={link.text} // Use text as the URL for copy actions
-          actionType="copy"
-          variant="outline"
-        >
-          {link.text.toUpperCase()}
-        </AppAction>
-      );
-    }
-
-    if (link.type === 'internal' && link.reference) {
-      return (
-        <AppAction href={`/${link.reference.slug}`} variant="outline">
-          {link.text.toUpperCase()}
-        </AppAction>
-      );
-    }
-
-    if (link.type === 'external' && link.url) {
-      return (
-        <AppAction
-          href={link.url}
+          link={link}
           className="flex items-center gap-3 px-4 xl:px-6 py-3 border border-text rounded-lg hover:bg-text hover:text-white transition-colors duration-200 w-full min-w-0"
           variant="minimal"
         >
@@ -83,13 +66,20 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
             />
           </svg>
           <span className="font-mono text-xs xl:text-sm truncate min-w-0">
-            {link.text.toUpperCase()}
+            {link.text?.toUpperCase()}
           </span>
         </AppAction>
       );
     }
 
-    return null;
+    return (
+      <AppAction
+        link={link}
+        variant="outline"
+      >
+        {link.text?.toUpperCase()}
+      </AppAction>
+    );
   };
 
   return (

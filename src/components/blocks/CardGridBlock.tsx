@@ -5,18 +5,14 @@ import { MediaCard } from './MediaCard';
 import clsx from 'clsx';
 import { DevIndicator } from '../DevIndicator';
 import { BlockHeader } from './BlockHeader';
+import { routeLink, type LinkGroup } from '../../utils/linkRouter';
 
 interface Card {
   title: string;
   description?: string;
   image?: { url: string; alt?: string };
   tags?: { id: string; name: string; description?: string }[];
-  link?: {
-    type: 'internal' | 'external';
-    reference?: { slug: string };
-    url?: string;
-    text?: string;
-  };
+  link?: LinkGroup;
 }
 
 interface CardGridBlockProps {
@@ -85,14 +81,8 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
       {link && (link.url || link.reference) && (
         <div className="mt-8 text-center">
           <AppLink
-            href={
-              link.type === 'internal' && link.reference
-                ? `/pages/${link.reference.slug}`
-                : link.url || '#'
-            }
+            link={link}
             className="inline-block px-6 py-3 bg-text text-white rounded font-bold hover:bg-accent transition"
-            target={link.type === 'external' ? '_blank' : undefined}
-            rel={link.type === 'external' ? 'noopener noreferrer' : undefined}
           >
             {link.text || 'See all'}
           </AppLink>

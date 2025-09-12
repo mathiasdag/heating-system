@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { routeLink, type LinkGroup, isExternalUrl, getExternalLinkAttributes } from '../utils/linkRouter';
 
 interface AppActionProps {
   href?: string;
@@ -13,6 +14,8 @@ interface AppActionProps {
   onClick?: React.MouseEventHandler<HTMLElement>;
   target?: string;
   rel?: string;
+  // New prop for LinkGroup support
+  link?: LinkGroup;
 }
 
 const baseStyles = {
@@ -33,13 +36,23 @@ export const AppAction: React.FC<AppActionProps> = ({
   className = '',
   actionType = 'link',
   onCopy,
+  link,
 }) => {
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // Use link router if link prop is provided, otherwise fall back to legacy behavior
+  const linkResult = link ? routeLink(link) : {
+    href: href || '#',
+    isExternal: href ? isExternalUrl(href) : false,
+    isCopy: actionType === 'copy',
+    shouldRenderAsButton: asButton || actionType === 'copy',
+  };
+
   const handleCopy = async () => {
-    if (href) {
+    const textToCopy = linkResult.href || href || '';
+    if (textToCopy) {
       try {
-        await navigator.clipboard.writeText(href);
+        await navigator.clipboard.writeText(textToCopy);
         setShowSuccess(true);
         setTimeout(() => setShowSuccess(false), 2000);
         onCopy?.();
@@ -52,7 +65,7 @@ export const AppAction: React.FC<AppActionProps> = ({
   const style = baseStyles[variant] + ' ' + className;
 
   // Handle copy action
-  if (actionType === 'copy') {
+  if (linkResult.isCopy || actionType === 'copy') {
     return (
       <>
         <button onClick={handleCopy} className={style} type="button">
@@ -82,8 +95,8 @@ export const AppAction: React.FC<AppActionProps> = ({
     );
   }
 
-  // Handle link actions
-  if (asButton) {
+  // Handle button actions
+  if (linkResult.shouldRenderAsButton || asButton) {
     return (
       <button className={style} type="button">
         {children}
@@ -91,27 +104,28 @@ export const AppAction: React.FC<AppActionProps> = ({
     );
   }
 
-  if (!href) {
+  if (!linkResult.href || linkResult.href === '#') {
     return null;
   }
 
-  const isExternal = href.startsWith('http');
-
-  if (isExternal) {
+  // Handle external links
+  if (linkResult.isExternal) {
+    const externalAttrs = getExternalLinkAttributes();
     return (
       <a
-        href={href}
+        href={linkResult.href}
         className={style}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={externalAttrs.target}
+        rel={externalAttrs.rel}
       >
         {children}
       </a>
     );
   }
 
+  // Handle internal links
   return (
-    <Link href={href} className={style}>
+    <Link href={linkResult.href} className={style}>
       {children}
     </Link>
   );

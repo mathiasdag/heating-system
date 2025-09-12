@@ -4,17 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
 import { AppAction } from '../AppLink';
+import { routeLink, type LinkGroup } from '../../utils/linkRouter';
 
 interface CTABlockProps {
   headline: string;
   ctaType: 'default' | 'rotating';
   description?: any; // Lexical RichText type
-  link: {
-    type: 'internal' | 'external' | 'copy';
-    reference?: any;
-    url?: string;
-    text?: string;
-  };
+  link: LinkGroup;
 }
 
 const CTABlock: React.FC<CTABlockProps> = ({
@@ -25,26 +21,10 @@ const CTABlock: React.FC<CTABlockProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const getLinkHref = () => {
-    if (link.type === 'internal' && link.reference?.slug) {
-      return `/${link.reference.slug}`;
-    }
-    if (link.type === 'external') {
-      return link.url;
-    }
-    if (link.type === 'copy') {
-      return link.text; // For copy action, use text as the value to copy
-    }
-    return '#';
-  };
-
   const renderLink = () => {
-    const href = getLinkHref();
-
     return (
       <AppAction
-        href={href}
-        {...(link.type === 'copy' && { actionType: 'copy' })}
+        link={link}
         variant="outline"
         className="block w-full min-w-0 hover:bg-white hover:text-black"
       >
@@ -71,10 +51,11 @@ const CTABlock: React.FC<CTABlockProps> = ({
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onClick={() => {
-                if (link.type === 'copy') {
+                const linkResult = routeLink(link);
+                if (linkResult.isCopy) {
                   navigator.clipboard.writeText(link.text || '');
                 } else {
-                  window.location.href = getLinkHref();
+                  window.location.href = linkResult.href || '#';
                 }
               }}
             >

@@ -3,22 +3,14 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../../DevIndicator';
 import { AppLink } from '../../AppLink';
 import Marquee from 'react-fast-marquee';
+import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
 
 interface ArticleCTABlockProps {
   headline: string;
   ctaType?: 'default' | 'rotating' | 'marquee';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   description?: any; // Lexical RichText type
-  link?: {
-    type?: 'internal' | 'external';
-    reference?:
-      | string
-      | { slug: string }
-      | { relationTo: string; value: { slug: string } }
-      | null;
-    url?: string;
-    text?: string;
-  };
+  link?: LinkGroup;
 }
 
 // Helper function to create marquee text with repetitions
@@ -38,40 +30,8 @@ export default function ArticleCTABlock({
   description,
   link,
 }: ArticleCTABlockProps) {
-  // Determine the href for the CTA
-  let href: string | undefined = undefined;
-  if (link?.type === 'internal' && link?.reference) {
-    // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
-    if (
-      typeof link.reference === 'object' &&
-      'relationTo' in link.reference &&
-      'value' in link.reference &&
-      link.reference.value?.slug
-    ) {
-      const collection = link.reference.relationTo;
-      const slug = link.reference.value.slug;
-      href =
-        collection === 'spaces'
-          ? `/spaces/${slug}`
-          : collection === 'articles'
-            ? `/artikel/${slug}`
-            : `/${slug}`;
-    }
-    // Handle direct object structure: { slug: "..." }
-    else if (
-      typeof link.reference === 'object' &&
-      'slug' in link.reference &&
-      !('relationTo' in link.reference)
-    ) {
-      href = `/artikel/${link.reference.slug}`;
-    }
-    // If reference is just an ID string
-    else if (typeof link.reference === 'string') {
-      href = `/artikel/${link.reference}`;
-    }
-  } else if (link?.type === 'external') {
-    href = link.url;
-  }
+  // Use the link router to resolve the link
+  const linkResult = link ? routeLink(link) : { href: undefined, isExternal: false, isCopy: false, shouldRenderAsButton: false };
 
   if (ctaType === 'marquee') {
     return (
@@ -84,8 +44,8 @@ export default function ArticleCTABlock({
               <RichText data={description} className="font-mono" />
             )}
           </div>
-          {href && typeof href === 'string' && link?.text && (
-            <AppLink href={href} variant="primary" className="h-[2.333em] px-0">
+          {linkResult.href && typeof linkResult.href === 'string' && link?.text && (
+            <AppLink link={link} variant="primary" className="h-[2.333em] px-0">
               <Marquee speed={50}>{createMarqueeText(link.text)}</Marquee>
             </AppLink>
           )}
@@ -104,8 +64,8 @@ export default function ArticleCTABlock({
             <RichText data={description} />
           </div>
         )}
-        {href && typeof href === 'string' && link?.text && (
-          <AppLink href={href} variant="secondary">
+        {linkResult.href && typeof linkResult.href === 'string' && link?.text && (
+          <AppLink link={link} variant="secondary">
             <Marquee speed={30}>{createMarqueeText(link.text)}</Marquee>
           </AppLink>
         )}

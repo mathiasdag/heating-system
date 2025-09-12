@@ -19,6 +19,7 @@ const CTA: Block = {
       options: [
         { label: 'Default', value: 'default' },
         { label: 'Rotating Button', value: 'rotating' },
+        { label: 'Marquee', value: 'marquee' },
       ],
       required: true,
       defaultValue: 'default',

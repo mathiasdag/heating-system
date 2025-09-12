@@ -5,24 +5,29 @@ import ListBlock from '@/components/blocks/ListBlock';
 import TextBlock from '@/components/blocks/TextBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
-import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
-import { HeaderBlock as ArticlesHeaderBlock } from '@/components/blocks/articles';
-import QABlock from '@/components/blocks/QABlock';
+import {
+  HeaderBlock as ArticlesHeaderBlock,
+  QABlock,
+  QuoteBlock,
+  ImageBlock,
+  ArticleCTABlock,
+} from '@/components/blocks/articles';
+import VideoBlock from '@/components/blocks/VideoBlock';
 import React from 'react';
 import { notFound } from 'next/navigation';
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function ArticlePage({ params }: ArticlePageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
 
-  const { slug } = params;
+  const { slug } = await params;
 
   // Fetch the article by slug
   const { docs: [article] = [] } = await payload.find({
@@ -43,13 +48,21 @@ async function ArticlePage({ params }: ArticlePageProps) {
     (block: any) => block.blockType === 'header'
   );
 
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('sv-SE', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
   return (
     <div data-content-type="article" className="min-h-screen">
       {/* Article Header */}
       <ArticlesHeaderBlock articleData={article} headerBlock={headerBlock} />
 
       {/* Article Content */}
-      <main className="px-4 grid grid-cols-12 gap-4 pb-16">
+      <main className="grid grid-cols-12 gap-4 pb-8">
         {article?.layout
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ?.filter((block: any) => block.blockType !== 'header')
@@ -59,6 +72,14 @@ async function ArticlePage({ params }: ArticlePageProps) {
             switch (block.blockType) {
               case 'qa':
                 return <QABlock key={i} {...cleanBlock} />;
+              case 'quote':
+                return <QuoteBlock key={i} {...cleanBlock} />;
+              case 'image':
+                return <ImageBlock key={i} {...cleanBlock} />;
+              case 'video':
+                return <VideoBlock key={i} {...cleanBlock} />;
+              case 'cta':
+                return <ArticleCTABlock key={i} {...cleanBlock} />;
               case 'feature':
                 return <FeatureBlock key={i} {...cleanBlock} />;
               case 'list':
@@ -69,8 +90,6 @@ async function ArticlePage({ params }: ArticlePageProps) {
                 return <SimpleCarouselBlock key={i} {...cleanBlock} />;
               case 'assetText':
                 return <AssetTextBlock key={i} {...cleanBlock} />;
-              case 'cta':
-                return <CTABlock key={i} {...cleanBlock} />;
               case 'highlightGrid':
                 return <HighlightGridBlock key={i} {...cleanBlock} />;
               default:
@@ -79,6 +98,21 @@ async function ArticlePage({ params }: ArticlePageProps) {
             }
           })}
       </main>
+      <footer className="font-mono mx-auto max-w-xl px-4 pb-36">
+        ———
+        <div>
+          Ord: &nbsp;
+          {article.author.firstName &&
+            article.author.lastName &&
+            `${article.author.firstName} ${article.author.lastName}`}
+        </div>
+        <div>
+          {article.lastModifiedDate
+            ? `Senast uppdaterad: ${formatDate(article.lastModifiedDate)}`
+            : `Publicerad: ${formatDate(article.publishedDate || '')}`}
+        </div>
+        <div className="mt-4">{article.author.bylineDescription}</div>
+      </footer>
     </div>
   );
 }

@@ -92,7 +92,7 @@ export default function HeaderBlock({
           {headerBlock.assets.map((asset, index) => (
             <div
               key={index}
-              className="h-[80vh] flex items-center justify-center"
+              className="max-h-[80vh] flex items-center justify-center"
             >
               {asset.type === 'image' && asset.image && (
                 <Image

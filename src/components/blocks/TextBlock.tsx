@@ -1,7 +1,7 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
-import AppLink from '../AppLink';
+import { AppLink } from '../AppLink';
 
 interface TextBlockProps {
   headline: string;

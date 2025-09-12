@@ -175,3 +175,17 @@ h2.font-sans,
 [data-content-type='space'] .rich-text h2:first-child {
   margin-top: 0em;
 }
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}

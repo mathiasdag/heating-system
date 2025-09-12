@@ -8,6 +8,9 @@ import CTA from '../blocks/CTA';
 import HighlightGrid from '../blocks/HighlightGrid';
 import Header from '../blocks/Header';
 import QA from '../blocks/articles/QA';
+import Quote from '../blocks/articles/Quote';
+import Image from '../blocks/articles/Image';
+import Video from '../blocks/Video';
 
 const Articles: CollectionConfig = {
   slug: 'articles',
@@ -124,6 +127,9 @@ const Articles: CollectionConfig = {
       blocks: [
         Header,
         QA,
+        Quote,
+        Image,
+        Video,
         Feature,
         List,
         Text,

@@ -21,19 +21,21 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function DynamicPage({ params }: PageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
 
+  const { slug } = await params;
+
   // Fetch the page by slug
   const { docs: [page] = [] } = await payload.find({
     collection: 'pages' as any,
-    where: { slug: { equals: params.slug } },
+    where: { slug: { equals: slug } },
     depth: 2, // Increased depth to populate relationship data within blocks
   });
 

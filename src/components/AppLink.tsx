@@ -33,7 +33,6 @@ export const AppAction: React.FC<AppActionProps> = ({
   className = '',
   actionType = 'link',
   onCopy,
-  ...rest
 }) => {
   const [showSuccess, setShowSuccess] = useState(false);
 

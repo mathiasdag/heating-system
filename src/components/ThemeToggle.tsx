@@ -5,12 +5,10 @@ import { useTheme } from 'next-themes';
 interface ThemeToggleProps {
   showLabel?: boolean;
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
 }
 
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   className = '',
-  size = 'md',
 }) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -20,18 +18,9 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     setMounted(true);
   }, []);
 
-  // Size variants
-  const sizeClasses = {
-    sm: 'text-xs px-2 py-1',
-    md: 'text-sm px-3 py-2',
-    lg: 'text-base px-4 py-3',
-  };
-
   if (!mounted) {
     // Return a placeholder that matches the server-rendered content
-    return (
-      <span className={`${sizeClasses[size]} ${className}`}>Undefined</span>
-    );
+    return <span className={className}>Undefined</span>;
   }
 
   const handleToggle = () => {
@@ -52,7 +41,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
   return (
     <button
-      className={`uppercase border border-text rounded-sm hover:bg-text hover:text-white transition-colors duration-200 ${sizeClasses[size]} ${className}`}
+      className={`uppercase ${className}`}
       onClick={handleToggle}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light'} mode`}
       title={`Current: ${getLabel()} mode`}

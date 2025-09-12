@@ -5,23 +5,19 @@ import { DevIndicator } from './DevIndicator';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative border-t border-gray-200 dark:border-dark-border bg-bg dark:bg-dark-surface">
+    <footer className="relative">
       <DevIndicator componentName="Footer" />
 
-      <div className="max-w-7xl mx-auto px-4 py-24">
-        <div className="flex items-center justify-between">
-          {/* Left side - could add links, copyright, etc. */}
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            <p>&copy; 2024 Varmeverket. All rights reserved.</p>
-          </div>
-
-          {/* Right side - Theme toggle */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              Theme:
-            </span>
-            <ThemeToggle size="sm" showLabel={false} />
-          </div>
+      <div className="flex items-center justify-between gap-2 p-2 uppercase">
+        <div className="flex gap-2">
+          <div>&copy; {new Date().getFullYear()} Varmeverket</div>
+          <div>Bredängsvägen 203, 127 34 Skärholmen</div>
+          <div>Email</div>
+          <div>Instagram</div>
+          <div>Terms of service</div>
+        </div>
+        <div>
+          Theme: <ThemeToggle showLabel={false} />
         </div>
       </div>
     </footer>

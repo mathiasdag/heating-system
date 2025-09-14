@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
-import { AppLink } from '../AppLink';
-import { DevIndicator } from '../DevIndicator';
-import { BlockHeader } from './BlockHeader';
-import { routeLink, type LinkGroup } from '../../utils/linkRouter';
+import { AppLink } from '../../AppLink';
+import { DevIndicator } from '../../DevIndicator';
+import { BlockHeader } from '../BlockHeader';
+import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
 
 interface NavigationLink {
   link: LinkGroup;

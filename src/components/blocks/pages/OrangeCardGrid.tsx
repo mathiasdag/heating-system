@@ -1,10 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { AppLink } from '../AppLink';
-import { MediaCard } from './MediaCard';
-import { DevIndicator } from '../DevIndicator';
-import { BlockHeader } from './BlockHeader';
-import { routeLink, type LinkGroup } from '../../utils/linkRouter';
+import { AppLink } from '../../AppLink';
+import { MediaCard } from '../MediaCard';
+import { DevIndicator } from '../../DevIndicator';
+import { BlockHeader } from '../BlockHeader';
+import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
 
 interface Card {
   title: string;

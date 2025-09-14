@@ -1,6 +1,6 @@
 import type { Block } from 'payload';
-import LinkGroup from './LinkGroup';
-import { BlockHeaderFields } from './BlockHeaderFields';
+import LinkGroup from '../LinkGroup';
+import { BlockHeaderFields } from '../BlockHeaderFields';
 
 const Carousel: Block = {
   slug: 'carousel',

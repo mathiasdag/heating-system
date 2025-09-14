@@ -3,11 +3,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '../DevIndicator';
-import { MarqueeText } from '../MarqueeText';
-import { BlinkHover } from '../BlinkHover';
-import { AppAction } from '../AppLink';
-import Tag from '../Tag';
+import { DevIndicator } from '../../DevIndicator';
+import { MarqueeText } from '../../MarqueeText';
+import { BlinkHover } from '../../BlinkHover';
+import { AppAction } from '../../AppLink';
+import Tag from '../../Tag';
 import Image from 'next/image';
 import clsx from 'clsx';
 

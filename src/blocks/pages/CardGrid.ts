@@ -1,9 +1,9 @@
 import type { Block } from 'payload';
-import CommonCard from './CommonCard';
-import { BlockHeaderFields } from './BlockHeaderFields';
+import CommonCard from '../CommonCard';
+import { BlockHeaderFields } from '../BlockHeaderFields';
 
-const OrangeCardGrid: Block = {
-  slug: 'orange-card-grid',
+const CardGrid: Block = {
+  slug: 'card-grid',
   fields: [
     ...BlockHeaderFields, // Already optional by default
     {
@@ -16,4 +16,4 @@ const OrangeCardGrid: Block = {
   ],
 };
 
-export default OrangeCardGrid;
+export default CardGrid;

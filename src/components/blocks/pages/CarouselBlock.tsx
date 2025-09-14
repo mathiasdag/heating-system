@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 import Slider from 'react-slick';
-import CarouselSlide from './CarouselSlide';
-import { DevIndicator } from '../DevIndicator';
-import { BlockHeader } from './BlockHeader';
+import CarouselSlide from '../CarouselSlide';
+import { DevIndicator } from '../../DevIndicator';
+import { BlockHeader } from '../BlockHeader';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 

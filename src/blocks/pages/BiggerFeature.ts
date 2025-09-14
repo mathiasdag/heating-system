@@ -1,5 +1,5 @@
 import type { Block } from 'payload';
-import LinkGroup from './LinkGroup';
+import LinkGroup from '../LinkGroup';
 
 const BiggerFeature: Block = {
   slug: 'spotlight',

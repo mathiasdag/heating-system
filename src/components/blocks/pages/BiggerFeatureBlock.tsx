@@ -43,7 +43,7 @@ const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
   });
 
   // Image movement based on scroll progress
-  const imageY = useTransform(scrollYProgress, [0, 0.5], ['0%', '-500%']);
+  const imageY = useTransform(scrollYProgress, [0.2, 0.7], ['0%', '-500%']);
 
   React.useEffect(() => {
     if (inView) {
@@ -74,10 +74,19 @@ const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
   return (
     <section
       ref={ref}
-      className="relative grid gap-8 py-16 px-4 text-center h-[250vh]"
+      className={clsx(
+        'relative grid gap-8 py-8 px-4 text-center',
+        image?.url ? 'h-[250vh]' : ''
+      )}
     >
       <DevIndicator componentName="BiggerFeatureBlock" />
-      <div className="flex flex-col gap-8 sticky top-0 inset-x-0 h-screen justify-center items-center">
+      <div
+        className={clsx(
+          'flex flex-col gap-8',
+          image?.url &&
+            'sticky top-0 inset-x-0 h-screen justify-center items-center'
+        )}
+      >
         <div className="pt-8 mx-auto grid max-w-8xl">
           {headline ? <h2 className="font-display">{headline}</h2> : null}
           {subheadline && (

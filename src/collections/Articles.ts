@@ -7,7 +7,7 @@ import AssetText from '../blocks/AssetText';
 import CTA from '../blocks/CTA';
 import HighlightGrid from '../blocks/HighlightGrid';
 import Header from '../blocks/Header';
-import QA from '../blocks/articles/QA';
+import QA from '../blocks/QA';
 import Quote from '../blocks/articles/Quote';
 import Image from '../blocks/articles/Image';
 import Video from '../blocks/Video';

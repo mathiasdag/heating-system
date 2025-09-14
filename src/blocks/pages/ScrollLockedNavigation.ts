@@ -1,5 +1,5 @@
 import type { Block } from 'payload';
-import CommonCard from './CommonCard';
+import CommonCard from '../CommonCard';
 
 const ScrollLockedNavigation: Block = {
   slug: 'scrollLockedNavigation',

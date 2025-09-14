@@ -1,49 +1,28 @@
 'use client';
-import React, { useRef, useState, useLayoutEffect, useEffect } from 'react';
-import { MediaCard } from './MediaCard';
-import { AppLink } from '../AppLink';
-import { DevIndicator } from '../DevIndicator';
-import { BlockHeader } from './BlockHeader';
+import React, {
+  useRef,
+  useState,
+  useLayoutEffect,
+  useEffect,
+  ReactNode,
+} from 'react';
+import { DevIndicator } from './DevIndicator';
 
-interface Card {
-  badge?: string;
-  title: string;
-  description: string;
-  link?: {
-    type?: 'internal' | 'external';
-    text?: string;
-    url?: string;
-    reference?: any;
-  };
+export interface HorizontalSnapCarouselProps {
+  children: ReactNode[];
+  className?: string;
+  cardClassName?: string;
+  showDevIndicator?: boolean;
+  getItemTitle?: (index: number) => string; // Function to get title for accessibility
 }
 
-interface HorizontalCardBlockProps {
-  headline: string;
-  cards: Card[];
-  link?: {
-    type?: 'internal' | 'external';
-    text?: string;
-    url?: string;
-    reference?: any;
-  };
-}
-
-const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
-  headline,
-  cards,
-  link,
+const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
+  children,
+  className = '',
+  cardClassName = '',
+  showDevIndicator = false,
+  getItemTitle = index => `Item ${index + 1}`,
 }) => {
-  // Determine the href for the CTA
-  let href: string | undefined = undefined;
-  if (link?.type === 'internal' && link?.reference) {
-    href =
-      typeof link.reference === 'object' && link.reference?.slug
-        ? `/pages/${link.reference.slug}`
-        : `/pages/${link.reference}`;
-  } else if (link?.type === 'external') {
-    href = link.url;
-  }
-
   // Refs for keyboard navigation
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -82,7 +61,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [cards.length]);
+  }, [children.length]);
 
   // Track which card is centered in the viewport (can stay in useEffect)
   useEffect(() => {
@@ -116,7 +95,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
     return () => {
       if (container) container.removeEventListener('scroll', handleScroll);
     };
-  }, [cards.length]);
+  }, [children.length]);
 
   // Keyboard navigation handler
   const handleKeyDown = (
@@ -135,9 +114,10 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
   };
 
   return (
-    <section className="py-12 relative" role="region" aria-label={headline}>
-      <DevIndicator componentName="HorizontalCardBlock" />
-      <BlockHeader headline={headline} />
+    <div className={`relative ${className}`}>
+      {showDevIndicator && (
+        <DevIndicator componentName="HorizontalSnapCarousel" />
+      )}
       <div
         ref={scrollContainerRef}
         className={
@@ -148,10 +128,10 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
         }
         role="list"
         tabIndex={0}
-        aria-label={`${headline} cards`}
+        aria-label="Carousel items"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        {cards.map((card, idx) => (
+        {children.map((child, idx) => (
           <div
             key={idx}
             role="listitem"
@@ -164,31 +144,26 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
               (showDots && activeIdx !== idx ? 'opacity-80' : '')
             }
             onKeyDown={e => handleKeyDown(e, idx)}
-            aria-label={card.title}
+            aria-label={getItemTitle(idx)}
           >
-            <div className="flex flex-col justify-between bg-surface rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2">
-              <MediaCard {...card} buttonVariant="primary" />
+            <div
+              className={`flex flex-col justify-between bg-surface rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2 ${cardClassName}`}
+            >
+              {child}
             </div>
           </div>
         ))}
       </div>
       {/* Pagination dots: only show if only one card is visible in the viewport */}
-      {showDots && cards.length > 1 && (
+      {showDots && children.length > 1 && (
         <div className="flex justify-center space-x-2">
-          {cards.map((_, idx) => (
+          {children.map((_, idx) => (
             <span
               key={idx}
               className={`inline-block w-1.5 h-1.5 rounded-full transition-all duration-200 ${activeIdx === idx ? 'bg-text' : 'border'}`}
               aria-label={activeIdx === idx ? 'Current card' : undefined}
             />
           ))}
-        </div>
-      )}
-      {href && link?.text && (
-        <div className="flex justify-center mt-8">
-          <AppLink href={href} variant="primary" className="">
-            {link.text}
-          </AppLink>
         </div>
       )}
       {/* Hide scrollbar for all browsers */}
@@ -201,8 +176,8 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
           scrollbar-width: none;
         }
       `}</style>
-    </section>
+    </div>
   );
 };
 
-export default HorizontalCardBlock;
+export default HorizontalSnapCarousel;

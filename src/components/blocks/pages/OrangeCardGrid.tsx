@@ -110,7 +110,7 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
                   Array.from({ length: emptyCount }).map((_, idx) => (
                     <div
                       key={`empty-${idx}`}
-                      className="border-r aspect-window pointer-events-none"
+                      className="border-r border-text aspect-window pointer-events-none"
                       aria-hidden="true"
                     />
                   ))}

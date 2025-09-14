@@ -171,6 +171,9 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
         <motion.div
           className="flex gap-4 justify-center select-none mb-8"
           style={{ scale: assetScale }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
         >
           {beforeAssets.map((asset, i) => (
             <React.Fragment key={i}>
@@ -182,22 +185,28 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
 
       {/* Render rich text with enhanced motion effects */}
       <motion.div
-        className="fixed inset-0 flex items-center justify-center"
+        className="fixed inset-x-0 top-0 h-[80vh] flex items-center justify-center"
         style={{
           opacity,
           scale,
           y,
         }}
       >
-        <div ref={richTextRef} className="max-w-7xl mx-auto px-4 pb-32 pt-24">
+        <motion.div
+          ref={richTextRef}
+          className="max-w-7xl mx-auto px-4 pb-32 pt-24"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+        >
           <RichText
             data={text}
             className="rich-text font-mono grid gap-3 hyphens-auto"
           />
-        </div>
+        </motion.div>
       </motion.div>
       <div
-        className="h-[80vh]"
+        className="h-[80vh] max-h-[600px]"
         style={{
           minHeight: richTextHeight > 0 ? `${richTextHeight + 150}px` : '80vh',
         }}
@@ -208,6 +217,9 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
           <motion.div
             className={`relative z-10 flex justify-center flex-row gap-4`}
             style={{ scale: assetScale }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, ease: 'easeOut', delay: 0.6 }}
           >
             {afterAssets.map((asset, i) => (
               <div key={i} className={afterAssets.length > 1 ? 'flex-1' : ''}>

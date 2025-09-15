@@ -1,7 +1,7 @@
 import type { Block } from 'payload';
 
-const SimpleCarousel: Block = {
-  slug: 'simpleCarousel',
+const MinimalCarousel: Block = {
+  slug: 'minimalCarousel',
   fields: [
     {
       name: 'assets',
@@ -37,4 +37,4 @@ const SimpleCarousel: Block = {
   ],
 };
 
-export default SimpleCarousel;
+export default MinimalCarousel;

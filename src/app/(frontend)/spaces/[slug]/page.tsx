@@ -1,6 +1,5 @@
 import { getPayload } from 'payload';
 import config from '@/payload.config';
-import FeatureBlock from '@/components/blocks/FeatureBlock';
 import ListBlock from '@/components/blocks/ListBlock';
 import TextBlock from '@/components/blocks/TextBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
@@ -45,13 +44,13 @@ async function SpacePage({ params }: SpacePageProps) {
         {space?.layout?.map((block: any, i: number) => {
           const cleanBlock = JSON.parse(JSON.stringify(block));
           switch (block.blockType) {
-            case 'feature':
-              return <FeatureBlock key={i} {...cleanBlock} />;
+            case 'assetText':
+              return <AssetTextBlock key={i} {...cleanBlock} />;
             case 'list':
               return <ListBlock key={i} {...cleanBlock} />;
             case 'text':
               return <TextBlock key={i} {...cleanBlock} />;
-            case 'simpleCarousel':
+            case 'minimalCarousel':
               return <SimpleCarouselBlock key={i} {...cleanBlock} />;
             case 'assetText':
               return <AssetTextBlock key={i} {...cleanBlock} />;

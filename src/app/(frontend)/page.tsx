@@ -1,6 +1,5 @@
 import { getPayload } from 'payload';
 import config from '@/payload.config';
-import FeatureBlock from '@/components/blocks/FeatureBlock';
 import HeaderBlock from '@/components/blocks/pages/HeaderBlock';
 import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
@@ -33,8 +32,8 @@ export default async function HomePage() {
       {page?.layout?.map((block: any, i: number) => {
         const cleanBlock = JSON.parse(JSON.stringify(block));
         switch (block.blockType) {
-          case 'feature':
-            return <FeatureBlock key={i} {...cleanBlock} />;
+          case 'assetText':
+            return <AssetTextBlock key={i} {...cleanBlock} />;
           case 'header':
             return <HeaderBlock key={i} {...cleanBlock} />;
           case 'animated-feature':
@@ -60,7 +59,7 @@ export default async function HomePage() {
             return <ScrollLockedNavigationBlock key={i} {...cleanBlock} />;
           case 'text':
             return <TextBlock key={i} {...cleanBlock} />;
-          case 'simpleCarousel':
+          case 'minimalCarousel':
             return <SimpleCarouselBlock key={i} {...cleanBlock} />;
           case 'assetText':
             return <AssetTextBlock key={i} {...cleanBlock} />;

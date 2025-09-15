@@ -1,9 +1,8 @@
 import type { CollectionConfig } from 'payload';
-import Feature from '../blocks/Feature';
+import AssetText from '../blocks/AssetText';
 import List from '../blocks/List';
 import Text from '../blocks/Text';
-import SimpleCarousel from '../blocks/SimpleCarousel';
-import AssetText from '../blocks/AssetText';
+import MinimalCarousel from '../blocks/MinimalCarousel';
 import CTA from '../blocks/CTA';
 import HighlightGrid from '../blocks/HighlightGrid';
 import Header from '../blocks/Header';
@@ -130,11 +129,10 @@ const Articles: CollectionConfig = {
         Quote,
         Image,
         Video,
-        Feature,
+        AssetText,
         List,
         Text,
-        SimpleCarousel,
-        AssetText,
+        MinimalCarousel,
         CTA,
         HighlightGrid,
       ],

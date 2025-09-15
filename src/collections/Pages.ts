@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload';
-import Feature from '../blocks/Feature';
+import AssetText from '../blocks/AssetText';
 import Header from '../blocks/Header';
 import Spotlight from '../blocks/pages/BiggerFeature';
 import HorizontalCardBlock from '../blocks/pages/HorizontalCardBlock';
@@ -10,8 +10,7 @@ import Carousel from '../blocks/pages/Carousel';
 import List from '../blocks/List';
 import ScrollLockedNavigation from '../blocks/pages/ScrollLockedNavigation';
 import Text from '../blocks/Text';
-import SimpleCarousel from '../blocks/SimpleCarousel';
-import AssetText from '../blocks/AssetText';
+import MinimalCarousel from '../blocks/MinimalCarousel';
 import CTA from '../blocks/CTA';
 import HighlightGrid from '../blocks/HighlightGrid';
 
@@ -40,7 +39,7 @@ const Pages: CollectionConfig = {
       type: 'blocks',
       required: false,
       blocks: [
-        Feature,
+        AssetText,
         Header,
         Spotlight,
         HorizontalCardBlock,
@@ -51,8 +50,7 @@ const Pages: CollectionConfig = {
         List, // Added List block
         ScrollLockedNavigation, // Added ScrollLockedNavigation block
         Text, // Added Text block
-        SimpleCarousel, // Added SimpleCarousel block
-        AssetText, // Added AssetText block
+        MinimalCarousel, // Added MinimalCarousel block
         CTA, // Added CTA block
         HighlightGrid, // Added HighlightGrid block
         // Add more blocks here as needed

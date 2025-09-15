@@ -1,9 +1,8 @@
 import type { CollectionConfig } from 'payload';
-import Feature from '../blocks/Feature';
+import AssetText from '../blocks/AssetText';
 import List from '../blocks/List';
 import Text from '../blocks/Text';
-import SimpleCarousel from '../blocks/SimpleCarousel';
-import AssetText from '../blocks/AssetText';
+import MinimalCarousel from '../blocks/MinimalCarousel';
 import CTA from '../blocks/CTA';
 import HighlightGrid from '../blocks/HighlightGrid';
 
@@ -85,15 +84,7 @@ const Spaces: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       required: false,
-      blocks: [
-        Feature,
-        List,
-        Text,
-        SimpleCarousel,
-        AssetText,
-        CTA,
-        HighlightGrid,
-      ],
+      blocks: [AssetText, List, Text, MinimalCarousel, CTA, HighlightGrid],
     },
     // SEO fields in sidebar
     {

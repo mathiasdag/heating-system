@@ -11,7 +11,7 @@ const HighlightGrid: Block = {
     {
       name: 'highlights',
       type: 'relationship',
-      relationTo: ['showcases'] as never,
+      relationTo: ['showcases', 'articles'] as never,
       hasMany: true,
       required: true,
     },

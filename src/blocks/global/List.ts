@@ -1,5 +1,5 @@
 import type { Block } from 'payload';
-import ListItem from './ListItem';
+import ListItem from '@/blocks/ListItem';
 
 const List: Block = {
   slug: 'list',

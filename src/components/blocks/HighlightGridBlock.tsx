@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { DevIndicator } from '../DevIndicator';
 import HighlightOverlay from './HighlightOverlay';
 import { AnimatePresence } from 'framer-motion';
@@ -15,6 +14,7 @@ interface HighlightGridBlockProps {
       id: string;
       title: string;
       slug: string;
+      // Showcase fields
       featuredImage?: {
         id: string;
         url: string;
@@ -22,8 +22,20 @@ interface HighlightGridBlockProps {
         width?: number;
         height?: number;
       };
-      client?: string;
       year?: number;
+      // Article fields
+      heroAsset?: {
+        type?: 'image' | 'mux';
+        image?: {
+          id: string;
+          url: string;
+          alt?: string;
+          width?: number;
+          height?: number;
+        };
+      };
+      excerpt?: string;
+      publishedDate?: string;
     };
   }>;
 }
@@ -32,7 +44,6 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
   headline,
   highlights,
 }) => {
-  const pathname = usePathname();
   const [selectedHighlight, setSelectedHighlight] = useState<
     HighlightGridBlockProps['highlights'][0]['value'] | null
   >(null);
@@ -75,7 +86,15 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
           {highlights.map(highlight => {
             // Extract the actual highlight data from the relationship structure
             const highlightData = highlight.value;
-            if (!highlightData || !highlightData.featuredImage) {
+
+            // Get image from either showcase (featuredImage) or article (heroAsset.image)
+            const image =
+              highlightData?.featuredImage ||
+              (highlightData?.heroAsset?.type === 'image'
+                ? highlightData.heroAsset.image
+                : null);
+
+            if (!highlightData || !image) {
               return null;
             }
 
@@ -90,11 +109,9 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
                   {/* Image */}
                   <div className="relative aspect-[4/6] overflow-hidden">
                     <Image
-                      src={highlightData.featuredImage.url}
+                      src={image.url}
                       alt={
-                        highlightData.featuredImage.alt ||
-                        highlightData.title ||
-                        'Highlight image'
+                        image.alt || highlightData.title || 'Highlight image'
                       }
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -112,13 +129,13 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
           <div className="basis-[1px] shrink-0 h-4"></div>
         </div>
       </div>
+      <hr className="mx-2 my-2" />
 
       {/* Showcase Overlay */}
       <AnimatePresence>
         {selectedHighlight && (
           <HighlightOverlay
             showcase={selectedHighlight}
-            currentPath={pathname}
             onClose={handleClose}
           />
         )}

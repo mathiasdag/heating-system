@@ -1,15 +1,15 @@
 import type { CollectionConfig } from 'payload';
-import AssetText from '../blocks/AssetText';
-import List from '../blocks/List';
-import Text from '../blocks/Text';
-import MinimalCarousel from '../blocks/MinimalCarousel';
-import CTA from '../blocks/CTA';
-import HighlightGrid from '../blocks/HighlightGrid';
-import Header from '../blocks/Header';
-import QA from '../blocks/QA';
-import Quote from '../blocks/articles/Quote';
-import Image from '../blocks/articles/Image';
-import Video from '../blocks/Video';
+import AssetText from '@/blocks/global/AssetText';
+import List from '@/blocks/global/List';
+import Text from '@/blocks/articles/Text';
+import MinimalCarousel from '@/blocks/global/MinimalCarousel';
+import CTA from '@/blocks/global/CTA';
+import HighlightGrid from '@/blocks/global/HighlightGrid';
+import Header from '@/blocks/pages/Header';
+import QA from '@/blocks/articles/QA';
+import Quote from '@/blocks/articles/Quote';
+import Image from '@/blocks/articles/Image';
+import Video from '@/blocks/articles/Video';
 
 const Articles: CollectionConfig = {
   slug: 'articles',

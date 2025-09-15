@@ -1,10 +1,10 @@
 import type { CollectionConfig } from 'payload';
-import AssetText from '../blocks/AssetText';
-import List from '../blocks/List';
-import Text from '../blocks/Text';
-import MinimalCarousel from '../blocks/MinimalCarousel';
-import CTA from '../blocks/CTA';
-import HighlightGrid from '../blocks/HighlightGrid';
+import AssetText from '@/blocks/global/AssetText';
+import List from '@/blocks/global/List';
+import Text from '@/blocks/articles/Text';
+import MinimalCarousel from '@/blocks/global/MinimalCarousel';
+import CTA from '@/blocks/global/CTA';
+import HighlightGrid from '@/blocks/global/HighlightGrid';
 
 const Spaces: CollectionConfig = {
   slug: 'spaces',

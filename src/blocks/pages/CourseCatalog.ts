@@ -1,8 +1,8 @@
 import type { Block } from 'payload';
-import CommonCard from '../CommonCard';
+import CommonCard from '@/blocks/CommonCard';
 
-const ScrollLockedNavigation: Block = {
-  slug: 'scrollLockedNavigation',
+const CourseCatalog: Block = {
+  slug: 'courseCatalog',
   fields: [
     {
       name: 'headline',
@@ -48,4 +48,4 @@ const ScrollLockedNavigation: Block = {
   ],
 };
 
-export default ScrollLockedNavigation;
+export default CourseCatalog;

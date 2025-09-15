@@ -1,18 +1,19 @@
 import type { CollectionConfig } from 'payload';
-import AssetText from '../blocks/AssetText';
-import Header from '../blocks/Header';
-import Spotlight from '../blocks/pages/Spotlight';
-import HorizontalCardBlock from '../blocks/pages/HorizontalCardBlock';
-import Video from '../blocks/Video';
-import CardGrid from '../blocks/pages/CardGrid';
-import Router from '../blocks/pages/Router';
-import Carousel from '../blocks/pages/Carousel';
-import List from '../blocks/List';
-import ScrollLockedNavigation from '../blocks/pages/ScrollLockedNavigation';
-import Text from '../blocks/Text';
-import MinimalCarousel from '../blocks/MinimalCarousel';
-import CTA from '../blocks/CTA';
-import HighlightGrid from '../blocks/HighlightGrid';
+import AssetText from '@/blocks/global/AssetText';
+import Header from '@/blocks/pages/Header';
+import Spotlight from '@/blocks/pages/Spotlight';
+import HorizontalCardBlock from '@/blocks/pages/HorizontalCardBlock';
+import Video from '@/blocks/articles/Video';
+import CardGrid from '@/blocks/pages/CardGrid';
+import Router from '@/blocks/pages/Router';
+import Carousel from '@/blocks/pages/Carousel';
+import List from '@/blocks/global/List';
+import CourseCatalog from '@/blocks/pages/CourseCatalog';
+import Text from '@/blocks/articles/Text';
+import FAQ from '@/blocks/pages/FAQ';
+import MinimalCarousel from '@/blocks/global/MinimalCarousel';
+import CTA from '@/blocks/global/CTA';
+import HighlightGrid from '@/blocks/global/HighlightGrid';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -48,8 +49,9 @@ const Pages: CollectionConfig = {
         Router, // Added Router block
         Carousel, // Added Carousel block
         List, // Added List block
-        ScrollLockedNavigation, // Added ScrollLockedNavigation block
+        CourseCatalog, // Added CourseCatalog block
         Text, // Added Text block
+        FAQ, // Added FAQ block
         MinimalCarousel, // Added MinimalCarousel block
         CTA, // Added CTA block
         HighlightGrid, // Added HighlightGrid block

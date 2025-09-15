@@ -68,7 +68,7 @@ module.exports = {
         full: '100%',
       },
       fontSize: {
-        xs: ['0.65rem', { lineHeight: '1.15' }],
+        xs: ['0.75rem', { lineHeight: '1.15' }],
         sm: ['0.9rem', { lineHeight: '1.15' }],
         base: ['1rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }], // 24px
         md: ['1.2rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],

@@ -40,7 +40,7 @@ interface NavigationSection {
   navigationItems: NavigationItem[];
 }
 
-interface ScrollLockedNavigationProps {
+interface CourseCatalogProps {
   headline: string;
   navigationSections: NavigationSection[];
 }
@@ -142,10 +142,10 @@ function ViewportItem({
   );
 }
 
-export default function ScrollLockedNavigationBlock({
+export default function CourseCatalogBlock({
   headline,
   navigationSections,
-}: ScrollLockedNavigationProps) {
+}: CourseCatalogProps) {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -250,7 +250,7 @@ export default function ScrollLockedNavigationBlock({
   return (
     <div className="relative bg-accent z-40" ref={containerRef}>
       <DevIndicator
-        componentName="ScrollLockedNavigationBlock"
+        componentName="CourseCatalogBlock"
         data={{
           activeItemIndex,
           isViewportCovered,

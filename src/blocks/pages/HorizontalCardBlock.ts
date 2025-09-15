@@ -1,7 +1,7 @@
 import type { Block } from 'payload';
-import LinkGroup from '../LinkGroup';
-import CommonCard from '../CommonCard';
-import { InlineHeader } from '../InlineHeader';
+import LinkGroup from '@/blocks/LinkGroup';
+import CommonCard from '@/blocks/CommonCard';
+import { InlineHeader } from '@/blocks/InlineHeader';
 
 const HorizontalCardBlock: Block = {
   slug: 'horizontal-card-block',

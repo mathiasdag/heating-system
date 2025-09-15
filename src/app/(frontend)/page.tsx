@@ -9,8 +9,9 @@ import CardGridBlock from '@/components/blocks/pages/cardGrid/CardGridBlock';
 import RouterBlock from '@/components/blocks/pages/RouterBlock';
 import CarouselBlock from '@/components/blocks/pages/CarouselBlock';
 import ListBlock from '@/components/blocks/ListBlock';
-import ScrollLockedNavigationBlock from '@/components/blocks/pages/ScrollLockedNavigationBlock';
+import CourseCatalogBlock from '@/components/blocks/pages/CourseCatalogBlock';
 import TextBlock from '@/components/blocks/TextBlock';
+import FAQBlock from '@/components/blocks/FAQBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import CTABlock from '@/components/blocks/CTABlock';
@@ -54,10 +55,12 @@ export default async function HomePage() {
             return <CarouselBlock key={i} {...cleanBlock} />;
           case 'list':
             return <ListBlock key={i} {...cleanBlock} />;
-          case 'scrollLockedNavigation':
-            return <ScrollLockedNavigationBlock key={i} {...cleanBlock} />;
+          case 'courseCatalog':
+            return <CourseCatalogBlock key={i} {...cleanBlock} />;
           case 'text':
             return <TextBlock key={i} {...cleanBlock} />;
+          case 'faq':
+            return <FAQBlock key={i} {...cleanBlock} />;
           case 'minimalCarousel':
             return <SimpleCarouselBlock key={i} {...cleanBlock} />;
           case 'assetText':

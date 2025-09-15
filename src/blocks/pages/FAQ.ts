@@ -1,23 +1,24 @@
 import type { Block } from 'payload';
-import { InlineHeader } from '@/blocks/InlineHeader';
-import QA from '@/blocks/articles/QA';
+import { InlineHeader } from '@/fields/InlineHeader';
+import QA from '@/blocks/global/QA';
+import QAGroup from '@/blocks/global/QAGroup';
 
 const FAQ: Block = {
   slug: 'faq',
   labels: {
-    singular: 'FAQ',
+    singular: 'FAQ Block',
     plural: 'FAQ Blocks',
   },
   fields: [
     ...InlineHeader,
     {
-      name: 'qas',
+      name: 'items',
       type: 'blocks',
       required: true,
       minRows: 1,
-      blocks: [QA],
+      blocks: [QA, QAGroup],
       admin: {
-        description: 'Add Q&A items to this FAQ section',
+        description: 'Add individual Q&As or Q&A groups to this FAQ section',
       },
     },
     {

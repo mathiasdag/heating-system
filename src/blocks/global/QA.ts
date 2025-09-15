@@ -11,17 +11,11 @@ const QA: Block = {
       name: 'question',
       type: 'richText',
       required: true,
-      admin: {
-        description: 'The question being asked',
-      },
     },
     {
       name: 'answer',
       type: 'richText',
       required: true,
-      admin: {
-        description: 'The answer to the question',
-      },
     },
   ],
 };

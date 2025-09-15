@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload';
-import NavigationItem from '../blocks/NavigationItem';
-import LinkGroup from '../blocks/LinkGroup';
+import NavigationItem from '@/blocks/NavigationItem';
+import LinkGroup from '@/fields/LinkGroup';
 
 const Navigation: CollectionConfig = {
   slug: 'navigation',

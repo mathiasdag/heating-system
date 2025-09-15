@@ -1,5 +1,5 @@
 import type { Block } from 'payload';
-import LinkGroup from '@/blocks/LinkGroup';
+import LinkGroup from '@/fields/LinkGroup';
 
 const Spotlight: Block = {
   slug: 'spotlight',

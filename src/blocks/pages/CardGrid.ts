@@ -1,6 +1,6 @@
 import type { Block } from 'payload';
 import CommonCard from '@/blocks/CommonCard';
-import { InlineHeader } from '@/blocks/InlineHeader';
+import { InlineHeader } from '@/fields/InlineHeader';
 
 const CardGrid: Block = {
   slug: 'card-grid',

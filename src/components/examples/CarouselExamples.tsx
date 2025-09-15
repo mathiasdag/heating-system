@@ -1,6 +1,6 @@
 import React from 'react';
 import HorizontalSnapCarousel from '../HorizontalSnapCarousel';
-import { MediaCard } from '../blocks/MediaCard';
+import { MediaCard } from '@/components/blocks/MediaCard';
 
 // Example 1: Using with MediaCard (same as HorizontalCardBlock)
 interface MediaCardItem {

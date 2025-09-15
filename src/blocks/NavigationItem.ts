@@ -1,5 +1,5 @@
 import type { Block } from 'payload';
-import LinkGroup from './LinkGroup';
+import LinkGroup from '@/fields/LinkGroup';
 
 const NavigationItem: Block = {
   slug: 'navigationItem',

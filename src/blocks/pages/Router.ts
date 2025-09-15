@@ -1,6 +1,6 @@
 import type { Block } from 'payload';
-import LinkGroup from '@/blocks/LinkGroup';
-import { InlineHeader } from '@/blocks/InlineHeader';
+import LinkGroup from '@/fields/LinkGroup';
+import { InlineHeader } from '@/fields/InlineHeader';
 
 const Router: Block = {
   slug: 'router',

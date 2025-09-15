@@ -8,7 +8,6 @@ import VideoBlock from '@/components/blocks/VideoBlock';
 import CardGridBlock from '@/components/blocks/pages/cardGrid/CardGridBlock';
 import RouterBlock from '@/components/blocks/pages/RouterBlock';
 import CarouselBlock from '@/components/blocks/pages/CarouselBlock';
-import AnimatedFeatureBlock from '@/components/blocks/AnimatedFeatureBlock';
 import ListBlock from '@/components/blocks/ListBlock';
 import ScrollLockedNavigationBlock from '@/components/blocks/pages/ScrollLockedNavigationBlock';
 import TextBlock from '@/components/blocks/TextBlock';
@@ -51,7 +50,6 @@ export default async function DynamicPage({ params }: PageProps) {
             return <AssetTextBlock key={i} {...cleanBlock} />;
           case 'header':
             return <HeaderBlock key={i} {...cleanBlock} />;
-          case 'animated-feature':
           case 'spotlight':
             return <BiggerFeatureBlock key={i} {...cleanBlock} />;
           case 'horizontal-card-block':
@@ -68,8 +66,6 @@ export default async function DynamicPage({ params }: PageProps) {
             return <RouterBlock key={i} {...cleanBlock} />;
           case 'carousel':
             return <CarouselBlock key={i} {...cleanBlock} />;
-          case 'animated-feature-block':
-            return <AnimatedFeatureBlock key={i} {...cleanBlock} />;
           case 'list':
             return <ListBlock key={i} {...cleanBlock} />;
           case 'scrollLockedNavigation':

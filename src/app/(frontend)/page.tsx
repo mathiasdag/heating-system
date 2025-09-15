@@ -36,7 +36,6 @@ export default async function HomePage() {
             return <AssetTextBlock key={i} {...cleanBlock} />;
           case 'header':
             return <HeaderBlock key={i} {...cleanBlock} />;
-          case 'animated-feature':
           case 'spotlight':
             return <BiggerFeatureBlock key={i} {...cleanBlock} />;
           case 'horizontal-card-block':

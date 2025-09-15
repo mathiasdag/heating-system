@@ -39,10 +39,11 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   // Determine the href for the CTA
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
-    href =
-      typeof link.reference === 'object' && link.reference?.slug
-        ? `/pages/${link.reference.slug}`
-        : `/pages/${link.reference}`;
+    if (typeof link.reference === 'object' && link.reference?.slug) {
+      href = `/${link.reference.slug}`;
+    } else if (typeof link.reference === 'string') {
+      href = `/${link.reference}`;
+    }
   } else if (link?.type === 'external') {
     href = link.url;
   }
@@ -76,7 +77,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
           <RichText data={body} />
         </div>
       </div>
-      {href && link?.text && (
+      {href && typeof href === 'string' && link?.text && (
         <AppLink
           href={href}
           variant={buttonVariant}

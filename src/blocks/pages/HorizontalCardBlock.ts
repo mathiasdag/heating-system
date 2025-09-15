@@ -1,20 +1,13 @@
 import type { Block } from 'payload';
 import LinkGroup from '../LinkGroup';
 import CommonCard from '../CommonCard';
-import { BlockHeaderFields } from '../BlockHeaderFields';
+import { InlineHeader } from '../InlineHeader';
 
 const HorizontalCardBlock: Block = {
   slug: 'horizontal-card-block',
   fields: [
-    // Only use headline from BlockHeaderFields, not description
-    {
-      name: 'headline',
-      type: 'text',
-      required: true,
-      admin: {
-        description: 'Optional headline for the block',
-      },
-    },
+    // Only use headline from InlineHeader, not description
+    ...InlineHeader.filter(field => field.name === 'headline'),
     {
       name: 'cards',
       type: 'array',

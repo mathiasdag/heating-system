@@ -62,11 +62,14 @@ export default function FeatureBlock({
       )}
       <div className="col-start-1 md:col-start-9 col-end-16">
         <div className="mb-4 whitespace-pre-line font-mono">{description}</div>
-        {href && link?.text && link.type === 'internal' ? (
+        {href &&
+        typeof href === 'string' &&
+        link?.text &&
+        link.type === 'internal' ? (
           <Link href={href} className="font-bold underline mt-2 inline-block">
             {link.text} &rarr;
           </Link>
-        ) : href && link?.text ? (
+        ) : href && typeof href === 'string' && link?.text ? (
           <AppLink href={href} variant="secondary">
             {link.text} &rarr;
           </AppLink>

@@ -5,7 +5,6 @@ import Spotlight from '../blocks/pages/BiggerFeature';
 import HorizontalCardBlock from '../blocks/pages/HorizontalCardBlock';
 import Video from '../blocks/Video';
 import CardGrid from '../blocks/pages/CardGrid';
-import OrangeCardGrid from '../blocks/pages/OrangeCardGrid';
 import Router from '../blocks/pages/Router';
 import Carousel from '../blocks/pages/Carousel';
 import List from '../blocks/List';
@@ -47,7 +46,6 @@ const Pages: CollectionConfig = {
         HorizontalCardBlock,
         Video, // Added Video block
         CardGrid, // Added CardGrid block
-        OrangeCardGrid, // Added OrangeCardGrid block
         Router, // Added Router block
         Carousel, // Added Carousel block
         List, // Added List block

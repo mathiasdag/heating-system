@@ -6,8 +6,7 @@ import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
 import React from 'react';
 import VideoBlock from '@/components/blocks/VideoBlock';
-import CardGridBlock from '@/components/blocks/pages/CardGridBlock';
-import { OrangeCardGrid } from '@/components/blocks/pages/OrangeCardGrid';
+import CardGridBlock from '@/components/blocks/pages/cardGrid/CardGridBlock';
 import RouterBlock from '@/components/blocks/pages/RouterBlock';
 import CarouselBlock from '@/components/blocks/pages/CarouselBlock';
 import ListBlock from '@/components/blocks/ListBlock';
@@ -48,7 +47,9 @@ export default async function HomePage() {
           case 'card-grid':
             return <CardGridBlock key={i} {...cleanBlock} />;
           case 'orange-card-grid':
-            return <OrangeCardGrid key={i} {...cleanBlock} />;
+            return (
+              <CardGridBlock key={i} {...cleanBlock} backgroundColor="orange" />
+            );
           case 'router':
             return <RouterBlock key={i} {...cleanBlock} />;
           case 'carousel':

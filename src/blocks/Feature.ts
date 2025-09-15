@@ -1,6 +1,5 @@
 import type { Block } from 'payload';
 import LinkGroup from './LinkGroup';
-import { BlockHeaderFields } from './BlockHeaderFields';
 
 const Feature: Block = {
   slug: 'feature',
@@ -11,11 +10,11 @@ const Feature: Block = {
       relationTo: 'media',
       required: true,
     },
-    // Use headline from BlockHeaderFields, but keep description as textarea for Feature
+    // Use headline from InlineHeader, but override description as textarea for Feature
     {
       name: 'headline',
       type: 'text',
-      required: true,
+      required: false,
       admin: {
         description: 'Optional headline for the block',
       },
@@ -23,7 +22,7 @@ const Feature: Block = {
     {
       name: 'description',
       type: 'textarea', // Keep as textarea for Feature (not richText)
-      required: true,
+      required: false,
     },
     LinkGroup,
   ],

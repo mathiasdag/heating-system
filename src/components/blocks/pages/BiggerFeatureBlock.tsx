@@ -57,10 +57,11 @@ const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
 
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
-    href =
-      typeof link.reference === 'object' && link.reference?.slug
-        ? `/pages/${link.reference.slug}`
-        : `/pages/${link.reference}`;
+    if (typeof link.reference === 'object' && link.reference?.slug) {
+      href = `/${link.reference.slug}`;
+    } else if (typeof link.reference === 'string') {
+      href = `/${link.reference}`;
+    }
   } else if (link?.type === 'external') {
     href = link.url;
   }
@@ -101,7 +102,7 @@ const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
           )}
         </div>
         <div className="pb-8">
-          {href && link?.text ? (
+          {href && typeof href === 'string' && link?.text ? (
             <AppLink href={href} variant="outline">
               {link.text}
             </AppLink>

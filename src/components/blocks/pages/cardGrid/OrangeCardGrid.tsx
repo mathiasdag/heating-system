@@ -1,24 +1,33 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { AppLink } from '../../AppLink';
-import { MediaCard } from '../MediaCard';
-import { DevIndicator } from '../../DevIndicator';
-import { BlockHeader } from '../BlockHeader';
-import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
+import { AppLink } from '../../../AppLink';
+import { MediaCard } from '../../MediaCard';
+import { DevIndicator } from '../../../DevIndicator';
+import { BlockHeader } from '../../BlockHeader';
 
 interface Card {
   title: string;
   description?: string;
   image?: { url: string; alt?: string };
   tags?: { id: string; name: string; description?: string }[];
-  link?: LinkGroup;
+  link?: {
+    type?: 'internal' | 'external';
+    text?: string;
+    url?: string;
+    reference?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  };
 }
 
 interface OrangeCardGridProps {
   headline?: string;
-  description?: any;
+  description?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   cards: Card[];
-  link?: Card['link'];
+  link?: {
+    type: 'internal' | 'external' | 'copy';
+    text?: string;
+    url?: string;
+    reference?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  };
 }
 
 function useHasHydrated() {
@@ -119,7 +128,7 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
           </React.Fragment>
         ))}
       </div>
-      {link && (link.url || link.reference) && (
+      {link && link.type && (link.url || link.reference) && (
         <div className="mt-8 text-center">
           <AppLink
             link={link}

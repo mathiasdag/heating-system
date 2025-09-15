@@ -1,29 +1,37 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { AppLink } from '../../AppLink';
-import { MediaCard } from '../MediaCard';
+import { AppLink } from '../../../AppLink';
+import { MediaCard } from '../../MediaCard';
 import clsx from 'clsx';
-import { DevIndicator } from '../../DevIndicator';
-import { BlockHeader } from '../BlockHeader';
-import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
+import { DevIndicator } from '../../../DevIndicator';
+import { BlockHeader } from '../../BlockHeader';
 
 interface Card {
   title: string;
   description?: string;
   image?: { url: string; alt?: string };
   tags?: { id: string; name: string; description?: string }[];
-  link?: LinkGroup;
+  link?: {
+    type?: 'internal' | 'external';
+    text?: string;
+    url?: string;
+    reference?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  };
 }
 
-interface CardGridBlockProps {
+interface DefaultCardGridProps {
   headline?: string;
-  description?: any;
+  description?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   cards: Card[];
-  link?: Card['link']; // Optional block-level CTA
-  buttonVariant?: 'primary' | 'secondary' | 'outline';
+  link?: {
+    type: 'internal' | 'external' | 'copy';
+    text?: string;
+    url?: string;
+    reference?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  };
 }
 
-const CardGridBlock: React.FC<CardGridBlockProps> = ({
+export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
   headline,
   description,
   cards,
@@ -47,7 +55,7 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
   // Default variant: horizontal scroll list
   return (
     <section className={`py-24 grid relative`}>
-      <DevIndicator componentName="CardGridBlock" />
+      <DevIndicator componentName="DefaultCardGrid" />
       <BlockHeader headline={headline} description={description} />
       <hr className="mx-4 my-2" />
       <div className="relative">
@@ -78,7 +86,7 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
       </div>
       <hr className="mx-4 my-2" />
 
-      {link && (link.url || link.reference) && (
+      {link && link.type && (link.url || link.reference) && (
         <div className="mt-8 text-center">
           <AppLink
             link={link}
@@ -92,4 +100,4 @@ const CardGridBlock: React.FC<CardGridBlockProps> = ({
   );
 };
 
-export default CardGridBlock;
+export default DefaultCardGrid;

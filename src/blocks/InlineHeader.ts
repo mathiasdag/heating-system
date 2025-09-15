@@ -4,7 +4,7 @@ import type { Field } from 'payload';
  * Shared field group for block headers (headline + description)
  * Used across multiple block types for consistency
  */
-export const BlockHeaderFields: Field[] = [
+export const InlineHeader: Field[] = [
   {
     name: 'headline',
     type: 'text',

@@ -1,39 +1,17 @@
 import type { Block } from 'payload';
 import LinkGroup from '../LinkGroup';
-import { BlockHeaderFields } from '../BlockHeaderFields';
+import { InlineHeader } from '../InlineHeader';
 
 const Carousel: Block = {
   slug: 'carousel',
   fields: [
-    {
-      name: 'headline',
-      type: 'text',
-      required: true,
-      admin: {
-        description: 'Optional headline for the block',
-      },
-    },
-    {
-      name: 'description',
-      type: 'richText',
-      required: true,
-      admin: {
-        description: 'Optional rich text description for the block',
-      },
-    },
+    ...InlineHeader,
     {
       name: 'slides',
       type: 'array',
       required: true,
       minRows: 1,
       fields: [
-        {
-          name: 'tags',
-          type: 'relationship',
-          relationTo: 'tags',
-          hasMany: true,
-          required: false,
-        },
         {
           name: 'subheadline',
           type: 'text',

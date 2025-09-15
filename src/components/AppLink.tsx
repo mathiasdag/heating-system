@@ -1,7 +1,12 @@
 'use client';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { routeLink, type LinkGroup, isExternalUrl, getExternalLinkAttributes } from '../utils/linkRouter';
+import {
+  routeLink,
+  type LinkGroup,
+  isExternalUrl,
+  getExternalLinkAttributes,
+} from '../utils/linkRouter';
 
 interface AppActionProps {
   href?: string;
@@ -41,12 +46,14 @@ export const AppAction: React.FC<AppActionProps> = ({
   const [showSuccess, setShowSuccess] = useState(false);
 
   // Use link router if link prop is provided, otherwise fall back to legacy behavior
-  const linkResult = link ? routeLink(link) : {
-    href: href || '#',
-    isExternal: href ? isExternalUrl(href) : false,
-    isCopy: actionType === 'copy',
-    shouldRenderAsButton: asButton || actionType === 'copy',
-  };
+  const linkResult = link
+    ? routeLink(link)
+    : {
+        href: href || '#',
+        isExternal: href ? isExternalUrl(href) : false,
+        isCopy: actionType === 'copy',
+        shouldRenderAsButton: asButton || actionType === 'copy',
+      };
 
   const handleCopy = async () => {
     const textToCopy = linkResult.href || href || '';
@@ -108,12 +115,15 @@ export const AppAction: React.FC<AppActionProps> = ({
     return null;
   }
 
+  // Ensure href is always a string
+  const safeHref = typeof linkResult.href === 'string' ? linkResult.href : '#';
+
   // Handle external links
   if (linkResult.isExternal) {
     const externalAttrs = getExternalLinkAttributes();
     return (
       <a
-        href={linkResult.href}
+        href={safeHref}
         className={style}
         target={externalAttrs.target}
         rel={externalAttrs.rel}
@@ -125,7 +135,7 @@ export const AppAction: React.FC<AppActionProps> = ({
 
   // Handle internal links
   return (
-    <Link href={linkResult.href} className={style}>
+    <Link href={safeHref} className={style}>
       {children}
     </Link>
   );

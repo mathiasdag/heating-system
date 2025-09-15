@@ -1,11 +1,29 @@
 import type { Block } from 'payload';
 import CommonCard from '../CommonCard';
-import { BlockHeaderFields } from '../BlockHeaderFields';
+import { InlineHeader } from '../InlineHeader';
 
 const CardGrid: Block = {
   slug: 'card-grid',
   fields: [
-    ...BlockHeaderFields, // Already optional by default
+    ...InlineHeader,
+    {
+      name: 'backgroundColor',
+      type: 'select',
+      options: [
+        {
+          label: 'Default',
+          value: 'default',
+        },
+        {
+          label: 'Orange Accent',
+          value: 'orange',
+        },
+      ],
+      defaultValue: 'default',
+      admin: {
+        description: 'Choose the background color for the card grid',
+      },
+    },
     {
       name: 'cards',
       type: 'array',

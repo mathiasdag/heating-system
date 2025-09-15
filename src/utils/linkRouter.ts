@@ -98,8 +98,12 @@ export function routeLink(link: LinkGroup): LinkRouterResult {
       break;
 
     case 'internal':
-      result.href = resolveReference(link.reference) || '#';
+      const resolvedHref = resolveReference(link.reference);
+      result.href = resolvedHref || '#';
       result.isExternal = false;
+      if (!resolvedHref) {
+        console.warn('Failed to resolve reference:', link.reference);
+      }
       break;
 
     case 'copy':
@@ -111,6 +115,12 @@ export function routeLink(link: LinkGroup): LinkRouterResult {
     default:
       console.warn('Unknown link type:', link.type);
       result.href = '#';
+  }
+
+  // Ensure href is always a string
+  if (typeof result.href !== 'string') {
+    console.error('Non-string href detected:', result.href, 'from link:', link);
+    result.href = '#';
   }
 
   return result;

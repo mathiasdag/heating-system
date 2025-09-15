@@ -6,11 +6,10 @@ import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
 import React from 'react';
 import VideoBlock from '@/components/blocks/VideoBlock';
-import CardGridBlock from '@/components/blocks/pages/CardGridBlock';
+import CardGridBlock from '@/components/blocks/pages/cardGrid/CardGridBlock';
 import RouterBlock from '@/components/blocks/pages/RouterBlock';
 import CarouselBlock from '@/components/blocks/pages/CarouselBlock';
 import AnimatedFeatureBlock from '@/components/blocks/AnimatedFeatureBlock';
-import { OrangeCardGrid } from '@/components/blocks/pages/OrangeCardGrid';
 import ListBlock from '@/components/blocks/ListBlock';
 import ScrollLockedNavigationBlock from '@/components/blocks/pages/ScrollLockedNavigationBlock';
 import TextBlock from '@/components/blocks/TextBlock';
@@ -63,7 +62,9 @@ export default async function DynamicPage({ params }: PageProps) {
           case 'card-grid':
             return <CardGridBlock key={i} {...cleanBlock} />;
           case 'orange-card-grid':
-            return <OrangeCardGrid key={i} {...cleanBlock} />;
+            return (
+              <CardGridBlock key={i} {...cleanBlock} backgroundColor="orange" />
+            );
           case 'router':
             return <RouterBlock key={i} {...cleanBlock} />;
           case 'carousel':

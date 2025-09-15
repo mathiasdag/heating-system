@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { commonHooks } from '@/utils/hooks';
 
 const Showcases: CollectionConfig = {
   slug: 'showcases',
@@ -103,21 +104,7 @@ const Showcases: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeValidate: [
-      ({ data, operation }) => {
-        if (data?.title) {
-          // Always generate slug from title for new documents
-          // For updates, only generate if slug is empty or if title changed significantly
-          if (operation === 'create' || !data.slug) {
-            data.slug = String(data.title)
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/(^-|-$)+/g, '');
-          }
-        }
-        return data;
-      },
-    ],
+    beforeValidate: [commonHooks.slugFromTitle],
   },
 };
 

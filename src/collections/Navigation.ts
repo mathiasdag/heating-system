@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import NavigationItem from '@/blocks/NavigationItem';
 import LinkGroup from '@/fields/LinkGroup';
+import { commonHooks, publicAccess } from '@/utils/hooks';
 
 const Navigation: CollectionConfig = {
   slug: 'navigation',
@@ -8,12 +9,7 @@ const Navigation: CollectionConfig = {
     useAsTitle: 'name',
     description: 'Main navigation menu configuration',
   },
-  access: {
-    read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
-  },
+  access: publicAccess,
   fields: [
     {
       name: 'name',
@@ -52,25 +48,7 @@ const Navigation: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeValidate: [
-      ({ data }) => {
-        // Initialize children arrays for all nesting levels
-        const initializeChildren = (items: any[]) => {
-          if (!items) return;
-          items.forEach(item => {
-            if (!item.children) {
-              item.children = [];
-            }
-            initializeChildren(item.children);
-          });
-        };
-
-        if (data?.menuItems) {
-          initializeChildren(data.menuItems);
-        }
-        return data;
-      },
-    ],
+    beforeValidate: [commonHooks.initializeNestedArrays],
   },
 };
 

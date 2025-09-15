@@ -10,6 +10,7 @@ import Video from '@/blocks/articles/Video';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
+import { commonHooks, commonVersioning } from '@/utils/hooks';
 
 const Articles: CollectionConfig = {
   slug: 'articles',
@@ -161,29 +162,9 @@ const Articles: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeChange: [
-      ({ data, operation }) => {
-        // Set published date on creation if not provided
-        if (operation === 'create' && !data.publishedDate) {
-          data.publishedDate = new Date().toISOString();
-        }
-
-        // Always update last modified date
-        data.lastModifiedDate = new Date().toISOString();
-
-        return data;
-      },
-    ],
+    beforeChange: [commonHooks.dateTracking],
   },
-  versions: {
-    drafts: {
-      autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
-      schedulePublish: true,
-    },
-    maxPerDoc: 50,
-  },
+  versions: commonVersioning,
 };
 
 export default Articles;

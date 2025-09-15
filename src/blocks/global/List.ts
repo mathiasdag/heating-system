@@ -1,5 +1,6 @@
 import type { Block } from 'payload';
 import ListItem from '@/blocks/ListItem';
+import { validateNoH1Headings } from '@/utils/validation';
 
 const List: Block = {
   slug: 'list',
@@ -19,17 +20,7 @@ const List: Block = {
           },
         },
       },
-      validate: (value: any) => {
-        if (value && value.root && value.root.children) {
-          const hasH1 = value.root.children.some(
-            (child: any) => child.type === 'heading' && child.tag === 'h1'
-          );
-          if (hasH1) {
-            return 'H1 headings are not allowed. Please use H2 or lower.';
-          }
-        }
-        return true;
-      },
+      validate: validateNoH1Headings,
     },
     {
       name: 'items',

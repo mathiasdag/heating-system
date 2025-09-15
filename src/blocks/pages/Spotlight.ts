@@ -1,7 +1,7 @@
 import type { Block } from 'payload';
 import LinkGroup from '../LinkGroup';
 
-const BiggerFeature: Block = {
+const Spotlight: Block = {
   slug: 'spotlight',
   labels: {
     singular: 'Spotlight',
@@ -37,4 +37,4 @@ const BiggerFeature: Block = {
   ],
 };
 
-export default BiggerFeature;
+export default Spotlight;

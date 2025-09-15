@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import AssetText from '../blocks/AssetText';
 import Header from '../blocks/Header';
-import Spotlight from '../blocks/pages/BiggerFeature';
+import Spotlight from '../blocks/pages/Spotlight';
 import HorizontalCardBlock from '../blocks/pages/HorizontalCardBlock';
 import Video from '../blocks/Video';
 import CardGrid from '../blocks/pages/CardGrid';

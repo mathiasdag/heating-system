@@ -1,5 +1,9 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
+
+// VERSION STAMP: v0.1.0-coupled-db - Coupled Database Era (Ending)
+// This configuration marks the end of the coupled database architecture.
+// Next version will transition to external Payload database.
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import path from 'path';

@@ -3,6 +3,7 @@ import List from '@/blocks/global/List';
 import MinimalCarousel from '@/blocks/global/MinimalCarousel';
 import CTA from '@/blocks/global/CTA';
 import HighlightGrid from '@/blocks/global/HighlightGrid';
+import Calendar from '@/blocks/global/Calendar';
 import QA from '@/blocks/global/QA';
 import Quote from '@/blocks/articles/Quote';
 import Image from '@/blocks/articles/Image';
@@ -150,6 +151,7 @@ const Articles: CollectionConfig = {
                 MinimalCarousel,
                 QA,
                 Video,
+                Calendar,
               ],
             },
           ],

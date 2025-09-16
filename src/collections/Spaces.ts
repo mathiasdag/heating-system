@@ -5,6 +5,7 @@ import Text from '@/blocks/articles/Text';
 import MinimalCarousel from '@/blocks/global/MinimalCarousel';
 import CTA from '@/blocks/global/CTA';
 import HighlightGrid from '@/blocks/global/HighlightGrid';
+import Calendar from '@/blocks/global/Calendar';
 import Image from '@/blocks/articles/Image';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
@@ -113,6 +114,7 @@ const Spaces: CollectionConfig = {
                 List,
                 MinimalCarousel,
                 Text,
+                Calendar,
               ],
             },
           ],

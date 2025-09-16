@@ -48,7 +48,7 @@ const AccordionItem: React.FC<{
     <div className="border border-text rounded-md overflow-hidden">
       <button
         onClick={toggleAccordion}
-        className="w-full pt-4 pb-[.9em] text-left flex items-center justify-between cursor-pointer hover:bg-text/5 transition-colors"
+        className="w-full pt-4 pb-[.9em] text-left flex items-center justify-between cursor-pointer hover:bg-text/5 transition-colors select-none"
       >
         <div className="flex-shrink-0 px-4">
           <AccordionArrowIcon

@@ -16,6 +16,7 @@ import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
+import CalendarBlock from '@/components/blocks/CalendarBlock';
 
 export default async function HomePage() {
   const payloadConfig = await config;
@@ -69,6 +70,8 @@ export default async function HomePage() {
             return <CTABlock key={i} {...cleanBlock} />;
           case 'highlightGrid':
             return <HighlightGridBlock key={i} {...cleanBlock} />;
+          case 'calendar':
+            return <CalendarBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types
           default:
             return null;

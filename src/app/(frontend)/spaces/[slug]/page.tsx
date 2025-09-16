@@ -6,6 +6,7 @@ import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
+import CalendarBlock from '@/components/blocks/CalendarBlock';
 import { HeaderBlock as SpacesHeaderBlock } from '@/components/blocks/spaces';
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -58,6 +59,8 @@ async function SpacePage({ params }: SpacePageProps) {
               return <CTABlock key={i} {...cleanBlock} />;
             case 'highlightGrid':
               return <HighlightGridBlock key={i} {...cleanBlock} />;
+            case 'calendar':
+              return <CalendarBlock key={i} {...cleanBlock} />;
             default:
               console.warn(`Unknown block type: ${block.blockType}`);
               return null;

@@ -10,6 +10,7 @@ import List from '@/blocks/global/List';
 import CourseCatalog from '@/blocks/pages/CourseCatalog';
 import FAQ from '@/blocks/pages/FAQ';
 import HighlightGrid from '@/blocks/global/HighlightGrid';
+import Calendar from '@/blocks/global/Calendar';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -67,6 +68,7 @@ const Pages: CollectionConfig = {
                 Header,
                 List,
                 FAQ,
+                Calendar,
                 // Add more blocks here as needed
               ],
             },

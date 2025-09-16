@@ -5,6 +5,7 @@ import TextBlock from '@/components/blocks/TextBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
+import CalendarBlock from '@/components/blocks/CalendarBlock';
 import {
   HeaderBlock as ArticlesHeaderBlock,
   QABlock,
@@ -91,6 +92,8 @@ async function ArticlePage({ params }: ArticlePageProps) {
                 return <AssetTextBlock key={i} {...cleanBlock} />;
               case 'highlightGrid':
                 return <HighlightGridBlock key={i} {...cleanBlock} />;
+              case 'calendar':
+                return <CalendarBlock key={i} {...cleanBlock} />;
               default:
                 console.warn(`Unknown block type: ${block.blockType}`);
                 return null;

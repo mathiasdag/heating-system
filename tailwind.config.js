@@ -26,22 +26,29 @@ module.exports = {
     // Custom colors - ensure they're always included
     {
       pattern:
-        /^(bg|text|border)-(text|bg|surface|offWhite|accent|border|crayonBlack)$/,
+        /^(bg|text|border)-(text|bg|surface|surface-dark|offWhite|accent|border|crayonBlack)$/,
       variants: ['hover', 'focus', 'active'],
     },
     {
-      pattern: /^from-(text|bg|surface|offWhite|accent|border|crayonBlack)$/,
+      pattern:
+        /^from-(text|bg|surface|surface-dark|offWhite|accent|border|crayonBlack)$/,
     },
     {
-      pattern: /^to-(text|bg|surface|offWhite|accent|border|crayonBlack)$/,
+      pattern:
+        /^to-(text|bg|surface|surface-dark|offWhite|accent|border|crayonBlack)$/,
     },
     'font-ballPill', // Add the custom font class to safelist
+    // Explicitly include surfaceDark classes
+    'bg-surface-dark',
+    'text-surface-dark',
+    'border-surface-dark',
   ],
   theme: {
     extend: {
       colors: {
         bg: 'var(--color-bg)',
         surface: 'var(--color-surface)',
+        'surface-dark': '#E1DED0', // Darker surface color
         text: 'var(--color-text)',
         border: 'var(--color-border)',
         accent: 'var(--color-accent)',
@@ -70,9 +77,9 @@ module.exports = {
       fontSize: {
         xs: ['0.75rem', { lineHeight: '1.15' }],
         sm: ['0.9rem', { lineHeight: '1.15' }],
-        base: ['1rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }], // 24px
-        md: ['1.2rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
-        lg: ['1.5rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
+        base: ['1rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }], // 24px
+        md: ['1.2rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
+        lg: ['1.5rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
         xl: [
           'clamp(2rem, 5vw, 3.25rem)',
           { lineHeight: '1.1', letterSpacing: '-0.02em' },

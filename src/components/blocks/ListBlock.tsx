@@ -1,7 +1,9 @@
+'use client';
+
 import React from 'react';
-import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
-import ListItemBlock from './ListItemBlock';
+import { BlockHeader } from './BlockHeader';
+import ListItem from '@/components/ListItem';
 
 interface ListItem {
   title: string;
@@ -9,30 +11,32 @@ interface ListItem {
 }
 
 interface ListBlockProps {
-  header: any;
+  headline?: string;
+  description?: any;
   items: ListItem[];
 }
 
-export default function ListBlock({ header, items }: ListBlockProps) {
+const ListBlock: React.FC<ListBlockProps> = ({
+  headline,
+  description,
+  items,
+}) => {
+  if (!items || items.length === 0) return null;
+
   return (
-    <div className="mb-36 mt-36 px-4 relative">
+    <div className="py-24 px-2">
       <DevIndicator componentName="ListBlock" />
-
-      {/* Header */}
-      <div className="text-center mb-8 list-header">
-        <RichText data={header} className="font-mono sans-headlines mb-4" />
-      </div>
-
-      {/* List Items */}
-      <div className=" gap-1 justify-center flex flex-wrap">
+      <BlockHeader headline={headline} description={description} />
+      <div className="max-w-2xl mx-auto gap-1 justify-center flex flex-wrap">
         {items.map((item, index) => (
-          <ListItemBlock
-            key={index}
-            title={item.title}
-            description={item.description}
-          />
+          <ListItem key={index} variant="background">
+            <h4 className="font-sans uppercase mb-2">{item.title}</h4>
+            <p className="font-mono">{item.description}</p>
+          </ListItem>
         ))}
       </div>
     </div>
   );
-}
+};
+
+export default ListBlock;

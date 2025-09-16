@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { AccordionArrowIcon } from '../icons';
+import { AccordionArrowIcon } from '@/components/icons';
+import ListItem from '@/components/ListItem';
 
 interface QAItem {
   blockType: 'qa';
@@ -47,7 +48,7 @@ const AccordionItem: React.FC<{
     <div className="border border-text rounded-md overflow-hidden">
       <button
         onClick={toggleAccordion}
-        className="w-full py-3 text-left flex items-center justify-between cursor-pointer hover:bg-text/5 transition-colors"
+        className="w-full pt-4 pb-[.9em] text-left flex items-center justify-between cursor-pointer hover:bg-text/5 transition-colors"
       >
         <div className="flex-shrink-0 px-4">
           <AccordionArrowIcon
@@ -77,7 +78,7 @@ const AccordionItem: React.FC<{
         }}
       >
         <div ref={contentRef} className="px-4 pb-4">
-          <div className="pt-3 font-mono">
+          <div className="pt-1 font-mono">
             <RichText data={qa.answer} />
           </div>
         </div>
@@ -95,14 +96,14 @@ const QAList: React.FC<QAListProps> = ({ items, layout }) => {
     if (layout === 'list') {
       const HeadingTag = headingLevel;
       return (
-        <div key={index} className="border-b border-text/20 pb-6">
-          <HeadingTag className="font-display mb-3">
+        <ListItem key={index}>
+          <HeadingTag className="font-sans mb-2">
             <RichText data={qa.question} />
           </HeadingTag>
           <div className="font-mono">
             <RichText data={qa.answer} />
           </div>
-        </div>
+        </ListItem>
       );
     }
 
@@ -126,7 +127,7 @@ const QAList: React.FC<QAListProps> = ({ items, layout }) => {
       return (
         <div key={index} className="">
           <h3 className="text-md text-center mb-4">{item.title}</h3>
-          <div className={layout === 'list' ? 'space-y-6' : 'space-y-[-1px]'}>
+          <div className={'space-y-[-1px]'}>
             {item.items.map((qa, qaIndex) => renderQAItem(qa, qaIndex, 'h4'))}
           </div>
         </div>
@@ -137,7 +138,7 @@ const QAList: React.FC<QAListProps> = ({ items, layout }) => {
   };
 
   return (
-    <div className={layout === 'list' ? 'space-y-6' : 'space-y-2'}>
+    <div className={layout === 'list' ? 'space-y-4' : 'space-y-2'}>
       {items.map((item, index) => renderItem(item, index))}
     </div>
   );

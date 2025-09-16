@@ -1,6 +1,6 @@
 import type { Block } from 'payload';
 import ListItem from '@/blocks/ListItem';
-import { validateNoH1Headings } from '@/utils/validation';
+import { InlineHeader } from '@/fields/InlineHeader';
 
 const List: Block = {
   slug: 'list',
@@ -9,19 +9,7 @@ const List: Block = {
     plural: 'Lists',
   },
   fields: [
-    {
-      name: 'header',
-      type: 'richText',
-      required: true,
-      admin: {
-        features: {
-          headings: {
-            enabledHeadingSizes: ['h2'],
-          },
-        },
-      },
-      validate: validateNoH1Headings,
-    },
+    ...InlineHeader,
     {
       name: 'items',
       type: 'blocks',

@@ -5,8 +5,7 @@ import NavigationWrapper from '@/components/NavigationWrapper';
 import RevalidateButton from '@/components/RevalidateButton';
 import { Footer } from '@/components/Footer';
 import { ThemeProvider } from 'next-themes';
-import { getPayload } from 'payload';
-import config from '@/payload.config';
+import PayloadAPI from '@/lib/api';
 
 const sans = localFont({
   src: [
@@ -79,16 +78,14 @@ export const dynamic = 'force-dynamic';
 
 async function getNavigation() {
   try {
-    const payloadConfig = await config;
-    const payload = await getPayload({ config: payloadConfig });
-
-    const { docs: [navigation] = [] } = await payload.find({
-      collection: 'navigation' as any,
+    const response = await PayloadAPI.find({
+      collection: 'navigation',
       depth: 3, // Populate nested navigation relationships
+      limit: 1,
     });
 
-    if (navigation) {
-      return JSON.parse(JSON.stringify(navigation)) as any;
+    if (response.docs[0]) {
+      return response.docs[0] as any;
     }
 
     return null;

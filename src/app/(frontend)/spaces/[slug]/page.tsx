@@ -1,5 +1,4 @@
-import { getPayload } from 'payload';
-import config from '@/payload.config';
+import PayloadAPI from '@/lib/api';
 import ListBlock from '@/components/blocks/ListBlock';
 import TextBlock from '@/components/blocks/TextBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
@@ -19,17 +18,10 @@ interface SpacePageProps {
 }
 
 async function SpacePage({ params }: SpacePageProps) {
-  const payloadConfig = await config;
-  const payload = await getPayload({ config: payloadConfig });
-
   const { slug } = params;
 
-  // Fetch the space by slug
-  const { docs: [space] = [] } = await payload.find({
-    collection: 'spaces' as any,
-    where: { slug: { equals: slug } },
-    depth: 2, // Increased depth to populate relationship data within blocks
-  });
+  // Fetch the space by slug from external backend
+  const space = await PayloadAPI.findBySlug('spaces', slug, 2);
 
   // If space doesn't exist, return 404
   if (!space) {

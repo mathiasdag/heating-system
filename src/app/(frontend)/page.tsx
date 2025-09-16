@@ -1,5 +1,4 @@
-import { getPayload } from 'payload';
-import config from '@/payload.config';
+import PayloadAPI from '@/lib/api';
 import HeaderBlock from '@/components/blocks/pages/HeaderBlock';
 import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
@@ -19,15 +18,8 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 
 export default async function HomePage() {
-  const payloadConfig = await config;
-  const payload = await getPayload({ config: payloadConfig });
-
-  // Fetch the homepage (by slug)
-  const { docs: [page] = [] } = await payload.find({
-    collection: 'pages' as any,
-    where: { slug: { equals: 'hem' } },
-    depth: 2, // Increased depth to populate relationship data within blocks
-  });
+  // Fetch the homepage (by slug) from backend
+  const page = await PayloadAPI.findBySlug('pages', 'hem', 2);
 
   return (
     <div data-content-type="page">

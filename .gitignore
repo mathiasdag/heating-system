@@ -45,3 +45,4 @@ media/
 
 # Add .env to .gitignore to prevent environment variables from being tracked by git.
 .env
+backend-integration/

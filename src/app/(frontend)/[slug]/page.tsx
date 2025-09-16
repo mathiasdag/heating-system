@@ -1,5 +1,4 @@
-import { getPayload } from 'payload';
-import config from '@/payload.config';
+import PayloadAPI from '@/lib/api';
 import HeaderBlock from '@/components/blocks/pages/HeaderBlock';
 import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
@@ -26,17 +25,10 @@ interface PageProps {
 }
 
 export default async function DynamicPage({ params }: PageProps) {
-  const payloadConfig = await config;
-  const payload = await getPayload({ config: payloadConfig });
-
   const { slug } = await params;
 
-  // Fetch the page by slug
-  const { docs: [page] = [] } = await payload.find({
-    collection: 'pages' as any,
-    where: { slug: { equals: slug } },
-    depth: 2, // Increased depth to populate relationship data within blocks
-  });
+  // Fetch the page by slug from external backend
+  const page = await PayloadAPI.findBySlug('pages', slug, 2);
 
   // If page doesn't exist, return 404
   if (!page) {

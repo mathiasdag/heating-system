@@ -26,6 +26,7 @@ export interface CalendarEventCardProps {
   event: CalendarEvent;
   index: number;
   onClick: (event: CalendarEvent) => void;
+  isInView?: boolean;
 }
 
 export interface CalendarEventOverlayProps {

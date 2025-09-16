@@ -4,24 +4,24 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { DevIndicator } from '@/components/DevIndicator';
 
-interface ReusableOverlayProps {
+interface OverlayProps {
   isOpen: boolean;
   onClose: () => void;
-  title?: string;
-  subtitle?: string;
   children: React.ReactNode;
   className?: string;
+  backgroundClassName?: string;
   componentName?: string;
+  closeOnOutsideClick?: boolean;
 }
 
-const ReusableOverlay: React.FC<ReusableOverlayProps> = ({
+const Overlay: React.FC<OverlayProps> = ({
   isOpen,
   onClose,
-  title,
-  subtitle,
   children,
   className = '',
-  componentName = 'ReusableOverlay',
+  backgroundClassName = 'bg-bg',
+  componentName = 'Overlay',
+  closeOnOutsideClick = false,
 }) => {
   // Handle escape key and prevent scroll
   useEffect(() => {
@@ -46,30 +46,21 @@ const ReusableOverlay: React.FC<ReusableOverlayProps> = ({
 
   if (!isOpen) return null;
 
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (closeOnOutsideClick && e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`fixed inset-0 z-50 bg-bg select-none ${className}`}
+      className={`fixed inset-0 z-50 ${backgroundClassName} select-none ${className}`}
+      onClick={closeOnOutsideClick ? handleOverlayClick : undefined}
     >
-      <DevIndicator componentName={componentName} />
-
-      {/* Header */}
-      {(title || subtitle) && (
-        <div className="absolute top-0 left-0 p-2 flex gap-x-3 z-10">
-          {title && <span className="uppercase">{title}</span>}
-          {subtitle && <span>({subtitle})</span>}
-        </div>
-      )}
-
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-0 right-0 p-2 z-20 hover:bg-gray-100 transition-colors"
-      >
-        Stäng
-      </button>
+      <DevIndicator componentName={componentName} position="bottom-right" />
 
       {/* Content */}
       {children}
@@ -77,4 +68,4 @@ const ReusableOverlay: React.FC<ReusableOverlayProps> = ({
   );
 };
 
-export default ReusableOverlay;
+export default Overlay;

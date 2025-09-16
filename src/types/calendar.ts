@@ -34,8 +34,3 @@ export interface CalendarEventOverlayProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-export interface CalendarEventActionsProps {
-  event: CalendarEvent;
-  onDownloadICS: (event: CalendarEvent) => void;
-}

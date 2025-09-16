@@ -47,13 +47,15 @@ const CalendarBlock: React.FC<CalendarBlockProps> = ({
     const emptyCards = [];
 
     // Determine current number of columns based on window width
-    let currentColumns = 2; // default for mobile
+    let currentColumns = 1; // default for mobile
     if (windowWidth >= 1536) {
       currentColumns = 5; // 2xl
     } else if (windowWidth >= 1280) {
       currentColumns = 4; // xl
     } else if (windowWidth >= 768) {
       currentColumns = 3; // md
+    } else if (windowWidth >= 480) {
+      currentColumns = 2; // xs
     }
 
     // Calculate how many empty cards are needed for the current screen size
@@ -91,9 +93,9 @@ const CalendarBlock: React.FC<CalendarBlockProps> = ({
 
       {/* Events Grid */}
       <div className="max-w-8xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 justify-center">
+        <div className="grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
           {events.map((event, index) => (
-            <div className="aspect-video" key={event.id || index}>
+            <div className="aspect-video w-full" key={event.id || index}>
               <CalendarEventCard
                 event={event}
                 index={index}

@@ -19,7 +19,7 @@ const CalendarEventCard: React.FC<CalendarEventCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      className={`bg-surface-dark rounded-md py-4 px-6 flex flex-col gap-2 text-center justify-between h-full ${
+      className={`bg-surface-dark rounded-md py-4 px-6 flex flex-col gap-2 text-center justify-between items-center w-full h-full ${
         isEmpty ? 'cursor-default opacity-0' : 'cursor-pointer'
       }`}
       onClick={() => !isEmpty && onClick(event)}

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { formatEventDate, formatEventTime } from '@/utils/dateFormatting';
 import { downloadICS } from '@/utils/icsUtils';
@@ -13,9 +13,35 @@ const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
   isOpen,
   onClose,
 }) => {
+  const headerRef = useRef<HTMLElement>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+
   const handleDownloadICS = (eventData: typeof event) => {
     downloadICS(eventData);
   };
+
+  // Check if header is scrollable
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const checkScrollable = () => {
+      if (headerRef.current) {
+        const { scrollHeight, clientHeight } = headerRef.current;
+        const hasScroll = scrollHeight > clientHeight + 1; // Add small buffer for precision
+        console.log('Scroll check:', { scrollHeight, clientHeight, hasScroll });
+        setIsScrollable(hasScroll);
+      }
+    };
+
+    // Multiple checks with increasing delays to ensure layout is stable
+    const timeouts = [
+      setTimeout(checkScrollable, 50),
+      setTimeout(checkScrollable, 200),
+      setTimeout(checkScrollable, 500),
+    ];
+
+    return () => timeouts.forEach(clearTimeout);
+  }, [event.description, isOpen]);
 
   return (
     <Overlay
@@ -23,14 +49,17 @@ const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
       onClose={onClose}
       componentName="CalendarEventOverlay"
       closeOnOutsideClick={true}
-      className="flex items-center justify-center px-2"
+      className="flex items-center justify-center p-2"
       backgroundClassName="bg-black/80 backdrop-blur-xl"
     >
       <div
-        className="w-full max-w-sm relative"
+        className="w-full max-w-sm max-h-[calc(100vh-1rem)] flex flex-col relative"
         onClick={e => e.stopPropagation()}
       >
-        <header className="bg-bg w-full grid gap-y-4 rounded-md px-5 py-6">
+        <header
+          ref={headerRef}
+          className="relative bg-bg w-full grid gap-y-4 rounded-md px-5 py-6 overflow-y-auto flex-1 min-h-0"
+        >
           <h3 className="font-sans text-md">{event.title}</h3>
           <div className="inline-flex flex-wrap gap-x-4">
             <div className="font-mono">
@@ -45,13 +74,13 @@ const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
               <RichText data={event.description} className="font-mono" />
             </div>
           )}
+          {isScrollable && (
+            <div className="absolute bottom-0 left-4 right-4 h-16 bg-gradient-to-t from-bg to-transparent pointer-events-none" />
+          )}
         </header>
-
-        <div className="flex"></div>
-
         <button
           onClick={() => handleDownloadICS(event)}
-          className="flex items-center justify-center gap-2 bg-bg w-full rounded-md p-4 hover:bg-surface-dark transition-colors"
+          className="flex items-center shrink-0 justify-center gap-2 bg-bg w-full rounded-md p-4 hover:bg-surface-dark transition-colors"
         >
           <svg
             className="w-4 h-4"
@@ -74,7 +103,7 @@ const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
           <AppLink
             link={event.link}
             variant="minimal"
-            className="flex items-center justify-center gap-2 w-full rounded-md p-4 uppercase bg-accent"
+            className="flex items-center justify-center shrink-0 gap-2 w-full rounded-md p-4 uppercase bg-accent"
           >
             <span className="translate-y-[.1em]">
               {event.link.text || 'Läs mer'}

@@ -48,7 +48,7 @@ module.exports = {
       colors: {
         bg: 'var(--color-bg)',
         surface: 'var(--color-surface)',
-        'surface-dark': '#E1DED0', // Darker surface color
+        'surface-dark': 'var(--color-surface-dark)',
         text: 'var(--color-text)',
         border: 'var(--color-border)',
         accent: 'var(--color-accent)',
@@ -94,7 +94,7 @@ module.exports = {
         ],
       },
       screens: {
-        xs: '480px',
+        xs: { raw: '(min-width: 480px) and (max-width: 639px)' },
         shortest: { raw: '(max-height: 400px)' },
         shorter: { raw: '(min-height: 401px) and (max-height: 600px)' },
         short: { raw: '(min-height: 601px) and (max-height: 800px)' },

@@ -44,7 +44,7 @@ const Header: Block = {
           relationTo: 'media',
           required: false,
           admin: {
-            condition: (data: any, siblingData: any) =>
+            condition: (data: unknown, siblingData: Record<string, unknown>) =>
               siblingData?.type === 'image',
           },
         },
@@ -53,7 +53,7 @@ const Header: Block = {
           type: 'text', // Store Mux asset ID or playback ID
           required: false,
           admin: {
-            condition: (data: any, siblingData: any) =>
+            condition: (data: unknown, siblingData: Record<string, unknown>) =>
               siblingData?.type === 'mux',
           },
         },

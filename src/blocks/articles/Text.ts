@@ -1,5 +1,4 @@
 import type { Block } from 'payload';
-import LinkGroup from './LinkGroup';
 
 const Text: Block = {
   slug: 'text',

@@ -62,7 +62,7 @@ const CalendarEvent: Block = {
           relationTo: ['pages', 'spaces'],
           required: false,
           admin: {
-            condition: (data: any, siblingData: any) =>
+            condition: (data: unknown, siblingData: Record<string, unknown>) =>
               siblingData?.type === 'internal',
           },
         },
@@ -71,7 +71,7 @@ const CalendarEvent: Block = {
           type: 'text',
           required: false,
           admin: {
-            condition: (data: any, siblingData: any) =>
+            condition: (data: unknown, siblingData: Record<string, unknown>) =>
               siblingData?.type === 'external',
           },
         },

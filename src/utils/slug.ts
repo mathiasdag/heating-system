@@ -20,7 +20,7 @@ export const slugFromTitleHook = ({
   data,
   operation,
 }: {
-  data: any;
+  data: Record<string, unknown>;
   operation: string;
 }) => {
   if (data?.title) {

@@ -3,13 +3,18 @@
  * @param value - The rich text value to validate
  * @returns true if valid, error message if invalid
  */
-export const validateNoH1Headings = (value: any): true | string => {
-  if (value && value.root && value.root.children) {
-    const hasH1 = value.root.children.some(
-      (child: any) => child.type === 'heading' && child.tag === 'h1'
-    );
-    if (hasH1) {
-      return 'H1 headings are not allowed. Please use H2 or lower.';
+export const validateNoH1Headings = (value: unknown): true | string => {
+  if (value && typeof value === 'object' && value !== null && 'root' in value) {
+    const richTextValue = value as {
+      root: { children: Array<{ type: string; tag: string }> };
+    };
+    if (richTextValue.root && richTextValue.root.children) {
+      const hasH1 = richTextValue.root.children.some(
+        child => child.type === 'heading' && child.tag === 'h1'
+      );
+      if (hasH1) {
+        return 'H1 headings are not allowed. Please use H2 or lower.';
+      }
     }
   }
   return true;
@@ -22,7 +27,7 @@ export const validateNoH1Headings = (value: any): true | string => {
  * @returns true if valid, error message if invalid
  */
 export const validateRequired = (
-  value: any,
+  value: unknown,
   fieldName: string = 'This field'
 ): true | string => {
   if (!value || (typeof value === 'string' && value.trim() === '')) {

@@ -7,10 +7,10 @@ export interface CalendarEvent {
   title: string;
   startDate: string;
   endDate: string;
-  description?: any;
+  description?: unknown;
   link?: {
     type: 'internal' | 'external';
-    reference?: any;
+    reference?: unknown;
     url?: string;
     text?: string;
   };
@@ -30,7 +30,7 @@ const formatICSDate = (date: Date): string => {
  * @param description - Rich text description
  * @returns Cleaned description string
  */
-const cleanDescriptionForICS = (description: any): string => {
+const cleanDescriptionForICS = (description: unknown): string => {
   if (!description) return '';
 
   return JSON.stringify(description)

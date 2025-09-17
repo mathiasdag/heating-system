@@ -95,7 +95,7 @@ const Articles: CollectionConfig = {
             {
               name: 'tags',
               type: 'relationship',
-              relationTo: 'tags' as any,
+              relationTo: 'tags',
               hasMany: true,
               required: false,
               admin: {

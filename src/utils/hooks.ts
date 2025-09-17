@@ -18,8 +18,8 @@ export const commonHooks = {
   /**
    * Hook for initializing nested arrays (useful for navigation items)
    */
-  initializeNestedArrays: ({ data }: { data: any }) => {
-    const initializeChildren = (items: any[]) => {
+  initializeNestedArrays: ({ data }: { data: Record<string, unknown> }) => {
+    const initializeChildren = (items: Record<string, unknown>[]) => {
       if (!items) return;
       items.forEach(item => {
         if (!item.children) {

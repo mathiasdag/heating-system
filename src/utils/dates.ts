@@ -16,7 +16,7 @@ export const setPublishedDateHook = ({
   data,
   operation,
 }: {
-  data: any;
+  data: Record<string, unknown>;
   operation: string;
 }) => {
   if (operation === 'create' && !data.publishedDate) {
@@ -30,7 +30,11 @@ export const setPublishedDateHook = ({
  * @param data - The document data
  * @returns Modified data with updated last modified date
  */
-export const updateLastModifiedHook = ({ data }: { data: any }) => {
+export const updateLastModifiedHook = ({
+  data,
+}: {
+  data: Record<string, unknown>;
+}) => {
   data.lastModifiedDate = getCurrentTimestamp();
   return data;
 };
@@ -45,7 +49,7 @@ export const dateTrackingHook = ({
   data,
   operation,
 }: {
-  data: any;
+  data: Record<string, unknown>;
   operation: string;
 }) => {
   // Set published date on creation if not provided

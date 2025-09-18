@@ -5,8 +5,11 @@ import Image from 'next/image';
 import { AppLink } from '@/components/AppLink';
 import Overlay from '@/components/Overlay';
 import { routeLink } from '@/utils/linkRouter';
+import { createMarqueeText } from '@/utils/marquee';
+import Marquee from 'react-fast-marquee';
 import OverlayTextBlock from './OverlayTextBlock';
 import OverlayListBlock from './OverlayListBlock';
+import clsx from 'clsx';
 
 interface InfoOverlayProps {
   overlay: {
@@ -27,11 +30,11 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
   isOpen,
   onClose,
 }) => {
-  const headerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const [isScrollable, setIsScrollable] = useState(false);
 
   // Use the global router to resolve the link
-  const linkResult = overlay.link ? routeLink(overlay.link) : null;
+  const linkResult = overlay.link ? routeLink(overlay.link as unknown) : null;
 
   // Check if header is scrollable
   useEffect(() => {
@@ -68,9 +71,17 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
         className="w-full max-w-lg max-h-[calc(100vh-1rem)] flex flex-col relative"
         onClick={e => e.stopPropagation()}
       >
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 p-4 uppercase text-sm z-10 font-mono"
+        >
+          (Esc)
+        </button>
         <div
           ref={headerRef}
-          className="relative bg-bg w-full grid gap-y-4 rounded-lg px-8 pt-8 pb-12 overflow-y-auto flex-1 min-h-0"
+          className={clsx(
+            'relative bg-bg w-full grid gap-y-6 rounded-sm px-8 pt-8 overflow-y-auto flex-1 min-h-0'
+          )}
         >
           <h3 className="font-sans text-base uppercase text-center">
             {overlay.headline}
@@ -88,7 +99,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
 
           {overlay.layout && overlay.layout.length > 0 && (
             <div className="space-y-4">
-              {overlay.layout.map((block: any, index: number) => {
+              {overlay.layout.map((block: unknown, index: number) => {
                 const cleanBlock = JSON.parse(JSON.stringify(block));
                 switch (block.blockType) {
                   case 'text':
@@ -106,14 +117,23 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
           )}
 
           {isScrollable && (
-            <div className="absolute bottom-0 left-4 right-4 h-16 bg-gradient-to-t from-bg to-transparent pointer-events-none" />
+            <div className="sticky bottom-0 left-4 right-4 h-16 -mt-12 sm:h-24 bg-gradient-to-t from-bg to-transparent pointer-events-none" />
           )}
         </div>
 
-        {linkResult?.href && overlay.link && (
-          <div className="bg-bg border-t border-gray-200 px-5 py-4 rounded-b-md">
-            <AppLink link={overlay.link} variant="primary" className="w-full">
-              {(overlay.link as any)?.text || 'Learn More'}
+        {linkResult && (linkResult as unknown)?.href && overlay.link && (
+          <div className="bg-bg rounded-sm">
+            <AppLink
+              link={overlay.link as unknown}
+              variant="primary"
+              className="w-full !px-0 !bg-accent !text-text"
+              size="lg"
+            >
+              <Marquee speed={30}>
+                {createMarqueeText(
+                  (overlay.link as unknown)?.text || 'Learn More'
+                )}
+              </Marquee>
             </AppLink>
           </div>
         )}

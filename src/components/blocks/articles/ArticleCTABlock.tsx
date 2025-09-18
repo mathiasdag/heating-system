@@ -4,6 +4,7 @@ import { DevIndicator } from '../../DevIndicator';
 import { AppLink } from '../../AppLink';
 import Marquee from 'react-fast-marquee';
 import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
+import { createMarqueeText } from '@/utils/marquee';
 
 interface ArticleCTABlockProps {
   headline: string;
@@ -13,17 +14,6 @@ interface ArticleCTABlockProps {
   link?: LinkGroup;
 }
 
-// Helper function to create marquee text with repetitions
-const createMarqueeText = (text: string, count: number = 10) => {
-  return Array(count)
-    .fill(null)
-    .map((_, i) => (
-      <span key={i} className="mx-4">
-        {text}
-      </span>
-    ));
-};
-
 export default function ArticleCTABlock({
   headline,
   ctaType = 'default',
@@ -31,7 +21,14 @@ export default function ArticleCTABlock({
   link,
 }: ArticleCTABlockProps) {
   // Use the link router to resolve the link
-  const linkResult = link ? routeLink(link) : { href: undefined, isExternal: false, isCopy: false, shouldRenderAsButton: false };
+  const linkResult = link
+    ? routeLink(link)
+    : {
+        href: undefined,
+        isExternal: false,
+        isCopy: false,
+        shouldRenderAsButton: false,
+      };
 
   if (ctaType === 'marquee') {
     return (
@@ -44,11 +41,17 @@ export default function ArticleCTABlock({
               <RichText data={description} className="font-mono" />
             )}
           </div>
-          {linkResult.href && typeof linkResult.href === 'string' && link?.text && (
-            <AppLink link={link} variant="primary" className="h-[2.333em] px-0">
-              <Marquee speed={50}>{createMarqueeText(link.text)}</Marquee>
-            </AppLink>
-          )}
+          {linkResult.href &&
+            typeof linkResult.href === 'string' &&
+            link?.text && (
+              <AppLink
+                link={link}
+                variant="primary"
+                className="h-[2.333em] px-0"
+              >
+                <Marquee speed={50}>{createMarqueeText(link.text)}</Marquee>
+              </AppLink>
+            )}
         </div>
       </div>
     );
@@ -64,11 +67,13 @@ export default function ArticleCTABlock({
             <RichText data={description} />
           </div>
         )}
-        {linkResult.href && typeof linkResult.href === 'string' && link?.text && (
-          <AppLink link={link} variant="secondary">
-            <Marquee speed={30}>{createMarqueeText(link.text)}</Marquee>
-          </AppLink>
-        )}
+        {linkResult.href &&
+          typeof linkResult.href === 'string' &&
+          link?.text && (
+            <AppLink link={link} variant="secondary">
+              <Marquee speed={30}>{createMarqueeText(link.text)}</Marquee>
+            </AppLink>
+          )}
       </div>
     </div>
   );

@@ -27,8 +27,8 @@ interface PageProps {
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
 
-  // Fetch the page by slug from external backend
-  const page = await PayloadAPI.findBySlug('pages', slug, 2);
+  // Fetch the page by slug from external backend with deeper population for links
+  const page = await PayloadAPI.findBySlug('pages', slug, 3);
 
   // If page doesn't exist, return 404
   if (!page) {

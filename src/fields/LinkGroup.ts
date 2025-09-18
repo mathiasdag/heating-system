@@ -1,22 +1,26 @@
 import type { Field } from 'payload';
 
 const LinkGroup: Field = {
-  type: 'collapsible',
-  label: 'Add link',
+  name: 'link',
+  type: 'group',
+  label: 'Add Link',
   admin: {
-    initCollapsed: true,
+    description: 'Choose the type of link to add',
   },
   fields: [
     {
       name: 'type',
       type: 'select',
       options: [
-        { label: 'Internal', value: 'internal' },
-        { label: 'External', value: 'external' },
-        { label: 'Copy', value: 'copy' },
+        { label: 'Internal Link', value: 'internal' },
+        { label: 'External Link', value: 'external' },
+        { label: 'Action', value: 'action' },
       ],
       defaultValue: 'internal',
       required: true,
+      admin: {
+        description: 'Choose the type of link',
+      },
     },
     {
       name: 'reference',
@@ -24,9 +28,9 @@ const LinkGroup: Field = {
       relationTo: ['pages', 'spaces'],
       required: false,
       admin: {
-        condition: (data: unknown, siblingData: Record<string, unknown>) => {
-          return siblingData?.type === 'internal';
-        },
+        condition: (data: unknown, siblingData: Record<string, unknown>) =>
+          siblingData?.type === 'internal',
+        description: 'Select a page or space to link to',
       },
     },
     {
@@ -34,9 +38,9 @@ const LinkGroup: Field = {
       type: 'text',
       required: false,
       admin: {
-        condition: (data: unknown, siblingData: Record<string, unknown>) => {
-          return siblingData?.type === 'external';
-        },
+        condition: (data: unknown, siblingData: Record<string, unknown>) =>
+          siblingData?.type === 'external',
+        description: 'Enter the external URL',
       },
     },
     {
@@ -44,6 +48,9 @@ const LinkGroup: Field = {
       type: 'text',
       required: false,
       defaultValue: 'Läs mer',
+      admin: {
+        description: 'Link text (optional)',
+      },
     },
   ],
 };

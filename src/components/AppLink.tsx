@@ -12,6 +12,7 @@ interface AppActionProps {
   href?: string;
   children: React.ReactNode;
   variant?: 'primary' | 'secondary' | 'outline' | 'minimal';
+  size?: 'sm' | 'md' | 'lg';
   asButton?: boolean;
   className?: string;
   actionType?: 'link' | 'copy';
@@ -23,13 +24,19 @@ interface AppActionProps {
   link?: LinkGroup;
 }
 
+const sizeStyles = {
+  sm: 'px-2 pt-[.4em] pb-1',
+  md: 'px-3 pt-[.6em] pb-2',
+  lg: 'px-4 pt-[1.1em] pb-4',
+};
+
 const baseStyles = {
   primary:
-    'uppercase bg-text text-white mix-blend-multiply rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-text text-white mix-blend-multiply rounded-sm block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   secondary:
-    'uppercase bg-accent rounded-sm px-3 pt-[.6em] pb-2 block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-accent rounded-sm block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   outline:
-    'uppercase border border-text rounded-sm px-3 pt-[.6em] pb-2 inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase border border-text rounded-sm inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   minimal: 'block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
 };
 
@@ -37,6 +44,7 @@ export const AppAction: React.FC<AppActionProps> = ({
   href,
   children,
   variant = 'primary',
+  size = 'md',
   asButton = false,
   className = '',
   actionType = 'link',
@@ -69,7 +77,7 @@ export const AppAction: React.FC<AppActionProps> = ({
     }
   };
 
-  const style = baseStyles[variant] + ' ' + className;
+  const style = baseStyles[variant] + ' ' + sizeStyles[size] + ' ' + className;
 
   // Handle copy action
   if (linkResult.isCopy || actionType === 'copy') {

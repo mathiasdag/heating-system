@@ -18,8 +18,8 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 
 export default async function HomePage() {
-  // Fetch the homepage (by slug) from backend
-  const page = await PayloadAPI.findBySlug('pages', 'hem', 2);
+  // Fetch the homepage (by slug) from backend with deeper population for links
+  const page = await PayloadAPI.findBySlug('pages', 'hem', 3);
 
   return (
     <div data-content-type="page">

@@ -11,6 +11,7 @@ import CourseCatalog from '@/blocks/pages/CourseCatalog';
 import FAQ from '@/blocks/pages/FAQ';
 import HighlightGrid from '@/blocks/global/HighlightGrid';
 import Calendar from '@/blocks/global/Calendar';
+import InfoOverlay from '@/blocks/global/InfoOverlay';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -69,6 +70,7 @@ const Pages: CollectionConfig = {
                 List,
                 FAQ,
                 Calendar,
+                InfoOverlay,
                 // Add more blocks here as needed
               ],
             },

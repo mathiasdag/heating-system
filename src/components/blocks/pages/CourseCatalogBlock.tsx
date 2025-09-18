@@ -121,7 +121,7 @@ function ViewportItem({
                   : item.link?.type === 'internal' && item.link?.reference
                     ? typeof item.link.reference === 'object' &&
                       item.link.reference?.slug
-                      ? `/${item.link.reference.slug}`
+                      ? `/${item.link.reference?.slug}`
                       : `/${item.link.reference}`
                     : undefined
               }

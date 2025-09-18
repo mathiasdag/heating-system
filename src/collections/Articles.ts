@@ -8,6 +8,7 @@ import QA from '@/blocks/global/QA';
 import Quote from '@/blocks/articles/Quote';
 import Image from '@/blocks/articles/Image';
 import Video from '@/blocks/articles/Video';
+import InfoOverlay from '@/blocks/global/InfoOverlay';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -152,6 +153,7 @@ const Articles: CollectionConfig = {
                 QA,
                 Video,
                 Calendar,
+                InfoOverlay,
               ],
             },
           ],

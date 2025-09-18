@@ -36,8 +36,8 @@ function resolveReference(reference: any): string | undefined {
     'value' in reference &&
     reference.value?.slug
   ) {
-    const collection = reference.relationTo;
-    const slug = reference.value.slug;
+    const collection = reference?.relationTo;
+    const slug = reference?.value?.slug;
 
     switch (collection) {
       case 'spaces':
@@ -56,8 +56,8 @@ function resolveReference(reference: any): string | undefined {
     'slug' in reference &&
     !('relationTo' in reference)
   ) {
-    const slug = reference.slug;
-    const collection = reference.collection;
+    const slug = reference?.slug;
+    const collection = reference?.collection;
 
     switch (collection) {
       case 'spaces':

@@ -35,7 +35,7 @@ const Navigation: CollectionConfig = {
       admin: {
         description: 'Highlighted item shown in closed navigation state',
       },
-      fields: [...LinkGroup.fields],
+      fields: LinkGroup.fields,
     },
     {
       name: 'menuItems',

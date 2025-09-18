@@ -8,7 +8,7 @@ const NavigationItem: Block = {
     {
       name: 'link',
       type: 'group',
-      fields: [...LinkGroup.fields],
+      fields: LinkGroup.fields,
       admin: {
         description:
           'Link configuration - use the "text" field for the menu item name',
@@ -30,7 +30,7 @@ const NavigationItem: Block = {
             {
               name: 'link',
               type: 'group',
-              fields: [...LinkGroup.fields],
+              fields: LinkGroup.fields,
               admin: {
                 description:
                   'Link configuration - use the "text" field for the menu item name',
@@ -52,7 +52,7 @@ const NavigationItem: Block = {
                     {
                       name: 'link',
                       type: 'group',
-                      fields: [...LinkGroup.fields],
+                      fields: LinkGroup.fields,
                       admin: {
                         description:
                           'Link configuration - use the "text" field for the menu item name',
@@ -74,7 +74,7 @@ const NavigationItem: Block = {
                             {
                               name: 'link',
                               type: 'group',
-                              fields: [...LinkGroup.fields],
+                              fields: LinkGroup.fields,
                               admin: {
                                 description:
                                   'Link configuration - use the "text" field for the menu item name',

@@ -7,6 +7,7 @@ import CTA from '@/blocks/global/CTA';
 import HighlightGrid from '@/blocks/global/HighlightGrid';
 import Calendar from '@/blocks/global/Calendar';
 import Image from '@/blocks/articles/Image';
+import InfoOverlay from '@/blocks/global/InfoOverlay';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -115,6 +116,7 @@ const Spaces: CollectionConfig = {
                 MinimalCarousel,
                 Text,
                 Calendar,
+                InfoOverlay,
               ],
             },
           ],

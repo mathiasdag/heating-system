@@ -58,7 +58,7 @@ const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
   let href: string | undefined = undefined;
   if (link?.type === 'internal' && link?.reference) {
     if (typeof link.reference === 'object' && link.reference?.slug) {
-      href = `/${link.reference.slug}`;
+      href = `/${link.reference?.slug}`;
     } else if (typeof link.reference === 'string') {
       href = `/${link.reference}`;
     }

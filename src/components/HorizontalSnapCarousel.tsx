@@ -32,14 +32,32 @@ const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
   const calcLayout = () => {
     if (!scrollContainerRef.current || !cardRefs.current[0])
       return { showDots: false, isScrollable: false };
+
     const container = scrollContainerRef.current;
     const card = cardRefs.current[0];
     const containerWidth = container.offsetWidth;
     const cardWidth = card.offsetWidth;
+    const totalContentWidth = container.scrollWidth;
+    const visibleWidth = container.clientWidth;
+
+    // Add some tolerance for rounding errors
+    const tolerance = 2;
+    const isScrollable = totalContentWidth > visibleWidth + tolerance;
+
+    // Debug logging (remove in production)
+    console.log('HorizontalSnapCarousel calcLayout:', {
+      containerWidth,
+      cardWidth,
+      totalContentWidth,
+      visibleWidth,
+      isScrollable,
+      childrenCount: children.length,
+    });
+
     // 24px = space-x-6 (1.5rem)
     return {
       showDots: containerWidth < cardWidth * 2 + 24,
-      isScrollable: container.scrollWidth > container.clientWidth,
+      isScrollable,
     };
   };
 
@@ -56,9 +74,13 @@ const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
       setIsScrollable(isScrollable);
       setHasMeasured(true);
     };
-    handleResize();
+
+    // Add a small delay to ensure all cards are rendered
+    const timeoutId = setTimeout(handleResize, 100);
+
     window.addEventListener('resize', handleResize);
     return () => {
+      clearTimeout(timeoutId);
       window.removeEventListener('resize', handleResize);
     };
   }, [children.length]);

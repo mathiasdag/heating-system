@@ -1,7 +1,6 @@
 import type { Field } from 'payload';
 
 const LinkGroup: Field = {
-  name: 'link',
   type: 'collapsible',
   label: 'Add link',
   admin: {
@@ -25,8 +24,9 @@ const LinkGroup: Field = {
       relationTo: ['pages', 'spaces'],
       required: false,
       admin: {
-        condition: (data: unknown, siblingData: Record<string, unknown>) =>
-          siblingData?.type === 'internal',
+        condition: (data: unknown, siblingData: Record<string, unknown>) => {
+          return siblingData?.type === 'internal';
+        },
       },
     },
     {
@@ -34,8 +34,9 @@ const LinkGroup: Field = {
       type: 'text',
       required: false,
       admin: {
-        condition: (data: unknown, siblingData: Record<string, unknown>) =>
-          siblingData?.type === 'external',
+        condition: (data: unknown, siblingData: Record<string, unknown>) => {
+          return siblingData?.type === 'external';
+        },
       },
     },
     {

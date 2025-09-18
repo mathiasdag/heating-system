@@ -29,7 +29,7 @@ const ListBlock: React.FC<ListBlockProps> = ({
       <BlockHeader headline={headline} description={description} />
       <div className="max-w-2xl mx-auto gap-1 justify-center flex flex-wrap">
         {items.map((item, index) => (
-          <ListItem key={index} variant="background">
+          <ListItem key={index} variant="background" size="md">
             <h4 className="font-sans uppercase mb-2">{item.title}</h4>
             <p className="font-mono">{item.description}</p>
           </ListItem>

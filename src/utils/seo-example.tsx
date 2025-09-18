@@ -16,7 +16,7 @@ export function generatePageMetadata(
   url?: string
 ): Metadata {
   const seoData = getSEOData(page);
-  const metaTags = generateMetaTags(seoData, url);
+  const _metaTags = generateMetaTags(seoData, url);
 
   return {
     title: seoData.title,

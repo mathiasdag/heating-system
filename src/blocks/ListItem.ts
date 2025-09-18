@@ -11,7 +11,7 @@ const ListItem: Block = {
     {
       name: 'description',
       type: 'textarea',
-      required: true,
+      required: false,
     },
   ],
 };

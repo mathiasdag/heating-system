@@ -121,15 +121,19 @@ const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
       <div
         ref={scrollContainerRef}
         className={
-          `flex overflow-x-auto space-x-2 pb-4 scrollbar-none snap-x snap-mandatory scroll-smooth ` +
+          `flex overflow-x-auto space-x-2 pb-4 scrollbar-hide snap-x snap-mandatory scroll-smooth ` +
           (isScrollable ? 'px-6' : 'justify-center') +
           ` transition-opacity duration-100` +
           (hasMeasured ? ' opacity-100' : ' opacity-0')
         }
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
         role="list"
         tabIndex={0}
         aria-label="Carousel items"
-        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {children.map((child, idx) => (
           <div
@@ -139,18 +143,11 @@ const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
             ref={el => {
               cardRefs.current[idx] = el;
             }}
-            className={
-              `snap-center flex-shrink-0 focus:outline-none aspect-window  ` +
-              (showDots && activeIdx !== idx ? 'opacity-80' : '')
-            }
+            className={`snap-center flex-shrink-0 focus:outline-none aspect-window`}
             onKeyDown={e => handleKeyDown(e, idx)}
             aria-label={getItemTitle(idx)}
           >
-            <div
-              className={`flex flex-col justify-between bg-surface rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2 ${cardClassName}`}
-            >
-              {child}
-            </div>
+            {child}
           </div>
         ))}
       </div>
@@ -166,16 +163,6 @@ const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
           ))}
         </div>
       )}
-      {/* Hide scrollbar for all browsers */}
-      <style jsx global>{`
-        .scrollbar-none::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-none {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 };

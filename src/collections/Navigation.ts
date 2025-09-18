@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig, Field } from 'payload';
 import NavigationItem from '@/blocks/NavigationItem';
 import LinkGroup from '@/fields/LinkGroup';
 import { commonHooks, publicAccess } from '@/utils/hooks';
@@ -35,7 +35,7 @@ const Navigation: CollectionConfig = {
       admin: {
         description: 'Highlighted item shown in closed navigation state',
       },
-      fields: LinkGroup.fields,
+      fields: LinkGroup.fields as Field[],
     },
     {
       name: 'menuItems',

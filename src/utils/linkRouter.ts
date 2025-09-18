@@ -9,8 +9,7 @@
 
 export interface LinkGroup {
   type: 'internal' | 'external' | 'copy';
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  reference?: any; // Payload reference object
+  reference?: unknown; // Payload reference object
   url?: string;
   text?: string;
 }
@@ -25,8 +24,7 @@ export interface LinkRouterResult {
 /**
  * Resolves a Payload reference object to a URL path
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function resolveReference(reference: any): string | undefined {
+function resolveReference(reference: unknown): string | undefined {
   if (!reference) return undefined;
 
   // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
@@ -132,8 +130,7 @@ export function routeLink(link: LinkGroup): LinkRouterResult {
  */
 export function routeLegacyLink(
   type: 'internal' | 'external' | 'copy',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  reference?: any,
+  reference?: unknown,
   url?: string,
   text?: string
 ): LinkRouterResult {

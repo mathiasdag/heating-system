@@ -16,7 +16,9 @@ export interface SEOData {
  */
 export function getSEOData(page: Page | Article | Space): SEOData {
   // Get SEO data from sidebar group
-  const seoData = (page as Record<string, unknown>).seo;
+  const seoData = (page as Record<string, unknown>).seo as
+    | Record<string, unknown>
+    | undefined;
 
   // Get page title with fallback logic
   let title = seoData?.title || page.title || '';

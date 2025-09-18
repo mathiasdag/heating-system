@@ -4,7 +4,6 @@ import { DevIndicator } from '../DevIndicator';
 import { AppLink } from '../AppLink';
 
 interface TextBlockProps {
-  headline: string;
   content: any;
   links?: Array<{
     label: string;
@@ -13,19 +12,12 @@ interface TextBlockProps {
   }>;
 }
 
-export default function TextBlock({
-  headline,
-  content,
-  links = [],
-}: TextBlockProps) {
+export default function TextBlock({ content, links = [] }: TextBlockProps) {
   return (
     <div className="py-16 px-4 lg:px-8 2xl:px-16 text-center">
       <DevIndicator componentName="TextBlock" />
 
       <div className="max-w-10xl mx-auto grid gap-4">
-        {/* Headline */}
-        <h2 className="font-mono uppercase">{headline}</h2>
-
         {/* Content */}
         <div className="">
           <RichText data={content} className="rich-text text-lg" />
@@ -33,12 +25,11 @@ export default function TextBlock({
 
         {/* Links */}
         {links.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-4 hidden">
+          <div className="flex flex-wrap justify-center gap-4">
             {links.map((link, index) => (
               <AppLink
                 key={index}
                 href={link.url}
-                type={link.type || 'internal'}
                 className="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
               >
                 {link.label}

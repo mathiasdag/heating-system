@@ -11,11 +11,19 @@ const QA: Block = {
       name: 'question',
       type: 'richText',
       required: true,
+      validate: (value: unknown) => {
+        const { validateNoH1Headings } = require('@/utils/validation');
+        return validateNoH1Headings(value);
+      },
     },
     {
       name: 'answer',
       type: 'richText',
       required: true,
+      validate: (value: unknown) => {
+        const { validateNoH1Headings } = require('@/utils/validation');
+        return validateNoH1Headings(value);
+      },
     },
   ],
 };

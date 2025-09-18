@@ -23,6 +23,10 @@ const CommonCard: Block = {
       name: 'body',
       type: 'richText',
       required: false,
+      validate: (value: unknown) => {
+        const { validateNoH1Headings } = require('@/utils/validation');
+        return validateNoH1Headings(value);
+      },
     },
     {
       name: 'image',

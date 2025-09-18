@@ -2,7 +2,11 @@ import type { Field } from 'payload';
 
 const LinkGroup: Field = {
   name: 'link',
-  type: 'group',
+  type: 'collapsible',
+  label: 'Add link',
+  admin: {
+    initCollapsed: true,
+  },
   fields: [
     {
       name: 'type',
@@ -41,9 +45,6 @@ const LinkGroup: Field = {
       defaultValue: 'Läs mer',
     },
   ],
-  admin: {
-    description: 'Link for the call to action',
-  },
 };
 
 export default LinkGroup;

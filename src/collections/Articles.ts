@@ -8,6 +8,7 @@ import QA from '@/blocks/global/QA';
 import Quote from '@/blocks/articles/Quote';
 import Image from '@/blocks/articles/Image';
 import Video from '@/blocks/articles/Video';
+import Text from '@/blocks/articles/Text';
 import InfoOverlay from '@/blocks/global/InfoOverlay';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
@@ -96,7 +97,7 @@ const Articles: CollectionConfig = {
             {
               name: 'tags',
               type: 'relationship',
-              relationTo: 'tags',
+              relationTo: 'tags' as const,
               hasMany: true,
               required: false,
               admin: {
@@ -147,6 +148,7 @@ const Articles: CollectionConfig = {
                 HighlightGrid,
                 Image,
                 Quote,
+                Text,
                 CTA,
                 List,
                 MinimalCarousel,

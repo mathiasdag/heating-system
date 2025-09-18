@@ -10,6 +10,7 @@ export { VarmeverketIcon } from './VarmeverketIcon';
 export { CapacityIcon } from './CapacityIcon';
 export { AreaIcon } from './AreaIcon';
 export { AccordionArrowIcon } from './AccordionArrowIcon';
+export { PlusIcon } from './PlusIcon';
 
 // Icon name type for type safety
 export type IconName =
@@ -20,7 +21,8 @@ export type IconName =
   | 'varmeverket'
   | 'capacity'
   | 'area'
-  | 'accordion-arrow';
+  | 'accordion-arrow'
+  | 'plus';
 
 // Icon mapping for dynamic usage
 import { CheckIcon } from './CheckIcon';
@@ -31,6 +33,7 @@ import { VarmeverketIcon } from './VarmeverketIcon';
 import { CapacityIcon } from './CapacityIcon';
 import { AreaIcon } from './AreaIcon';
 import { AccordionArrowIcon } from './AccordionArrowIcon';
+import { PlusIcon } from './PlusIcon';
 import { IconProps } from './Icon';
 
 export const ICONS: Record<IconName, React.ComponentType<IconProps>> = {
@@ -42,4 +45,5 @@ export const ICONS: Record<IconName, React.ComponentType<IconProps>> = {
   capacity: CapacityIcon,
   area: AreaIcon,
   'accordion-arrow': AccordionArrowIcon,
+  plus: PlusIcon,
 };

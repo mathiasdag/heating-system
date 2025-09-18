@@ -8,14 +8,13 @@ const Text: Block = {
   },
   fields: [
     {
-      name: 'headline',
-      type: 'text',
-      required: true,
-    },
-    {
       name: 'content',
       type: 'richText',
       required: true,
+      validate: (value: unknown) => {
+        const { validateNoH1Headings } = require('@/utils/validation');
+        return validateNoH1Headings(value);
+      },
     },
   ],
 };

@@ -38,7 +38,7 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   const fullName = [firstName, lastName].filter(Boolean).join(' ') || email;
 
   const renderTextOnly = () => (
-    <div className="bg-surface w-36 aspect-square text-center">
+    <div className="bg-surface w-64 aspect-video text-center">
       <h3 className="text-lg font-bold text-gray-900 mb-3">{fullName}</h3>
       {references && references.length > 0 && (
         <div className="flex flex-wrap justify-center gap-2">
@@ -203,6 +203,21 @@ function UserCardBlockWithFetch({
 }
 
 /**
+ * Reusable skeleton components
+ */
+const SkeletonBox = ({ className }: { className: string }) => (
+  <div className={`bg-gray-300 rounded animate-pulse ${className}`}></div>
+);
+
+const SkeletonCircle = ({ size }: { size: string }) => (
+  <SkeletonBox className={`${size} rounded-full`} />
+);
+
+const SkeletonText = ({ width, height = 'h-3' }: { width: string; height?: string }) => (
+  <SkeletonBox className={`${height} ${width}`} />
+);
+
+/**
  * Loading component that matches the card variant
  */
 function UserCardBlockLoading({
@@ -210,61 +225,49 @@ function UserCardBlockLoading({
 }: {
   variant: 'textOnly' | 'compactCard' | 'mediumCard' | 'largeCard';
 }) {
-  switch (variant) {
-    case 'textOnly':
-      return (
-        <div className="bg-surface w-36 aspect-square text-center flex items-center justify-center">
-          <div className="animate-pulse">
-            <div className="h-4 bg-gray-300 rounded w-24 mb-2"></div>
-            <div className="h-3 bg-gray-300 rounded w-16"></div>
-          </div>
+  const variants = {
+    textOnly: (
+      <div className="bg-surface w-36 aspect-square text-center flex items-center justify-center">
+        <div className="animate-pulse">
+          <SkeletonText width="w-24" height="h-4" />
+          <SkeletonText width="w-16" />
         </div>
-      );
+      </div>
+    ),
 
-    case 'compactCard':
-      return (
-        <div className="flex items-center space-x-4 p-4">
-          <div className="flex-shrink-0">
-            <div className="w-15 h-15 bg-gray-300 rounded-full animate-pulse"></div>
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="h-4 bg-gray-300 rounded w-32 mb-2 animate-pulse"></div>
-            <div className="h-3 bg-gray-300 rounded w-20 animate-pulse"></div>
-          </div>
+    compactCard: (
+      <div className="flex items-center space-x-4 p-4">
+        <div className="flex-shrink-0">
+          <SkeletonCircle size="w-15 h-15" />
         </div>
-      );
+        <div className="flex-1 min-w-0">
+          <SkeletonText width="w-32" height="h-4" />
+          <SkeletonText width="w-20" />
+        </div>
+      </div>
+    ),
 
-    case 'mediumCard':
-      return (
-        <div className="text-center">
-          <div className="mb-4">
-            <div className="w-30 h-30 bg-gray-300 rounded-full mx-auto animate-pulse"></div>
-          </div>
-          <div className="h-6 bg-gray-300 rounded w-40 mx-auto mb-3 animate-pulse"></div>
-          <div className="h-3 bg-gray-300 rounded w-24 mx-auto animate-pulse"></div>
+    mediumCard: (
+      <div className="text-center">
+        <div className="mb-4">
+          <SkeletonCircle size="w-30 h-30 mx-auto" />
         </div>
-      );
+        <SkeletonText width="w-40 mx-auto" height="h-6" />
+        <SkeletonText width="w-24 mx-auto" />
+      </div>
+    ),
 
-    case 'largeCard':
-      return (
-        <div className="text-center">
-          <div className="mb-4">
-            <div className="w-36 h-36 bg-gray-300 rounded-full mx-auto animate-pulse"></div>
-          </div>
-          <div className="h-6 bg-gray-300 rounded w-48 mx-auto mb-3 animate-pulse"></div>
-          <div className="h-3 bg-gray-300 rounded w-32 mx-auto mb-4 animate-pulse"></div>
-          <div className="h-3 bg-gray-300 rounded w-40 mx-auto animate-pulse"></div>
+    largeCard: (
+      <div className="text-center">
+        <div className="mb-4">
+          <SkeletonCircle size="w-36 h-36 mx-auto" />
         </div>
-      );
+        <SkeletonText width="w-48 mx-auto" height="h-6" />
+        <SkeletonText width="w-32 mx-auto" />
+        <SkeletonText width="w-40 mx-auto" />
+      </div>
+    ),
+  };
 
-    default:
-      return (
-        <div className="bg-surface w-36 aspect-square text-center flex items-center justify-center">
-          <div className="animate-pulse">
-            <div className="h-4 bg-gray-300 rounded w-24 mb-2"></div>
-            <div className="h-3 bg-gray-300 rounded w-16"></div>
-          </div>
-        </div>
-      );
-  }
+  return variants[variant] || variants.textOnly;
 }

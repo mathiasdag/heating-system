@@ -39,17 +39,12 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   const fullName = [firstName, lastName].filter(Boolean).join(' ') || email;
 
   const renderTextOnly = () => (
-    <div className="bg-surface w-64 aspect-video text-center p-6">
+    <div className="bg-surface w-64 text-center p-6 flex flex-col justify-center gap-2 rounded-xl">
       <h3 className="text-md">{fullName}</h3>
       {references && references.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-1">
           {references.map(tag => (
-            <span
-              key={tag.id}
-              className="inline-block px-3 py-1 text-sm border border-gray-800 text-gray-800 rounded-full"
-            >
-              {tag.name}
-            </span>
+            <Tag key={tag.id} name={tag.name} size="sm" />
           ))}
         </div>
       )}

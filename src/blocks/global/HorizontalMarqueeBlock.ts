@@ -33,7 +33,7 @@ const HorizontalMarqueeBlock: Block = {
       max: 50,
       admin: {
         description:
-          'Speed of the marquee animation (10 = fastest, 50 = slowest)',
+          'Speed of the marquee animation (10 = slowest, 50 = fastest)',
       },
     },
     {

@@ -26,13 +26,24 @@ export default function HorizontalMarqueeBlock({
 
   // Try different speed calculations to see which one works
   const speedValue = Number(speed);
-  const invertedSpeed = 100 - speedValue; // Invert the speed (higher CMS value = slower marquee)
-  const scaledSpeed = speedValue * 2; // Scale up the speed
+  
+  // react-fast-marquee typically expects speed in pixels per second
+  // Let's try mapping CMS values (10-50) to reasonable pixel speeds (20-200)
+  const minCmsSpeed = 10;
+  const maxCmsSpeed = 50;
+  const minPixelSpeed = 20;
+  const maxPixelSpeed = 200;
+  
+  const normalizedSpeed = (speedValue - minCmsSpeed) / (maxCmsSpeed - minCmsSpeed);
+  const pixelSpeed = minPixelSpeed + (normalizedSpeed * (maxPixelSpeed - minPixelSpeed));
+  
+  // Also try inverted (higher CMS = slower)
+  const invertedPixelSpeed = maxPixelSpeed - (normalizedSpeed * (maxPixelSpeed - minPixelSpeed));
 
   console.log('Speed calculations:', {
     speedValue,
-    invertedSpeed,
-    scaledSpeed,
+    pixelSpeed: Math.round(pixelSpeed),
+    invertedPixelSpeed: Math.round(invertedPixelSpeed),
   });
 
   if (!userCards || userCards.length === 0) {
@@ -46,7 +57,7 @@ export default function HorizontalMarqueeBlock({
 
       <div className="overflow-hidden">
         <Marquee
-          speed={invertedSpeed}
+          speed={pixelSpeed}
           direction="left"
           gradient={false}
           className="px-4"

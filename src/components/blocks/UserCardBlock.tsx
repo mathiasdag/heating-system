@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { DevIndicator } from '../DevIndicator';
 import { useUserData } from '@/hooks/useUserData';
+import Tag from '../Tag';
 
 interface UserCardBlockProps {
   variant: 'textOnly' | 'compactCard' | 'mediumCard' | 'largeCard';
@@ -38,8 +39,8 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   const fullName = [firstName, lastName].filter(Boolean).join(' ') || email;
 
   const renderTextOnly = () => (
-    <div className="bg-surface w-64 aspect-video text-center">
-      <h3 className="text-lg font-bold text-gray-900 mb-3">{fullName}</h3>
+    <div className="bg-surface w-64 aspect-video text-center p-6">
+      <h3 className="text-md">{fullName}</h3>
       {references && references.length > 0 && (
         <div className="flex flex-wrap justify-center gap-2">
           {references.map(tag => (
@@ -73,12 +74,7 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
         {references && references.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {references.map(tag => (
-              <span
-                key={tag.id}
-                className="inline-block px-3 py-1 text-sm border border-gray-800 text-gray-800 rounded-full"
-              >
-                {tag.name}
-              </span>
+              <Tag key={tag.id} name={tag.name} size="sm" />
             ))}
           </div>
         )}
@@ -213,9 +209,13 @@ const SkeletonCircle = ({ size }: { size: string }) => (
   <SkeletonBox className={`${size} rounded-full`} />
 );
 
-const SkeletonText = ({ width, height = 'h-3' }: { width: string; height?: string }) => (
-  <SkeletonBox className={`${height} ${width}`} />
-);
+const SkeletonText = ({
+  width,
+  height = 'h-3',
+}: {
+  width: string;
+  height?: string;
+}) => <SkeletonBox className={`${height} ${width}`} />;
 
 /**
  * Loading component that matches the card variant

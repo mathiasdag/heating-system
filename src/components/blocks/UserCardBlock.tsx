@@ -39,8 +39,8 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   const fullName = [firstName, lastName].filter(Boolean).join(' ') || email;
 
   const renderTextOnly = () => (
-    <div className="bg-surface w-64 text-center p-6 flex flex-col justify-center gap-2 rounded-xl">
-      <h3 className="text-md">{fullName}</h3>
+    <div className="bg-surface w-72 text-center p-4 flex flex-col justify-center gap-2 rounded-xl">
+      <h3 className="text-md whitespace-nowrap truncate">{fullName}</h3>
       {references && references.length > 0 && (
         <div className="flex flex-wrap justify-center gap-1">
           {references.map(tag => (
@@ -52,22 +52,20 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   );
 
   const renderCompactCard = () => (
-    <div className="flex items-center space-x-4 p-4">
+    <div className="bg-surface w-72 p-4 flex justify-center gap-4 rounded-xl">
       {profilePicture?.url && (
-        <div className="flex-shrink-0">
-          <Image
-            src={profilePicture.url}
-            alt={profilePicture.alt || fullName}
-            width={60}
-            height={60}
-            className="w-15 h-15 object-cover"
-          />
-        </div>
+        <Image
+          src={profilePicture.url}
+          alt={profilePicture.alt || fullName}
+          width={60}
+          height={60}
+          className="w-15 h-15 object-cover rounded-md"
+        />
       )}
-      <div className="flex-1 min-w-0">
-        <h3 className="text-lg font-bold text-gray-900 mb-2">{fullName}</h3>
+      <div className="flex-1 min-w-0 flex gap-1 flex-col justify-center">
+        <h3 className="text-base whitespace-nowrap truncate">{fullName}</h3>
         {references && references.length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1">
             {references.map(tag => (
               <Tag key={tag.id} name={tag.name} size="sm" />
             ))}

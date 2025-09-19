@@ -26,19 +26,22 @@ export default function HorizontalMarqueeBlock({
 
   // Try different speed calculations to see which one works
   const speedValue = Number(speed);
-  
+
   // react-fast-marquee typically expects speed in pixels per second
   // Let's try mapping CMS values (10-50) to reasonable pixel speeds (20-200)
   const minCmsSpeed = 10;
   const maxCmsSpeed = 50;
   const minPixelSpeed = 20;
   const maxPixelSpeed = 200;
-  
-  const normalizedSpeed = (speedValue - minCmsSpeed) / (maxCmsSpeed - minCmsSpeed);
-  const pixelSpeed = minPixelSpeed + (normalizedSpeed * (maxPixelSpeed - minPixelSpeed));
-  
+
+  const normalizedSpeed =
+    (speedValue - minCmsSpeed) / (maxCmsSpeed - minCmsSpeed);
+  const pixelSpeed =
+    minPixelSpeed + normalizedSpeed * (maxPixelSpeed - minPixelSpeed);
+
   // Also try inverted (higher CMS = slower)
-  const invertedPixelSpeed = maxPixelSpeed - (normalizedSpeed * (maxPixelSpeed - minPixelSpeed));
+  const invertedPixelSpeed =
+    maxPixelSpeed - normalizedSpeed * (maxPixelSpeed - minPixelSpeed);
 
   console.log('Speed calculations:', {
     speedValue,
@@ -55,13 +58,8 @@ export default function HorizontalMarqueeBlock({
       <DevIndicator componentName="HorizontalMarqueeBlock" />
       <BlockHeader headline={headline} description={description} />
 
-      <div className="overflow-hidden">
-        <Marquee
-          speed={pixelSpeed}
-          direction="left"
-          gradient={false}
-          className="px-4"
-        >
+      <div className="overflow-hidden mt-8">
+        <Marquee speed={pixelSpeed} direction="left" gradient={false}>
           <div className="flex items-center gap-4 sm:gap-6 ml-4 sm:ml-6">
             {userCards.map((userCard, index) => (
               <div key={index} className="flex-shrink-0">

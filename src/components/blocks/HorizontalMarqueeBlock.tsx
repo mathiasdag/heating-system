@@ -37,7 +37,7 @@ export default function HorizontalMarqueeBlock({
           gradient={false}
           className="px-4"
         >
-          <div className="flex items-center gap-4 sm:gap-6">
+          <div className="flex items-center gap-4 sm:gap-6 ml-4 sm:ml-6">
             {userCards.map((userCard, index) => (
               <div key={index} className="flex-shrink-0">
                 <UserCardBlock

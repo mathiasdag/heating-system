@@ -25,7 +25,7 @@ interface UseUserDataResult {
 }
 
 /**
- * Hook to fetch user data by ID
+ * Hook to fetch user data by ID with retry logic
  */
 export function useUserData(userId: string): UseUserDataResult {
   const [user, setUser] = useState<User | null>(null);
@@ -38,7 +38,7 @@ export function useUserData(userId: string): UseUserDataResult {
       return;
     }
 
-    const fetchUser = async () => {
+    const fetchUserWithRetry = async (retryCount = 0): Promise<void> => {
       try {
         setLoading(true);
         setError(null);
@@ -51,15 +51,24 @@ export function useUserData(userId: string): UseUserDataResult {
 
         const userData = await response.json();
         setUser(userData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch user');
-        console.error('Error fetching user:', err);
-      } finally {
         setLoading(false);
+      } catch (err) {
+        console.error(`Error fetching user (attempt ${retryCount + 1}):`, err);
+        
+        if (retryCount < 2) {
+          // Retry after a short delay
+          setTimeout(() => {
+            fetchUserWithRetry(retryCount + 1);
+          }, 1000 * (retryCount + 1)); // 1s, 2s delays
+        } else {
+          // Final attempt failed
+          setError(err instanceof Error ? err.message : 'Failed to fetch user');
+          setLoading(false);
+        }
       }
     };
 
-    fetchUser();
+    fetchUserWithRetry();
   }, [userId]);
 
   return { user, loading, error };

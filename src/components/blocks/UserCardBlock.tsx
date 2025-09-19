@@ -37,8 +37,6 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
 
   const fullName = [firstName, lastName].filter(Boolean).join(' ') || email;
 
-  console.log(user);
-
   const renderTextOnly = () => (
     <div className="bg-surface w-36 aspect-square text-center">
       <h3 className="text-lg font-bold text-gray-900 mb-3">{fullName}</h3>
@@ -190,22 +188,83 @@ function UserCardBlockWithFetch({
 }) {
   const { user, loading, error } = useUserData(userId);
 
-  if (loading) {
-    return (
-      <div className="bg-surface w-36 aspect-square text-center flex items-center justify-center">
-        <p className="text-sm text-gray-500">Loading user...</p>
-      </div>
-    );
+  // If error after retries, don't render anything (remove the block)
+  if (error || (!loading && !user)) {
+    return null;
   }
 
-  if (error || !user) {
-    return (
-      <div className="bg-surface w-36 aspect-square text-center flex items-center justify-center">
-        <p className="text-sm text-red-500">Error loading user</p>
-      </div>
-    );
+  // Show loading state that matches the card variant
+  if (loading) {
+    return <UserCardBlockLoading variant={variant} />;
   }
 
   // Render with the fetched user data
   return <UserCardBlock variant={variant} user={user} />;
+}
+
+/**
+ * Loading component that matches the card variant
+ */
+function UserCardBlockLoading({ 
+  variant 
+}: { 
+  variant: 'textOnly' | 'compactCard' | 'mediumCard' | 'largeCard';
+}) {
+  switch (variant) {
+    case 'textOnly':
+      return (
+        <div className="bg-surface w-36 aspect-square text-center flex items-center justify-center">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-300 rounded w-24 mb-2"></div>
+            <div className="h-3 bg-gray-300 rounded w-16"></div>
+          </div>
+        </div>
+      );
+    
+    case 'compactCard':
+      return (
+        <div className="flex items-center space-x-4 p-4">
+          <div className="flex-shrink-0">
+            <div className="w-15 h-15 bg-gray-300 rounded-full animate-pulse"></div>
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="h-4 bg-gray-300 rounded w-32 mb-2 animate-pulse"></div>
+            <div className="h-3 bg-gray-300 rounded w-20 animate-pulse"></div>
+          </div>
+        </div>
+      );
+    
+    case 'mediumCard':
+      return (
+        <div className="text-center">
+          <div className="mb-4">
+            <div className="w-30 h-30 bg-gray-300 rounded-full mx-auto animate-pulse"></div>
+          </div>
+          <div className="h-6 bg-gray-300 rounded w-40 mx-auto mb-3 animate-pulse"></div>
+          <div className="h-3 bg-gray-300 rounded w-24 mx-auto animate-pulse"></div>
+        </div>
+      );
+    
+    case 'largeCard':
+      return (
+        <div className="text-center">
+          <div className="mb-4">
+            <div className="w-36 h-36 bg-gray-300 rounded-full mx-auto animate-pulse"></div>
+          </div>
+          <div className="h-6 bg-gray-300 rounded w-48 mx-auto mb-3 animate-pulse"></div>
+          <div className="h-3 bg-gray-300 rounded w-32 mx-auto mb-4 animate-pulse"></div>
+          <div className="h-3 bg-gray-300 rounded w-40 mx-auto animate-pulse"></div>
+        </div>
+      );
+    
+    default:
+      return (
+        <div className="bg-surface w-36 aspect-square text-center flex items-center justify-center">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-300 rounded w-24 mb-2"></div>
+            <div className="h-3 bg-gray-300 rounded w-16"></div>
+          </div>
+        </div>
+      );
+  }
 }

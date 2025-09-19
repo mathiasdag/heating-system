@@ -21,6 +21,16 @@ export default function HorizontalMarqueeBlock({
   speed,
   userCards,
 }: HorizontalMarqueeBlockProps) {
+  // Debug: Log the speed value and try different speed calculations
+  console.log('HorizontalMarqueeBlock - speed:', speed, 'type:', typeof speed);
+  
+  // Try different speed calculations to see which one works
+  const speedValue = Number(speed);
+  const invertedSpeed = 100 - speedValue; // Invert the speed (higher CMS value = slower marquee)
+  const scaledSpeed = speedValue * 2; // Scale up the speed
+  
+  console.log('Speed calculations:', { speedValue, invertedSpeed, scaledSpeed });
+  
   if (!userCards || userCards.length === 0) {
     return null;
   }
@@ -32,7 +42,7 @@ export default function HorizontalMarqueeBlock({
 
       <div className="overflow-hidden">
         <Marquee
-          speed={speed}
+          speed={invertedSpeed}
           direction="left"
           gradient={false}
           className="px-4"

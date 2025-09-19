@@ -205,9 +205,9 @@ function UserCardBlockWithFetch({
 /**
  * Loading component that matches the card variant
  */
-function UserCardBlockLoading({ 
-  variant 
-}: { 
+function UserCardBlockLoading({
+  variant,
+}: {
   variant: 'textOnly' | 'compactCard' | 'mediumCard' | 'largeCard';
 }) {
   switch (variant) {
@@ -220,7 +220,7 @@ function UserCardBlockLoading({
           </div>
         </div>
       );
-    
+
     case 'compactCard':
       return (
         <div className="flex items-center space-x-4 p-4">
@@ -233,7 +233,7 @@ function UserCardBlockLoading({
           </div>
         </div>
       );
-    
+
     case 'mediumCard':
       return (
         <div className="text-center">
@@ -244,7 +244,7 @@ function UserCardBlockLoading({
           <div className="h-3 bg-gray-300 rounded w-24 mx-auto animate-pulse"></div>
         </div>
       );
-    
+
     case 'largeCard':
       return (
         <div className="text-center">
@@ -256,7 +256,7 @@ function UserCardBlockLoading({
           <div className="h-3 bg-gray-300 rounded w-40 mx-auto animate-pulse"></div>
         </div>
       );
-    
+
     default:
       return (
         <div className="bg-surface w-36 aspect-square text-center flex items-center justify-center">

@@ -74,7 +74,6 @@ function resolveReference(reference: unknown): string | undefined {
   }
 
   // Fallback for unpopulated references or invalid objects
-  console.warn('Invalid reference object:', reference);
   return undefined;
 }
 
@@ -99,9 +98,6 @@ export function routeLink(link: LinkGroup): LinkRouterResult {
       const resolvedHref = resolveReference(link.reference);
       result.href = resolvedHref || '#';
       result.isExternal = false;
-      if (!resolvedHref) {
-        console.warn('Failed to resolve reference:', link.reference);
-      }
       break;
 
     case 'copy':
@@ -111,13 +107,11 @@ export function routeLink(link: LinkGroup): LinkRouterResult {
       break;
 
     default:
-      console.warn('Unknown link type:', link.type);
       result.href = '#';
   }
 
   // Ensure href is always a string
   if (typeof result.href !== 'string') {
-    console.error('Non-string href detected:', result.href, 'from link:', link);
     result.href = '#';
   }
 

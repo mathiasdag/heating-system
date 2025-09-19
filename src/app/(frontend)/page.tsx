@@ -16,14 +16,19 @@ import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
+import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 
 export default async function HomePage() {
-  // Fetch the homepage (by slug) from backend with deeper population for links
-  const page = await PayloadAPI.findBySlug('pages', 'hem', 3);
+  // Fetch the homepage with REST API
+  const page = await PayloadAPI.findBySlug('pages', 'hem', 10);
+
+  if (!page) {
+    return <div>Page not found</div>;
+  }
 
   return (
     <div data-content-type="page">
-      {page?.layout?.map((block: any, i: number) => {
+      {(page as any).layout?.map((block: any, i: number) => {
         const cleanBlock = JSON.parse(JSON.stringify(block));
         switch (block.blockType) {
           case 'assetText':
@@ -64,6 +69,8 @@ export default async function HomePage() {
             return <HighlightGridBlock key={i} {...cleanBlock} />;
           case 'calendar':
             return <CalendarBlock key={i} {...cleanBlock} />;
+          case 'horizontalMarquee':
+            return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types
           default:
             return null;

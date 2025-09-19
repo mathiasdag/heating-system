@@ -26,5 +26,24 @@ export const Users: CollectionConfig = {
         description: 'A brief description or bio for use in article bylines',
       },
     },
+    {
+      name: 'profilePicture',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      admin: {
+        description: 'Profile picture for this user',
+      },
+    },
+    {
+      name: 'references',
+      type: 'relationship',
+      relationTo: 'tags',
+      hasMany: true,
+      required: false,
+      admin: {
+        description: 'Tags associated with this user',
+      },
+    },
   ],
 };

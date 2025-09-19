@@ -15,6 +15,7 @@ import {
   ArticleTextBlock,
 } from '@/components/blocks/articles';
 import VideoBlock from '@/components/blocks/VideoBlock';
+import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import React from 'react';
 import { notFound } from 'next/navigation';
 
@@ -27,15 +28,14 @@ interface ArticlePageProps {
 async function ArticlePage({ params }: ArticlePageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
-
   const { slug } = await params;
 
-  // Fetch the article by slug
+  // Fetch the article with REST API
   const { docs: [article] = [] } = await payload.find({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     collection: 'articles' as any,
     where: { slug: { equals: slug } },
-    depth: 2, // Increased depth to populate relationship data within blocks
+    depth: 10,
   });
 
   // If article doesn't exist, return 404
@@ -95,6 +95,8 @@ async function ArticlePage({ params }: ArticlePageProps) {
                 return <HighlightGridBlock key={i} {...cleanBlock} />;
               case 'calendar':
                 return <CalendarBlock key={i} {...cleanBlock} />;
+              case 'horizontalMarquee':
+                return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
               default:
                 console.warn(`Unknown block type: ${block.blockType}`);
                 return null;

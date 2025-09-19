@@ -10,6 +10,7 @@ import Image from '@/blocks/articles/Image';
 import Video from '@/blocks/articles/Video';
 import Text from '@/blocks/articles/Text';
 import InfoOverlay from '@/blocks/global/InfoOverlay';
+import HorizontalMarqueeBlock from '@/blocks/global/HorizontalMarqueeBlock';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -156,6 +157,7 @@ const Articles: CollectionConfig = {
                 Video,
                 Calendar,
                 InfoOverlay,
+                HorizontalMarqueeBlock,
               ],
             },
           ],

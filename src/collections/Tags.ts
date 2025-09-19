@@ -16,6 +16,25 @@ export const Tags: CollectionConfig = {
       type: 'textarea',
       required: false,
     },
+    {
+      name: 'profilePicture',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      admin: {
+        description: 'Profile picture for this tag',
+      },
+    },
+    {
+      name: 'references',
+      type: 'relationship',
+      relationTo: ['articles', 'pages', 'spaces'],
+      hasMany: true,
+      required: false,
+      admin: {
+        description: 'Related content that uses this tag',
+      },
+    },
   ],
 };
 

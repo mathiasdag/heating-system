@@ -6,6 +6,7 @@ import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
+import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { HeaderBlock as SpacesHeaderBlock } from '@/components/blocks/spaces';
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -20,8 +21,8 @@ interface SpacePageProps {
 async function SpacePage({ params }: SpacePageProps) {
   const { slug } = params;
 
-  // Fetch the space by slug from external backend
-  const space = await PayloadAPI.findBySlug('spaces', slug, 2);
+  // Fetch the space with REST API
+  const space = await PayloadAPI.findBySlug('spaces', slug, 10);
 
   // If space doesn't exist, return 404
   if (!space) {
@@ -53,6 +54,8 @@ async function SpacePage({ params }: SpacePageProps) {
               return <HighlightGridBlock key={i} {...cleanBlock} />;
             case 'calendar':
               return <CalendarBlock key={i} {...cleanBlock} />;
+            case 'horizontalMarquee':
+              return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
             default:
               console.warn(`Unknown block type: ${block.blockType}`);
               return null;

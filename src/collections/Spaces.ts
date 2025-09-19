@@ -8,6 +8,7 @@ import HighlightGrid from '@/blocks/global/HighlightGrid';
 import Calendar from '@/blocks/global/Calendar';
 import Image from '@/blocks/articles/Image';
 import InfoOverlay from '@/blocks/global/InfoOverlay';
+import HorizontalMarqueeBlock from '@/blocks/global/HorizontalMarqueeBlock';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -117,6 +118,7 @@ const Spaces: CollectionConfig = {
                 Text,
                 Calendar,
                 InfoOverlay,
+                HorizontalMarqueeBlock,
               ],
             },
           ],

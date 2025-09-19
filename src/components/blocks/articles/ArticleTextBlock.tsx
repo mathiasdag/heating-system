@@ -3,7 +3,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../../DevIndicator';
 
 interface ArticleTextBlockProps {
-  content: any;
+  content: Record<string, unknown>;
 }
 
 export default function ArticleTextBlock({ content }: ArticleTextBlockProps) {

@@ -16,6 +16,7 @@ import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
+import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
@@ -27,8 +28,8 @@ interface PageProps {
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
 
-  // Fetch the page by slug from external backend with deeper population for links
-  const page = await PayloadAPI.findBySlug('pages', slug, 3);
+  // Fetch the page with REST API
+  const page = await PayloadAPI.findBySlug('pages', slug, 10);
 
   // If page doesn't exist, return 404
   if (!page) {
@@ -37,7 +38,7 @@ export default async function DynamicPage({ params }: PageProps) {
 
   return (
     <div data-content-type="page">
-      {page?.layout?.map((block: any, i: number) => {
+      {(page as any).layout?.map((block: any, i: number) => {
         const cleanBlock = JSON.parse(JSON.stringify(block));
         switch (block.blockType) {
           case 'assetText':
@@ -78,6 +79,8 @@ export default async function DynamicPage({ params }: PageProps) {
             return <HighlightGridBlock key={i} {...cleanBlock} />;
           case 'calendar':
             return <CalendarBlock key={i} {...cleanBlock} />;
+          case 'horizontalMarquee':
+            return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types as needed
           default:
             console.warn(`Unknown block type: ${block.blockType}`);

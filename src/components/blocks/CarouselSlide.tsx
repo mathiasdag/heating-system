@@ -91,7 +91,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
               alt={image.alt || 'Carousel image'}
               width={image.width || 800}
               height={image.height || 600}
-              className="w-full h-auto rounded-2xl object-cover h-full"
+              className="w-full h-full rounded-2xl object-cover"
             />
           </div>
         )}
@@ -126,7 +126,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
               alt={image.alt || 'Carousel image'}
               width={image.width || 800}
               height={image.height || 600}
-              className="w-full h-auto rounded-t-lg xl:rounded-r-lg xl:rounded-t-none object-cover h-full"
+              className="w-full h-full rounded-t-lg xl:rounded-r-lg xl:rounded-t-none object-cover"
             />
           </div>
         )}

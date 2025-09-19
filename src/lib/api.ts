@@ -116,7 +116,7 @@ export class PayloadAPI {
   static async findByID<T>(
     collection: string,
     id: string,
-    depth = 2
+    depth = 10
   ): Promise<T> {
     const response = await fetch(
       `${API_BASE_URL}/${collection}/${id}?depth=${depth}`,
@@ -144,7 +144,7 @@ export class PayloadAPI {
   static async findBySlug<T>(
     collection: string,
     slug: string,
-    depth = 2
+    depth = 10
   ): Promise<T | null> {
     const response = await this.find<T>({
       collection,

@@ -12,6 +12,7 @@ import {
   QuoteBlock,
   ImageBlock,
   ArticleCTABlock,
+  ArticleTextBlock,
 } from '@/components/blocks/articles';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import React from 'react';
@@ -85,7 +86,7 @@ async function ArticlePage({ params }: ArticlePageProps) {
               case 'list':
                 return <ListBlock key={i} {...cleanBlock} />;
               case 'text':
-                return <TextBlock key={i} {...cleanBlock} />;
+                return <ArticleTextBlock key={i} {...cleanBlock} />;
               case 'minimalCarousel':
                 return <SimpleCarouselBlock key={i} {...cleanBlock} />;
               case 'assetText':

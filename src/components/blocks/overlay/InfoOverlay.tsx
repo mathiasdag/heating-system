@@ -116,9 +116,14 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
             </div>
           )}
 
-          {isScrollable && (
-            <div className="sticky bottom-0 left-4 right-4 h-16 -mt-12 sm:h-24 bg-gradient-to-t from-bg to-transparent pointer-events-none" />
-          )}
+          <div
+            className={clsx(
+              'sticky bottom-0 left-4 right-4 h-16 -mt-12 sm:h-24 pointer-events-none',
+              overlay.layout && overlay.layout.length > 0
+                ? 'bg-gradient-to-t from-bg to-transparent'
+                : ''
+            )}
+          />
         </div>
 
         {linkResult && (linkResult as unknown)?.href && overlay.link && (

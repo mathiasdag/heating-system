@@ -15,7 +15,7 @@ export default function OverlayListBlock({
   items = [],
 }: OverlayListBlockProps) {
   return (
-    <div className="">
+    <div className="pb-2">
       {headline && <h4 className="text-center mb-3">{headline}</h4>}
       <ul className="space-y-[-1px]">
         {items.map((item, index) => (

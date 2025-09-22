@@ -4,7 +4,7 @@ import { DevIndicator } from '../DevIndicator';
 import { AppLink } from '../AppLink';
 import { type LinkGroup } from '../../utils/linkRouter';
 import { transformRichTextLinks } from '../../utils/richTextTransform';
-import { headingConverter } from '../../utils/richTextConverters';
+import { jsxConverter } from '../../utils/richTextConverters';
 import AssetRenderer from '../common/AssetRenderer';
 import clsx from 'clsx';
 
@@ -71,7 +71,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
             <RichText 
               data={transformedText as any} 
               className="rich-text grid gap-4"
-              converters={headingConverter}
+              converters={jsxConverter}
             />
 
             {/* Link */}

@@ -1,18 +1,15 @@
-import { JSXConverters } from '@payloadcms/richtext-lexical/react';
+import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical';
+import { JSXConvertersFunction, JSXConverters } from '@payloadcms/richtext-lexical/react';
 import { SerializedHeadingNode } from '@payloadcms/richtext-lexical';
 
 /**
- * Custom converters for Payload CMS Lexical RichText
- * Provides consistent styling and behavior for rich text elements
+ * Custom heading converter for Payload CMS Lexical RichText
  */
-export const headingConverter: JSXConverters<SerializedHeadingNode> = {
+const headingConverter: JSXConverters<SerializedHeadingNode> = {
   heading: ({ node, nodesToJSX }) => {
     if (node.tag === 'h2') {
       const text = nodesToJSX({ nodes: node.children });
       return <h2 className="text-lg font-display">{text}</h2>;
-    } else if (node.tag === 'h3') {
-      const text = nodesToJSX({ nodes: node.children });
-      return <h3 className="text-base font-display">{text}</h3>;
     } else {
       const text = nodesToJSX({ nodes: node.children });
       const Tag = node.tag;
@@ -20,3 +17,14 @@ export const headingConverter: JSXConverters<SerializedHeadingNode> = {
     }
   },
 };
+
+/**
+ * Main JSX converter that combines all custom converters
+ * This is the proper way to use converters with Payload CMS Lexical
+ */
+type NodeTypes = DefaultNodeTypes | SerializedBlockNode<any>;
+
+export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
+  ...defaultConverters,
+  ...headingConverter,
+});

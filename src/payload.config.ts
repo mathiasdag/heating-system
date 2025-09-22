@@ -28,38 +28,19 @@ export default buildConfig({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,
       {
-        key: 'link',
         name: 'link',
         config: {
           fields: [
-            {
-              name: 'type',
-              type: 'select',
-              options: [
-                { label: 'Internal Link', value: 'internal' },
-                { label: 'External Link', value: 'external' },
-              ],
-              defaultValue: 'internal',
-              required: true,
-            },
             {
               name: 'doc',
               type: 'relationship',
               relationTo: ['pages', 'spaces'],
               required: false,
-              admin: {
-                condition: (data: unknown, siblingData: Record<string, unknown>) =>
-                  siblingData?.type === 'internal',
-              },
             },
             {
               name: 'url',
               type: 'text',
               required: false,
-              admin: {
-                condition: (data: unknown, siblingData: Record<string, unknown>) =>
-                  siblingData?.type === 'external',
-              },
             },
             {
               name: 'newTab',

@@ -68,16 +68,16 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
               !isTextLeft ? 'md:order-2' : 'md:order-1'
             )}
           >
-            <RichText 
-              data={transformedText as any} 
-              className="rich-text grid gap-4"
+            <RichText
+              data={transformedText as any}
+              className="grid gap-4"
               converters={jsxConverter}
             />
 
             {/* Link */}
             {link && (
               <div className="mt-6">
-                <AppLink link={link} variant="primary" size="md">
+                <AppLink link={link} variant="outline" size="md">
                   {link.text || 'Läs mer'}
                 </AppLink>
               </div>

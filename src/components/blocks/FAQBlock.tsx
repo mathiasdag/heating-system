@@ -41,7 +41,9 @@ const FAQBlock: React.FC<FAQBlockProps> = ({
       {/* Header */}
       {(headline || description) && (
         <div className="mb-8 text-center">
-          {headline && <h2 className="font-display mb-4">{headline}</h2>}
+          {headline && (
+            <h2 className="font-display text-xl uppercase mb-4">{headline}</h2>
+          )}
           {description && (
             <div className="font-mono mx-autofont-mono text-center px-8 max-w-6xl mx-auto mb-4">
               <RichText data={description} />

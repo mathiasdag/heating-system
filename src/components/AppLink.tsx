@@ -26,7 +26,7 @@ interface AppActionProps {
 
 const sizeStyles = {
   sm: 'px-2 pt-[.4em] pb-1',
-  md: 'px-3 pt-[.6em] pb-2',
+  md: 'px-3 pt-[.65em] pb-[.45em]',
   lg: 'px-4 pt-[1.1em] pb-4',
 };
 

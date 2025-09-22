@@ -91,8 +91,16 @@ hr {
   margin: 0 auto;
 }
 
-h2.font-display {
+/*h2.font-display {
   font-size: 1.5rem;
+}*/
+
+h2.font-display.text-lg {
+  font-size: 2.5rem;
+}
+
+h2.font-display.text-xl {
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
 }
 
 h2.font-sans,
@@ -106,11 +114,14 @@ h2.font-sans,
   margin-bottom: 0.8em;
 }
 
-[data-content-type='page'] h2.font-display {
+/*[data-content-type='page'] h2.font-display {
+  font-size: clamp(2rem, 6vw, 6em);
+}*/
+
+h2.font-display {
   text-transform: uppercase;
   letter-spacing: -0.01em;
   line-height: 1em;
-  font-size: clamp(2rem, 6vw, 6em);
 }
 
 .h2-style {

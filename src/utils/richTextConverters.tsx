@@ -1,5 +1,11 @@
-import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical';
-import { JSXConvertersFunction, JSXConverters } from '@payloadcms/richtext-lexical/react';
+import {
+  DefaultNodeTypes,
+  SerializedBlockNode,
+} from '@payloadcms/richtext-lexical';
+import {
+  JSXConvertersFunction,
+  JSXConverters,
+} from '@payloadcms/richtext-lexical/react';
 import { SerializedHeadingNode } from '@payloadcms/richtext-lexical';
 
 /**
@@ -9,7 +15,7 @@ const headingConverter: JSXConverters<SerializedHeadingNode> = {
   heading: ({ node, nodesToJSX }) => {
     if (node.tag === 'h2') {
       const text = nodesToJSX({ nodes: node.children });
-      return <h2 className="text-lg font-display">{text}</h2>;
+      return <h2 className="text-lg font-display uppercase">{text}</h2>;
     } else {
       const text = nodesToJSX({ nodes: node.children });
       const Tag = node.tag;
@@ -24,7 +30,9 @@ const headingConverter: JSXConverters<SerializedHeadingNode> = {
  */
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<any>;
 
-export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
+export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({
+  defaultConverters,
+}) => ({
   ...defaultConverters,
   ...headingConverter,
 });

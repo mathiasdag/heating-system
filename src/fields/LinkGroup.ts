@@ -14,7 +14,7 @@ const LinkGroup: Field = {
       options: [
         { label: 'Internal Link', value: 'internal' },
         { label: 'External Link', value: 'external' },
-        { label: 'Action', value: 'action' },
+        { label: 'Copy', value: 'copy' },
       ],
       defaultValue: 'internal',
       required: true,

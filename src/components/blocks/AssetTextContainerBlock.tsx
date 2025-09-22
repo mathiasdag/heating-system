@@ -34,13 +34,9 @@ const AssetTextContainerBlock: React.FC<AssetTextContainerBlockProps> = ({
   return (
     <div className="mb-16 mt-8 px-2 relative">
       <DevIndicator componentName="AssetTextContainerBlock" />
-      
+
       {/* Block Header */}
-      <BlockHeader
-        headline={headline}
-        description={description}
-        className="mb-12"
-      />
+      <BlockHeader headline={headline} description={description} />
 
       {/* Asset Text Blocks */}
       <div className="space-y-16">

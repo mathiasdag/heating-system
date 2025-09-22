@@ -17,7 +17,10 @@ interface AssetRendererProps {
   className?: string;
 }
 
-const AssetRenderer: React.FC<AssetRendererProps> = ({ asset, className = '' }) => {
+const AssetRenderer: React.FC<AssetRendererProps> = ({
+  asset,
+  className = '',
+}) => {
   if (asset.type === 'image' && asset.image?.url) {
     return (
       <Image

@@ -4,7 +4,7 @@ import { DevIndicator } from '../DevIndicator';
 import { AppLink } from '../AppLink';
 import { type LinkGroup } from '../../utils/linkRouter';
 import { transformRichTextLinks } from '../../utils/richTextTransform';
-import AssetRenderer from './AssetRenderer';
+import AssetRenderer from '../common/AssetRenderer';
 
 interface AssetTextBlockProps {
   asset: {
@@ -54,7 +54,10 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           <div
             className={`place-self-start py-2 order-2 ${!isTextLeft ? 'md:order-2' : 'md:order-1'}`}
           >
-            <RichText data={transformedText as any} className="rich-text grid gap-4" />
+            <RichText
+              data={transformedText as any}
+              className="rich-text grid gap-4"
+            />
 
             {/* Link */}
             {link && (

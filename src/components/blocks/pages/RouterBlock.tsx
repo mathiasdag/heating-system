@@ -3,6 +3,7 @@ import React from 'react';
 import { AppLink } from '../../AppLink';
 import { DevIndicator } from '../../DevIndicator';
 import { BlockHeader } from '../BlockHeader';
+import { FadeInUp } from '../../FadeIn';
 import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
 
 interface NavigationLink {
@@ -11,7 +12,7 @@ interface NavigationLink {
 
 interface RouterBlockProps {
   headline?: string;
-  description?: any;
+  description?: unknown;
   links: NavigationLink[];
 }
 
@@ -23,7 +24,9 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
   return (
     <section className="py-24 grid relative">
       <DevIndicator componentName="RouterBlock" />
-      <BlockHeader headline={headline} description={description} />
+      <FadeInUp timing="normal">
+        <BlockHeader headline={headline} description={description} />
+      </FadeInUp>
       <hr className="mx-4 my-2" />
 
       <div className="relative flex justify-center items-center py-24">
@@ -40,13 +43,15 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
             return (
               <div key={idx} className="text-center">
                 {href && (
-                  <AppLink
-                    link={link.link}
-                    className="text-4xl sm:text-6xl md:text-7xl font-ballPill uppercase bg-bg pt-2"
-                    variant="minimal"
-                  >
-                    {link.link.text}
-                  </AppLink>
+                  <FadeInUp timing="normal" delay={0.2 + idx * 0.1}>
+                    <AppLink
+                      link={link.link}
+                      className="text-4xl sm:text-6xl md:text-7xl font-ballPill uppercase bg-bg pt-2"
+                      variant="minimal"
+                    >
+                      {link.link.text}
+                    </AppLink>
+                  </FadeInUp>
                 )}
               </div>
             );

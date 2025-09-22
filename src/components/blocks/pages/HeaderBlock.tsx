@@ -6,6 +6,8 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '../../DevIndicator';
 import VideoBlock from '../VideoBlock';
+import { FadeIn } from '../../FadeIn';
+import clsx from 'clsx';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -34,7 +36,7 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
   // Create smooth opacity transition based on scroll progress
   const opacity = useTransform(
     scrollYProgress,
-    [0, 0.2, 0.6, 0.7],
+    [0, 0.2, 0.7, 0.8],
     [0, 1, 1, 0]
   );
 
@@ -159,74 +161,88 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
 
   const beforeAssets = assets.filter(asset => asset.placement === 'before');
   const afterAssets = assets.filter(asset => asset.placement === 'after');
-
-  console.log('RichText height:', richTextHeight);
+  const hasAssets = assets.length > 0;
 
   return (
-    <div ref={ref} className="mb-36 px-4 text-center relative">
+    <div
+      ref={ref}
+      className={clsx('px-4 text-center relative', hasAssets ? 'mb-36' : '')}
+    >
       <DevIndicator componentName="HeaderBlock" />
 
       {/* Render assets before text - centered with max height */}
       {beforeAssets.length > 0 && (
-        <motion.div
+        <FadeIn
+          as="div"
           className="flex gap-4 justify-center select-none mb-8"
-          style={{ scale: assetScale }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.2, ease: 'easeOut' }}
+          customMotionProps={{ style: { scale: assetScale } }}
+          timing="fast"
         >
           {beforeAssets.map((asset, i) => (
             <React.Fragment key={i}>
               {renderBeforeAsset(asset, i)}
             </React.Fragment>
           ))}
-        </motion.div>
+        </FadeIn>
       )}
 
       {/* Render rich text with enhanced motion effects */}
       <motion.div
-        className="fixed inset-x-0 top-0 h-[80vh] flex items-center justify-center"
-        style={{
-          opacity,
-          scale,
-          y,
-        }}
+        className={clsx(
+          'flex items-center justify-center',
+          hasAssets ? 'h-[80vh] fixed inset-x-0 top-0' : ''
+        )}
+        style={
+          hasAssets
+            ? {
+                opacity,
+                scale,
+                y,
+              }
+            : undefined
+        }
       >
-        <motion.div
+        <FadeIn
+          as="div"
           ref={richTextRef}
-          className="max-w-7xl mx-auto px-4 pb-32 pt-24"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+          className={clsx(
+            'max-w-7xl mx-auto px-4',
+            hasAssets ? 'pt-24 pb-32' : 'pt-36'
+          )}
+          timing="slow"
+          delay={0.2}
         >
           <RichText
             data={text}
             className="rich-text font-mono grid gap-3 hyphens-auto"
           />
-        </motion.div>
+        </FadeIn>
       </motion.div>
-      <div
-        className="h-[80vh] max-h-[600px]"
-        style={{
-          minHeight: richTextHeight > 0 ? `${richTextHeight + 150}px` : '80vh',
-        }}
-      ></div>
+      {hasAssets && (
+        <div
+          className="h-[80vh] max-h-[600px]"
+          style={{
+            minHeight:
+              richTextHeight > 0 ? `${richTextHeight + 150}px` : '80vh',
+          }}
+        ></div>
+      )}
 
       {afterAssets.length > 0 && (
         <>
-          <motion.div
+          <FadeIn
+            as="div"
             className={`relative z-10 flex justify-center flex-row gap-4`}
-            style={{ scale: assetScale }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, ease: 'easeOut', delay: 0.6 }}
+            customMotionProps={{ style: { scale: assetScale } }}
+            timing="normal"
+            delay={0.6}
           >
             {afterAssets.map((asset, i) => (
               <div key={i} className={afterAssets.length > 1 ? 'flex-1' : ''}>
                 {renderAsset(asset, i)}
               </div>
             ))}
-          </motion.div>
+          </FadeIn>
         </>
       )}
     </div>

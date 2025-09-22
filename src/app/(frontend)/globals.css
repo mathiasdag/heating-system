@@ -51,10 +51,34 @@
   --color-accent: #351607;
 }
 
-/* Theme transition animations - background only */
+/* Theme transition animations - smooth transitions for all theme-related properties */
 html {
   transition: background-color var(--theme-transition-duration)
     var(--theme-transition-easing);
+}
+
+/* Smooth transitions for all elements that change with theme */
+* {
+  transition:
+    background-color var(--theme-transition-duration)
+      var(--theme-transition-easing),
+    color var(--theme-transition-duration) var(--theme-transition-easing),
+    border-color var(--theme-transition-duration) var(--theme-transition-easing);
+}
+
+/* Ensure smooth transitions for body and main content areas */
+body {
+  transition:
+    background-color var(--theme-transition-duration)
+      var(--theme-transition-easing),
+    color var(--theme-transition-duration) var(--theme-transition-easing);
+}
+
+/* Prevent transitions on elements that shouldn't animate */
+*:not(html):not(body):not([class*='bg-']):not([class*='text-']):not(
+    [class*='border-']
+  ) {
+  transition: none;
 }
 
 .uppercase {

@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { ThemeToggle } from './ThemeToggle';
 import clsx from 'clsx';
 import Marquee from 'react-fast-marquee';
 
@@ -85,7 +84,7 @@ export const Footer: React.FC = () => {
           <div className="whitespace-nowrap">Terms of service</div>
         </div>
         <div className="whitespace-nowrap">
-          Theme: <ThemeToggle showLabel={false} />
+          {/* Theme is now automatically controlled by URL */}
         </div>
       </div>
     </footer>

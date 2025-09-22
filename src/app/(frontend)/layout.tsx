@@ -2,9 +2,12 @@ import React from 'react';
 import localFont from 'next/font/local';
 import './globals.css';
 import NavigationWrapper from '@/components/NavigationWrapper';
+import { NavigationData } from '@/components/Navigation';
 import RevalidateButton from '@/components/RevalidateButton';
 import { Footer } from '@/components/Footer';
 import { ThemeProvider } from 'next-themes';
+import { UrlBasedTheme } from '@/components/UrlBasedTheme';
+import { BackgroundLoader } from '@/components/BackgroundLoader';
 import PayloadAPI from '@/lib/api';
 
 const sans = localFont({
@@ -85,7 +88,7 @@ async function getNavigation() {
     });
 
     if (response.docs[0]) {
-      return response.docs[0] as any;
+      return response.docs[0] as NavigationData;
     }
 
     return null;
@@ -105,11 +108,19 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="sv" className={htmlClass} suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <NavigationWrapper navigation={navigation} />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-          <RevalidateButton />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+        >
+          <UrlBasedTheme>
+            <BackgroundLoader>
+              <NavigationWrapper navigation={navigation} />
+              <main className="min-h-screen">{children}</main>
+              <Footer />
+              <RevalidateButton />
+            </BackgroundLoader>
+          </UrlBasedTheme>
         </ThemeProvider>
       </body>
     </html>

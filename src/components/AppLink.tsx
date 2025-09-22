@@ -77,7 +77,11 @@ export const AppAction: React.FC<AppActionProps> = ({
     }
   };
 
-  const style = baseStyles[variant] + ' ' + sizeStyles[size] + ' ' + className;
+  const style =
+    baseStyles[variant] +
+    (variant === 'minimal' ? '' : ' ' + sizeStyles[size]) +
+    ' ' +
+    className;
 
   // Handle copy action
   if (linkResult.isCopy || actionType === 'copy') {

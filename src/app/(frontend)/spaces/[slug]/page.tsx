@@ -3,6 +3,7 @@ import ListBlock from '@/components/blocks/ListBlock';
 import TextBlock from '@/components/blocks/TextBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
+import AssetTextContainerBlock from '@/components/blocks/AssetTextContainerBlock';
 import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
@@ -40,6 +41,8 @@ async function SpacePage({ params }: SpacePageProps) {
           switch (block.blockType) {
             case 'assetText':
               return <AssetTextBlock key={i} {...cleanBlock} />;
+            case 'assetTextContainer':
+              return <AssetTextContainerBlock key={i} {...cleanBlock} />;
             case 'list':
               return <ListBlock key={i} {...cleanBlock} />;
             case 'text':

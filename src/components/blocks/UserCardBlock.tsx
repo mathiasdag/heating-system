@@ -76,68 +76,48 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   );
 
   const renderMediumCard = () => (
-    <div className="text-center">
+    <div className="grid gap-2 bg-surface text-center py-10 px-8 rounded-xl w-80">
       {profilePicture?.url && (
-        <div className="mb-4">
-          <Image
-            src={profilePicture.url}
-            alt={profilePicture.alt || fullName}
-            width={120}
-            height={120}
-            className="w-30 h-30 object-cover mx-auto"
-          />
-        </div>
+        <Image
+          src={profilePicture.url}
+          alt={profilePicture.alt || fullName}
+          width={120}
+          height={120}
+          className="w-36 h-36 object-cover mx-auto rounded-md mb-4"
+        />
       )}
-      <h3 className="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-wide">
-        {fullName}
-      </h3>
       {tags && tags.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-1">
           {tags.map(tag => (
-            <span
-              key={tag.id}
-              className="inline-block px-3 py-1 text-sm border border-gray-800 text-gray-800 rounded-full"
-            >
-              {tag.name}
-            </span>
+            <Tag key={tag.id} name={tag.name} size="sm" />
           ))}
         </div>
       )}
+      <h3 className="font-display text-lg uppercase">{fullName}</h3>
     </div>
   );
 
   const renderLargeCard = () => (
-    <div className="text-center">
+    <div className="grid gap-2 bg-surface text-center py-10 px-8 rounded-xl w-80">
       {profilePicture?.url && (
-        <div className="mb-4">
-          <Image
-            src={profilePicture.url}
-            alt={profilePicture.alt || fullName}
-            width={150}
-            height={150}
-            className="w-36 h-36 object-cover mx-auto"
-          />
-        </div>
+        <Image
+          src={profilePicture.url}
+          alt={profilePicture.alt || fullName}
+          width={120}
+          height={120}
+          className="w-36 h-36 object-cover mx-auto rounded-md mb-4"
+        />
       )}
-      <h3 className="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-wide">
-        {fullName}
-      </h3>
       {tags && tags.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-2 mb-4">
+        <div className="flex flex-wrap justify-center gap-1">
           {tags.map(tag => (
-            <span
-              key={tag.id}
-              className="inline-block px-3 py-1 text-sm border border-gray-800 text-gray-800 rounded-full"
-            >
-              {tag.name}
-            </span>
+            <Tag key={tag.id} name={tag.name} size="sm" />
           ))}
         </div>
       )}
+      <h3 className="font-display text-lg uppercase">{fullName}</h3>
       {bylineDescription && (
-        <p className="text-gray-600 text-sm leading-relaxed max-w-md mx-auto">
-          {bylineDescription}
-        </p>
+        <p className="font-mono mt-2 hyphens-auto">{bylineDescription}</p>
       )}
     </div>
   );

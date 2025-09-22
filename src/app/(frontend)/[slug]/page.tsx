@@ -13,6 +13,7 @@ import TextBlock from '@/components/blocks/TextBlock';
 import FAQBlock from '@/components/blocks/FAQBlock';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
+import AssetTextContainerBlock from '@/components/blocks/AssetTextContainerBlock';
 import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
@@ -43,6 +44,8 @@ export default async function DynamicPage({ params }: PageProps) {
         switch (block.blockType) {
           case 'assetText':
             return <AssetTextBlock key={i} {...cleanBlock} />;
+          case 'assetTextContainer':
+            return <AssetTextContainerBlock key={i} {...cleanBlock} />;
           case 'header':
             return <HeaderBlock key={i} {...cleanBlock} />;
           case 'spotlight':

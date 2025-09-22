@@ -89,20 +89,42 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
                 link: ({ node, children }) => {
                   const { type, doc, url, newTab } = node;
                   
+                  // Debug: Log the node structure
+                  console.log('Link node:', node);
+                  
                   // Handle internal links
                   if (type === 'internal' && doc) {
                     let href = '#';
                     
                     // Resolve the internal link based on the document reference
-                    if (typeof doc === 'object' && doc.value) {
-                      if (doc.relationTo === 'spaces') {
-                        href = `/spaces/${doc.value.slug}`;
-                      } else if (doc.relationTo === 'articles') {
-                        href = `/artikel/${doc.value.slug}`;
-                      } else {
-                        href = `/${doc.value.slug}`;
+                    if (typeof doc === 'object') {
+                      // Check if it's a populated reference with value
+                      if (doc.value && doc.value.slug) {
+                        if (doc.relationTo === 'spaces') {
+                          href = `/spaces/${doc.value.slug}`;
+                        } else if (doc.relationTo === 'articles') {
+                          href = `/artikel/${doc.value.slug}`;
+                        } else {
+                          href = `/${doc.value.slug}`;
+                        }
+                      }
+                      // Check if it's a direct object with slug
+                      else if (doc.slug) {
+                        if (doc.relationTo === 'spaces') {
+                          href = `/spaces/${doc.slug}`;
+                        } else if (doc.relationTo === 'articles') {
+                          href = `/artikel/${doc.slug}`;
+                        } else {
+                          href = `/${doc.slug}`;
+                        }
+                      }
+                      // Check if it's just an ID (unpopulated reference)
+                      else if (typeof doc === 'string') {
+                        href = `/${doc}`;
                       }
                     }
+                    
+                    console.log('Resolved internal link href:', href);
                     
                     return (
                       <Link 

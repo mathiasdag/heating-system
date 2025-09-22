@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
 import VideoBlock from './VideoBlock';
@@ -81,7 +82,61 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           <div
             className={`place-self-start py-2 order-2 ${!isTextLeft ? 'md:order-2' : 'md:order-1'}`}
           >
-            <RichText data={text} className="rich-text grid gap-4" />
+            <RichText 
+              data={text} 
+              className="rich-text grid gap-4"
+              renderers={{
+                link: ({ node, children }) => {
+                  const { type, doc, url, newTab } = node;
+                  
+                  // Handle internal links
+                  if (type === 'internal' && doc) {
+                    let href = '#';
+                    
+                    // Resolve the internal link based on the document reference
+                    if (typeof doc === 'object' && doc.value) {
+                      if (doc.relationTo === 'spaces') {
+                        href = `/spaces/${doc.value.slug}`;
+                      } else if (doc.relationTo === 'articles') {
+                        href = `/artikel/${doc.value.slug}`;
+                      } else {
+                        href = `/${doc.value.slug}`;
+                      }
+                    }
+                    
+                    return (
+                      <Link 
+                        href={href}
+                        className="text-blue-600 hover:text-blue-800 underline transition-colors"
+                      >
+                        {children}
+                      </Link>
+                    );
+                  }
+                  
+                  // Handle external links
+                  if (type === 'external' && url) {
+                    return (
+                      <a
+                        href={url}
+                        target={newTab ? '_blank' : '_self'}
+                        rel={newTab ? 'noopener noreferrer' : undefined}
+                        className="text-blue-600 hover:text-blue-800 underline transition-colors"
+                      >
+                        {children}
+                      </a>
+                    );
+                  }
+                  
+                  // Fallback for any other link type
+                  return (
+                    <a href="#" className="text-blue-600 hover:text-blue-800 underline transition-colors">
+                      {children}
+                    </a>
+                  );
+                },
+              }}
+            />
           </div>
         </div>
       </div>

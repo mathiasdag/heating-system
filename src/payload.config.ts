@@ -30,20 +30,48 @@ export default buildConfig({
       LinkFeature({
         fields: [
           {
+            name: 'type',
+            type: 'select',
+            options: [
+              { label: 'Internal Link', value: 'internal' },
+              { label: 'External Link', value: 'external' },
+            ],
+            defaultValue: 'internal',
+            required: true,
+          },
+          {
             name: 'doc',
             type: 'relationship',
             relationTo: ['pages', 'spaces', 'articles'],
             required: false,
+            admin: {
+              condition: (
+                data: unknown,
+                siblingData: Record<string, unknown>
+              ) => siblingData?.type === 'internal',
+            },
           },
           {
             name: 'url',
             type: 'text',
             required: false,
+            admin: {
+              condition: (
+                data: unknown,
+                siblingData: Record<string, unknown>
+              ) => siblingData?.type === 'external',
+            },
           },
           {
             name: 'newTab',
             type: 'checkbox',
             defaultValue: false,
+            admin: {
+              condition: (
+                data: unknown,
+                siblingData: Record<string, unknown>
+              ) => siblingData?.type === 'external',
+            },
           },
         ],
       }),

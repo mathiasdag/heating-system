@@ -21,6 +21,7 @@ interface AssetTextBlockProps {
   text: unknown; // Lexical RichText type
   textPosition: 'left' | 'right';
   link?: LinkGroup;
+  variant?: 'standalone' | 'inline';
 }
 
 const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
@@ -28,6 +29,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   text,
   textPosition,
   link,
+  variant = 'standalone',
 }) => {
   // Debug: Log the text data structure
   console.log('AssetTextBlock text data:', text);
@@ -36,9 +38,10 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   const transformedText = transformRichTextLinks(text);
 
   const isTextLeft = textPosition === 'left';
+  const isStandalone = variant === 'standalone';
 
   return (
-    <div className="mb-16 mt-8 px-2 relative">
+    <div className={`${isStandalone ? 'mb-16 mt-8' : 'mb-8'} px-2 relative`}>
       <DevIndicator componentName="AssetTextBlock" />
 
       <div className="">

@@ -47,6 +47,7 @@ const AssetTextContainerBlock: React.FC<AssetTextContainerBlockProps> = ({
             text={block.text}
             textPosition={block.textPosition}
             link={block.link}
+            variant="inline"
           />
         ))}
       </div>

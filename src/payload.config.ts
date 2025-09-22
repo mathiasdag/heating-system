@@ -74,6 +74,28 @@ export default buildConfig({
             },
           },
         ],
+        generateURL: ({ doc, url, type }) => {
+          // Handle internal links
+          if (type === 'internal' && doc) {
+            if (typeof doc === 'object' && doc.value && doc.value.slug) {
+              if (doc.relationTo === 'spaces') {
+                return `/spaces/${doc.value.slug}`;
+              } else if (doc.relationTo === 'articles') {
+                return `/artikel/${doc.value.slug}`;
+              } else {
+                return `/${doc.value.slug}`;
+              }
+            }
+          }
+          
+          // Handle external links
+          if (type === 'external' && url) {
+            return url;
+          }
+          
+          // Fallback
+          return '#';
+        },
       }),
     ],
   }),

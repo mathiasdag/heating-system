@@ -24,35 +24,7 @@ export default buildConfig({
     },
   },
   collections,
-  editor: lexicalEditor({
-    features: ({ defaultFeatures }) => [
-      ...defaultFeatures,
-      {
-        key: 'customLink',
-        name: 'link',
-        config: {
-          fields: [
-            {
-              name: 'doc',
-              type: 'relationship',
-              relationTo: ['pages', 'spaces'],
-              required: false,
-            },
-            {
-              name: 'url',
-              type: 'text',
-              required: false,
-            },
-            {
-              name: 'newTab',
-              type: 'checkbox',
-              defaultValue: false,
-            },
-          ],
-        },
-      },
-    ],
-  }),
+  editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

@@ -32,7 +32,7 @@ export default buildConfig({
           {
             name: 'doc',
             type: 'relationship',
-            relationTo: ['pages', 'spaces'],
+            relationTo: ['pages', 'spaces', 'articles'],
             required: false,
           },
         ],

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import VideoBlock from './VideoBlock';
+import VideoBlock from '@/components/blocks/VideoBlock';
 
 interface AssetRendererProps {
   asset: {

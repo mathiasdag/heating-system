@@ -26,6 +26,8 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   text,
   textPosition,
 }) => {
+  // Debug: Log the text data structure
+  console.log('AssetTextBlock text data:', text);
   const renderAsset = () => {
     if (asset.type === 'image' && asset.image?.url) {
       return (
@@ -87,10 +89,11 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
               className="rich-text grid gap-4"
               renderers={{
                 link: ({ node, children }) => {
-                  const { type, doc, url, newTab } = node;
-                  
-                  // Debug: Log the node structure
+                  console.log('Custom link renderer called!');
                   console.log('Link node:', node);
+                  console.log('Link children:', children);
+                  
+                  const { type, doc, url, newTab } = node;
                   
                   // Handle internal links
                   if (type === 'internal' && doc) {
@@ -138,6 +141,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
                   
                   // Handle external links
                   if (type === 'external' && url) {
+                    console.log('External link:', url);
                     return (
                       <a
                         href={url}
@@ -151,6 +155,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
                   }
                   
                   // Fallback for any other link type
+                  console.log('Fallback link renderer');
                   return (
                     <a href="#" className="text-blue-600 hover:text-blue-800 underline transition-colors">
                       {children}

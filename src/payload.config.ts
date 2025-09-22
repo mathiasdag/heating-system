@@ -5,7 +5,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb';
 // This configuration marks the end of the coupled database architecture.
 // Next version will transition to external Payload database.
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud';
-import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { lexicalEditor, LinkFeature } from '@payloadcms/richtext-lexical';
 import path from 'path';
 import { buildConfig } from 'payload';
 import { fileURLToPath } from 'url';
@@ -24,7 +24,21 @@ export default buildConfig({
     },
   },
   collections,
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      LinkFeature({
+        fields: [
+          {
+            name: 'doc',
+            type: 'relationship',
+            relationTo: ['pages', 'spaces'],
+            required: false,
+          },
+        ],
+      }),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

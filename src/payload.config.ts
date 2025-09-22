@@ -28,6 +28,7 @@ export default buildConfig({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,
       {
+        key: 'link',
         name: 'link',
         config: {
           fields: [

@@ -30,9 +30,14 @@ const sans = localFont({
 const mono = localFont({
   src: [
     {
-      path: '../../../public/fonts/MonumentGrotesk-Mono.woff2',
+      path: '../../../public/fonts/ABCMonumentGroteskMono-Regular.woff2',
       weight: '400',
       style: 'normal',
+    },
+    {
+      path: '../../../public/fonts/ABCMonumentGroteskMono-RegularItalic.woff2',
+      weight: '400',
+      style: 'italic',
     },
   ],
   variable: '--font-mono',

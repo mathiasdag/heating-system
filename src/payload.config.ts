@@ -24,7 +24,52 @@ export default buildConfig({
     },
   },
   collections,
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      {
+        name: 'link',
+        config: {
+          fields: [
+            {
+              name: 'type',
+              type: 'select',
+              options: [
+                { label: 'Internal Link', value: 'internal' },
+                { label: 'External Link', value: 'external' },
+              ],
+              defaultValue: 'internal',
+              required: true,
+            },
+            {
+              name: 'doc',
+              type: 'relationship',
+              relationTo: ['pages', 'spaces'],
+              required: false,
+              admin: {
+                condition: (data: unknown, siblingData: Record<string, unknown>) =>
+                  siblingData?.type === 'internal',
+              },
+            },
+            {
+              name: 'url',
+              type: 'text',
+              required: false,
+              admin: {
+                condition: (data: unknown, siblingData: Record<string, unknown>) =>
+                  siblingData?.type === 'external',
+              },
+            },
+            {
+              name: 'newTab',
+              type: 'checkbox',
+              defaultValue: false,
+            },
+          ],
+        },
+      },
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

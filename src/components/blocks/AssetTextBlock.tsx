@@ -87,9 +87,9 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
             <RichText 
               data={text} 
               className="rich-text grid gap-4"
-              renderers={{
-                linkNode: ({ node, children }) => {
-                  console.log('Custom linkNode renderer called!');
+              converters={{
+                link: ({ node, children }) => {
+                  console.log('Custom link converter called!');
                   console.log('Link node:', node);
                   
                   const { fields } = node;
@@ -151,7 +151,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
                   }
                   
                   // Fallback for any other link type
-                  console.log('Fallback link renderer');
+                  console.log('Fallback link converter');
                   return (
                     <a href="#" className="text-blue-600 hover:text-blue-800 underline transition-colors">
                       {children}

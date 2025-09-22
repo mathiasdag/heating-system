@@ -88,12 +88,12 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
               data={text} 
               className="rich-text grid gap-4"
               renderers={{
-                link: ({ node, children }) => {
-                  console.log('Custom link renderer called!');
+                linkNode: ({ node, children }) => {
+                  console.log('Custom linkNode renderer called!');
                   console.log('Link node:', node);
-                  console.log('Link children:', children);
                   
-                  const { type, doc, url, newTab } = node;
+                  const { fields } = node;
+                  const { type, doc, url, newTab } = fields || {};
                   
                   // Handle internal links
                   if (type === 'internal' && doc) {
@@ -120,10 +120,6 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
                         } else {
                           href = `/${doc.slug}`;
                         }
-                      }
-                      // Check if it's just an ID (unpopulated reference)
-                      else if (typeof doc === 'string') {
-                        href = `/${doc}`;
                       }
                     }
                     

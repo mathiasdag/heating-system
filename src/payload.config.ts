@@ -87,12 +87,12 @@ export default buildConfig({
               }
             }
           }
-          
+
           // Handle external links
           if (type === 'external' && url) {
             return url;
           }
-          
+
           // Fallback
           return '#';
         },

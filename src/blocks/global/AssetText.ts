@@ -1,4 +1,5 @@
 import type { Block } from 'payload';
+import LinkGroup from '@/fields/LinkGroup';
 
 const AssetText: Block = {
   slug: 'assetText',
@@ -53,6 +54,7 @@ const AssetText: Block = {
       required: true,
       defaultValue: 'left',
     },
+    LinkGroup,
   ],
 };
 

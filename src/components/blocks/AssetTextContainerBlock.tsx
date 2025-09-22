@@ -2,6 +2,7 @@ import React from 'react';
 import { BlockHeader } from './BlockHeader';
 import AssetTextBlock from './AssetTextBlock';
 import { DevIndicator } from '../DevIndicator';
+import { type LinkGroup } from '../../utils/linkRouter';
 
 interface AssetTextContainerBlockProps {
   headline?: string;
@@ -21,6 +22,7 @@ interface AssetTextContainerBlockProps {
     };
     text: any; // Lexical RichText type
     textPosition: 'left' | 'right';
+    link?: LinkGroup;
   }>;
 }
 
@@ -48,6 +50,7 @@ const AssetTextContainerBlock: React.FC<AssetTextContainerBlockProps> = ({
             asset={block.asset}
             text={block.text}
             textPosition={block.textPosition}
+            link={block.link}
           />
         ))}
       </div>

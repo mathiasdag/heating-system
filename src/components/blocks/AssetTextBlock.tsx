@@ -1,9 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '../DevIndicator';
 import VideoBlock from './VideoBlock';
+import { AppLink } from '../AppLink';
+import { type LinkGroup } from '../../utils/linkRouter';
 
 interface AssetTextBlockProps {
   asset: {
@@ -17,54 +18,72 @@ interface AssetTextBlockProps {
     };
     mux?: string;
   };
-  text: any; // Lexical RichText type
+  text: unknown; // Lexical RichText type
   textPosition: 'left' | 'right';
+  link?: LinkGroup;
 }
 
 const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   asset,
   text,
   textPosition,
+  link,
 }) => {
   // Debug: Log the text data structure
   console.log('AssetTextBlock text data:', text);
   
   // Transform the text data to fix internal links
-  const transformTextData = (data: any) => {
-    if (!data || !data.root || !data.root.children) {
+  const transformTextData = (data: unknown) => {
+    if (!data || typeof data !== 'object' || !('root' in data)) {
+      return data;
+    }
+    
+    const dataObj = data as { root: { children?: unknown[] } };
+    if (!dataObj.root || !dataObj.root.children) {
       return data;
     }
     
     const transformedData = JSON.parse(JSON.stringify(data)); // Deep clone
     
-    const transformNode = (node: any) => {
-      if (node.type === 'link' && node.fields) {
-        const { type, doc, url } = node.fields;
-        
-        if (type === 'internal' && doc && doc.value && doc.value.slug) {
-          // Fix the URL for internal links
-          let correctUrl = '#';
-          if (doc.relationTo === 'spaces') {
-            correctUrl = `/spaces/${doc.value.slug}`;
-          } else if (doc.relationTo === 'articles') {
-            correctUrl = `/artikel/${doc.value.slug}`;
-          } else {
-            correctUrl = `/${doc.value.slug}`;
-          }
+    const transformNode = (node: unknown) => {
+      if (typeof node === 'object' && node !== null && 'type' in node && 'fields' in node) {
+        const nodeObj = node as { type: string; fields: unknown };
+        if (nodeObj.type === 'link' && typeof nodeObj.fields === 'object' && nodeObj.fields !== null) {
+          const fields = nodeObj.fields as { type?: string; doc?: unknown };
+          const { type, doc } = fields;
           
-          // Update the URL field
-          node.fields.url = correctUrl;
-          console.log('Fixed internal link URL:', correctUrl);
+          if (type === 'internal' && doc && typeof doc === 'object' && doc !== null) {
+            const docObj = doc as { value?: { slug?: string; relationTo?: string } };
+            if (docObj.value && docObj.value.slug) {
+              // Fix the URL for internal links
+              let correctUrl = '#';
+              if (docObj.value.relationTo === 'spaces') {
+                correctUrl = `/spaces/${docObj.value.slug}`;
+              } else if (docObj.value.relationTo === 'articles') {
+                correctUrl = `/artikel/${docObj.value.slug}`;
+              } else {
+                correctUrl = `/${docObj.value.slug}`;
+              }
+              
+              // Update the URL field
+              (nodeObj.fields as { url: string }).url = correctUrl;
+              console.log('Fixed internal link URL:', correctUrl);
+            }
+          }
         }
       }
       
       // Recursively transform children
-      if (node.children) {
-        node.children.forEach(transformNode);
+      if (typeof node === 'object' && node !== null && 'children' in node) {
+        const nodeWithChildren = node as { children: unknown[] };
+        if (Array.isArray(nodeWithChildren.children)) {
+          nodeWithChildren.children.forEach(transformNode);
+        }
       }
     };
     
-    transformedData.root.children.forEach(transformNode);
+    const transformedDataObj = transformedData as { root: { children: unknown[] } };
+    transformedDataObj.root.children.forEach(transformNode);
     return transformedData;
   };
   
@@ -95,8 +114,6 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           ]}
           controls={false}
           autoplay={true}
-          loop={true}
-          muted={true}
           adaptiveResolution={true}
           className="rounded-lg max-h-[400px] md:max-h-[600px] object-contain"
         />
@@ -126,6 +143,15 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
             className={`place-self-start py-2 order-2 ${!isTextLeft ? 'md:order-2' : 'md:order-1'}`}
           >
             <RichText data={transformedText} className="rich-text grid gap-4" />
+
+            {/* Link */}
+            {link && (
+              <div className="mt-6">
+                <AppLink link={link} variant="primary" size="md">
+                  {link.text || 'Läs mer'}
+                </AppLink>
+              </div>
+            )}
           </div>
         </div>
       </div>

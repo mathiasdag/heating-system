@@ -28,6 +28,47 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
 }) => {
   // Debug: Log the text data structure
   console.log('AssetTextBlock text data:', text);
+  
+  // Transform the text data to fix internal links
+  const transformTextData = (data: any) => {
+    if (!data || !data.root || !data.root.children) {
+      return data;
+    }
+    
+    const transformedData = JSON.parse(JSON.stringify(data)); // Deep clone
+    
+    const transformNode = (node: any) => {
+      if (node.type === 'link' && node.fields) {
+        const { type, doc, url } = node.fields;
+        
+        if (type === 'internal' && doc && doc.value && doc.value.slug) {
+          // Fix the URL for internal links
+          let correctUrl = '#';
+          if (doc.relationTo === 'spaces') {
+            correctUrl = `/spaces/${doc.value.slug}`;
+          } else if (doc.relationTo === 'articles') {
+            correctUrl = `/artikel/${doc.value.slug}`;
+          } else {
+            correctUrl = `/${doc.value.slug}`;
+          }
+          
+          // Update the URL field
+          node.fields.url = correctUrl;
+          console.log('Fixed internal link URL:', correctUrl);
+        }
+      }
+      
+      // Recursively transform children
+      if (node.children) {
+        node.children.forEach(transformNode);
+      }
+    };
+    
+    transformedData.root.children.forEach(transformNode);
+    return transformedData;
+  };
+  
+  const transformedText = transformTextData(text);
   const renderAsset = () => {
     if (asset.type === 'image' && asset.image?.url) {
       return (
@@ -84,10 +125,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           <div
             className={`place-self-start py-2 order-2 ${!isTextLeft ? 'md:order-2' : 'md:order-1'}`}
           >
-            <RichText 
-              data={text} 
-              className="rich-text grid gap-4"
-            />
+            <RichText data={transformedText} className="rich-text grid gap-4" />
           </div>
         </div>
       </div>

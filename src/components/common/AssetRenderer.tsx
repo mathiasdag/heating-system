@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import VideoBlock from '@/components/blocks/VideoBlock';
+import clsx from 'clsx';
 
 interface AssetRendererProps {
   asset: {
@@ -19,8 +20,14 @@ interface AssetRendererProps {
 
 const AssetRenderer: React.FC<AssetRendererProps> = ({
   asset,
-  className = '',
+  className,
 }) => {
+  // Default styling when no className is provided
+  const defaultStyles = 'rounded-lg w-auto max-h-[400px] md:max-h-[600px] object-contain';
+  
+  // Use provided className if available, otherwise use default styles
+  const finalClassName = className || defaultStyles;
+
   if (asset.type === 'image' && asset.image?.url) {
     return (
       <Image
@@ -28,7 +35,7 @@ const AssetRenderer: React.FC<AssetRendererProps> = ({
         alt={asset.image.alt || ''}
         width={asset.image.width}
         height={asset.image.height}
-        className={`rounded-lg w-auto max-h-[400px] md:max-h-[600px] object-contain ${className}`}
+        className={finalClassName}
         priority
       />
     );
@@ -47,7 +54,7 @@ const AssetRenderer: React.FC<AssetRendererProps> = ({
         controls={false}
         autoplay={true}
         adaptiveResolution={true}
-        className={`rounded-lg max-h-[400px] md:max-h-[600px] object-contain ${className}`}
+        className={finalClassName}
       />
     );
   }

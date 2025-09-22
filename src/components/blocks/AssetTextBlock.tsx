@@ -5,6 +5,7 @@ import { AppLink } from '../AppLink';
 import { type LinkGroup } from '../../utils/linkRouter';
 import { transformRichTextLinks } from '../../utils/richTextTransform';
 import AssetRenderer from '../common/AssetRenderer';
+import clsx from 'clsx';
 
 interface AssetTextBlockProps {
   asset: {
@@ -31,31 +32,36 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   link,
   variant = 'standalone',
 }) => {
-  // Debug: Log the text data structure
-  console.log('AssetTextBlock text data:', text);
-
-  // Transform the text data to fix internal links
   const transformedText = transformRichTextLinks(text);
 
   const isTextLeft = textPosition === 'left';
   const isStandalone = variant === 'standalone';
 
   return (
-    <div className={`${isStandalone ? 'mb-16 mt-8' : 'mb-8'} px-2 relative`}>
+    <div className={clsx(
+      'px-2 relative',
+      isStandalone ? 'mb-16 mt-8' : 'mb-8'
+    )}>
       <DevIndicator componentName="AssetTextBlock" />
 
       <div className="">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Asset Content */}
           <div
-            className={`inline order-1 self-start ${!isTextLeft ? 'md:order-1' : 'justify-self-end md:order-2'}`}
+            className={clsx(
+              'inline order-1 self-start',
+              !isTextLeft ? 'md:order-1' : 'justify-self-end md:order-2'
+            )}
           >
             <AssetRenderer asset={asset} />
           </div>
 
           {/* Text Content */}
           <div
-            className={`place-self-start py-2 order-2 ${!isTextLeft ? 'md:order-2' : 'md:order-1'}`}
+            className={clsx(
+              'place-self-start py-2 order-2',
+              !isTextLeft ? 'md:order-2' : 'md:order-1'
+            )}
           >
             <RichText
               data={transformedText as any}

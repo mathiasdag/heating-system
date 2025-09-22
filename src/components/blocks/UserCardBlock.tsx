@@ -29,7 +29,7 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
         height?: number;
       }
     | undefined;
-  const references = user.references as
+  const tags = user.tags as
     | Array<{
         id: string;
         name: string;
@@ -41,9 +41,9 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   const renderTextOnly = () => (
     <div className="bg-surface w-72 text-center p-4 flex flex-col justify-center gap-2 rounded-xl">
       <h3 className="text-md whitespace-nowrap truncate">{fullName}</h3>
-      {references && references.length > 0 && (
+      {tags && tags.length > 0 && (
         <div className="flex flex-wrap justify-center gap-1">
-          {references.map(tag => (
+          {tags.map(tag => (
             <Tag key={tag.id} name={tag.name} size="sm" />
           ))}
         </div>
@@ -52,7 +52,7 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   );
 
   const renderCompactCard = () => (
-    <div className="bg-surface w-72 p-4 flex justify-center gap-4 rounded-xl">
+    <div className="bg-surface w-72 p-4 flex justify-center gap-3 rounded-xl">
       {profilePicture?.url && (
         <Image
           src={profilePicture.url}
@@ -64,9 +64,9 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
       )}
       <div className="flex-1 min-w-0 flex gap-1 flex-col justify-center">
         <h3 className="text-base whitespace-nowrap truncate">{fullName}</h3>
-        {references && references.length > 0 && (
+        {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-1">
-            {references.map(tag => (
+            {tags.map(tag => (
               <Tag key={tag.id} name={tag.name} size="sm" />
             ))}
           </div>
@@ -91,9 +91,9 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
       <h3 className="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-wide">
         {fullName}
       </h3>
-      {references && references.length > 0 && (
+      {tags && tags.length > 0 && (
         <div className="flex flex-wrap justify-center gap-2">
-          {references.map(tag => (
+          {tags.map(tag => (
             <span
               key={tag.id}
               className="inline-block px-3 py-1 text-sm border border-gray-800 text-gray-800 rounded-full"
@@ -122,9 +122,9 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
       <h3 className="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-wide">
         {fullName}
       </h3>
-      {references && references.length > 0 && (
+      {tags && tags.length > 0 && (
         <div className="flex flex-wrap justify-center gap-2 mb-4">
-          {references.map(tag => (
+          {tags.map(tag => (
             <span
               key={tag.id}
               className="inline-block px-3 py-1 text-sm border border-gray-800 text-gray-800 rounded-full"
@@ -188,7 +188,13 @@ function UserCardBlockWithFetch({
   }
 
   // Render with the fetched user data
-  return <UserCardBlock variant={variant} user={user} />;
+  if (!user) return null;
+  return (
+    <UserCardBlock
+      variant={variant}
+      user={user as unknown as Record<string, unknown>}
+    />
+  );
 }
 
 /**

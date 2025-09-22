@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { authenticated } from '@/access/authenticated';
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -6,6 +7,12 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   auth: true,
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: () => true, // Allow public read access for user profiles
+    update: authenticated,
+  },
   fields: [
     // Email added by default
     {
@@ -36,7 +43,7 @@ export const Users: CollectionConfig = {
       },
     },
     {
-      name: 'references',
+      name: 'tags',
       type: 'relationship',
       relationTo: 'tags',
       hasMany: true,

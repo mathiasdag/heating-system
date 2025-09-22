@@ -1,9 +1,16 @@
 import type { CollectionConfig } from 'payload';
+import { authenticated } from '@/access/authenticated';
 
 export const Tags: CollectionConfig = {
   slug: 'tags',
   admin: {
     useAsTitle: 'name',
+  },
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: () => true, // Allow public read access for tags
+    update: authenticated,
   },
   fields: [
     {

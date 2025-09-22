@@ -12,7 +12,7 @@ interface User {
     width?: number;
     height?: number;
   };
-  references?: Array<{
+  tags?: Array<{
     id: string;
     name: string;
   }>;
@@ -54,12 +54,15 @@ export function useUserData(userId: string): UseUserDataResult {
         setLoading(false);
       } catch (err) {
         console.error(`Error fetching user (attempt ${retryCount + 1}):`, err);
-        
+
         if (retryCount < 2) {
           // Retry after a short delay
-          setTimeout(() => {
-            fetchUserWithRetry(retryCount + 1);
-          }, 1000 * (retryCount + 1)); // 1s, 2s delays
+          setTimeout(
+            () => {
+              fetchUserWithRetry(retryCount + 1);
+            },
+            1000 * (retryCount + 1)
+          ); // 1s, 2s delays
         } else {
           // Final attempt failed
           setError(err instanceof Error ? err.message : 'Failed to fetch user');

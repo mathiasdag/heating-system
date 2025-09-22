@@ -35,6 +35,16 @@ export default buildConfig({
             relationTo: ['pages', 'spaces', 'articles'],
             required: false,
           },
+          {
+            name: 'url',
+            type: 'text',
+            required: false,
+          },
+          {
+            name: 'newTab',
+            type: 'checkbox',
+            defaultValue: false,
+          },
         ],
       }),
     ],

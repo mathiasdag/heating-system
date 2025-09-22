@@ -91,6 +91,10 @@ hr {
   margin: 0 auto;
 }
 
+.rich-text h2 {
+  @apply text-lg font-display;
+}
+
 h2.font-display {
   font-size: 1.5rem;
 }

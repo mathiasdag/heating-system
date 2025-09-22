@@ -36,22 +36,27 @@ const AssetTextContainerBlock: React.FC<AssetTextContainerBlockProps> = ({
       <DevIndicator componentName="AssetTextContainerBlock" />
 
       {/* Block Header */}
-      <BlockHeader headline={headline} description={description} />
+      <BlockHeader
+        headline={headline}
+        description={description}
+        className="mb-12"
+      />
 
       {/* Asset Text Blocks */}
-      <div className="divide-y divide-gray-200">
+      <hr />
+      <div className="divide-y divide-text">
         {assetTextBlocks?.map((block, index) => (
-          <div key={index} className={index > 0 ? 'pt-8' : ''}>
-            <AssetTextBlock
-              asset={block.asset}
-              text={block.text}
-              textPosition={block.textPosition}
-              link={block.link}
-              variant="inline"
-            />
-          </div>
+          <AssetTextBlock
+            key={index}
+            asset={block.asset}
+            text={block.text}
+            textPosition={block.textPosition}
+            link={block.link}
+            variant="inline"
+          />
         ))}
       </div>
+      <hr />
     </div>
   );
 };

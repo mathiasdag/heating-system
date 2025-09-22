@@ -18,13 +18,11 @@ interface AssetRendererProps {
   className?: string;
 }
 
-const AssetRenderer: React.FC<AssetRendererProps> = ({
-  asset,
-  className,
-}) => {
+const AssetRenderer: React.FC<AssetRendererProps> = ({ asset, className }) => {
   // Default styling when no className is provided
-  const defaultStyles = 'rounded-lg w-auto max-h-[400px] md:max-h-[600px] object-contain';
-  
+  const defaultStyles =
+    'rounded-lg w-auto max-h-[400px] md:max-h-[600px] object-contain';
+
   // Use provided className if available, otherwise use default styles
   const finalClassName = className || defaultStyles;
 

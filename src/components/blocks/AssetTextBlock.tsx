@@ -4,6 +4,7 @@ import { DevIndicator } from '../DevIndicator';
 import { AppLink } from '../AppLink';
 import { type LinkGroup } from '../../utils/linkRouter';
 import { transformRichTextLinks } from '../../utils/richTextTransform';
+import { richTextRenderers } from '../../utils/richTextRenderers';
 import AssetRenderer from '../common/AssetRenderer';
 import clsx from 'clsx';
 
@@ -38,10 +39,9 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   const isStandalone = variant === 'standalone';
 
   return (
-    <div className={clsx(
-      'px-2 relative',
-      isStandalone ? 'mb-16 mt-8' : 'mb-8'
-    )}>
+    <div
+      className={clsx('px-2 relative', isStandalone ? 'mb-16 mt-8' : 'py-8')}
+    >
       <DevIndicator componentName="AssetTextBlock" />
 
       <div className="">
@@ -53,7 +53,12 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
               !isTextLeft ? 'md:order-1' : 'justify-self-end md:order-2'
             )}
           >
-            <AssetRenderer asset={asset} />
+            <AssetRenderer
+              asset={asset}
+              className={
+                !isStandalone ? 'aspect-[4/3] object-cover rounded-lg' : ''
+              }
+            />
           </div>
 
           {/* Text Content */}
@@ -63,9 +68,10 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
               !isTextLeft ? 'md:order-2' : 'md:order-1'
             )}
           >
-            <RichText
-              data={transformedText as any}
-              className="rich-text grid gap-4"
+            <RichText 
+              data={transformedText as any} 
+              className="grid gap-4"
+              renderers={richTextRenderers}
             />
 
             {/* Link */}

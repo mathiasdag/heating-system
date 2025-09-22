@@ -9,7 +9,7 @@
 
 export interface LinkGroup {
   type: 'internal' | 'external' | 'copy';
-  reference?: unknown; // Payload reference object
+  doc?: unknown; // Payload reference object
   url?: string;
   text?: string;
 }
@@ -95,7 +95,7 @@ export function routeLink(link: LinkGroup): LinkRouterResult {
       break;
 
     case 'internal':
-      const resolvedHref = resolveReference(link.reference);
+      const resolvedHref = resolveReference(link.doc);
       result.href = resolvedHref || '#';
       result.isExternal = false;
       break;

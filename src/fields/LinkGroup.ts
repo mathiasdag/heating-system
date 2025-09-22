@@ -23,14 +23,14 @@ const LinkGroup: Field = {
       },
     },
     {
-      name: 'reference',
+      name: 'doc',
       type: 'relationship',
-      relationTo: ['pages', 'spaces'],
+      relationTo: ['pages', 'spaces', 'articles'],
       required: false,
       admin: {
         condition: (data: unknown, siblingData: Record<string, unknown>) =>
           siblingData?.type === 'internal',
-        description: 'Select a page or space to link to',
+        description: 'Select a page, space, or article to link to',
       },
     },
     {

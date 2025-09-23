@@ -5,7 +5,7 @@ import Marquee from 'react-fast-marquee';
 
 // Style constants
 const GRID_COLUMN_WIDTH = 'basis-[6.6666vw]';
-const GRID_COLUMN_HEIGHT = 'h-[14vw]';
+const GRID_COLUMN_HEIGHT = 'h-full';
 const GRID_COLUMN_HEIGHT_SMALL = 'h-[12.6666vw]';
 const BORDER_RIGHT = 'border-r border-text';
 const BORDER_LEFT = 'border-l border-text';
@@ -31,7 +31,7 @@ const GridRow: React.FC<{
 }> = ({ hasBorders = false, children, className = '' }) => (
   <div
     className={clsx(
-      'flex justify-between py-1 md:py-2',
+      'flex justify-between py-[1vw] md:py-2 h-[14vw]',
       hasBorders && BORDER_TOP_BOTTOM,
       className
     )}
@@ -42,7 +42,7 @@ const GridRow: React.FC<{
 
 // Marquee component
 const MarqueeText: React.FC = () => (
-  <div className="font-ballPill w-[86.5%] h-[14vw] text-[13.5vw] leading-[13.5vw] pt-[.1rem] overflow-hidden pointer-events-none">
+  <div className="font-ballPill w-[86.5%] h-full text-[13vw] leading-[13vw] pt-[.0rem] overflow-hidden pointer-events-none">
     <Marquee speed={50}>
       {Array(5)
         .fill(null)

@@ -12,23 +12,22 @@ import { routeLink, type LinkGroup } from '../utils/linkRouter';
 // Component for highlight link with marquee effect
 const HighlightLink: React.FC<{
   link: NavigationLink;
-  onClick: (link: NavigationLink) => void;
-  linkClasses: string;
+  onClick: () => void;
   isDarkMode: boolean;
   mounted: boolean;
-}> = ({ link, onClick, linkClasses, isDarkMode, mounted }) => {
+}> = ({ link, onClick, isDarkMode, mounted }) => {
   const [isMarqueeing, setIsMarqueeing] = useState(false);
 
   const linkResult = routeLink(link);
   const href = linkResult.href || '#';
 
   return (
-    <a
+    <Link
       href={href}
-      onClick={() => onClick(link)}
+      onClick={onClick}
       className={clsx(
         'rounded-sm cursor-pointer',
-        'text-md pt-[.125rem] h-8',
+        'text-md h-8',
         'flex items-center justify-center',
         'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.2em] md:max-w-sm',
         !isMarqueeing && 'px-[.6rem]',
@@ -45,12 +44,12 @@ const HighlightLink: React.FC<{
         spacing="mx-2"
         onMarqueeStateChange={setIsMarqueeing}
       />
-    </a>
+    </Link>
   );
 };
 
 export interface NavigationLink extends LinkGroup {
-  reference?: any; // Payload reference object - can be various shapes
+  reference?: unknown; // Payload reference object - can be various shapes
 }
 
 export interface MenuItem {
@@ -100,10 +99,8 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
     return Boolean(item.children && item.children.length > 0);
   };
 
-  const handleLinkClick = (link: NavigationLink) => {
-    if (link.type !== 'copy') {
-      setIsOpen(false);
-    }
+  const handleLinkClick = () => {
+    setIsOpen(false);
   };
 
   const renderMenuItem = (item: MenuItem, level: number = 0) => {
@@ -111,28 +108,17 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
     const hasSubmenu = hasChildren(item);
 
     const renderLink = () => {
-      if (item.link.type === 'copy') {
-        return (
-          <button
-            onClick={() => handleLinkClick(item.link)}
-            className={clsx(linkClasses, 'px-[.6rem]')}
-          >
-            {itemText}
-          </button>
-        );
-      }
-
       const linkResult = routeLink(item.link);
       const href = linkResult.href || '#';
 
       return (
-        <a
+        <Link
           href={href}
-          onClick={() => handleLinkClick(item.link)}
+          onClick={handleLinkClick}
           className={clsx(linkClasses, 'px-[.6rem]')}
         >
           {itemText}
-        </a>
+        </Link>
       );
     };
 
@@ -191,7 +177,6 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
           <HighlightLink
             link={navigation.highlight}
             onClick={handleLinkClick}
-            linkClasses={linkClasses}
             isDarkMode={isDarkMode}
             mounted={mounted}
           />

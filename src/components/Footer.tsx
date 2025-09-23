@@ -3,10 +3,23 @@ import React from 'react';
 import clsx from 'clsx';
 import Marquee from 'react-fast-marquee';
 
+// Style constants
+const GRID_COLUMN_WIDTH = 'basis-[6.6666vw]';
+const GRID_COLUMN_HEIGHT = 'h-[14vw]';
+const GRID_COLUMN_HEIGHT_SMALL = 'h-[12.6666vw]';
+const BORDER_RIGHT = 'border-r border-text';
+const BORDER_LEFT = 'border-l border-text';
+const BORDER_TOP_BOTTOM = 'border-t border-b border-text';
+const FOOTER_LINK_CLASS = 'whitespace-nowrap';
+
 // Helper component for grid columns
 const GridColumn: React.FC<{ isLast?: boolean }> = ({ isLast = false }) => (
   <div
-    className={`aspect-[9/16] grow ${!isLast ? 'border-r border-text' : ''}`}
+    className={clsx(
+      GRID_COLUMN_WIDTH,
+      GRID_COLUMN_HEIGHT,
+      !isLast && BORDER_RIGHT
+    )}
   />
 );
 
@@ -19,7 +32,7 @@ const GridRow: React.FC<{
   <div
     className={clsx(
       'flex justify-between py-1 md:py-2',
-      hasBorders && 'border-t border-b border-text',
+      hasBorders && BORDER_TOP_BOTTOM,
       className
     )}
   >
@@ -29,17 +42,41 @@ const GridRow: React.FC<{
 
 // Marquee component
 const MarqueeText: React.FC = () => (
-  <div className="font-ballPill uppercase w-[86.5%] text-vvCustom pt-3 overflow-hidden h-full pointer-events-none">
+  <div className="font-ballPill w-[86.5%] h-[14vw] text-[13.5vw] leading-[13.5vw] pt-[.1rem] overflow-hidden pointer-events-none">
     <Marquee speed={50}>
       {Array(5)
         .fill(null)
         .map((_, i) => (
           <span key={i} className="mx-12">
-            Värmeverket
+            VäRMEVERKET
           </span>
         ))}
     </Marquee>
   </div>
+);
+
+// Helper function to generate grid columns
+const generateGridColumns = (count: number) =>
+  Array(count)
+    .fill(null)
+    .map((_, i) => <GridColumn key={i} isLast={i === count - 1} />);
+
+// Helper component for side columns in marquee row
+const SideColumn: React.FC<{ hasRightBorder?: boolean }> = ({
+  hasRightBorder = false,
+}) => (
+  <div
+    className={clsx(
+      GRID_COLUMN_WIDTH,
+      GRID_COLUMN_HEIGHT_SMALL,
+      hasRightBorder ? BORDER_RIGHT : BORDER_LEFT
+    )}
+  />
+);
+
+// Helper component for footer links
+const FooterLink: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className={FOOTER_LINK_CLASS}>{children}</div>
 );
 
 export const Footer: React.FC = () => {
@@ -47,45 +84,24 @@ export const Footer: React.FC = () => {
     <footer className="relative mt-32">
       <div className="mx-2">
         {/* Top row */}
-        <GridRow hasBorders>
-          {Array(15)
-            .fill(null)
-            .map((_, i) => (
-              <GridColumn key={i} isLast={i === 14} />
-            ))}
-        </GridRow>
+        <GridRow hasBorders>{generateGridColumns(15)}</GridRow>
 
         {/* Middle row with marquee */}
         <GridRow>
-          <div className="aspect-[9/16] basis-[6.6666%] shrink-0 border-r border-text" />
+          <SideColumn hasRightBorder />
           <MarqueeText />
-          <div className="aspect-[9/16] basis-[6.6666%] shrink-0 border-l border-text" />
+          <SideColumn />
         </GridRow>
 
         {/* Bottom row */}
-        <GridRow hasBorders>
-          {Array(15)
-            .fill(null)
-            .map((_, i) => (
-              <GridColumn key={i} isLast={i === 14} />
-            ))}
-        </GridRow>
+        <GridRow hasBorders>{generateGridColumns(15)}</GridRow>
       </div>
-      <div className="flex items-end justify-between gap-3 p-2 uppercase pb-12 md:pb-2">
-        <div className="flex gap-x-3 flex-col xl:flex-row">
-          <div className="whitespace-nowrap">
-            &copy; {new Date().getFullYear()} Varmeverket
-          </div>
-          <div className="whitespace-nowrap">
-            Bredängsvägen 203, 127 34 Skärholmen
-          </div>
-          <div className="whitespace-nowrap">Email</div>
-          <div className="whitespace-nowrap">Instagram</div>
-          <div className="whitespace-nowrap">Terms of service</div>
-        </div>
-        <div className="whitespace-nowrap">
-          {/* Theme is now automatically controlled by URL */}
-        </div>
+      <div className="flex flex-col xl:flex-row gap-x-3 p-2 uppercase pb-12 md:pb-2">
+        <FooterLink>&copy; {new Date().getFullYear()} Varmeverket</FooterLink>
+        <FooterLink>Bredängsvägen 203, 127 34 Skärholmen</FooterLink>
+        <FooterLink>Email</FooterLink>
+        <FooterLink>Instagram</FooterLink>
+        <FooterLink>Terms of service</FooterLink>
       </div>
     </footer>
   );

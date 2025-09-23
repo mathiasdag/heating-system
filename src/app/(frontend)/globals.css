@@ -21,6 +21,11 @@
   --theme-transition-easing: ease-out;
 }
 
+.bg-surface-backdrop {
+  background-color: rgba(249, 247, 236, 0.8);
+  backdrop-filter: blur(10px);
+}
+
 @media (min-width: 1024px) {
   :root {
     font-size: 18px;

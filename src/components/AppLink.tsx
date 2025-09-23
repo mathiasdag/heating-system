@@ -1,12 +1,13 @@
 'use client';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   routeLink,
   type LinkGroup,
   isExternalUrl,
   getExternalLinkAttributes,
 } from '../utils/linkRouter';
+import { useNotification } from '../hooks/useNotification';
 
 interface AppActionProps {
   href?: string;
@@ -51,7 +52,7 @@ export const AppAction: React.FC<AppActionProps> = ({
   onCopy,
   link,
 }) => {
-  const [showSuccess, setShowSuccess] = useState(false);
+  const { showSuccess, showError } = useNotification();
 
   // Use link router if link prop is provided, otherwise fall back to legacy behavior
   const linkResult = link
@@ -68,11 +69,13 @@ export const AppAction: React.FC<AppActionProps> = ({
     if (textToCopy) {
       try {
         await navigator.clipboard.writeText(textToCopy);
-        setShowSuccess(true);
-        setTimeout(() => setShowSuccess(false), 2000);
+        showSuccess('Kopierat!', {
+          duration: 5000,
+        });
         onCopy?.();
       } catch (err) {
         console.error('Failed to copy:', err);
+        showError('Kunde inte kopiera texten');
       }
     }
   };
@@ -105,11 +108,6 @@ export const AppAction: React.FC<AppActionProps> = ({
             <div className="truncate min-w-0">{children}</div>
           </div>
         </button>
-        {showSuccess && (
-          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-in slide-in-from-right duration-300">
-            Kopierat!
-          </div>
-        )}
       </>
     );
   }

@@ -8,6 +8,8 @@ import { Footer } from '@/components/Footer';
 import { ThemeProvider } from 'next-themes';
 import { UrlBasedTheme } from '@/components/UrlBasedTheme';
 import { BackgroundLoader } from '@/components/BackgroundLoader';
+import { NotificationProvider } from '@/contexts/NotificationContext';
+import { NotificationContainer } from '@/components/NotificationContainer';
 import PayloadAPI from '@/lib/api';
 
 const sans = localFont({
@@ -118,14 +120,17 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           defaultTheme="light"
           enableSystem={false}
         >
-          <UrlBasedTheme>
-            <BackgroundLoader>
-              <NavigationWrapper navigation={navigation} />
-              <main className="min-h-screen">{children}</main>
-              <Footer />
-              <RevalidateButton />
-            </BackgroundLoader>
-          </UrlBasedTheme>
+          <NotificationProvider>
+            <UrlBasedTheme>
+              <BackgroundLoader>
+                <NavigationWrapper navigation={navigation} />
+                <main className="min-h-screen">{children}</main>
+                <Footer />
+                <RevalidateButton />
+                <NotificationContainer />
+              </BackgroundLoader>
+            </UrlBasedTheme>
+          </NotificationProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -80,11 +80,11 @@ export const metadata = {
   title: 'Payload Blank Template',
 };
 
-// Force revalidation on every request
-export const revalidate = 0;
+// Allow caching with reasonable revalidation
+export const revalidate = 3600; // 1 hour
 
-// Disable caching for this layout
-export const dynamic = 'force-dynamic';
+// Allow caching when possible, but keep dynamic for user-specific content
+export const dynamic = 'auto';
 
 async function getNavigation() {
   try {

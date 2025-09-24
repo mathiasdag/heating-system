@@ -63,8 +63,10 @@ async function fetchFromExternalAPI<T>(
 
   const url = `${API_BASE_URL}/${collection}?${params.toString()}`;
 
-  // Log the API call for debugging
-  console.log(`🌐 External API Call: ${url}`);
+  // Log the API call for debugging (development only)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`🌐 External API Call: ${url}`);
+  }
 
   try {
     const response = await fetch(url, {
@@ -83,7 +85,12 @@ async function fetchFromExternalAPI<T>(
     }
 
     const data = await response.json();
-    console.log(`✅ External API Response (${collection}):`, data);
+    
+    // Log response for debugging (development only)
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`✅ External API Response (${collection}):`, data);
+    }
+    
     return data;
   } catch (error) {
     console.error(
@@ -94,20 +101,51 @@ async function fetchFromExternalAPI<T>(
   }
 }
 
+// Request deduplication cache
+const requestCache = new Map<string, Promise<any>>();
+
 /**
  * Unified API interface that works with both local and external backends
  */
 export class PayloadAPI {
   /**
+   * Helper method for request deduplication
+   */
+  private static async deduplicatedRequest<T>(
+    cacheKey: string,
+    fetcher: () => Promise<T>
+  ): Promise<T> {
+    if (requestCache.has(cacheKey)) {
+      return requestCache.get(cacheKey);
+    }
+
+    const promise = fetcher();
+    requestCache.set(cacheKey, promise);
+
+    try {
+      const result = await promise;
+      requestCache.delete(cacheKey);
+      return result;
+    } catch (error) {
+      requestCache.delete(cacheKey);
+      throw error;
+    }
+  }
+
+  /**
    * Find documents in a collection
    */
   static async find<T>(options: FindOptions): Promise<ApiResponse<T>> {
-    if (USE_EXTERNAL_BACKEND) {
-      return fetchFromExternalAPI<T>(options);
-    } else {
-      // Use local API endpoint (same as external, but local)
-      return fetchFromExternalAPI<T>(options);
-    }
+    const cacheKey = `find-${JSON.stringify(options)}`;
+    
+    return this.deduplicatedRequest(cacheKey, async () => {
+      if (USE_EXTERNAL_BACKEND) {
+        return fetchFromExternalAPI<T>(options);
+      } else {
+        // Use local API endpoint (same as external, but local)
+        return fetchFromExternalAPI<T>(options);
+      }
+    });
   }
 
   /**
@@ -146,41 +184,53 @@ export class PayloadAPI {
     slug: string,
     depth = 10
   ): Promise<T | null> {
-    // Use direct fetch with simple query format instead of the broken JSON format
-    const params = new URLSearchParams();
-    params.append(`where[slug][equals]`, slug);
-    params.append('depth', depth.toString());
-    params.append('limit', '1');
+    const cacheKey = `findBySlug-${collection}-${slug}-${depth}`;
+    
+    return this.deduplicatedRequest(cacheKey, async () => {
+      // Use direct fetch with simple query format instead of the broken JSON format
+      const params = new URLSearchParams();
+      params.append(`where[slug][equals]`, slug);
+      params.append('depth', depth.toString());
+      params.append('limit', '1');
 
-    const url = `${API_BASE_URL}/${collection}?${params.toString()}`;
+      const url = `${API_BASE_URL}/${collection}?${params.toString()}`;
 
-    console.log(`🔍 findBySlug API Call: ${url}`);
-
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        next: { revalidate: 60 },
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          `API request failed: ${response.status} ${response.statusText}`
-        );
+      // Log API call for debugging (development only)
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`🔍 findBySlug API Call: ${url}`);
       }
 
-      const data = await response.json();
-      console.log(`✅ findBySlug Response (${collection}):`, data);
-      return data.docs[0] || null;
-    } catch (error) {
-      console.error(
-        `❌ Failed to fetch by slug from API (${collection}):`,
-        error
-      );
-      throw error;
-    }
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          next: { revalidate: 60 },
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `API request failed: ${response.status} ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+        
+        // Log response for debugging (development only)
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`✅ findBySlug Response (${collection}):`, data);
+        }
+        
+        return data.docs[0] || null;
+      } catch (error) {
+        console.error(
+          `❌ Failed to fetch by slug from API (${collection}):`,
+          error
+        );
+        throw error;
+      }
+    });
   }
 }
 

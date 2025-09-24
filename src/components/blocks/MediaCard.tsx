@@ -50,7 +50,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
 
   return (
     <div
-      className={`flex flex-col justify-between bg-surface rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2`}
+      className={`flex flex-col justify-between bg-bg rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2`}
     >
       <div className="py-3 md:py-4 md:px-2 lg:px-4 lg:py-6 relative">
         <DevIndicator componentName="MediaCard" />

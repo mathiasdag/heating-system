@@ -1,5 +1,6 @@
 import PayloadAPI from '@/lib/api';
 import HeaderBlock from '@/components/blocks/pages/HeaderBlock';
+import HomepageHeaderBlock from '@/components/blocks/pages/HomepageHeaderBlock';
 import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
 import React from 'react';
@@ -19,6 +20,54 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 
+// Helper function to render blocks
+function renderBlock(block: any, i: number) {
+  const cleanBlock = JSON.parse(JSON.stringify(block));
+  switch (block.blockType) {
+    case 'assetText':
+      return <AssetTextBlock key={i} {...cleanBlock} />;
+    case 'assetTextContainer':
+      return <AssetTextContainerBlock key={i} {...cleanBlock} />;
+    case 'header':
+      return <HomepageHeaderBlock key={i} {...cleanBlock} />;
+    case 'spotlight':
+      return <BiggerFeatureBlock key={i} {...cleanBlock} />;
+    case 'horizontal-card-block':
+      return <HorizontalCardBlock key={i} {...cleanBlock} />;
+    case 'video':
+      return <VideoBlock key={i} {...cleanBlock} />;
+    case 'card-grid':
+      return <CardGridBlock key={i} {...cleanBlock} />;
+    case 'orange-card-grid':
+      return <CardGridBlock key={i} {...cleanBlock} backgroundColor="orange" />;
+    case 'router':
+      return <RouterBlock key={i} {...cleanBlock} />;
+    case 'carousel':
+      return <CarouselBlock key={i} {...cleanBlock} />;
+    case 'list':
+      return <ListBlock key={i} {...cleanBlock} />;
+    case 'courseCatalog':
+      return <CourseCatalogBlock key={i} {...cleanBlock} />;
+    case 'text':
+      return <TextBlock key={i} {...cleanBlock} />;
+    case 'faq':
+      return <FAQBlock key={i} {...cleanBlock} />;
+    case 'minimalCarousel':
+      return <SimpleCarouselBlock key={i} {...cleanBlock} />;
+    case 'cta':
+      return <CTABlock key={i} {...cleanBlock} />;
+    case 'highlightGrid':
+      return <HighlightGridBlock key={i} {...cleanBlock} />;
+    case 'calendar':
+      return <CalendarBlock key={i} {...cleanBlock} />;
+    case 'horizontalMarquee':
+      return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
+    // Add more cases for other block types
+    default:
+      return null;
+  }
+}
+
 export default async function HomePage() {
   // Fetch the homepage with REST API using slug
   const page = await PayloadAPI.findBySlug('pages', 'hem', 10);
@@ -27,56 +76,21 @@ export default async function HomePage() {
     return <div>Page not found</div>;
   }
 
+  const blocks = (page as any).layout || [];
+  const headerBlock = blocks.find((block: any) => block.blockType === 'header');
+  const otherBlocks = blocks.filter(
+    (block: any) => block.blockType !== 'header'
+  );
+
   return (
     <div data-content-type="page">
-      {(page as any).layout?.map((block: any, i: number) => {
-        const cleanBlock = JSON.parse(JSON.stringify(block));
-        switch (block.blockType) {
-          case 'assetText':
-            return <AssetTextBlock key={i} {...cleanBlock} />;
-          case 'assetTextContainer':
-            return <AssetTextContainerBlock key={i} {...cleanBlock} />;
-          case 'header':
-            return <HeaderBlock key={i} {...cleanBlock} />;
-          case 'spotlight':
-            return <BiggerFeatureBlock key={i} {...cleanBlock} />;
-          case 'horizontal-card-block':
-            return <HorizontalCardBlock key={i} {...cleanBlock} />;
-          case 'video':
-            return <VideoBlock key={i} {...cleanBlock} />;
-          case 'card-grid':
-            return <CardGridBlock key={i} {...cleanBlock} />;
-          case 'orange-card-grid':
-            return (
-              <CardGridBlock key={i} {...cleanBlock} backgroundColor="orange" />
-            );
-          case 'router':
-            return <RouterBlock key={i} {...cleanBlock} />;
-          case 'carousel':
-            return <CarouselBlock key={i} {...cleanBlock} />;
-          case 'list':
-            return <ListBlock key={i} {...cleanBlock} />;
-          case 'courseCatalog':
-            return <CourseCatalogBlock key={i} {...cleanBlock} />;
-          case 'text':
-            return <TextBlock key={i} {...cleanBlock} />;
-          case 'faq':
-            return <FAQBlock key={i} {...cleanBlock} />;
-          case 'minimalCarousel':
-            return <SimpleCarouselBlock key={i} {...cleanBlock} />;
-          case 'cta':
-            return <CTABlock key={i} {...cleanBlock} />;
-          case 'highlightGrid':
-            return <HighlightGridBlock key={i} {...cleanBlock} />;
-          case 'calendar':
-            return <CalendarBlock key={i} {...cleanBlock} />;
-          case 'horizontalMarquee':
-            return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
-          // Add more cases for other block types
-          default:
-            return null;
-        }
-      })}
+      {headerBlock ? (
+        <HomepageHeaderBlock {...JSON.parse(JSON.stringify(headerBlock))}>
+          {otherBlocks.map((block: any, i: number) => renderBlock(block, i))}
+        </HomepageHeaderBlock>
+      ) : (
+        blocks.map((block: any, i: number) => renderBlock(block, i))
+      )}
     </div>
   );
 }

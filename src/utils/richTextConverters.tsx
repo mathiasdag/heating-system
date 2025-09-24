@@ -21,7 +21,7 @@ const headingConverter: JSXConverters<SerializedHeadingNode> = {
     switch (node.tag) {
       case 'h1':
         return (
-          <Heading variant="page-title" as="h1">
+          <Heading variant="page-header" as="h1">
             {text}
           </Heading>
         );

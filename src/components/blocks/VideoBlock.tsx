@@ -66,21 +66,18 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
 
   if (host === 'mux' && currentSource?.playbackId) {
     return (
-      <div className="relative">
-        <DevIndicator componentName="VideoBlock" />
-        <MuxPlayer
-          playbackId={currentSource.playbackId}
-          autoPlay={autoplay}
-          muted={autoplay}
-          loop={autoplay}
-          className="object-cover w-full h-full"
-          style={{
-            aspectRatio,
-            ...(controls === false ? { ['--controls' as any]: 'none' } : {}),
-          }}
-          {...(!adaptiveResolution ? { playbackEngine: 'mse' } : {})}
-        />
-      </div>
+      <MuxPlayer
+        playbackId={currentSource.playbackId}
+        autoPlay={autoplay}
+        muted={autoplay}
+        loop={autoplay}
+        className="object-cover w-full h-full"
+        style={{
+          aspectRatio,
+          ...(controls === false ? { ['--controls' as any]: 'none' } : {}),
+        }}
+        {...(!adaptiveResolution ? { playbackEngine: 'mse' } : {})}
+      />
     );
   }
 

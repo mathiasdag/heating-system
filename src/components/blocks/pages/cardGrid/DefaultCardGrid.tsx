@@ -57,7 +57,7 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
     <section className={`py-24 grid relative`}>
       <DevIndicator componentName="DefaultCardGrid" />
       <BlockHeader headline={headline} description={description} />
-      <hr className="mx-4 my-2" />
+      <hr className="mx-2 my-2" />
       <div className="relative">
         <div
           ref={scrollRef}
@@ -84,7 +84,7 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
           {isOverflowing && <div className="snap-start grow-0 shrink-0 w-12" />}
         </div>
       </div>
-      <hr className="mx-4 my-2" />
+      <hr className="mx-2 my-2" />
 
       {link && link.type && (link.url || link.reference) && (
         <div className="mt-8 text-center">

@@ -5,6 +5,7 @@ import { cn } from '@/utils/cn';
 export type HeadingVariant =
   | 'page-title' // Main page titles (H1)
   | 'article-title' // Article titles (H1)
+  | 'page-header' // Page header titles (H1) - matches globals.css
   | 'section' // Section headings (H2)
   | 'subsection' // Subsection headings (H3)
   | 'card-title' // Card/component titles (H3)
@@ -20,71 +21,59 @@ export interface HeadingProps {
   size?: HeadingSize;
   className?: string;
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  uppercase?: boolean;
   center?: boolean;
 }
 
 // Default configurations for each variant
 const variantConfig = {
+  'page-header': {
+    defaultAs: 'h1' as const,
+    defaultSize: '2xl' as const,
+    className:
+      'font-display uppercase leading-[0.95em] tracking-[-0.01em] mb-4',
+  },
   'page-title': {
     defaultAs: 'h1' as const,
-    defaultSize: '3xl' as const,
-    fontFamily: 'font-sans', // HAL Colant for big headings
-    uppercase: true,
+    defaultSize: '2xl' as const,
     className:
-      'text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.95em;',
+      'font-sans uppercase text-2xl leading-[0.95em] tracking-[-0.01em]',
   },
   'article-title': {
     defaultAs: 'h1' as const,
     defaultSize: '3xl' as const,
-    fontFamily: 'font-sans', // HAL Colant for big headings
-    uppercase: true,
     className:
-      'text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.95em;',
+      'font-sans uppercase text-3xl leading-[0.95em] tracking-[-0.01em]',
   },
   section: {
     defaultAs: 'h2' as const,
     defaultSize: '2xl' as const,
-    fontFamily: 'font-sans', // HAL Colant for big headings
-    uppercase: true,
-    className:
-      'text-transform: uppercase; letter-spacing: -0.01em; line-height: 1em;',
+    className: 'font-sans uppercase text-2xl leading-[1em] tracking-[-0.01em]',
   },
   subsection: {
     defaultAs: 'h3' as const,
     defaultSize: 'xl' as const,
-    fontFamily: 'font-display', // Monument Grotesk for smaller headings
-    uppercase: true,
     className:
-      'text-transform: uppercase; letter-spacing: 0.005em; line-height: 1em;',
+      'font-display uppercase text-xl leading-[1em] tracking-[0.005em]',
   },
   'card-title': {
     defaultAs: 'h3' as const,
     defaultSize: 'lg' as const,
-    fontFamily: 'font-sans', // HAL Colant for cards
-    uppercase: true,
-    className: '',
+    className: 'font-sans uppercase text-lg',
   },
   'small-title': {
     defaultAs: 'h4' as const,
     defaultSize: 'md' as const,
-    fontFamily: 'font-display', // Monument Grotesk for smaller headings
-    uppercase: true,
-    className: '',
+    className: 'font-display uppercase text-md',
   },
   'building-title': {
     defaultAs: 'h1' as const,
     defaultSize: '3xl' as const,
-    fontFamily: 'font-ballPill', // BallPill for building-specific content
-    uppercase: false,
-    className: 'hyphens-auto break-words',
+    className: 'font-ballPill text-3xl hyphens-auto break-words',
   },
   label: {
     defaultAs: 'h5' as const,
     defaultSize: 'sm' as const,
-    fontFamily: 'font-sans', // HAL Colant for labels
-    uppercase: false,
-    className: '',
+    className: 'font-sans text-sm',
   },
 };
 
@@ -104,25 +93,20 @@ export function Heading({
   size,
   className,
   as,
-  uppercase,
   center = false,
 }: HeadingProps) {
   const config = variantConfig[variant];
   const Component = as || config.defaultAs;
   const finalSize = size || config.defaultSize;
-  const shouldUppercase =
-    uppercase !== undefined ? uppercase : config.uppercase;
 
   const classes = cn(
     // Base styles
-    config.fontFamily,
     sizeConfig[finalSize],
 
     // Variant-specific styles
     config.className,
 
     // Conditional styles
-    shouldUppercase && 'uppercase',
     center && 'text-center',
 
     // Custom className

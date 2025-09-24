@@ -42,7 +42,7 @@ const GridRow: React.FC<{
 
 // Marquee component
 const MarqueeText: React.FC = () => (
-  <div className="font-ballPill w-[86.5%] h-full text-[13vw] leading-[13vw] pt-[.0rem] overflow-hidden pointer-events-none">
+  <div className="font-ballPill w-[86.5%] h-full text-[13vw] leading-[13vw] pt-[.0rem] overflow-hidden pointer-events-none overflow-hidden">
     <Marquee speed={50}>
       {Array(5)
         .fill(null)

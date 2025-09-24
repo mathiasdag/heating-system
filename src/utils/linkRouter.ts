@@ -87,7 +87,7 @@ function resolveReference(reference: unknown): string | undefined {
  */
 export function routeLink(link: LinkGroup): LinkRouterResult {
   console.log('routeLink called with:', link);
-  
+
   const result: LinkRouterResult = {
     href: undefined,
     isExternal: false,

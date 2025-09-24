@@ -17,7 +17,7 @@ export const ForceTheme: React.FC<ForceThemeProps> = ({ children, theme }) => {
   useEffect(() => {
     // Force the theme when component mounts
     setTheme(theme);
-    
+
     // Cleanup: restore system theme when component unmounts
     return () => {
       setTheme('system');
@@ -42,7 +42,7 @@ export const withDarkMode = <P extends object>(
   };
 
   WrappedComponent.displayName = `withDarkMode(${Component.displayName || Component.name})`;
-  
+
   return WrappedComponent;
 };
 
@@ -61,6 +61,6 @@ export const withLightMode = <P extends object>(
   };
 
   WrappedComponent.displayName = `withLightMode(${Component.displayName || Component.name})`;
-  
+
   return WrappedComponent;
 };

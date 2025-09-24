@@ -78,37 +78,64 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
     };
   }, [text]);
 
-  const renderBeforeAsset = (asset: Asset, key: number) => {
-    // Calculate height based on number of assets
-    const assetCount = beforeAssets.length;
-    const height = Math.max(280 - (assetCount - 1) * 40, 120); // Minimum 120px
+  const renderAsset = (asset: Asset, key: number, isBeforeAsset = false) => {
+    // Calculate dimensions for before assets
+    let width: number;
+    let height: number;
+    let className: string;
+
+    if (isBeforeAsset) {
+      const assetCount = beforeAssets.length;
+      height = Math.max(280 - (assetCount - 1) * 40, 120); // Minimum 120px
+      className = 'rounded';
+    } else {
+      height = asset.image?.height || 600;
+      className = 'rounded object-cover';
+    }
 
     if (asset.type === 'image' && asset.image?.url) {
-      // Calculate aspect ratio from original dimensions
-      const aspectRatio =
-        asset.image.width && asset.image.height
-          ? asset.image.width / asset.image.height
-          : 1; // Default to square if no dimensions
-
-      // Calculate width based on calculated height
-      const calculatedWidth = Math.round(height * aspectRatio);
+      if (isBeforeAsset) {
+        // Calculate aspect ratio from original dimensions
+        const aspectRatio =
+          asset.image.width && asset.image.height
+            ? asset.image.width / asset.image.height
+            : 1; // Default to square if no dimensions
+        width = Math.round(height * aspectRatio);
+      } else {
+        width = asset.image.width || 800;
+      }
 
       return (
         <Image
           key={key}
           src={asset.image.url}
           alt={asset.image.alt || ''}
-          width={calculatedWidth}
+          width={width}
           height={height}
-          className="rounded"
+          className={className}
         />
       );
     }
+
     if (asset.type === 'mux' && asset.mux) {
+      if (isBeforeAsset) {
+        width = Math.round(height * 1.5); // Default 3:2 aspect ratio for videos
+        className = 'rounded overflow-hidden';
+      } else {
+        className = 'rounded overflow-hidden';
+      }
+
       return (
-        <div style={{ height: `${height}px` }}>
+        <div
+          key={key}
+          style={
+            isBeforeAsset
+              ? { height: `${height}px`, width: `${width}px` }
+              : undefined
+          }
+          className={className}
+        >
           <VideoBlock
-            key={key}
             host="mux"
             sources={[
               {
@@ -116,46 +143,15 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
                 minWidth: 0,
               },
             ]}
-            controls={true}
-            autoplay={false}
+            controls={false}
+            autoplay={true}
+            loop={true}
             adaptiveResolution={true}
           />
         </div>
       );
     }
-    return null;
-  };
 
-  const renderAsset = (asset: Asset, key: number) => {
-    if (asset.type === 'image' && asset.image?.url) {
-      return (
-        <Image
-          key={key}
-          src={asset.image.url}
-          alt={asset.image.alt || ''}
-          width={asset.image.width || 800}
-          height={asset.image.height || 600}
-          className="rounded object-cover"
-        />
-      );
-    }
-    if (asset.type === 'mux' && asset.mux) {
-      return (
-        <VideoBlock
-          key={key}
-          host="mux"
-          sources={[
-            {
-              playbackId: asset.mux,
-              minWidth: 0,
-            },
-          ]}
-          controls={true}
-          autoplay={false}
-          adaptiveResolution={true}
-        />
-      );
-    }
     return null;
   };
 
@@ -168,7 +164,7 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
       ref={ref}
       className={clsx('px-4 text-center relative', hasAssets ? 'mb-36' : '')}
     >
-      <DevIndicator componentName="HeaderBlock" />
+      <DevIndicator componentName="HeaderBlock" position="top-right" />
 
       {/* Render assets before text - centered with max height */}
       {beforeAssets.length > 0 && (
@@ -180,7 +176,7 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
         >
           {beforeAssets.map((asset, i) => (
             <React.Fragment key={i}>
-              {renderBeforeAsset(asset, i)}
+              {renderAsset(asset, i, true)}
             </React.Fragment>
           ))}
         </FadeIn>
@@ -239,7 +235,7 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
           >
             {afterAssets.map((asset, i) => (
               <div key={i} className={afterAssets.length > 1 ? 'flex-1' : ''}>
-                {renderAsset(asset, i)}
+                {renderAsset(asset, i, false)}
               </div>
             ))}
           </FadeIn>

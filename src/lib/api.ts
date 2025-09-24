@@ -85,12 +85,12 @@ async function fetchFromExternalAPI<T>(
     }
 
     const data = await response.json();
-    
+
     // Log response for debugging (development only)
     if (process.env.NODE_ENV === 'development') {
       console.log(`✅ External API Response (${collection}):`, data);
     }
-    
+
     return data;
   } catch (error) {
     console.error(
@@ -137,7 +137,7 @@ export class PayloadAPI {
    */
   static async find<T>(options: FindOptions): Promise<ApiResponse<T>> {
     const cacheKey = `find-${JSON.stringify(options)}`;
-    
+
     return this.deduplicatedRequest(cacheKey, async () => {
       if (USE_EXTERNAL_BACKEND) {
         return fetchFromExternalAPI<T>(options);
@@ -185,7 +185,7 @@ export class PayloadAPI {
     depth = 10
   ): Promise<T | null> {
     const cacheKey = `findBySlug-${collection}-${slug}-${depth}`;
-    
+
     return this.deduplicatedRequest(cacheKey, async () => {
       // Use direct fetch with simple query format instead of the broken JSON format
       const params = new URLSearchParams();
@@ -216,12 +216,12 @@ export class PayloadAPI {
         }
 
         const data = await response.json();
-        
+
         // Log response for debugging (development only)
         if (process.env.NODE_ENV === 'development') {
           console.log(`✅ findBySlug Response (${collection}):`, data);
         }
-        
+
         return data.docs[0] || null;
       } catch (error) {
         console.error(

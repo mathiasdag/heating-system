@@ -1,6 +1,7 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
+import { SectionHeading } from '@/components/headings';
 
 interface BlockHeaderProps {
   headline?: string;
@@ -24,15 +25,15 @@ export const BlockHeader: React.FC<BlockHeaderProps> = ({
   return (
     <header className={className}>
       {headline && (
-        <h2
+        <SectionHeading
           className={clsx(
-            'text-center text-md', // Default styles
+            'text-center', // Default styles
             !description ? 'mb-8' : 'mb-3',
             headlineClassName // Additional custom styles
           )}
         >
           {headline}
-        </h2>
+        </SectionHeading>
       )}
       {description && (
         <div

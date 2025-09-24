@@ -32,12 +32,14 @@ NEXT_PUBLIC_PAYLOAD_API_URL=https://api.yourdomain.com/api
 ## 🔄 Switching Between Local and External
 
 ### For Local Development (Current Setup)
+
 ```env
 NEXT_PUBLIC_USE_EXTERNAL_BACKEND=false
 NEXT_PUBLIC_PAYLOAD_API_URL=http://localhost:3000/api
 ```
 
 ### For External Backend Testing
+
 ```env
 NEXT_PUBLIC_USE_EXTERNAL_BACKEND=true
 NEXT_PUBLIC_PAYLOAD_API_URL=https://your-backend-domain.com/api

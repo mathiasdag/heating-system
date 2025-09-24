@@ -46,8 +46,8 @@ const variantConfig = {
   },
   section: {
     defaultAs: 'h2' as const,
-    defaultSize: '2xl' as const,
-    className: 'font-sans uppercase text-2xl leading-[1em] tracking-[-0.01em]',
+    defaultSize: 'lg' as const,
+    className: 'font-sans text-lg leading-[1em] tracking-[-0.01em]',
   },
   subsection: {
     defaultAs: 'h3' as const,

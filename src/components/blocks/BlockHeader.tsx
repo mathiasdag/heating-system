@@ -38,7 +38,7 @@ export const BlockHeader: React.FC<BlockHeaderProps> = ({
       {description && (
         <div
           className={clsx(
-            'font-mono text-center px-8 max-w-6xl mx-auto mb-4', // Default styles
+            'font-mono text-center px-2 sm:px-4 md:px-8 max-w-6xl mx-auto mb-4', // Default styles
             descriptionClassName // Additional custom styles
           )}
         >

@@ -146,14 +146,41 @@ export class PayloadAPI {
     slug: string,
     depth = 10
   ): Promise<T | null> {
-    const response = await this.find<T>({
-      collection,
-      where: { slug: { equals: slug } },
-      depth,
-      limit: 1,
-    });
+    // Use direct fetch with simple query format instead of the broken JSON format
+    const params = new URLSearchParams();
+    params.append(`where[slug][equals]`, slug);
+    params.append('depth', depth.toString());
+    params.append('limit', '1');
 
-    return response.docs[0] || null;
+    const url = `${API_BASE_URL}/${collection}?${params.toString()}`;
+
+    console.log(`🔍 findBySlug API Call: ${url}`);
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        next: { revalidate: 60 },
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `API request failed: ${response.status} ${response.statusText}`
+        );
+      }
+
+      const data = await response.json();
+      console.log(`✅ findBySlug Response (${collection}):`, data);
+      return data.docs[0] || null;
+    } catch (error) {
+      console.error(
+        `❌ Failed to fetch by slug from API (${collection}):`,
+        error
+      );
+      throw error;
+    }
   }
 }
 

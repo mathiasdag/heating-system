@@ -167,10 +167,14 @@ export const Notification: React.FC<NotificationProps> = ({
   return (
     <div
       className={clsx(
-        'relative w-full rounded-md',
+        'relative w-full rounded-md touch-manipulation', // Add touch-manipulation for better touch response
         typeStyles[notification.type]
       )}
       onClick={handleDismiss}
+      onTouchStart={e => {
+        // Prevent default touch behavior that might interfere with drag
+        e.stopPropagation();
+      }}
     >
       <div className="p-4">
         <div className="flex items-center">
@@ -197,8 +201,17 @@ export const Notification: React.FC<NotificationProps> = ({
             )}
           </div>
           <div className="ml-4 flex-shrink-0 flex">
-            <button className="inline-flex text-current focus:outline-none">
-              <span className="font-mono uppercase">Esc</span>
+            <button
+              className="inline-flex text-current focus:outline-none touch-manipulation"
+              onClick={e => {
+                e.stopPropagation(); // Prevent triggering the parent onClick
+                handleDismiss();
+              }}
+            >
+              <span className="font-mono uppercase text-xs opacity-70">
+                <span className="hidden sm:inline">Esc</span>
+                <span className="sm:hidden">Tap</span>
+              </span>
             </button>
           </div>
         </div>

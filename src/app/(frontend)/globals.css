@@ -286,3 +286,24 @@ details summary .accordion-arrow {
 details[open] summary .accordion-arrow {
   transform: rotate(180deg);
 }
+
+/* Touch-friendly notification styles */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Improve touch targets for mobile */
+@media (max-width: 640px) {
+  .notification-container {
+    max-width: calc(100vw - 2rem);
+    margin: 0 1rem;
+  }
+
+  /* Larger touch targets on mobile */
+  button,
+  [role='button'] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

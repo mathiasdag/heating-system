@@ -20,12 +20,8 @@ import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 
 export default async function HomePage() {
-  // Fetch the homepage with REST API using direct ID since findBySlug is not working correctly
-  const page = await PayloadAPI.findByID(
-    'pages',
-    '68c803caf9ba7e2f18080d52',
-    10
-  );
+  // Fetch the homepage with REST API using slug
+  const page = await PayloadAPI.findBySlug('pages', 'hem', 10);
 
   if (!page) {
     return <div>Page not found</div>;
@@ -68,8 +64,6 @@ export default async function HomePage() {
             return <FAQBlock key={i} {...cleanBlock} />;
           case 'minimalCarousel':
             return <SimpleCarouselBlock key={i} {...cleanBlock} />;
-          case 'assetText':
-            return <AssetTextBlock key={i} {...cleanBlock} />;
           case 'cta':
             return <CTABlock key={i} {...cleanBlock} />;
           case 'highlightGrid':

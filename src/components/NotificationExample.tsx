@@ -197,6 +197,8 @@ export const NotificationExample: React.FC = () => {
           <li>Dynamic stacking with 5 notification limit</li>
           <li>Automatic height calculation for perfect stacking</li>
           <li>Hover to spread out and pause timer</li>
+          <li>Touch-friendly: swipe down or tap to dismiss</li>
+          <li>ESC key support for keyboard users</li>
           <li>Persistent across page transitions</li>
           <li>Beautiful Framer Motion animations with spring physics</li>
           <li>Stagger animations for multiple notifications</li>

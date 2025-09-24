@@ -1,12 +1,13 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { useNotifications } from '@/contexts/NotificationContext';
 import { Notification } from './Notification';
 
 export const NotificationContainer: React.FC = () => {
   const { notifications, removeNotification } = useNotifications();
   const [isHovered, setIsHovered] = useState(false);
+  const [dragConstraints, setDragConstraints] = useState({ top: 0, bottom: 0 });
 
   // Handle ESC key to close the latest notification
   useEffect(() => {
@@ -24,9 +25,23 @@ export const NotificationContainer: React.FC = () => {
     };
   }, [notifications, removeNotification]);
 
+  // Handle swipe down gesture to dismiss
+  const handlePanEnd = (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+    notificationId: string
+  ) => {
+    const { offset, velocity } = info;
+
+    // If swiped down more than 100px or with high velocity, dismiss the notification
+    if (offset.y > 100 || velocity.y > 500) {
+      removeNotification(notificationId);
+    }
+  };
+
   return (
     <div
-      className="fixed top-4 left-1/2 max-w-72 w-full -translate-x-1/2 z-50 select-none cursor-pointer"
+      className="fixed top-4 left-1/2 max-w-72 w-full -translate-x-1/2 z-50 select-none cursor-pointer notification-container"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -48,6 +63,12 @@ export const NotificationContainer: React.FC = () => {
                 key={notification.id}
                 className="w-full shadow-sm absolute top-0 left-0"
                 layout
+                drag="y" // Enable vertical dragging
+                dragConstraints={{ top: 0, bottom: 0 }} // Prevent dragging up, allow dragging down
+                dragElastic={0.2} // Add some elastic resistance
+                onPanEnd={(event, info) =>
+                  handlePanEnd(event, info, notification.id)
+                }
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{
                   opacity: 1,
@@ -77,15 +98,23 @@ export const NotificationContainer: React.FC = () => {
                   },
                 }}
                 whileTap={{
-                  scale: 1,
+                  scale: 0.98, // Slight press feedback for touch
                   transition: {
-                    duration: 0.15,
+                    duration: 0.1,
+                    ease: 'easeInOut',
+                  },
+                }}
+                whileDrag={{
+                  scale: 1.02, // Slight scale up while dragging
+                  transition: {
+                    duration: 0.1,
                     ease: 'easeInOut',
                   },
                 }}
                 style={{
                   zIndex: 1000 + (4 - index), // Newest (index 0) gets highest z-index (1004)
                   pointerEvents: 'auto',
+                  cursor: 'grab', // Show grab cursor on desktop
                 }}
               >
                 <Notification

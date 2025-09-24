@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'payload.cms.varmeverket.com',
+        port: '',
+        pathname: '/api/media/**',
+      },
+    ],
+  },
 };
 
 export default withPayload(nextConfig);

@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { DevIndicator } from '../../DevIndicator';
 import VideoBlock from '../VideoBlock';
 import MuxPlayer from '@mux/mux-player-react';
+import { fixImageUrl } from '@/utils/imageUrl';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -40,7 +41,7 @@ export default function HomepageHeaderBlock({
     if (backgroundAsset.type === 'image' && backgroundAsset.image?.url) {
       return (
         <Image
-          src={backgroundAsset.image.url}
+          src={fixImageUrl(backgroundAsset.image.url)}
           alt={backgroundAsset.image.alt || ''}
           fill
           className="object-cover h-full w-full"

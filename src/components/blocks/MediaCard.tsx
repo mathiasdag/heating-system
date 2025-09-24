@@ -5,6 +5,7 @@ import Tag from '../Tag';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
 import { DevIndicator } from '../DevIndicator';
+import { fixImageUrl } from '@/utils/imageUrl';
 
 interface TagType {
   id: string;
@@ -65,7 +66,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
         {image && (
           <div className="mb-0 mt-6 h-40 relative px-8 flex justify-center">
             <Image
-              src={image.url}
+              src={fixImageUrl(image.url)}
               alt={image.alt || title}
               width={image.width}
               height={image.height}

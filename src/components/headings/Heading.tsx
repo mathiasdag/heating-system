@@ -28,52 +28,43 @@ export interface HeadingProps {
 const variantConfig = {
   'page-header': {
     defaultAs: 'h1' as const,
-    defaultSize: '2xl' as const,
     className:
-      'font-display uppercase leading-[0.95em] tracking-[-0.01em] mb-4 mx-4',
+      'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] mb-4 mx-4',
   },
   'page-title': {
     defaultAs: 'h1' as const,
-    defaultSize: '2xl' as const,
     className:
       'font-sans uppercase text-2xl leading-[0.95em] tracking-[-0.01em]',
   },
   'article-title': {
     defaultAs: 'h1' as const,
-    defaultSize: '3xl' as const,
     className:
       'font-sans uppercase text-3xl leading-[0.95em] tracking-[-0.01em]',
   },
   section: {
     defaultAs: 'h2' as const,
-    defaultSize: 'lg' as const,
     className: 'font-sans text-lg leading-[1em] tracking-[-0.01em]',
   },
   subsection: {
     defaultAs: 'h3' as const,
-    defaultSize: 'xl' as const,
     className:
       'font-display uppercase text-xl leading-[1em] tracking-[0.005em]',
   },
   'card-title': {
     defaultAs: 'h3' as const,
-    defaultSize: 'lg' as const,
     className:
       'font-display uppercase text-[2em] leading-[1em] text-center break-words tracking-[-0.01em]',
   },
   'small-title': {
     defaultAs: 'h4' as const,
-    defaultSize: 'md' as const,
     className: 'font-display uppercase text-md',
   },
   'building-title': {
     defaultAs: 'h1' as const,
-    defaultSize: '3xl' as const,
     className: 'font-ballPill text-3xl hyphens-auto break-words',
   },
   label: {
     defaultAs: 'h5' as const,
-    defaultSize: 'sm' as const,
     className: 'font-sans text-sm',
   },
 };
@@ -98,11 +89,10 @@ export function Heading({
 }: HeadingProps) {
   const config = variantConfig[variant];
   const Component = as || config.defaultAs;
-  const finalSize = size || config.defaultSize;
 
   const classes = cn(
     // Base styles
-    sizeConfig[finalSize],
+    size && sizeConfig[size],
 
     // Variant-specific styles
     config.className,

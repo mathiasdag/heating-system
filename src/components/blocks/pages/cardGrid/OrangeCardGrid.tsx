@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { AppLink } from '@/components/ui';
-import { MediaCard } from '../../MediaCard';
+import { MediaCard } from '@/components/blocks/MediaCard';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import { BlockHeader } from '../../BlockHeader';
+import { BlockHeader } from '@/components/blocks/BlockHeader';
 
 interface Card {
   title: string;

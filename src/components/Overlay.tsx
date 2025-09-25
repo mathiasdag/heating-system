@@ -12,6 +12,7 @@ interface OverlayProps {
   backgroundClassName?: string;
   componentName?: string;
   closeOnOutsideClick?: boolean;
+  zIndex?: number;
 }
 
 const Overlay: React.FC<OverlayProps> = ({
@@ -22,6 +23,7 @@ const Overlay: React.FC<OverlayProps> = ({
   backgroundClassName = 'bg-bg',
   componentName = 'Overlay',
   closeOnOutsideClick = false,
+  zIndex = 50,
 }) => {
   // Handle escape key and prevent scroll
   useEffect(() => {
@@ -57,7 +59,8 @@ const Overlay: React.FC<OverlayProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`fixed inset-0 z-50 ${backgroundClassName} select-none ${className}`}
+      className={`fixed inset-0 ${backgroundClassName} select-none ${className}`}
+      style={{ zIndex }}
       onClick={closeOnOutsideClick ? handleOverlayClick : undefined}
     >
       <DevIndicator componentName={componentName} position="bottom-right" />

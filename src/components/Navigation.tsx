@@ -1,55 +1,19 @@
 'use client';
+
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
+
 import { OpenNavIcon } from './icons/OpenNavIcon';
 import { CloseNavIcon } from './icons/CloseNavIcon';
 import { VarmeverketIcon } from './icons/VarmeverketIcon';
 import { MarqueeText } from './MarqueeText';
-import Link from 'next/link';
+import Overlay from './Overlay';
 import { routeLink, type LinkGroup } from '../utils/linkRouter';
 
-// Component for highlight link with marquee effect
-const HighlightLink: React.FC<{
-  link: NavigationLink;
-  onClick: () => void;
-  isDarkMode: boolean;
-  mounted: boolean;
-}> = ({ link, onClick, isDarkMode, mounted }) => {
-  const [isMarqueeing, setIsMarqueeing] = useState(false);
-
-  const linkResult = routeLink(link);
-  const href = linkResult.href || '#';
-
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className={clsx(
-        'rounded-sm cursor-pointer',
-        'text-md h-8',
-        'flex items-center justify-center',
-        'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.2em] md:max-w-sm',
-        !isMarqueeing && 'px-[.6rem]',
-        'border-text',
-        !mounted && 'mix-blend-multiply bg-text',
-        mounted && isDarkMode && 'text-text border border-white',
-        mounted && !isDarkMode && 'mix-blend-multiply bg-text text-white'
-      )}
-    >
-      <MarqueeText
-        text={link.text || ''}
-        speed={30}
-        pauseOnHover={false}
-        spacing="mx-2"
-        onMarqueeStateChange={setIsMarqueeing}
-      />
-    </Link>
-  );
-};
-
 export interface NavigationLink extends LinkGroup {
-  reference?: unknown; // Payload reference object - can be various shapes
+  reference?: unknown;
 }
 
 export interface MenuItem {
@@ -70,109 +34,256 @@ interface NavigationProps {
   navigation: NavigationData;
 }
 
+interface HighlightLinkProps {
+  link: NavigationLink;
+  onClick: () => void;
+  isDarkMode: boolean;
+  mounted: boolean;
+}
+
+const HighlightLink: React.FC<HighlightLinkProps> = ({
+  link,
+  onClick,
+  isDarkMode,
+  mounted,
+}) => {
+  const [isMarqueeing, setIsMarqueeing] = useState(false);
+  const linkResult = routeLink(link);
+  const href = linkResult.href || '#';
+
+  const highlightLinkClasses = clsx(
+    'rounded-sm cursor-pointer',
+    'text-md h-8',
+    'flex items-center justify-center',
+    'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.2em] md:max-w-sm',
+    !isMarqueeing && 'px-[.6rem]',
+    'border-text',
+    !mounted && 'mix-blend-multiply bg-text',
+    mounted && isDarkMode && 'text-text border border-white',
+    mounted && !isDarkMode && 'mix-blend-multiply bg-text text-white'
+  );
+
+  return (
+    <Link href={href} onClick={onClick} className={highlightLinkClasses}>
+      <MarqueeText
+        text={link.text || ''}
+        speed={30}
+        pauseOnHover={false}
+        spacing="mx-2"
+        onMarqueeStateChange={setIsMarqueeing}
+      />
+    </Link>
+  );
+};
+
+interface NavigationButtonProps {
+  isOpen: boolean;
+  onToggle: () => void;
+  isDarkMode: boolean;
+  mounted: boolean;
+}
+
+const NavigationButton: React.FC<NavigationButtonProps> = ({
+  isOpen,
+  onToggle,
+  isDarkMode,
+  mounted,
+}) => {
+  const navButtonClasses = clsx(
+    'fixed top-2 left-2 z-30 rounded-sm',
+    'cursor-pointer text-white w-8 h-8',
+    'flex items-center justify-center',
+    'border-text',
+    !mounted && 'mix-blend-multiply bg-text',
+    mounted && isDarkMode && 'border',
+    mounted && !isDarkMode && 'mix-blend-multiply bg-text'
+  );
+
+  return (
+    <button
+      onClick={onToggle}
+      className={navButtonClasses}
+      aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+    >
+      {isOpen ? (
+        <CloseNavIcon className="w-4 h-4" />
+      ) : (
+        <OpenNavIcon className="w-4 h-4" />
+      )}
+    </button>
+  );
+};
+
+const Logo: React.FC = () => {
+  const logoContainerClasses = clsx('fixed top-2 right-2 z-30');
+
+  return (
+    <div className={logoContainerClasses}>
+      <Link href="/">
+        <VarmeverketIcon
+          size={120}
+          className="text-text w-20 sm:w-22 md:w-24 2xl:w-[6.5em] h-auto"
+        />
+      </Link>
+    </div>
+  );
+};
+
+interface NavigationLinkProps {
+  item: MenuItem;
+  onClick: () => void;
+  isDarkMode: boolean;
+}
+
+const NavigationLink: React.FC<NavigationLinkProps> = ({
+  item,
+  onClick,
+  isDarkMode,
+}) => {
+  const linkClasses = clsx(
+    'rounded-sm cursor-pointer',
+    'text-md h-8',
+    'flex items-center justify-center',
+    isDarkMode
+      ? 'text-text border border-text'
+      : 'mix-blend-multiply text-white bg-text'
+  );
+
+  const itemText = item.link.text || 'Untitled';
+  const linkResult = routeLink(item.link);
+  const href = linkResult.href || '#';
+
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={clsx(linkClasses, 'px-[.4rem]')}
+    >
+      {itemText}
+    </Link>
+  );
+};
+
+interface MenuItemProps {
+  item: MenuItem;
+  level?: number;
+  onLinkClick: () => void;
+  isDarkMode: boolean;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({
+  item,
+  level = 0,
+  onLinkClick,
+  isDarkMode,
+}) => {
+  const itemText = item.link.text || 'Untitled';
+  const hasSubmenu = Boolean(item.children && item.children.length > 0);
+
+  return (
+    <div key={`${itemText}-${level}`} className="text-md">
+      <div className="inline-block">
+        <NavigationLink
+          item={item}
+          onClick={onLinkClick}
+          isDarkMode={isDarkMode}
+        />
+      </div>
+      {hasSubmenu && (
+        <div className="ml-8 grid gap-[.15em] mt-[.15em]">
+          {item.children!.map(child => (
+            <MenuItem
+              key={`${child.link.text}-${level + 1}`}
+              item={child}
+              level={level + 1}
+              onLinkClick={onLinkClick}
+              isDarkMode={isDarkMode}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+interface MenuOverlayProps {
+  isOpen: boolean;
+  onClose: () => void;
+  menuItems: MenuItem[];
+  isDarkMode: boolean;
+  onLinkClick: () => void;
+}
+
+const MenuOverlay: React.FC<MenuOverlayProps> = ({
+  isOpen,
+  onClose,
+  menuItems,
+  isDarkMode,
+  onLinkClick,
+}) => {
+  const overlayBackgroundClasses = clsx(
+    isDarkMode ? 'bg-bg/80 backdrop-blur-lg' : 'bg-accent'
+  );
+
+  return (
+    <Overlay
+      isOpen={isOpen}
+      onClose={onClose}
+      backgroundClassName={overlayBackgroundClasses}
+      componentName="Navigation"
+      closeOnOutsideClick={true}
+      zIndex={30}
+    >
+      <ul className="grid gap-[.12em] ml-2 mt-[2.65em]">
+        {menuItems.map((item, index) => (
+          <li key={index}>
+            <MenuItem
+              item={item}
+              onLinkClick={onLinkClick}
+              isDarkMode={isDarkMode}
+            />
+          </li>
+        ))}
+      </ul>
+    </Overlay>
+  );
+};
+
 const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
 
-  // Prevent hydration mismatch by only using theme after mount
+  const isDarkMode = mounted && resolvedTheme === 'dark';
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const isDarkMode = mounted && resolvedTheme === 'dark';
-
-  const linkClasses = clsx(
-    'rounded-sm cursor-pointer',
-    'text-md pt-[.125rem] h-8',
-    'flex items-center justify-center',
-    isDarkMode
-      ? 'text-white/30 border border-white/30 hover:text-text hover:border-text transition-colors duration-500'
-      : 'mix-blend-multiply text-white bg-text'
-  );
-
-  const toggleNav = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const hasChildren = (item: MenuItem): boolean => {
-    return Boolean(item.children && item.children.length > 0);
+  const handleToggleNav = () => {
+    setIsOpen(prev => !prev);
   };
 
   const handleLinkClick = () => {
     setIsOpen(false);
   };
 
-  const renderMenuItem = (item: MenuItem, level: number = 0) => {
-    const itemText = item.link.text || 'Untitled';
-    const hasSubmenu = hasChildren(item);
-
-    const renderLink = () => {
-      const linkResult = routeLink(item.link);
-      const href = linkResult.href || '#';
-
-      return (
-        <Link
-          href={href}
-          onClick={handleLinkClick}
-          className={clsx(linkClasses, 'px-[.6rem]')}
-        >
-          {itemText}
-        </Link>
-      );
-    };
-
-    return (
-      <div key={`${itemText}-${level}`} className="text-md">
-        <div className="inline-block">{renderLink()}</div>
-        {hasSubmenu && (
-          <div className="ml-8 grid gap-[.12em] mt-[.12em]">
-            {item.children!.map(child => renderMenuItem(child, level + 1))}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   return (
     <>
-      {/* Full Screen Overlay */}
-      {isOpen && (
-        <div
-          className={clsx(
-            'fixed inset-0 z-30',
-            isDarkMode ? 'bg-black/80 backdrop-blur-lg' : 'bg-accent'
-          )}
-        >
-          <ul className="grid gap-[.12em] ml-2 mt-[2.65em]">
-            {navigation.menuItems.map((item, index) => (
-              <li key={index}>{renderMenuItem(item)}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Navigation */}
+      <MenuOverlay
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        menuItems={navigation.menuItems}
+        isDarkMode={isDarkMode}
+        onLinkClick={handleLinkClick}
+      />
       <nav>
-        <button
-          onClick={toggleNav}
-          className={clsx(
-            'fixed top-2 left-2 z-30 rounded-sm',
-            'cursor-pointer text-white w-8 h-8',
-            'flex items-center justify-center',
-            'border-text',
-            !mounted && 'mix-blend-multiply bg-text',
-            mounted && isDarkMode && 'border',
-            mounted && !isDarkMode && 'mix-blend-multiply bg-text'
-          )}
-          aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-        >
-          {isOpen ? (
-            <CloseNavIcon className="w-4 h-4" />
-          ) : (
-            <OpenNavIcon className="w-4 h-4" />
-          )}
-        </button>
+        <NavigationButton
+          isOpen={isOpen}
+          onToggle={handleToggleNav}
+          isDarkMode={isDarkMode}
+          mounted={mounted}
+        />
         {navigation.highlight && (
           <HighlightLink
             link={navigation.highlight}
@@ -181,14 +292,7 @@ const Navigation: React.FC<NavigationProps> = ({ navigation }) => {
             mounted={mounted}
           />
         )}
-        <div className={clsx('fixed top-2 right-2 z-30')}>
-          <Link href="/">
-            <VarmeverketIcon
-              size={120}
-              className="text-text w-20 sm:w-22 md:w-24 2xl:w-[6.5em] h-auto"
-            />
-          </Link>
-        </div>
+        <Logo />
       </nav>
     </>
   );

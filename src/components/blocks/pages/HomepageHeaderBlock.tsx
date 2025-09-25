@@ -83,7 +83,7 @@ export default function HomepageHeaderBlock({
         <div className="flex items-center justify-center px-2 text-center pt-16 sm:pt-28 md:pt-36 pb-24">
           <RichText
             data={text}
-            className="font-mono grid gap-3 hyphens-auto px-2 sm:px-4 md:px-8 max-w-6xl mx-auto"
+            className="grid gap-3"
             converters={jsxConverter}
           />
         </div>

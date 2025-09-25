@@ -85,7 +85,7 @@ module.exports = {
           { lineHeight: '1.1', letterSpacing: '-0.02em' },
         ],
         '2xl': [
-          'clamp(2.5rem, 6vw, 9rem)',
+          'clamp(2.5rem, 6vw, 6rem)',
           { lineHeight: '1', letterSpacing: '-0.02em' },
         ],
         vvCustom: [

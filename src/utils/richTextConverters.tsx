@@ -6,8 +6,27 @@ import {
   JSXConvertersFunction,
   JSXConverters,
 } from '@payloadcms/richtext-lexical/react';
-import { SerializedHeadingNode } from '@payloadcms/richtext-lexical';
+import {
+  SerializedHeadingNode,
+  SerializedParagraphNode,
+} from '@payloadcms/richtext-lexical';
 import { Heading } from '@/components/headings';
+
+/**
+ * Custom paragraph converter for Payload CMS Lexical RichText
+ * Allows custom styling of paragraph elements
+ */
+const paragraphConverter: JSXConverters<SerializedParagraphNode> = {
+  paragraph: ({ node, nodesToJSX }) => {
+    const text = nodesToJSX({ nodes: node.children });
+
+    return (
+      <p className="font-mono sm:px-4 md:px-8 max-w-6xl mx-auto hyphens-auto px-2">
+        {text}
+      </p>
+    );
+  },
+};
 
 /**
  * Custom heading converter for Payload CMS Lexical RichText
@@ -70,5 +89,6 @@ export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({
   defaultConverters,
 }) => ({
   ...defaultConverters,
+  ...paragraphConverter,
   ...headingConverter,
 });

@@ -30,7 +30,7 @@ const variantConfig = {
     defaultAs: 'h1' as const,
     defaultSize: '2xl' as const,
     className:
-      'font-display uppercase leading-[0.95em] tracking-[-0.01em] mb-4',
+      'font-display uppercase leading-[0.95em] tracking-[-0.01em] mb-4 mx-4',
   },
   'page-title': {
     defaultAs: 'h1' as const,

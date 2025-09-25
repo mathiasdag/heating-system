@@ -174,12 +174,12 @@ h2.font-display {
   font-family: var(--font-display);
 }
 
-[data-content-type='page'] h3.font-display {
+/*[data-content-type='page'] h3.font-display {
   text-transform: uppercase;
   letter-spacing: 0.005em;
   line-height: 1em;
   font-size: 2em;
-}
+}*/
 
 .font-ballPill {
   font-family: var(--font-ballPill);

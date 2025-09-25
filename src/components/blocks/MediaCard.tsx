@@ -6,6 +6,8 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
 import { DevIndicator } from '../DevIndicator';
 import { fixImageUrl } from '@/utils/imageUrl';
+import { Heading } from '../headings';
+import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
 interface TagType {
   id: string;
@@ -20,13 +22,9 @@ interface MediaCardProps {
   title: string;
   body?: any;
   image?: { url: string; alt?: string; width?: number; height?: number };
-  link?: {
-    type?: 'internal' | 'external';
-    text?: string;
-    url?: string;
-    reference?: any;
-  };
+  link?: LinkGroup;
   buttonVariant?: 'primary' | 'secondary' | 'outline';
+  className?: string;
 }
 
 export const MediaCard: React.FC<MediaCardProps> = ({
@@ -36,35 +34,41 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   image,
   link,
   buttonVariant,
+  className,
 }) => {
-  // Determine the href for the CTA
-  let href: string | undefined = undefined;
-  if (link?.type === 'internal' && link?.reference) {
-    if (typeof link.reference === 'object' && link.reference?.slug) {
-      href = `/${link.reference?.slug}`;
-    } else if (typeof link.reference === 'string') {
-      href = `/${link.reference}`;
-    }
-  } else if (link?.type === 'external') {
-    href = link.url;
-  }
+  // Use the global link router utility
+  const linkResult = link ? routeLink(link) : null;
+  const hasValidLink = Boolean(
+    linkResult?.href && linkResult.href !== '#' && link?.text
+  );
 
   return (
     <div
-      className={`flex flex-col justify-between bg-bg rounded-sm p-5 md:p-6 w-68 sm:w-72 md:w-76 lg:w-80 aspect-window mx-2`}
+      className={clsx(
+        'flex flex-col rounded-sm aspect-window',
+        'px-6 relative',
+        hasValidLink && buttonVariant === 'primary-full'
+          ? 'justify-between pb-4 pt-6'
+          : 'justify-center py-6',
+        className
+      )}
     >
-      <div className="py-3 md:py-4 md:px-2 lg:px-4 lg:py-6 relative">
-        <DevIndicator componentName="MediaCard" />
-        <div className="flex justify-center mb-4 gap-[.15em] flex-wrap">
-          {tags &&
-            tags.length > 0 &&
-            tags.map((tag, index) => (
-              <Tag key={tag.id || index} name={tag.name} size="md" />
-            ))}
-        </div>
-        <h3 className="text-center font-display break-words">{title}</h3>
+      <DevIndicator componentName="MediaCard" />
+      <div className="grid gap-6 mb-4">
+        <header>
+          <div className="flex justify-center mb-3 gap-[.15em] flex-wrap">
+            {tags &&
+              tags.length > 0 &&
+              tags.map((tag, index) => (
+                <Tag key={tag.id || index} name={tag.name} size="md" />
+              ))}
+          </div>
+          <Heading variant="card-title" as="h3">
+            {title}
+          </Heading>
+        </header>
         {image && (
-          <div className="mb-0 mt-6 h-40 relative px-8 flex justify-center">
+          <div className="h-40 relative px-8 flex justify-center">
             <Image
               src={fixImageUrl(image.url)}
               alt={image.alt || title}
@@ -76,17 +80,18 @@ export const MediaCard: React.FC<MediaCardProps> = ({
             />
           </div>
         )}
-        <div className="text-center font-mono text-base mb-6 mt-6">
-          <RichText data={body} />
-        </div>
+        <RichText data={body} className="text-center font-mono px-2" />
       </div>
-      {href && typeof href === 'string' && link?.text && (
+      {hasValidLink && linkResult && (
         <AppLink
-          href={href}
+          href={linkResult.href!}
           variant={buttonVariant}
-          className={clsx('mx-auto', buttonVariant === 'primary' && 'w-full')}
+          className={clsx(
+            'mx-auto mt-2',
+            buttonVariant === 'primary-full' && 'w-full'
+          )}
         >
-          {link.text}
+          {link!.text}
         </AppLink>
       )}
     </div>

@@ -15,7 +15,7 @@ interface Card {
     type?: 'internal' | 'external';
     text?: string;
     url?: string;
-    reference?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    doc?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
 }
 
@@ -27,7 +27,7 @@ interface DefaultCardGridProps {
     type: 'internal' | 'external' | 'copy';
     text?: string;
     url?: string;
-    reference?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    doc?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
 }
 
@@ -67,26 +67,23 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
               : 'overflow-x-hidden justify-center'
           }`}
         >
-          {isOverflowing && (
-            <div className="snap-end grow-0 shrink-0 w-12 border-r" />
-          )}
+          <div className="snap-end grow-0 shrink-0 w-12 border-r border-text" />
           {cards.map((card, idx) => (
-            <div
+            <MediaCard
               key={idx}
               className={clsx(
-                'grow-0 shrink-0 w-[360px] sm:w-[400px] border-r border-text px-8 pb-8 pt-6 snap-center grid justify-center',
-                isOverflowing ? 'last:border-r-0' : 'first:border-l'
+                'grow-0 shrink-0 w-[360px] sm:w-[400px] border-r border-text snap-center'
               )}
-            >
-              <MediaCard {...card} buttonVariant={'primary'} />
-            </div>
+              {...card}
+              buttonVariant={'primary'}
+            />
           ))}
-          {isOverflowing && <div className="snap-start grow-0 shrink-0 w-12" />}
+          <div className="snap-start grow-0 shrink-0 w-12" />
         </div>
       </div>
       <hr className="mx-2 my-2" />
 
-      {link && link.type && (link.url || link.reference) && (
+      {link && link.type && (link.url || link.doc) && (
         <div className="mt-8 text-center">
           <AppLink
             link={link}

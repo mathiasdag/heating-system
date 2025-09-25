@@ -49,7 +49,8 @@ function resolveReference(reference: unknown): string | undefined {
         return `/artikel/${slug}`;
       case 'pages':
       default:
-        return `/${slug}`;
+        // Always redirect homepage to root
+        return slug === 'hem' ? '/' : `/${slug}`;
     }
   }
 
@@ -69,7 +70,8 @@ function resolveReference(reference: unknown): string | undefined {
         return `/artikel/${slug}`;
       case 'pages':
       default:
-        return `/${slug}`;
+        // Always redirect homepage to root
+        return slug === 'hem' ? '/' : `/${slug}`;
     }
   }
 

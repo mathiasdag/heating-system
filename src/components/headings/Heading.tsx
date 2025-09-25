@@ -58,7 +58,8 @@ const variantConfig = {
   'card-title': {
     defaultAs: 'h3' as const,
     defaultSize: 'lg' as const,
-    className: 'font-sans uppercase text-lg',
+    className:
+      'font-display uppercase text-[2em] leading-[1em] text-center break-words tracking-[-0.01em]',
   },
   'small-title': {
     defaultAs: 'h4' as const,

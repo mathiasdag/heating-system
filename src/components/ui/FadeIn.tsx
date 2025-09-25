@@ -29,6 +29,8 @@ interface FadeInProps {
   // Allow style and ref to be passed through
   style?: React.CSSProperties;
   ref?: React.Ref<HTMLElement>;
+  // Allow additional props to be passed through
+  [key: string]: unknown;
 }
 
 const timingConfigs = {
@@ -47,7 +49,7 @@ const variantConfig = {
     animate: { opacity: 1, y: 0 },
   },
   fadeDown: {
-    initial: { opacity: 0, y: -20 },
+    initial: { opacity: 0, y: -5 },
     animate: { opacity: 1, y: 0 },
   },
   fadeLeft: {
@@ -102,6 +104,7 @@ export const FadeIn: React.FC<FadeInProps> = ({
   customMotionProps,
   style,
   ref,
+  ...restProps
 }) => {
   const MotionComponent = motion[
     as as keyof typeof motion
@@ -131,6 +134,7 @@ export const FadeIn: React.FC<FadeInProps> = ({
   return (
     <MotionComponent
       {...motionProps}
+      {...restProps}
       className={clsx(className)}
       style={style}
       ref={ref}

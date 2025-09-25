@@ -10,6 +10,7 @@ import { CloseNavIcon } from '@/components/icons';
 import { VarmeverketIcon } from '@/components/icons';
 import { MarqueeText } from '@/components/ui';
 import Overlay from '@/components/ui/Overlay';
+import { FadeIn } from '@/components/ui/FadeIn';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
 export interface NavigationLink extends LinkGroup {
@@ -64,15 +65,17 @@ const HighlightLink: React.FC<HighlightLinkProps> = ({
   );
 
   return (
-    <Link href={href} onClick={onClick} className={highlightLinkClasses}>
-      <MarqueeText
-        text={link.text || ''}
-        speed={30}
-        pauseOnHover={false}
-        spacing="mx-2"
-        onMarqueeStateChange={setIsMarqueeing}
-      />
-    </Link>
+    <FadeIn variant="fadeDown" delay={0.4} className={highlightLinkClasses}>
+      <Link href={href} onClick={onClick}>
+        <MarqueeText
+          text={link.text || ''}
+          speed={30}
+          pauseOnHover={false}
+          spacing="mx-2"
+          onMarqueeStateChange={setIsMarqueeing}
+        />
+      </Link>
+    </FadeIn>
   );
 };
 
@@ -100,7 +103,11 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
   );
 
   return (
-    <button
+    <FadeIn
+      variant="fadeDown"
+      timing="normal"
+      delay={0.4}
+      as="button"
       onClick={onToggle}
       className={navButtonClasses}
       aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -110,7 +117,7 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
       ) : (
         <OpenNavIcon className="w-4 h-4" />
       )}
-    </button>
+    </FadeIn>
   );
 };
 
@@ -118,14 +125,19 @@ const Logo: React.FC = () => {
   const logoContainerClasses = clsx('fixed top-2 right-2 z-30');
 
   return (
-    <div className={logoContainerClasses}>
+    <FadeIn
+      className={logoContainerClasses}
+      variant="fadeDown"
+      timing="normal"
+      delay={0.4}
+    >
       <Link href="/">
         <VarmeverketIcon
           size={120}
           className="text-text w-20 sm:w-22 md:w-24 2xl:w-[6.5em] h-auto"
         />
       </Link>
-    </div>
+    </FadeIn>
   );
 };
 

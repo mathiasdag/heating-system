@@ -53,12 +53,7 @@ const HighlightLink: React.FC<HighlightLinkProps> = ({
   const href = linkResult.href || '#';
 
   const highlightLinkClasses = clsx(
-    'rounded-sm cursor-pointer',
-    'text-md h-8',
-    'flex items-center justify-center',
-    'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.2em] md:max-w-sm',
-    !isMarqueeing && 'px-[.6rem]',
-    'border-text',
+    'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.6em]',
     !mounted && 'mix-blend-multiply bg-text',
     mounted && isDarkMode && 'text-text border border-white',
     mounted && !isDarkMode && 'mix-blend-multiply bg-text text-white'
@@ -66,7 +61,16 @@ const HighlightLink: React.FC<HighlightLinkProps> = ({
 
   return (
     <FadeIn variant="fadeDown" delay={0.4} className={highlightLinkClasses}>
-      <Link href={href} onClick={onClick}>
+      <Link
+        href={href}
+        onClick={onClick}
+        className={clsx(
+          'rounded-sm cursor-pointer md:max-w-sm',
+          'text-md h-8',
+          'flex items-center justify-center',
+          !isMarqueeing && 'px-[.6rem]'
+        )}
+      >
         <MarqueeText
           text={link.text || ''}
           speed={30}

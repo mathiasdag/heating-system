@@ -1,3 +1,3 @@
-export { AdminContainer } from './AdminContainer';
-export { RevalidateButton } from './RevalidateButton';
-export { ExitPreviewButton } from './ExitPreviewButton';
+export { default as AdminContainer } from './AdminContainer';
+export { default as RevalidateButton } from './RevalidateButton';
+export { default as ExitPreviewButton } from './ExitPreviewButton';

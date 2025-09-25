@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 
 interface ImageBlockProps {
   image: {

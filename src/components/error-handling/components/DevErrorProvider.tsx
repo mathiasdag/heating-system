@@ -1,10 +1,7 @@
 import React, { createContext, useContext, ReactNode } from 'react';
-import { ErrorLogger } from '@/components/error-handling';
+import { ErrorLogger } from './ErrorLogger';
 import { DevErrorContextType } from '@/components/error-handling/types';
-import {
-  storeError,
-  clearStoredErrors,
-} from '@/components/error-handling/utils/errorStorage';
+import { storeError, clearStoredErrors } from '../utils/errorStorage';
 
 const DevErrorContext = createContext<DevErrorContextType | null>(null);
 

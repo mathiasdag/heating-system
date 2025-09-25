@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import VideoBlock from '@/components/blocks/VideoBlock';
 
 interface SimpleCarouselBlockProps {

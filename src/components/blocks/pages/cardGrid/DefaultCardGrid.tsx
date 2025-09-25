@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AppLink } from '@/components/ui';
 import { MediaCard } from '@/components/blocks/MediaCard';
 import clsx from 'clsx';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 
 interface Card {

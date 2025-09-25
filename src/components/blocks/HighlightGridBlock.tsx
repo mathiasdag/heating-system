@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import HighlightOverlay from '@/components/blocks/HighlightOverlay';
 import { AnimatePresence } from 'framer-motion';
 

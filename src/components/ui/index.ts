@@ -1,8 +1,8 @@
 export { AppLink, AppAction } from './AppLink';
-export { Attribute } from './Attribute';
+export { default as Attribute } from './Attribute';
 export { BlinkHover } from './BlinkHover';
-export { FadeIn } from './FadeIn';
-export { ListItem } from './ListItem';
+export { default as FadeIn, FadeInUp } from './FadeIn';
+export { default as ListItem } from './ListItem';
 export { MarqueeText } from './MarqueeText';
-export { Overlay } from './Overlay';
-export { Tag } from './Tag';
+export { default as Overlay } from './Overlay';
+export { default as Tag } from './Tag';

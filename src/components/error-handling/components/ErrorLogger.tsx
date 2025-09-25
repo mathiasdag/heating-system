@@ -1,11 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { ErrorLog } from '@/components/error-handling/types';
-import {
-  getStoredErrors,
-  clearStoredErrors,
-} from '@/components/error-handling/utils/errorStorage';
+import { getStoredErrors, clearStoredErrors } from '../utils/errorStorage';
 
 export const ErrorLogger: React.FC = () => {
   const [errors, setErrors] = useState<ErrorLog[]>([]);

@@ -5,7 +5,7 @@ import {
   ErrorFallback,
   withErrorBoundary,
 } from '@/components/error-handling';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from './DevIndicator';
 
 // Example component that can throw errors
 const BuggyComponent: React.FC<{ shouldThrow?: boolean }> = ({

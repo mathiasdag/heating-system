@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import {
   ErrorBoundaryProps,
   ErrorBoundaryState,
 } from '@/components/error-handling/types';
-import {
-  storeError,
-  generateErrorId,
-} from '@/components/error-handling/utils/errorStorage';
+import { storeError, generateErrorId } from '../utils/errorStorage';
 
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,

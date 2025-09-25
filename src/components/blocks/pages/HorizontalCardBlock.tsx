@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { MediaCard } from '@/components/blocks/MediaCard';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import { AppLink } from '@/components/ui';
-import HorizontalSnapCarousel from '@/components/carousels';
+import { HorizontalSnapCarousel } from '@/components/carousels';
 import { OverlayCard, InfoOverlay } from '@/components/blocks/overlay';
 import { routeLink, LinkGroup } from '@/utils/linkRouter';
 

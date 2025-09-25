@@ -2,9 +2,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { AppAction } from '@/components/ui';
-import Tag from '@/components/ui';
+import { Tag } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
 interface Tag {

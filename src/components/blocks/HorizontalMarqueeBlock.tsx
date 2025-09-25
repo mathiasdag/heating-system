@@ -1,6 +1,6 @@
 import React from 'react';
 import Marquee from 'react-fast-marquee';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import UserCardBlock from '@/components/blocks/UserCardBlock';
 

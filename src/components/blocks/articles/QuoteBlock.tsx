@@ -1,6 +1,6 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 
 interface QuoteBlockProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

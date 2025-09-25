@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { AppLink } from '@/components/ui';
 import { MediaCard } from '../../MediaCard';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '../../BlockHeader';
 
 interface Card {

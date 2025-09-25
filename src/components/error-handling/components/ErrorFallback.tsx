@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { ErrorFallbackProps } from '@/components/error-handling/types';
 
 export const ErrorFallback: React.FC<ErrorFallbackProps> = ({

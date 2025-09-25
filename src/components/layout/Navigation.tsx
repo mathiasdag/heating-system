@@ -9,7 +9,7 @@ import { OpenNavIcon } from '@/components/icons';
 import { CloseNavIcon } from '@/components/icons';
 import { VarmeverketIcon } from '@/components/icons';
 import { MarqueeText } from '@/components/ui';
-import { Overlay } from '@/components/ui';
+import Overlay from '@/components/ui/Overlay';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
 export interface NavigationLink extends LinkGroup {

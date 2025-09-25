@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import { ListItem } from '@/components/ui';
 

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import MuxPlayer from '@mux/mux-player-react';
 import type { MinResolutionValue } from '@mux/playback-core';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 
 interface VideoSource {
   playbackId: string;

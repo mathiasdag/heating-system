@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { useUserData } from '@/hooks/useUserData';
-import Tag from '@/components/ui';
+import { Tag } from '@/components/ui';
 
 interface UserCardBlockProps {
   variant: 'textOnly' | 'compactCard' | 'mediumCard' | 'largeCard';

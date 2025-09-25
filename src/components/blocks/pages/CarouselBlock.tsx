@@ -2,7 +2,7 @@
 import React from 'react';
 import Slider from 'react-slick';
 import CarouselSlide from '@/components/blocks/CarouselSlide';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';

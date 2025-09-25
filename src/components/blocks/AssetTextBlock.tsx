@@ -1,6 +1,6 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { AppLink } from '@/components/ui';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';

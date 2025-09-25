@@ -1,4 +1,4 @@
-import { ErrorLog } from '@/components/error-handling/types';
+import { ErrorLog } from '../types';
 
 const STORAGE_KEY = 'dev-errors';
 const MAX_ERRORS = 10;

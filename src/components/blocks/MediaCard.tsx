@@ -1,10 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { AppLink } from '@/components/ui';
-import Tag from '@/components/ui';
+import { Tag } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { fixImageUrl } from '@/utils/imageUrl';
 import { Heading } from '@/components/headings';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';

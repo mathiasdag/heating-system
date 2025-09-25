@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useRef, useEffect, useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import { FadeIn } from '@/components/ui';
 import clsx from 'clsx';

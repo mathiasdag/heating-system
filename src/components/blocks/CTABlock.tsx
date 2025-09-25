@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { AppAction } from '@/components/ui';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 

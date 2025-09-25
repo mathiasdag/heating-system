@@ -1,7 +1,7 @@
 import React from 'react';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { type LinkGroup } from '@/utils/linkRouter';
 
 interface AssetTextContainerBlockProps {

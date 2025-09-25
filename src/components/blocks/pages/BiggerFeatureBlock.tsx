@@ -10,7 +10,7 @@ import {
 } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { AppLink } from '@/components/ui';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import clsx from 'clsx';
 
 interface BiggerFeatureBlockProps {

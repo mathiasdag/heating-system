@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { AppLink } from '@/components/ui';
-import { DevIndicator } from '@/components/dev';
+import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import { FadeInUp } from '@/components/ui';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';

@@ -19,18 +19,29 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { notFound } from 'next/navigation';
+import { getPreviewData, isPreviewFromSearchParams } from '@/utils/preview';
 
 interface PageProps {
   params: Promise<{
     slug: string;
   }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function DynamicPage({ params }: PageProps) {
+export default async function DynamicPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
+  const search = await searchParams;
 
-  // Fetch the page with REST API
-  const page = await PayloadAPI.findBySlug('pages', slug, 10);
+  // Check if this is a preview request
+  const previewData = await getPreviewData();
+  const isPreview =
+    previewData.isPreview ||
+    isPreviewFromSearchParams(
+      new URLSearchParams(search as Record<string, string>)
+    );
+
+  // Fetch the page with REST API (draft if in preview mode)
+  const page = await PayloadAPI.findBySlug('pages', slug, 10, isPreview);
 
   // If page doesn't exist, return 404
   if (!page) {

@@ -39,28 +39,21 @@ const RevalidateButton: React.FC = () => {
   };
 
   return (
-    <div className="">
-      <button
-        onClick={handleRevalidate}
-        disabled={isLoading}
-        className="fixed uppercase bottom-2 pt-[.125rem] h-[40px] right-2 z-50 bg-text text-bg mix-blend-multiply px-3 rounded-sm"
-      >
-        {isLoading ? (
-          <>
-            <span>Revalidating...</span>
-          </>
-        ) : (
-          <>
-            <span>Revalidate</span>
-          </>
-        )}
-      </button>
-      {message && (
-        <div className="mt-2 p-2 bg-white rounded-lg shadow-lg text-sm">
-          {message}
-        </div>
+    <button
+      onClick={handleRevalidate}
+      disabled={isLoading}
+      className="grow px-4 py-3 rounded-sm hover:bg-white/10 uppercase"
+    >
+      {isLoading ? (
+        <>
+          <span>Revalidating...</span>
+        </>
+      ) : (
+        <>
+          <span>Revalidate</span>
+        </>
       )}
-    </div>
+    </button>
   );
 };
 

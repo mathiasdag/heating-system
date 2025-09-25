@@ -32,6 +32,7 @@ interface FindOptions {
   limit?: number;
   page?: number;
   sort?: string;
+  draft?: boolean; // Add draft support
 }
 
 /**
@@ -40,13 +41,26 @@ interface FindOptions {
 async function fetchFromExternalAPI<T>(
   options: FindOptions
 ): Promise<ApiResponse<T>> {
-  const { collection, where, depth = 2, limit = 10, page = 1, sort } = options;
+  const {
+    collection,
+    where,
+    depth = 2,
+    limit = 10,
+    page = 1,
+    sort,
+    draft = false,
+  } = options;
 
   // Build query parameters
   const params = new URLSearchParams();
 
   if (where) {
     params.append('where', JSON.stringify(where));
+  }
+
+  // Add draft parameter for preview mode
+  if (draft) {
+    params.append('draft', 'true');
   }
   if (depth) {
     params.append('depth', depth.toString());
@@ -182,15 +196,21 @@ export class PayloadAPI {
   static async findBySlug<T>(
     collection: string,
     slug: string,
-    depth = 10
+    depth = 10,
+    draft = false
   ): Promise<T | null> {
-    const cacheKey = `findBySlug-${collection}-${slug}-${depth}`;
+    const cacheKey = `findBySlug-${collection}-${slug}-${depth}-${draft}`;
 
     return this.deduplicatedRequest(cacheKey, async () => {
       // Use direct fetch with simple query format instead of the broken JSON format
       const params = new URLSearchParams();
       params.append(`where[slug][equals]`, slug);
       params.append('depth', depth.toString());
+
+      // Add draft parameter for preview mode
+      if (draft) {
+        params.append('draft', 'true');
+      }
       params.append('limit', '1');
 
       const url = `${API_BASE_URL}/${collection}?${params.toString()}`;

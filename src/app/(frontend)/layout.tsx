@@ -3,13 +3,16 @@ import localFont from 'next/font/local';
 import './globals.css';
 import NavigationWrapper from '@/components/NavigationWrapper';
 import { NavigationData } from '@/components/Navigation';
-import RevalidateButton from '@/components/RevalidateButton';
 import { Footer } from '@/components/Footer';
 import { ThemeProvider } from 'next-themes';
 import { UrlBasedTheme } from '@/components/UrlBasedTheme';
 import { BackgroundLoader } from '@/components/BackgroundLoader';
 import { NotificationProvider } from '@/contexts/NotificationContext';
 import { NotificationContainer } from '@/components/NotificationContainer';
+import AdminContainer from '@/components/AdminContainer';
+import RevalidateButton from '@/components/RevalidateButton';
+import ExitPreviewButton from '@/components/ExitPreviewButton';
+import { getPreviewData } from '@/utils/preview';
 import PayloadAPI from '@/lib/api';
 
 const sans = localFont({
@@ -76,8 +79,9 @@ const ballPill = localFont({
 });
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description:
+    'Värmeverket är ett nav för innovation, kreativitet och gemenskap i Stockholm.',
+  title: 'Värmeverket',
 };
 
 // Allow caching with reasonable revalidation
@@ -126,7 +130,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                 <NavigationWrapper navigation={navigation} />
                 <main className="min-h-screen">{children}</main>
                 <Footer />
-                <RevalidateButton />
+                <AdminContainer>
+                  <RevalidateButton />
+                  <ExitPreviewButton />
+                </AdminContainer>
                 <NotificationContainer />
               </BackgroundLoader>
             </UrlBasedTheme>

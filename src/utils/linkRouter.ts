@@ -27,9 +27,6 @@ export interface LinkRouterResult {
 function resolveReference(reference: unknown): string | undefined {
   if (!reference) return undefined;
 
-  // Debug logging
-  console.log('resolveReference called with:', reference);
-
   // Handle Payload's reference structure: { relationTo: "pages", value: {...} }
   if (
     typeof reference === 'object' &&
@@ -39,8 +36,6 @@ function resolveReference(reference: unknown): string | undefined {
   ) {
     const collection = reference?.relationTo;
     const slug = reference?.value?.slug;
-
-    console.log(`Resolving ${collection} with slug: ${slug}`);
 
     switch (collection) {
       case 'spaces':
@@ -88,8 +83,6 @@ function resolveReference(reference: unknown): string | undefined {
  * Main link router function that processes LinkGroup objects
  */
 export function routeLink(link: LinkGroup): LinkRouterResult {
-  console.log('routeLink called with:', link);
-
   const result: LinkRouterResult = {
     href: undefined,
     isExternal: false,

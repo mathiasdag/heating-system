@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '../DevIndicator';
-import { AppAction } from '../AppLink';
-import { routeLink, type LinkGroup } from '../../utils/linkRouter';
+import { DevIndicator } from '@/components/dev';
+import { AppAction } from '@/components/ui';
+import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
 interface CTABlockProps {
   headline: string;

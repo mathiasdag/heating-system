@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { useNotifications } from '@/contexts/NotificationContext';
-import { Notification } from './Notification';
+import { Notification } from '@/components/notifications';
 
 export const NotificationContainer: React.FC = () => {
   const { notifications, removeNotification } = useNotifications();

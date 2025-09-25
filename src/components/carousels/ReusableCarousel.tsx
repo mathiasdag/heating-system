@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { DevIndicator } from './DevIndicator';
+import { DevIndicator } from '@/components/dev';
 
 export interface CarouselItem {
   id: string;

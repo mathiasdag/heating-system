@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { AppLink } from '../AppLink';
-import Tag from '../Tag';
+import { AppLink } from '@/components/ui';
+import Tag from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
-import { DevIndicator } from '../DevIndicator';
+import { DevIndicator } from '@/components/dev';
 import { fixImageUrl } from '@/utils/imageUrl';
-import { Heading } from '../headings';
+import { Heading } from '@/components/headings';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
 interface TagType {

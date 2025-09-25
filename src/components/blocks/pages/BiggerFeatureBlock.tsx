@@ -9,8 +9,8 @@ import {
   useTransform,
 } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { AppLink } from '../../AppLink';
-import { DevIndicator } from '../../DevIndicator';
+import { AppLink } from '@/components/ui';
+import { DevIndicator } from '@/components/dev';
 import clsx from 'clsx';
 
 interface BiggerFeatureBlockProps {

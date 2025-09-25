@@ -1,9 +1,9 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '../../DevIndicator';
-import { AppLink } from '../../AppLink';
+import { DevIndicator } from '@/components/dev';
+import { AppLink } from '@/components/ui';
 import Marquee from 'react-fast-marquee';
-import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
+import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 import { createMarqueeText } from '@/utils/marquee';
 
 interface ArticleCTABlockProps {

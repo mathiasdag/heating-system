@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { storeError } from '../utils/errorStorage';
+import { storeError } from '@/components/error-handling/utils/errorStorage';
 
 export const useErrorHandler = () => {
   const handleError = useCallback(

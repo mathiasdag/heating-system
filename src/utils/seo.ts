@@ -1,5 +1,5 @@
-import type { Page, Article, Space } from '../payload-types';
-import { seoConfig } from '../config/seo';
+import type { Page, Article, Space } from '@/payload-types';
+import { seoConfig } from '@/config/seo';
 
 export interface SEOData {
   title: string;

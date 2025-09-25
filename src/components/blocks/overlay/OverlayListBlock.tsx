@@ -1,6 +1,6 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import ListItem from '@/components/ListItem';
+import { ListItem } from '@/components/ui';
 
 interface OverlayListBlockProps {
   headline?: string;

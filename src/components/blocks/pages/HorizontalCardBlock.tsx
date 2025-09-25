@@ -1,13 +1,13 @@
 'use client';
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { MediaCard } from '../MediaCard';
-import { DevIndicator } from '../../DevIndicator';
-import { BlockHeader } from '../BlockHeader';
-import { AppLink } from '../../AppLink';
-import HorizontalSnapCarousel from '../../HorizontalSnapCarousel';
-import { OverlayCard, InfoOverlay } from '../overlay';
-import { routeLink, LinkGroup } from '../../../utils/linkRouter';
+import { MediaCard } from '@/components/blocks/MediaCard';
+import { DevIndicator } from '@/components/dev';
+import { BlockHeader } from '@/components/blocks/BlockHeader';
+import { AppLink } from '@/components/ui';
+import HorizontalSnapCarousel from '@/components/carousels';
+import { OverlayCard, InfoOverlay } from '@/components/blocks/overlay';
+import { routeLink, LinkGroup } from '@/utils/linkRouter';
 
 interface Card {
   badge?: string;

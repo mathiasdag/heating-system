@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { DevIndicator } from '../DevIndicator';
-import HighlightOverlay from './HighlightOverlay';
+import { DevIndicator } from '@/components/dev';
+import HighlightOverlay from '@/components/blocks/HighlightOverlay';
 import { AnimatePresence } from 'framer-motion';
 
 interface HighlightGridBlockProps {

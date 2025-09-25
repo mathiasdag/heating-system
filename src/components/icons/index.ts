@@ -1,5 +1,5 @@
 // Base Icon component
-export { Icon, type IconProps, type BaseIconProps } from './Icon';
+export { Icon, type IconProps, type BaseIconProps } from '@/components/icons/Icon';
 
 // Individual icons
 export { CheckIcon } from './CheckIcon';
@@ -34,7 +34,7 @@ import { CapacityIcon } from './CapacityIcon';
 import { AreaIcon } from './AreaIcon';
 import { AccordionArrowIcon } from './AccordionArrowIcon';
 import { PlusIcon } from './PlusIcon';
-import { IconProps } from './Icon';
+import { IconProps } from '@/components/icons/Icon';
 
 export const ICONS: Record<IconName, React.ComponentType<IconProps>> = {
   check: CheckIcon,

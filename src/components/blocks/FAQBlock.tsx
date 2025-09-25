@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '../DevIndicator';
-import QAList from './QAList';
+import { DevIndicator } from '@/components/dev';
+import QAList from '@/components/blocks/QAList';
 
 interface FAQItem {
   blockType: 'qa';

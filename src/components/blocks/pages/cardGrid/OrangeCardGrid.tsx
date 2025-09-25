@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { AppLink } from '../../../AppLink';
+import { AppLink } from '@/components/ui';
 import { MediaCard } from '../../MediaCard';
-import { DevIndicator } from '../../../DevIndicator';
+import { DevIndicator } from '@/components/dev';
 import { BlockHeader } from '../../BlockHeader';
 
 interface Card {

@@ -11,7 +11,7 @@ import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { HeaderBlock as SpacesHeaderBlock } from '@/components/blocks/spaces';
 import React from 'react';
 import { notFound } from 'next/navigation';
-import SpacesPageWrapper from '@/components/SpacesPageWrapper';
+import { SpacesPageWrapper } from '@/components/wrappers';
 
 interface SpacePageProps {
   params: {

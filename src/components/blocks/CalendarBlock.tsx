@@ -2,9 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, useInView } from 'framer-motion';
-import { DevIndicator } from '@/components/DevIndicator';
+import { DevIndicator } from '@/components/dev';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
-import { CalendarEventCard, CalendarEventOverlay } from './calendar';
+import { CalendarEventCard, CalendarEventOverlay } from '@/components/blocks/calendar';
 import type { CalendarBlockProps, CalendarEvent } from '@/types/calendar';
 
 const CalendarBlock: React.FC<CalendarBlockProps> = ({

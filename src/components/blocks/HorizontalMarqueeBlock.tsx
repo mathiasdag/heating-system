@@ -1,8 +1,8 @@
 import React from 'react';
 import Marquee from 'react-fast-marquee';
-import { DevIndicator } from '../DevIndicator';
-import { BlockHeader } from './BlockHeader';
-import UserCardBlock from './UserCardBlock';
+import { DevIndicator } from '@/components/dev';
+import { BlockHeader } from '@/components/blocks/BlockHeader';
+import UserCardBlock from '@/components/blocks/UserCardBlock';
 
 interface HorizontalMarqueeBlockProps {
   headline?: string;

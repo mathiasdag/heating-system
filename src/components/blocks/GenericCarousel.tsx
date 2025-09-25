@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { DevIndicator } from '../DevIndicator';
+import { DevIndicator } from '@/components/dev';
 
 interface GenericCarouselProps {
   headline?: string;

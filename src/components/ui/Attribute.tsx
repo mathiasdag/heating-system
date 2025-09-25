@@ -1,6 +1,6 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { CapacityIcon, AreaIcon } from './icons';
+import { CapacityIcon, AreaIcon } from '@/components/icons';
 
 interface AttributeProps {
   type:

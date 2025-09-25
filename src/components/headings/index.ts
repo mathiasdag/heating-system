@@ -11,4 +11,4 @@ export {
   type HeadingProps,
   type HeadingVariant,
   type HeadingSize,
-} from './Heading';
+} from '@/components/headings';

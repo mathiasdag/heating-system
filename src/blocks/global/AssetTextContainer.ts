@@ -1,5 +1,5 @@
 import type { Block } from 'payload';
-import AssetText from './AssetText';
+import AssetText from '@/blocks/global/AssetText';
 
 const AssetTextContainer: Block = {
   slug: 'assetTextContainer',

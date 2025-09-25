@@ -2,13 +2,12 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { AppLink } from '@/components/AppLink';
-import Overlay from '@/components/Overlay';
+import { AppLink, Overlay } from '@/components/ui';
 import { routeLink } from '@/utils/linkRouter';
 import { createMarqueeText } from '@/utils/marquee';
 import Marquee from 'react-fast-marquee';
-import OverlayTextBlock from './OverlayTextBlock';
-import OverlayListBlock from './OverlayListBlock';
+import OverlayTextBlock from '@/components/blocks/overlay/OverlayTextBlock';
+import OverlayListBlock from '@/components/blocks/overlay/OverlayListBlock';
 import clsx from 'clsx';
 
 interface InfoOverlayProps {

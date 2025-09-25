@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, type IconProps } from './Icon';
+import { Icon, type IconProps } from '@/components/icons/Icon';
 
 export const CloseNavIcon: React.FC<IconProps> = ({
   size = 18,

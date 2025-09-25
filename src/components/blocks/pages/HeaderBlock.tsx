@@ -4,9 +4,9 @@ import Image from 'next/image';
 import React, { useRef, useEffect, useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { DevIndicator } from '../../DevIndicator';
-import VideoBlock from '../VideoBlock';
-import { FadeIn } from '../../FadeIn';
+import { DevIndicator } from '@/components/dev';
+import VideoBlock from '@/components/blocks/VideoBlock';
+import { FadeIn } from '@/components/ui';
 import clsx from 'clsx';
 
 interface Asset {

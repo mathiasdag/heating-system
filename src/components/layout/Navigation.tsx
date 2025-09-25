@@ -5,12 +5,12 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 
-import { OpenNavIcon } from './icons/OpenNavIcon';
-import { CloseNavIcon } from './icons/CloseNavIcon';
-import { VarmeverketIcon } from './icons/VarmeverketIcon';
-import { MarqueeText } from './MarqueeText';
-import Overlay from './Overlay';
-import { routeLink, type LinkGroup } from '../utils/linkRouter';
+import { OpenNavIcon } from '@/components/icons';
+import { CloseNavIcon } from '@/components/icons';
+import { VarmeverketIcon } from '@/components/icons';
+import { MarqueeText } from '@/components/ui';
+import { Overlay } from '@/components/ui';
+import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
 export interface NavigationLink extends LinkGroup {
   reference?: unknown;

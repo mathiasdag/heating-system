@@ -1,10 +1,11 @@
+'use client';
 import React, { useState } from 'react';
 import {
   ErrorBoundary,
   ErrorFallback,
   withErrorBoundary,
-} from './error-handling';
-import { DevIndicator } from './DevIndicator';
+} from '@/components/error-handling';
+import { DevIndicator } from '@/components/dev';
 
 // Example component that can throw errors
 const BuggyComponent: React.FC<{ shouldThrow?: boolean }> = ({

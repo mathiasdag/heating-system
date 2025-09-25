@@ -4,7 +4,7 @@ import {
   Notification as NotificationType,
   NotificationAction,
 } from '@/types/notification';
-import { AppAction } from './AppLink';
+import { AppAction } from '@/components/ui';
 import clsx from 'clsx';
 
 interface NotificationProps {

@@ -1,5 +1,5 @@
-import { slugFromTitleHook } from './slug';
-import { dateTrackingHook } from './dates';
+import { slugFromTitleHook } from '@/utils/slug';
+import { dateTrackingHook } from '@/utils/dates';
 
 /**
  * Common collection hooks that can be reused across collections

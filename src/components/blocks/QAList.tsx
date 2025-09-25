@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { AccordionArrowIcon } from '@/components/icons';
-import ListItem from '@/components/ListItem';
+import { ListItem } from '@/components/ui';
 
 interface QAItem {
   blockType: 'qa';

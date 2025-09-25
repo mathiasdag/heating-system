@@ -1,11 +1,11 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '../DevIndicator';
-import { AppLink } from '../AppLink';
-import { type LinkGroup } from '../../utils/linkRouter';
-import { transformRichTextLinks } from '../../utils/richTextTransform';
-import { jsxConverter } from '../../utils/richTextConverters';
-import AssetRenderer from '../common/AssetRenderer';
+import { DevIndicator } from '@/components/dev';
+import { AppLink } from '@/components/ui';
+import { type LinkGroup } from '@/utils/linkRouter';
+import { transformRichTextLinks } from '@/utils/richTextTransform';
+import { jsxConverter } from '@/utils/richTextConverters';
+import AssetRenderer from '@/components/common/AssetRenderer';
 import clsx from 'clsx';
 
 interface AssetTextBlockProps {

@@ -6,7 +6,7 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { DevIndicator } from './DevIndicator';
+import { DevIndicator } from '@/components/dev';
 
 export interface HorizontalSnapCarouselProps {
   children: ReactNode[];

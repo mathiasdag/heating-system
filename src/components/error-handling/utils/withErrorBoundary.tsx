@@ -1,7 +1,7 @@
 import React from 'react';
-import { ErrorBoundary } from '../components/ErrorBoundary';
-import { ErrorFallback } from '../components/ErrorFallback';
-import { WithErrorBoundaryOptions } from '../types';
+import { ErrorBoundary } from '@/components/error-handling/components/ErrorBoundary';
+import { ErrorFallback } from '@/components/error-handling/components/ErrorFallback';
+import { WithErrorBoundaryOptions } from '@/components/error-handling/types';
 
 export function withErrorBoundary<P extends object>(
   Component: React.ComponentType<P>,

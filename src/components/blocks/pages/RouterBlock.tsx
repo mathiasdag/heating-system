@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
-import { AppLink } from '../../AppLink';
-import { DevIndicator } from '../../DevIndicator';
-import { BlockHeader } from '../BlockHeader';
-import { FadeInUp } from '../../FadeIn';
-import { routeLink, type LinkGroup } from '../../../utils/linkRouter';
+import { AppLink } from '@/components/ui';
+import { DevIndicator } from '@/components/dev';
+import { BlockHeader } from '@/components/blocks/BlockHeader';
+import { FadeInUp } from '@/components/ui';
+import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
 interface NavigationLink {
   link: LinkGroup;

@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { PlusIcon } from '../../icons';
+import { PlusIcon } from '@/components/icons';
 
 interface OverlayCardProps {
   overlay: {

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { AppLink } from '../AppLink';
-import { DevIndicator } from '../DevIndicator';
+import { AppLink } from '@/components/ui';
+import { DevIndicator } from '@/components/dev';
 
 interface FeatureBlockProps {
   image?: { url: string; alt?: string; width?: number; height?: number };

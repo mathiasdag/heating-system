@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import { useTheme, useIsDark, useThemeClasses } from '../hooks/useTheme';
-import { ForceTheme } from './ForceTheme';
-import { DevIndicator } from './DevIndicator';
+import { useTheme, useIsDark, useThemeClasses } from '@/hooks/useTheme';
+import { ForceTheme } from '@/components/layout';
+import { DevIndicator } from '@/components/dev';
 
 export const DarkModeExample: React.FC = () => {
   const { theme, resolvedTheme, setTheme } = useTheme();

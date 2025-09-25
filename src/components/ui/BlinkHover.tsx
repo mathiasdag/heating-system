@@ -1,5 +1,5 @@
 import React, { cloneElement, isValidElement, Children } from 'react';
-import { useBlinkHover } from '../hooks/useBlinkHover';
+import { useBlinkHover } from '@/hooks/useBlinkHover';
 
 interface BlinkHoverProps {
   children: React.ReactNode;

@@ -3,8 +3,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DevIndicator } from '../DevIndicator';
-import VideoBlock from './VideoBlock';
+import { DevIndicator } from '@/components/dev';
+import VideoBlock from '@/components/blocks/VideoBlock';
 
 interface SimpleCarouselBlockProps {
   aspectRatio: 'landscape' | 'portrait' | 'square' | 'fourThree';

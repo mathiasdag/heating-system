@@ -1,6 +1,6 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '../../DevIndicator';
+import { DevIndicator } from '@/components/dev';
 
 interface ArticleTextBlockProps {
   content: Record<string, unknown>;

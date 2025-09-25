@@ -1,17 +1,21 @@
 import React from 'react';
 import localFont from 'next/font/local';
 import './globals.css';
-import NavigationWrapper from '@/components/NavigationWrapper';
-import { NavigationData } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
+import {
+  NavigationWrapper,
+  NavigationData,
+  Footer,
+  UrlBasedTheme,
+  BackgroundLoader,
+} from '@/components/layout';
 import { ThemeProvider } from 'next-themes';
-import { UrlBasedTheme } from '@/components/UrlBasedTheme';
-import { BackgroundLoader } from '@/components/BackgroundLoader';
 import { NotificationProvider } from '@/contexts/NotificationContext';
-import { NotificationContainer } from '@/components/NotificationContainer';
-import AdminContainer from '@/components/AdminContainer';
-import RevalidateButton from '@/components/RevalidateButton';
-import ExitPreviewButton from '@/components/ExitPreviewButton';
+import { NotificationContainer } from '@/components/notifications';
+import {
+  AdminContainer,
+  RevalidateButton,
+  ExitPreviewButton,
+} from '@/components/admin';
 import { getPreviewData } from '@/utils/preview';
 import PayloadAPI from '@/lib/api';
 

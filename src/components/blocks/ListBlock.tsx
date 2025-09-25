@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { DevIndicator } from '../DevIndicator';
-import { BlockHeader } from './BlockHeader';
-import ListItem from '@/components/ListItem';
+import { DevIndicator } from '@/components/dev';
+import { BlockHeader } from '@/components/blocks/BlockHeader';
+import { ListItem } from '@/components/ui';
 
 interface ListItem {
   title: string;

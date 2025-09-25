@@ -3,8 +3,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import VideoBlock from './VideoBlock';
-import ReusableCarousel, { CarouselItem } from '../ReusableCarousel';
+import VideoBlock from '@/components/blocks/VideoBlock';
+import ReusableCarousel, { CarouselItem } from '@/components/carousels';
 
 interface ShowcaseAsset extends CarouselItem {
   blockType: 'imageWithCaption' | 'videoWithCaption' | 'text';

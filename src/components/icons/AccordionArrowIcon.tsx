@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, IconProps } from './Icon';
+import { Icon, IconProps } from '@/components/icons/Icon';
 
 export const AccordionArrowIcon: React.FC<IconProps> = ({
   size = 16,

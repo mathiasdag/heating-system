@@ -1,5 +1,5 @@
 import React from 'react';
-import { type IconProps } from './Icon';
+import { type IconProps } from '@/components/icons/Icon';
 
 export const VarmeverketIcon: React.FC<IconProps> = ({
   size = 128,

@@ -1,4 +1,4 @@
-import { Icon, type IconProps } from './Icon';
+import { Icon, type IconProps } from '@/components/icons/Icon';
 
 export const AreaIcon = ({ size = 16, ...props }: IconProps) => (
   <Icon size={size} {...props}>

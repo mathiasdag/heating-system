@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { DevIndicator } from '@/components/DevIndicator';
+import { DevIndicator } from '@/components/dev';
 
 interface OverlayProps {
   isOpen: boolean;

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { useNotification } from '@/hooks/useNotification';
-import { AppAction } from './AppLink';
+import { AppAction } from '@/components/ui';
 
 export const NotificationExample: React.FC = () => {
   const { showSuccess, showError, showWarning, showInfo } = useNotification();

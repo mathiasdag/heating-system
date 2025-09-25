@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
-import { DevIndicator } from '../../DevIndicator';
-import VideoBlock from '../VideoBlock';
-import Attribute from '../../Attribute';
+import { DevIndicator } from '@/components/dev';
+import VideoBlock from '@/components/blocks/VideoBlock';
+import Attribute from '@/components/ui';
 
 interface HeaderBlockProps {
   spaceData: {

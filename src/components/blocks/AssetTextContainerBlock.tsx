@@ -1,8 +1,8 @@
 import React from 'react';
-import { BlockHeader } from './BlockHeader';
-import AssetTextBlock from './AssetTextBlock';
-import { DevIndicator } from '../DevIndicator';
-import { type LinkGroup } from '../../utils/linkRouter';
+import { BlockHeader } from '@/components/blocks/BlockHeader';
+import AssetTextBlock from '@/components/blocks/AssetTextBlock';
+import { DevIndicator } from '@/components/dev';
+import { type LinkGroup } from '@/utils/linkRouter';
 
 interface AssetTextContainerBlockProps {
   headline?: string;

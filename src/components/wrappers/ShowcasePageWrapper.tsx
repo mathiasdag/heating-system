@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import HighlightOverlay from './blocks/HighlightOverlay';
+import HighlightOverlay from '@/components/blocks/HighlightOverlay';
 
 interface ShowcasePageWrapperProps {
   showcase: any;

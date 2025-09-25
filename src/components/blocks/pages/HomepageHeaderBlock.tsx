@@ -5,8 +5,8 @@ import React, { useRef } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { jsxConverter } from '@/utils/richTextConverters';
 import { motion } from 'framer-motion';
-import { DevIndicator } from '../../DevIndicator';
-import VideoBlock from '../VideoBlock';
+import { DevIndicator } from '@/components/dev';
+import VideoBlock from '@/components/blocks/VideoBlock';
 import MuxPlayer from '@mux/mux-player-react';
 import { fixImageUrl } from '@/utils/imageUrl';
 

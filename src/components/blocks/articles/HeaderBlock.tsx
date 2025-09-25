@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '../../DevIndicator';
-import VideoBlock from '../VideoBlock';
-import Tag from '../../Tag';
+import { DevIndicator } from '@/components/dev';
+import VideoBlock from '@/components/blocks/VideoBlock';
+import Tag from '@/components/ui';
 
 interface HeaderBlockProps {
   articleData: {

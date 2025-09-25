@@ -1,6 +1,6 @@
 import React from 'react';
-import { DefaultCardGrid } from './DefaultCardGrid';
-import { OrangeCardGrid } from './OrangeCardGrid';
+import { DefaultCardGrid } from '@/components/blocks/pages/cardGrid/DefaultCardGrid';
+import { OrangeCardGrid } from '@/components/blocks/pages/cardGrid/OrangeCardGrid';
 
 interface Card {
   title: string;

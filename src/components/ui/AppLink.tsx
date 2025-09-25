@@ -6,8 +6,8 @@ import {
   type LinkGroup,
   isExternalUrl,
   getExternalLinkAttributes,
-} from '../utils/linkRouter';
-import { useNotification } from '../hooks/useNotification';
+} from '@/utils/linkRouter';
+import { useNotification } from '@/hooks/useNotification';
 
 interface AppActionProps {
   href?: string;

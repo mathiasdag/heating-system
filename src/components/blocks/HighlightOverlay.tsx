@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import Overlay from '../Overlay';
-import ShowcaseCarousel from './ShowcaseCarousel';
+import Overlay from '@/components/ui';
+import ShowcaseCarousel from '@/components/blocks/ShowcaseCarousel';
 
 interface HighlightOverlayProps {
   showcase: {

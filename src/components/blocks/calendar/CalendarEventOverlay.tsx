@@ -4,8 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { formatEventDate, formatEventTime } from '@/utils/dateFormatting';
 import { downloadICS } from '@/utils/icsUtils';
-import { AppLink } from '@/components/AppLink';
-import Overlay from '@/components/Overlay';
+import { AppLink, Overlay } from '@/components/ui';
 import type { CalendarEventOverlayProps } from '@/types/calendar';
 
 const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({

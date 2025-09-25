@@ -5,8 +5,8 @@
  */
 
 import { Metadata } from 'next';
-import { getSEOData, generateMetaTags } from './seo';
-import type { Page, Article, Space } from '../payload-types';
+import { getSEOData, generateMetaTags } from '@/utils/seo';
+import type { Page, Article, Space } from '@/payload-types';
 
 /**
  * Generate Next.js metadata from a page with SEO block

@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { AppAction } from '@/components/AppLink';
-import { DevIndicator } from '@/components/DevIndicator';
-import { FadeInUp } from '@/components/FadeIn';
+import { AppAction } from '@/components/ui';
+import { DevIndicator } from '@/components/dev';
+import { FadeInUp } from '@/components/ui';
 
 export default function NotFound() {
   return (

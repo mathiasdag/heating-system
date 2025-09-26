@@ -33,6 +33,8 @@ const Pages: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     useAsTitle: 'title',
+    group: 'Content',
+    description: 'Manage website pages and content',
   },
   fields: [
     {

@@ -1,16 +1,11 @@
 import type { CollectionConfig } from 'payload';
-import List from '@/blocks/global/List';
-import MinimalCarousel from '@/blocks/global/MinimalCarousel';
-import CTA from '@/blocks/global/CTA';
-import HighlightGrid from '@/blocks/global/HighlightGrid';
-import Calendar from '@/blocks/global/Calendar';
-import QA from '@/blocks/global/QA';
+import { lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical';
 import Quote from '@/blocks/articles/Quote';
 import Image from '@/blocks/articles/Image';
 import Video from '@/blocks/articles/Video';
-import Text from '@/blocks/articles/Text';
-import InfoOverlay from '@/blocks/global/InfoOverlay';
-import HorizontalMarqueeBlock from '@/blocks/global/HorizontalMarqueeBlock';
+import TextBlock from '@/blocks/articles/TextBlock';
+import CTA from '@/blocks/global/CTA';
+import QA from '@/blocks/global/QA';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -21,7 +16,15 @@ const Articles: CollectionConfig = {
   access: {
     create: authenticated,
     delete: authenticated,
-    read: authenticatedOrPublished,
+    read: ({ req: { user } }) => {
+      // Allow reading if user is authenticated or if post is published
+      if (user) return true;
+      return {
+        status: {
+          equals: 'published',
+        },
+      };
+    },
     update: authenticated,
   },
   defaultPopulate: {
@@ -29,14 +32,18 @@ const Articles: CollectionConfig = {
     slug: true,
   },
   admin: {
-    defaultColumns: ['title', 'slug', 'publishedDate', 'updatedAt'],
+    defaultColumns: ['title', 'status', 'author', 'publishedDate', 'updatedAt'],
     useAsTitle: 'title',
+    group: 'Content',
   },
   fields: [
     {
       name: 'title',
       type: 'text',
       required: true,
+      admin: {
+        description: 'The main title of the article',
+      },
     },
     {
       name: 'slug',
@@ -45,6 +52,23 @@ const Articles: CollectionConfig = {
       unique: false,
       admin: {
         position: 'sidebar',
+        description:
+          'URL-friendly version of the title (auto-generated if empty)',
+      },
+    },
+    {
+      name: 'status',
+      type: 'select',
+      required: true,
+      defaultValue: 'draft',
+      options: [
+        { label: 'Draft', value: 'draft' },
+        { label: 'Published', value: 'published' },
+        { label: 'Archived', value: 'archived' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Publication status of the article',
       },
     },
     {
@@ -60,12 +84,14 @@ const Articles: CollectionConfig = {
     {
       name: 'publishedDate',
       type: 'date',
-      required: true,
+      required: false,
       admin: {
         position: 'sidebar',
         description: 'The date when this article was first published',
         date: {
           pickerAppearance: 'dayAndTime',
+          timeFormat: 'HH:mm',
+          displayFormat: 'MMM dd, yyyy HH:mm',
         },
       },
     },
@@ -78,6 +104,8 @@ const Articles: CollectionConfig = {
         description: 'The date when this article was last edited',
         date: {
           pickerAppearance: 'dayAndTime',
+          timeFormat: 'HH:mm',
+          displayFormat: 'MMM dd, yyyy HH:mm',
         },
       },
     },
@@ -88,11 +116,21 @@ const Articles: CollectionConfig = {
           label: 'Content',
           fields: [
             {
+              name: 'featuredImage',
+              type: 'upload',
+              relationTo: 'media',
+              required: false,
+              admin: {
+                description: 'Main image displayed at the top of the article',
+              },
+            },
+            {
               name: 'excerpt',
               type: 'textarea',
               required: false,
               admin: {
-                description: 'A brief summary or excerpt of the article',
+                description:
+                  'A brief summary or excerpt of the article (used in listings and social media)',
               },
             },
             {
@@ -106,59 +144,30 @@ const Articles: CollectionConfig = {
               },
             },
             {
-              name: 'heroAsset',
-              type: 'group',
-              label: 'Hero Asset',
-              fields: [
-                {
-                  name: 'type',
-                  type: 'select',
-                  options: [
-                    { label: 'Image', value: 'image' },
-                    { label: 'Mux Video', value: 'mux' },
-                  ],
-                  required: false,
-                },
-                {
-                  name: 'image',
-                  type: 'upload',
-                  relationTo: 'media',
-                  required: false,
-                  admin: {
-                    condition: (data: unknown, siblingData: unknown) =>
-                      (siblingData as { type?: string })?.type === 'image',
-                  },
-                },
-                {
-                  name: 'mux',
-                  type: 'text', // Store Mux asset ID or playback ID
-                  required: false,
-                  admin: {
-                    condition: (data: unknown, siblingData: unknown) =>
-                      (siblingData as { type?: string })?.type === 'mux',
-                  },
-                },
-              ],
+              name: 'introduction',
+              type: 'richText',
               required: false,
+              admin: {
+                description:
+                  'Optional introduction section (appears before main content)',
+              },
             },
             {
-              name: 'layout',
-              type: 'blocks',
-              required: false,
-              blocks: [
-                HighlightGrid,
-                Image,
-                Quote,
-                Text,
-                CTA,
-                List,
-                MinimalCarousel,
-                QA,
-                Video,
-                Calendar,
-                InfoOverlay,
-                HorizontalMarqueeBlock,
-              ],
+              name: 'content',
+              type: 'richText',
+              required: true,
+              editor: lexicalEditor({
+                features: ({ defaultFeatures }) => [
+                  ...defaultFeatures,
+                  BlocksFeature({
+                    blocks: [TextBlock, Image, Quote, Video, CTA, QA],
+                  }),
+                ],
+              }),
+              admin: {
+                description:
+                  'The main content of the article. You can insert blocks (images, quotes, videos, etc.) anywhere within the content using the block button.',
+              },
             },
           ],
         },
@@ -170,7 +179,17 @@ const Articles: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeChange: [commonHooks.dateTracking],
+    beforeChange: [
+      commonHooks.dateTracking,
+      ({ data, operation }) => {
+        // Auto-set published date when status changes to published
+        if (operation === 'create' || operation === 'update') {
+          if (data.status === 'published' && !data.publishedDate) {
+            data.publishedDate = new Date().toISOString();
+          }
+        }
+      },
+    ],
   },
   versions: commonVersioning,
 };

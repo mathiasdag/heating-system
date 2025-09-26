@@ -105,7 +105,11 @@ export default function HeaderBlockStandard({
           timing="slow"
           delay={0.2}
         >
-          <RichText data={text} className="" converters={jsxConverter} />
+          <RichText
+            data={text}
+            className="grid gap-3"
+            converters={jsxConverter}
+          />
         </FadeIn>
       </motion.div>
 

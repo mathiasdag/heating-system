@@ -136,7 +136,7 @@ export default function HeaderBlockAssetsAbove({
       >
         <RichText
           data={text}
-          className="rich-text font-mono grid hyphens-auto"
+          className="rich-text font-mono grid gap-3 hyphens-auto"
           converters={jsxConverter}
         />
       </FadeInUp>

@@ -60,7 +60,7 @@ const defaultParagraphConverter: JSXConverters<SerializedParagraphNode> = {
   paragraph: ({ node, nodesToJSX }) => {
     const text = nodesToJSX({ nodes: node.children });
 
-    return <p className="font-mono">{text}</p>;
+    return <p className="font-mono max-w-6xl">{text}</p>;
   },
 };
 

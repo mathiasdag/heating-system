@@ -42,6 +42,13 @@ module.exports = {
     'bg-surface-dark',
     'text-surface-dark',
     'border-surface-dark',
+    // Animation classes
+    'rotate-0',
+    'rotate-180',
+    'transition-transform',
+    'duration-300',
+    'duration-500',
+    'ease-in-out',
   ],
   theme: {
     extend: {

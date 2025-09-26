@@ -4,6 +4,7 @@ export interface IconProps {
   size?: number;
   className?: string;
   color?: string;
+  style?: React.CSSProperties;
 }
 
 export interface BaseIconProps extends IconProps {
@@ -15,6 +16,7 @@ export const Icon: React.FC<BaseIconProps> = ({
   size = 24,
   className = '',
   color = 'currentColor',
+  style,
   children,
   viewBox,
 }) => {
@@ -26,7 +28,7 @@ export const Icon: React.FC<BaseIconProps> = ({
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ color }}
+      style={{ color, ...style }}
     >
       {children}
     </svg>

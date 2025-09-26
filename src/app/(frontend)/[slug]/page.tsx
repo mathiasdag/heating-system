@@ -49,7 +49,7 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
   }
 
   return (
-    <div data-content-type="page">
+    <div data-content-type="page" className="grid gap-32 pb-32">
       {(page as any).layout?.map((block: any, i: number) => {
         const cleanBlock = JSON.parse(JSON.stringify(block));
         switch (block.blockType) {

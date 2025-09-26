@@ -35,7 +35,7 @@ const FAQBlock: React.FC<FAQBlockProps> = ({
   if (!items || items.length === 0) return null;
 
   return (
-    <div className="py-24 px-2">
+    <div className="x-2 pb-8">
       <DevIndicator componentName="FAQBlock" />
 
       {/* Header */}

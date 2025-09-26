@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { AccordionArrowIcon } from '@/components/icons';
-import { ListItem } from '@/components/ui';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ListItem, AnimatedArrow } from '@/components/ui';
+import { extractPlainText } from '@/utils/richTextUtils';
 
 interface QAItem {
   blockType: 'qa';
@@ -31,14 +32,7 @@ const AccordionItem: React.FC<{
   headingLevel: 'h3' | 'h4';
 }> = ({ qa, index, headingLevel }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [height, setHeight] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setHeight(contentRef.current.scrollHeight);
-    }
-  }, [qa.answer]);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -51,38 +45,35 @@ const AccordionItem: React.FC<{
         className="w-full pt-4 pb-[.9em] text-left flex items-center justify-between cursor-pointer hover:bg-text/5 transition-colors select-none"
       >
         <div className="flex-shrink-0 px-4">
-          <AccordionArrowIcon
-            size={16}
-            className={`transition-transform duration-400 ease-out ${
-              isOpen ? 'rotate-180' : 'rotate-0'
-            }`}
-          />
+          <AnimatedArrow isOpen={isOpen} />
         </div>
         <div className="font-sans flex-1 text-center">
-          <RichText data={qa.question} />
+          {extractPlainText(qa.question)}
         </div>
         <div className="flex-shrink-0 px-4">
-          <AccordionArrowIcon
-            size={16}
-            className={`transition-transform duration-400 ease-out ${
-              isOpen ? 'rotate-180' : 'rotate-0'
-            }`}
-          />
+          <AnimatedArrow isOpen={isOpen} />
         </div>
       </button>
-      <div
-        className="overflow-hidden transition-all duration-400 ease-out"
-        style={{
-          height: isOpen ? `${height}px` : '0px',
-          opacity: isOpen ? 1 : 0,
-        }}
-      >
-        <div ref={contentRef} className="px-4 pb-4">
-          <div className="pt-1 font-mono">
-            <RichText data={qa.answer} />
-          </div>
-        </div>
-      </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{
+              duration: 0.3,
+              ease: 'easeInOut',
+            }}
+            className="overflow-hidden"
+          >
+            <div ref={contentRef} className="px-4 pb-4">
+              <div className="pt-1 font-mono">
+                <RichText data={qa.answer} />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -98,7 +89,7 @@ const QAList: React.FC<QAListProps> = ({ items, layout }) => {
       return (
         <ListItem key={index}>
           <HeadingTag className="font-sans mb-2">
-            <RichText data={qa.question} />
+            {extractPlainText(qa.question)}
           </HeadingTag>
           <div className="font-mono">
             <RichText data={qa.answer} />

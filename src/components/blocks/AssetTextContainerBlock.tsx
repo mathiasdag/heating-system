@@ -32,7 +32,7 @@ const AssetTextContainerBlock: React.FC<AssetTextContainerBlockProps> = ({
   assetTextBlocks,
 }) => {
   return (
-    <div className="mb-16 mt-8 px-2 relative">
+    <div className="px-2 relative">
       <DevIndicator componentName="AssetTextContainerBlock" />
 
       {/* Block Header */}

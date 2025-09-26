@@ -100,7 +100,7 @@ export default function HeaderBlockAssetsAbove({
   };
 
   return (
-    <div ref={ref} className="px-2 text-center relative mb-36">
+    <div ref={ref} className="px-2 text-center relative">
       <DevIndicator
         componentName="HeaderBlockAssetsAbove"
         position="top-right"

@@ -6,3 +6,4 @@ export { default as ListItem } from './ListItem';
 export { MarqueeText } from './MarqueeText';
 export { default as Overlay } from './Overlay';
 export { default as Tag } from './Tag';
+export { AnimatedArrow } from './AnimatedArrow';

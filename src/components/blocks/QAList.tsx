@@ -129,7 +129,7 @@ const QAList: React.FC<QAListProps> = ({ items, layout }) => {
   };
 
   return (
-    <div className={layout === 'list' ? 'space-y-4' : 'space-y-2'}>
+    <div className={layout === 'list' ? 'space-y-4' : 'space-y-[-1px]'}>
       {items.map((item, index) => renderItem(item, index))}
     </div>
   );

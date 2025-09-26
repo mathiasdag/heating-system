@@ -101,10 +101,10 @@ export default function HomepageHeaderBlock({
 
       <motion.div
         ref={containerRef}
-        className="mt-[50vh] sm:mt-[calc(100vh-2rem)] relative z-10 bg-bg rounded-t-xl"
+        className="mt-[50vh] sm:mt-[calc(100vh-2rem)] relative z-10 bg-bg rounded-t-xl grid gap-32 pb-32"
       >
         <FadeIn
-          className="flex items-center justify-center px-2 text-center pt-16 sm:pt-28 md:pt-36 pb-24"
+          className="flex items-center justify-center px-2 text-center pt-8 sm:pt-16 md:pt-20"
           timing="slow"
           delay={1}
         >

@@ -32,32 +32,17 @@ export default function HeaderBlockStandard({
   // Use Framer Motion's scroll-based animations
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end start'],
+    offset: ['start start', 'end start'],
   });
 
-  // Create smooth opacity transition based on scroll progress
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.7, 0.8],
-    [0, 1, 1, 0]
-  );
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.4], [1, 1, 0]);
 
-  // Add subtle scale effect for more dynamic feel
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.6, 0.7],
-    [0.95, 1, 1, 0.95]
-  );
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 1.05]);
 
-  // Add slight y-axis movement for parallax effect
-  const y = useTransform(scrollYProgress, [0, 1], [150, -150]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
 
   // Asset scale - inverse of text scale for dynamic balance
-  const assetScale = useTransform(
-    scrollYProgress,
-    [0, 0.1, 0.2, 0.6],
-    [1, 0.9, 0.9, 1]
-  );
+  const assetScale = useTransform(scrollYProgress, [0, 0.1], [0.95, 1]);
 
   const renderAsset = (asset: Asset, key: number) => {
     const height = asset.image?.height || 600;
@@ -103,12 +88,11 @@ export default function HeaderBlockStandard({
   };
 
   return (
-    <div ref={ref} className="px-4 text-center relative">
+    <div ref={ref} className="px-2 text-center relative">
       <DevIndicator componentName="HeaderBlockStandard" position="top-right" />
 
-      {/* Render rich text with enhanced motion effects */}
       <motion.div
-        className="flex items-center justify-center pt-36"
+        className="flex items-center justify-center pt-36 pb-16 fixed inset-x-0 top-0"
         style={{
           opacity,
           scale,
@@ -121,29 +105,36 @@ export default function HeaderBlockStandard({
           timing="slow"
           delay={0.2}
         >
-          <RichText
-            data={text}
-            className="rich-text font-mono grid gap-3 hyphens-auto"
-            converters={jsxConverter}
-          />
+          <RichText data={text} className="" converters={jsxConverter} />
         </FadeIn>
       </motion.div>
 
+      <div className="flex items-center justify-center pt-36 pb-16 opacity-0 pointer-events-none">
+        <div className="max-w-7xl mx-auto px-4">
+          <RichText data={text} className="" converters={jsxConverter} />
+        </div>
+      </div>
+
       {/* Render assets after text */}
       {assets.length > 0 && (
-        <FadeIn
-          as="div"
-          className="relative z-10 flex justify-center flex-row gap-4 mt-8"
-          customMotionProps={{ style: { scale: assetScale } }}
-          timing="normal"
-          delay={0.6}
+        <motion.div
+          style={{
+            scale: assetScale,
+          }}
         >
-          {assets.map((asset, i) => (
-            <div key={i} className={assets.length > 1 ? 'flex-1' : ''}>
-              {renderAsset(asset, i)}
-            </div>
-          ))}
-        </FadeIn>
+          <FadeIn
+            as="div"
+            className="relative z-10 flex justify-center flex-row gap-4 mt-8"
+            timing="normal"
+            delay={0.6}
+          >
+            {assets.map((asset, i) => (
+              <div key={i} className={assets.length > 1 ? 'flex-1' : ''}>
+                {renderAsset(asset, i)}
+              </div>
+            ))}
+          </FadeIn>
+        </motion.div>
       )}
     </div>
   );

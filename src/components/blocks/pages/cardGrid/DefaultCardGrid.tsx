@@ -54,7 +54,7 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
 
   // Default variant: horizontal scroll list
   return (
-    <section className={`py-24 grid relative`}>
+    <section className={`grid relative`}>
       <DevIndicator componentName="DefaultCardGrid" />
       <BlockHeader headline={headline} description={description} />
       <hr className="mx-2 my-2" />

@@ -53,7 +53,7 @@ const HighlightLink: React.FC<HighlightLinkProps> = ({
   const href = linkResult.href || '#';
 
   const highlightLinkClasses = clsx(
-    'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.65em]',
+    'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.65em] h-8 rounded-sm',
     !mounted && 'mix-blend-multiply bg-text',
     mounted && isDarkMode && 'text-text border border-white',
     mounted && !isDarkMode && 'mix-blend-multiply bg-text text-white'
@@ -66,7 +66,7 @@ const HighlightLink: React.FC<HighlightLinkProps> = ({
         onClick={onClick}
         className={clsx(
           'rounded-sm cursor-pointer md:max-w-sm',
-          'text-md h-8',
+          'text-md h-full',
           'flex items-center justify-center',
           !isMarqueeing && 'px-[.6rem]'
         )}

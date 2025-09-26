@@ -5,6 +5,7 @@ const Showcases: CollectionConfig = {
   slug: 'showcases',
   admin: {
     useAsTitle: 'title',
+    group: 'Content',
   },
   fields: [
     {

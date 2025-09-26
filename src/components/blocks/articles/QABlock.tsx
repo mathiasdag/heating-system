@@ -2,7 +2,9 @@ import React from 'react';
 import {
   RichText,
   JSXConvertersFunction,
+  JSXConverters,
 } from '@payloadcms/richtext-lexical/react';
+import { SerializedParagraphNode } from '@payloadcms/richtext-lexical';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import SignatureBlock from '@/components/blocks/global/SignatureBlock';
 
@@ -13,9 +15,37 @@ interface QABlockProps {
   answer: any;
 }
 
+// Custom paragraph converter for QA content (filters empty paragraphs)
+const qaParagraphConverter: JSXConverters<SerializedParagraphNode> = {
+  paragraph: ({ node, nodesToJSX }) => {
+    const text = nodesToJSX({ nodes: node.children });
+
+    // Check if paragraph is empty (no text content or only whitespace/breaks)
+    const isEmpty =
+      !text ||
+      (typeof text === 'string' && text.trim() === '') ||
+      (React.isValidElement(text) && text.props.children === '') ||
+      (Array.isArray(text) &&
+        text.every(
+          child =>
+            !child ||
+            (typeof child === 'string' && child.trim() === '') ||
+            (React.isValidElement(child) && child.props.children === '')
+        ));
+
+    // Return null for empty paragraphs to prevent rendering
+    if (isEmpty) {
+      return null;
+    }
+
+    return <p>{text}</p>;
+  },
+};
+
 // JSX Converter for signature blocks in QA content
 const qaConverter: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
+  ...qaParagraphConverter,
   blocks: {
     signature: ({ node }) => <SignatureBlock text={node.fields.text} />,
   },

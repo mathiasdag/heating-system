@@ -29,6 +29,7 @@ const Spaces: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'slug', 'capacity', 'updatedAt'],
     useAsTitle: 'title',
+    group: 'Content',
   },
   fields: [
     {

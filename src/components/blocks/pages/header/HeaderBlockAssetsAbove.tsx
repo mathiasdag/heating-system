@@ -39,7 +39,7 @@ export default function HeaderBlockAssetsAbove({
   const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
 
   // Add slight y-axis movement for parallax effect
-  const y = useTransform(scrollYProgress, [0, 0.7, 1], [0, 200, 250]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   const renderAsset = (asset: Asset, key: number) => {
     const assetCount = assets.length;
@@ -62,6 +62,9 @@ export default function HeaderBlockAssetsAbove({
           width={width}
           height={height}
           className={className}
+          priority
+          quality={75}
+          sizes="(max-width: 768px) 50vw, 30vw"
         />
       );
     }
@@ -109,11 +112,12 @@ export default function HeaderBlockAssetsAbove({
         style={{
           scale,
           y,
+          willChange: 'transform',
         }}
       >
         <FadeInDown
           as="div"
-          className="flex gap-4 justify-center select-none mb-4 pt-36 relative z-10"
+          className="flex gap-4 justify-center select-none pt-36 relative z-10"
           timing="fast"
           delay={0.3}
         >

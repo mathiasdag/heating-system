@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { DevIndicator } from '@/components/dev/DevIndicator';
+import { fixImageUrl } from '@/utils/imageUrl';
 import HighlightOverlay from '@/components/blocks/HighlightOverlay';
 import { AnimatePresence } from 'framer-motion';
 
@@ -109,7 +110,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
                   {/* Image */}
                   <div className="relative aspect-[4/6] overflow-hidden">
                     <Image
-                      src={image.url}
+                        src={fixImageUrl(image.url)}
                       alt={
                         image.alt || highlightData.title || 'Highlight image'
                       }

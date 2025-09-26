@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { DevIndicator } from '@/components/dev/DevIndicator';
+import { fixImageUrl } from '@/utils/imageUrl';
 
 interface ImageBlockProps {
   image: {
@@ -17,7 +18,7 @@ export default function ImageBlock({ image, caption }: ImageBlockProps) {
     <div className="relative max-h-[80vh] mx-auto col-start-1 col-end-13 md:col-start-2 md:col-end-12 my-8 flex items-center justify-center flex-col">
       <DevIndicator componentName="ImageBlock" />
       <Image
-        src={image.url}
+        src={fixImageUrl(image.url)}
         alt={image.alt || ''}
         width={image.width || 1200}
         height={image.height || 800}

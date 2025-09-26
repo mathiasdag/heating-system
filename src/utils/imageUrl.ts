@@ -1,18 +1,22 @@
 /**
  * Utility to fix image URLs for external backend
- * Converts relative or localhost URLs to the correct external domain
+ * Frontend always fetches from external server, so images should too
  */
 
-const EXTERNAL_DOMAIN = 'https://payload.cms.varmeverket.com';
+// Get the external domain from environment variable
+const EXTERNAL_API_URL =
+  process.env.NEXT_PUBLIC_PAYLOAD_API_URL ||
+  'https://payload.cms.varmeverket.com/api';
+const EXTERNAL_DOMAIN = EXTERNAL_API_URL.replace('/api', '');
 
 /**
- * Fix image URL to use external domain
+ * Fix image URL to always use external domain for frontend
  */
 export function fixImageUrl(url: string | undefined | null): string {
   if (!url) return '';
 
   // If it's already a full URL with the correct domain, return as is
-  if (url.startsWith('http') && url.includes('payload.cms.varmeverket.com')) {
+  if (url.startsWith('http') && url.includes(EXTERNAL_DOMAIN)) {
     return url;
   }
 
@@ -34,7 +38,7 @@ export function fixImageUrl(url: string | undefined | null): string {
   }
 
   // If it's just a filename, assume it's in the media folder
-  const fixedUrl = `${EXTERNAL_DOMAIN}/media/${url}`;
+  const fixedUrl = `${EXTERNAL_DOMAIN}/api/media/file/${url}`;
   return fixedUrl;
 }
 

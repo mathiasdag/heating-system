@@ -1,5 +1,4 @@
-import { getPayload } from 'payload';
-import config from '@/payload.config';
+import { PayloadAPI } from '@/lib/api';
 import ArticleHeader from '@/components/blocks/articles/ArticleHeader';
 import ArticleContent from '@/components/blocks/articles/ArticleContent';
 import React from 'react';
@@ -12,31 +11,20 @@ interface ArticlePageProps {
 }
 
 async function ArticlePage({ params }: ArticlePageProps) {
-  const payloadConfig = await config;
-  const payload = await getPayload({ config: payloadConfig });
   const { slug } = await params;
 
-  // Build where clause based on environment
-  const whereClause: any = {
-    slug: { equals: slug },
-  };
+  // Use the dedicated findBySlug method which handles the query properly
+  const article = await PayloadAPI.findBySlug('articles', slug, 10, false);
 
-  // In production, only show published articles
-  // In development/preview, show all articles
-  if (process.env.NODE_ENV === 'production') {
-    whereClause.status = { equals: 'published' };
+  // In production, check if article is published
+  if (
+    process.env.NODE_ENV === 'production' &&
+    article &&
+    article.status !== 'published'
+  ) {
+    notFound();
   }
 
-  // Fetch the article with REST API
-  const { docs: [article] = [] } = await payload.find({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    collection: 'articles' as any,
-    where: whereClause,
-    depth: 10,
-  });
-
-  console.log(article);
-  // If article doesn't exist, return 404
   if (!article) {
     notFound();
   }

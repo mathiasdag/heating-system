@@ -5,11 +5,11 @@
  * and provides a unified interface for data fetching.
  */
 
-// Environment configuration
+// Environment configuration - always use external for frontend
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_PAYLOAD_API_URL || 'http://localhost:3000/api';
-const USE_EXTERNAL_BACKEND =
-  process.env.NEXT_PUBLIC_USE_EXTERNAL_BACKEND === 'true';
+  process.env.NEXT_PUBLIC_PAYLOAD_API_URL ||
+  'https://payload.cms.varmeverket.com/api';
+const USE_EXTERNAL_BACKEND = true; // Always use external for frontend
 
 // API response types
 interface ApiResponse<T> {

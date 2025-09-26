@@ -4,6 +4,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import { Tag } from '@/components/ui';
+import { fixImageUrl } from '@/utils/imageUrl';
 
 interface HeaderBlockProps {
   articleData: {
@@ -96,7 +97,7 @@ export default function HeaderBlock({
             >
               {asset.type === 'image' && asset.image && (
                 <Image
-                  src={asset.image.url}
+                  src={fixImageUrl(asset.image.url)}
                   alt={asset.image.alt || ''}
                   width={asset.image.width || 1200}
                   height={asset.image.height || 800}

@@ -8,6 +8,8 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import { FadeIn } from '@/components/ui';
 import clsx from 'clsx';
+import { fixImageUrl } from '@/utils/imageUrl';
+import { jsxConverter } from '@/utils/richTextConverters';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -108,7 +110,7 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
       return (
         <Image
           key={key}
-          src={asset.image.url}
+          src={fixImageUrl(asset.image.url)}
           alt={asset.image.alt || ''}
           width={width}
           height={height}
@@ -211,6 +213,7 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
           <RichText
             data={text}
             className="rich-text font-mono grid gap-3 hyphens-auto"
+            converters={jsxConverter}
           />
         </FadeIn>
       </motion.div>

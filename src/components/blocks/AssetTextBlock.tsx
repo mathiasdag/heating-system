@@ -4,7 +4,7 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { AppLink } from '@/components/ui';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';
-import { jsxConverter } from '@/utils/richTextConverters';
+import { defaultConverter } from '@/utils/richTextConverters';
 import AssetRenderer from '@/components/common/AssetRenderer';
 import clsx from 'clsx';
 
@@ -40,9 +40,9 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
 
   return (
     <div
-      className={clsx('px-2 relative', isStandalone ? 'mb-16 mt-8' : 'py-8')}
+      className={clsx('px-2 relative', isStandalone ? 'mb-16 mt-8' : 'py-6')}
     >
-      <DevIndicator componentName="AssetTextBlock" />
+      <DevIndicator componentName="AssetTextBlock" position="top-right" />
 
       <div className="">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -64,14 +64,14 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           {/* Text Content */}
           <div
             className={clsx(
-              'place-self-start py-2 order-2',
+              'place-self-start order-2',
               !isTextLeft ? 'md:order-2' : 'md:order-1'
             )}
           >
             <RichText
               data={transformedText as any}
               className="grid gap-4"
-              converters={jsxConverter}
+              converters={defaultConverter}
             />
 
             {/* Link */}

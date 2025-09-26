@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import clsx from 'clsx';
+import { fixImageUrl } from '@/utils/imageUrl';
 
 interface AssetRendererProps {
   asset: {
@@ -29,7 +30,7 @@ const AssetRenderer: React.FC<AssetRendererProps> = ({ asset, className }) => {
   if (asset.type === 'image' && asset.image?.url) {
     return (
       <Image
-        src={asset.image.url}
+        src={fixImageUrl(asset.image.url)}
         alt={asset.image.alt || ''}
         width={asset.image.width}
         height={asset.image.height}

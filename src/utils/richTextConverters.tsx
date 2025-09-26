@@ -13,10 +13,10 @@ import {
 import { Heading } from '@/components/headings';
 
 /**
- * Custom paragraph converter for Payload CMS Lexical RichText
- * Allows custom styling of paragraph elements
+ * Article-specific paragraph converter
+ * Used in articles with centered, max-width styling
  */
-const paragraphConverter: JSXConverters<SerializedParagraphNode> = {
+const articleParagraphConverter: JSXConverters<SerializedParagraphNode> = {
   paragraph: ({ node, nodesToJSX }) => {
     const text = nodesToJSX({ nodes: node.children });
 
@@ -29,7 +29,19 @@ const paragraphConverter: JSXConverters<SerializedParagraphNode> = {
 };
 
 /**
- * Custom heading converter for Payload CMS Lexical RichText
+ * Default paragraph converter
+ * Used in blocks, cards, and other components
+ */
+const defaultParagraphConverter: JSXConverters<SerializedParagraphNode> = {
+  paragraph: ({ node, nodesToJSX }) => {
+    const text = nodesToJSX({ nodes: node.children });
+
+    return <p className="font-mono">{text}</p>;
+  },
+};
+
+/**
+ * Custom heading converter for all contexts
  * Uses the standardized heading system
  */
 const headingConverter: JSXConverters<SerializedHeadingNode> = {
@@ -85,10 +97,23 @@ const headingConverter: JSXConverters<SerializedHeadingNode> = {
  */
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<any>;
 
-export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({
+// Article converter - for article content
+export const articleConverter: JSXConvertersFunction<NodeTypes> = ({
   defaultConverters,
 }) => ({
   ...defaultConverters,
-  ...paragraphConverter,
+  ...articleParagraphConverter,
   ...headingConverter,
 });
+
+// Default converter - for blocks, cards, etc.
+export const defaultConverter: JSXConvertersFunction<NodeTypes> = ({
+  defaultConverters,
+}) => ({
+  ...defaultConverters,
+  ...defaultParagraphConverter,
+  ...headingConverter,
+});
+
+// Legacy export for backward compatibility
+export const jsxConverter = defaultConverter;

@@ -16,6 +16,7 @@ import {
   ArticleTextBlock,
 } from '@/components/blocks/articles';
 import VideoBlock from '@/components/blocks/VideoBlock';
+import SignatureBlock from '@/components/blocks/global/SignatureBlock';
 
 interface ArticleContentProps {
   content: any; // RichText content from Payload with inline blocks
@@ -75,6 +76,7 @@ const jsxConverter: JSXConvertersFunction = ({ defaultConverters }) => ({
     qa: ({ node }) => (
       <QABlock question={node.fields.question} answer={node.fields.answer} />
     ),
+    signature: ({ node }) => <SignatureBlock text={node.fields.text} />,
   },
 });
 

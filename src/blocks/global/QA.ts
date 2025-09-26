@@ -1,4 +1,6 @@
 import type { Block } from 'payload';
+import { lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical';
+import Signature from './Signature';
 
 const QA: Block = {
   slug: 'qa',
@@ -11,6 +13,14 @@ const QA: Block = {
       name: 'question',
       type: 'richText',
       required: true,
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          BlocksFeature({
+            blocks: [Signature],
+          }),
+        ],
+      }),
       validate: (value: unknown) => {
         const { validateNoH1Headings } = require('@/utils/validation');
         return validateNoH1Headings(value);
@@ -20,6 +30,14 @@ const QA: Block = {
       name: 'answer',
       type: 'richText',
       required: true,
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          BlocksFeature({
+            blocks: [Signature],
+          }),
+        ],
+      }),
       validate: (value: unknown) => {
         const { validateNoH1Headings } = require('@/utils/validation');
         return validateNoH1Headings(value);

@@ -6,7 +6,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import VideoBlock from '@/components/blocks/VideoBlock';
-import { FadeIn } from '@/components/ui';
+import { FadeIn, FadeInUp, FadeInDown } from '@/components/ui/FadeIn';
 import clsx from 'clsx';
 import { fixImageUrl } from '@/utils/imageUrl';
 import { jsxConverter } from '@/utils/richTextConverters';
@@ -32,37 +32,19 @@ export default function HeaderBlockAssetsAbove({
   // Use Framer Motion's scroll-based animations
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end start'],
+    offset: ['start start', 'end start'],
   });
 
-  // Create smooth opacity transition based on scroll progress
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.7, 0.8],
-    [0, 1, 1, 0]
-  );
-
   // Add subtle scale effect for more dynamic feel
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.6, 0.7],
-    [0.95, 1, 1, 0.95]
-  );
+  const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
 
   // Add slight y-axis movement for parallax effect
-  const y = useTransform(scrollYProgress, [0, 1], [150, -150]);
-
-  // Asset scale - inverse of text scale for dynamic balance
-  const assetScale = useTransform(
-    scrollYProgress,
-    [0, 0.1, 0.2, 0.6],
-    [1, 0.9, 0.9, 1]
-  );
+  const y = useTransform(scrollYProgress, [0, 0.7, 1], [0, 200, 250]);
 
   const renderAsset = (asset: Asset, key: number) => {
     const assetCount = assets.length;
-    const height = Math.max(280 - (assetCount - 1) * 40, 120); // Minimum 120px
-    const className = 'rounded';
+    const height = Math.max(220 - (assetCount - 1) * 40, 120); // Minimum 120px
+    const className = 'rounded max-w-[50vw]';
 
     if (asset.type === 'image' && asset.image?.url) {
       // Calculate aspect ratio from original dimensions
@@ -115,49 +97,45 @@ export default function HeaderBlockAssetsAbove({
   };
 
   return (
-    <div ref={ref} className="px-4 text-center relative mb-36">
+    <div ref={ref} className="px-2 text-center relative mb-36">
       <DevIndicator
         componentName="HeaderBlockAssetsAbove"
         position="top-right"
       />
 
       {/* Render assets before text - centered with max height */}
-      <FadeIn
-        as="div"
-        className="flex gap-4 justify-center select-none mb-8"
-        customMotionProps={{ style: { scale: assetScale } }}
-        timing="fast"
-      >
-        {assets.map((asset, i) => (
-          <React.Fragment key={i}>{renderAsset(asset, i)}</React.Fragment>
-        ))}
-      </FadeIn>
-
-      {/* Render rich text with enhanced motion effects */}
       <motion.div
-        className="flex items-center justify-center h-[80vh] fixed inset-x-0 top-0"
+        className="flex items-center justify-center"
         style={{
-          opacity,
           scale,
           y,
         }}
       >
-        <FadeIn
+        <FadeInDown
           as="div"
-          className="max-w-7xl mx-auto px-4 pt-24 pb-32"
-          timing="slow"
-          delay={0.2}
+          className="flex gap-4 justify-center select-none mb-4 pt-36 relative z-10"
+          timing="fast"
+          delay={0.3}
         >
-          <RichText
-            data={text}
-            className="rich-text font-mono grid gap-3 hyphens-auto"
-            converters={jsxConverter}
-          />
-        </FadeIn>
+          {assets.map((asset, i) => (
+            <React.Fragment key={i}>{renderAsset(asset, i)}</React.Fragment>
+          ))}
+        </FadeInDown>
       </motion.div>
 
-      {/* Spacer for fixed positioning */}
-      <div className="h-[80vh] max-h-[600px]" />
+      {/* Render rich text with enhanced motion effects */}
+      <FadeInUp
+        as="div"
+        className="max-w-7xl mx-auto px-4"
+        timing="fast"
+        delay={0.3}
+      >
+        <RichText
+          data={text}
+          className="rich-text font-mono grid hyphens-auto"
+          converters={jsxConverter}
+        />
+      </FadeInUp>
     </div>
   );
 }

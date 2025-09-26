@@ -34,7 +34,7 @@ interface FadeInProps {
 }
 
 const timingConfigs = {
-  fast: { duration: 0.2, ease: 'easeOut' },
+  fast: { duration: 0.3, ease: 'easeOut' },
   normal: { duration: 0.5, ease: 'easeOut' },
   slow: { duration: 0.8, ease: 'easeOut' },
 } as const;

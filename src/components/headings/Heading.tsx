@@ -29,7 +29,7 @@ const variantConfig = {
   'page-header': {
     defaultAs: 'h1' as const,
     className:
-      'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] mb-4 mx-4',
+      'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] pb-4 px-4 pt-8',
   },
   'page-title': {
     defaultAs: 'h1' as const,

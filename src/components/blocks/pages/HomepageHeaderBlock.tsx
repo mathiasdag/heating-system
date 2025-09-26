@@ -44,7 +44,7 @@ export default function HomepageHeaderBlock({
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.25, ease: 'easeOut' }}
+          transition={{ delay: 2, duration: 1, ease: 'easeOut' }}
           className="w-full h-full"
         >
           <Image
@@ -63,7 +63,7 @@ export default function HomepageHeaderBlock({
         <motion.div
           initial={{ opacity: 0, scale: 1.2 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 3, duration: 1, ease: 'easeOut' }}
+          transition={{ delay: 2, duration: 1, ease: 'easeOut' }}
           className="w-full h-full"
         >
           <MuxPlayer

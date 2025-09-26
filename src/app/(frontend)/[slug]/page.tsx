@@ -1,5 +1,5 @@
 import PayloadAPI from '@/lib/api';
-import HeaderBlock from '@/components/blocks/pages/HeaderBlock';
+import { HeaderBlock } from '@/components/blocks/pages/header';
 import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
 import React from 'react';

@@ -46,7 +46,7 @@ async function ArticlePage({ params }: ArticlePageProps) {
       <ArticleContent content={article.content} />
 
       {/* Footer */}
-      <footer className="font-mono mx-auto w-full max-w-xl px-2 -mt-20">
+      <footer className="font-mono mx-auto w-full max-w-xl px-2 -mt-24">
         ———
         <div>
           Ord: &nbsp;

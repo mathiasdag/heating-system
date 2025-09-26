@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   DefaultNodeTypes,
   SerializedBlockNode,
@@ -9,8 +10,17 @@ import {
 import {
   SerializedHeadingNode,
   SerializedParagraphNode,
+  SerializedQuoteNode,
 } from '@payloadcms/richtext-lexical';
 import { Heading } from '@/components/headings';
+import {
+  QABlock,
+  ImageBlock,
+  ArticleCTABlock,
+  ArticleTextBlock,
+} from '@/components/blocks/articles';
+import VideoBlock from '@/components/blocks/VideoBlock';
+import SignatureBlock from '@/components/blocks/global/SignatureBlock';
 
 /**
  * Article-specific paragraph converter
@@ -20,7 +30,25 @@ const articleParagraphConverter: JSXConverters<SerializedParagraphNode> = {
   paragraph: ({ node, nodesToJSX }) => {
     const text = nodesToJSX({ nodes: node.children });
 
-    return <p className="max-w-xl hyphens-auto px-2">{text}</p>;
+    // Check if paragraph is empty (no text content or only whitespace/breaks)
+    const isEmpty =
+      !text ||
+      (typeof text === 'string' && text.trim() === '') ||
+      (React.isValidElement(text) && text.props.children === '') ||
+      (Array.isArray(text) &&
+        text.every(
+          child =>
+            !child ||
+            (typeof child === 'string' && child.trim() === '') ||
+            (React.isValidElement(child) && child.props.children === '')
+        ));
+
+    // Return null for empty paragraphs to prevent rendering
+    if (isEmpty) {
+      return null;
+    }
+
+    return <p className="max-w-xl px-2">{text}</p>;
   },
 };
 
@@ -33,6 +61,24 @@ const defaultParagraphConverter: JSXConverters<SerializedParagraphNode> = {
     const text = nodesToJSX({ nodes: node.children });
 
     return <p className="font-mono">{text}</p>;
+  },
+};
+
+/**
+ * Article-specific blockquote converter
+ * Used in articles with centered styling and horizontal rules
+ */
+const articleBlockquoteConverter: JSXConverters<SerializedQuoteNode> = {
+  quote: ({ node, nodesToJSX }) => {
+    const text = nodesToJSX({ nodes: node.children });
+
+    return (
+      <blockquote className="relative max-w-6xl w-full mx-auto px-4 text-center font-display text-xl">
+        <hr className="mx-auto w-16 mb-4" />
+        {text}
+        <hr className="mx-auto w-16 mt-6" />
+      </blockquote>
+    );
   },
 };
 
@@ -93,13 +139,41 @@ const headingConverter: JSXConverters<SerializedHeadingNode> = {
  */
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<any>;
 
-// Article converter - for article content
+// Article converter - for article content with inline blocks
 export const articleConverter: JSXConvertersFunction<NodeTypes> = ({
   defaultConverters,
 }) => ({
   ...defaultConverters,
   ...articleParagraphConverter,
+  ...articleBlockquoteConverter,
   ...headingConverter,
+  blocks: {
+    textBlock: ({ node }) => <ArticleTextBlock content={node.fields.content} />,
+    image: ({ node }) => (
+      <ImageBlock image={node.fields.image} caption={node.fields.caption} />
+    ),
+    video: ({ node }) => (
+      <VideoBlock
+        host={node.fields.host}
+        sources={node.fields.sources}
+        autoplay={node.fields.autoplay}
+        controls={node.fields.controls}
+        adaptiveResolution={node.fields.adaptiveResolution}
+      />
+    ),
+    cta: ({ node }) => (
+      <ArticleCTABlock
+        headline={node.fields.headline}
+        ctaType={node.fields.ctaType}
+        description={node.fields.description}
+        link={node.fields.link}
+      />
+    ),
+    qa: ({ node }) => (
+      <QABlock question={node.fields.question} answer={node.fields.answer} />
+    ),
+    signature: ({ node }) => <SignatureBlock text={node.fields.text} />,
+  },
 });
 
 // Default converter - for blocks, cards, etc.

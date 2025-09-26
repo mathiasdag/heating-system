@@ -159,7 +159,7 @@ const Articles: CollectionConfig = {
                 features: ({ defaultFeatures }) => [
                   ...defaultFeatures,
                   BlocksFeature({
-                    blocks: [TextBlock, Image, Video, CTA, QA],
+                    blocks: [Image, Video, CTA, QA],
                   }),
                 ],
               }),

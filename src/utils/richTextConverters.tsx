@@ -20,11 +20,7 @@ const articleParagraphConverter: JSXConverters<SerializedParagraphNode> = {
   paragraph: ({ node, nodesToJSX }) => {
     const text = nodesToJSX({ nodes: node.children });
 
-    return (
-      <p className="font-mono sm:px-4 md:px-8 max-w-6xl mx-auto hyphens-auto px-2">
-        {text}
-      </p>
-    );
+    return <p className="max-w-xl hyphens-auto px-2">{text}</p>;
   },
 };
 

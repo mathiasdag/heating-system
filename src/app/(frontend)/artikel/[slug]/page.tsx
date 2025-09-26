@@ -38,7 +38,7 @@ async function ArticlePage({ params }: ArticlePageProps) {
   };
 
   return (
-    <div data-content-type="article" className="min-h-screen">
+    <div data-content-type="article" className="min-h-screen grid gap-24 pb-36">
       {/* Article Header */}
       <ArticleHeader article={article} />
 
@@ -46,13 +46,13 @@ async function ArticlePage({ params }: ArticlePageProps) {
       <ArticleContent content={article.content} />
 
       {/* Footer */}
-      <footer className="font-mono mx-auto max-w-xl px-4 pb-36">
+      <footer className="font-mono mx-auto w-full max-w-xl px-2 -mt-20">
         ———
         <div>
           Ord: &nbsp;
-          {article.author?.firstName &&
-            article.author?.lastName &&
-            `${article.author.firstName} ${article.author.lastName}`}
+          {article.author.firstName && article.author.lastName
+            ? `${article.author.firstName} ${article.author.lastName}`
+            : article.author.email}
         </div>
         <div>
           {article.lastModifiedDate

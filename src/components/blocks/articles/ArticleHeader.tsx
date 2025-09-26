@@ -41,13 +41,13 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
   };
 
   return (
-    <div className="relative mb-16">
+    <div className="relative">
       <DevIndicator componentName="ArticleHeader" />
 
-      <div className="grid gap-6 justify-center pt-32 pb-16 text-center">
+      <div className="grid gap-6 justify-center pt-32 text-center px-2">
         {/* Tags */}
         {article.tags && article.tags.length > 0 && (
-          <div className="flex justify-center gap-2 flex-wrap mb-4">
+          <div className="flex justify-center gap-1 flex-wrap mb-4">
             {article.tags.map((tag, index) => (
               <Tag key={tag.id || index} name={tag.name} size="md" />
             ))}

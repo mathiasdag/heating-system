@@ -56,7 +56,7 @@ const articleBlockquoteConverter: JSXConverters<SerializedQuoteNode> = {
     const text = nodesToJSX({ nodes: node.children });
 
     return (
-      <blockquote className="relative max-w-6xl w-full mx-auto px-4 text-center font-display text-xl py-8">
+      <blockquote className="relative max-w-6xl w-full mx-auto px-4 text-center font-display text-xl">
         <hr className="mx-auto w-16 mb-4" />
         {text}
         <hr className="mx-auto w-16 mt-6" />

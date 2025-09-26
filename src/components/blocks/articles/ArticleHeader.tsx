@@ -4,6 +4,7 @@ import { fixImageUrl } from '@/utils/imageUrl';
 import Image from 'next/image';
 import Tag from '@/components/ui/Tag';
 import { DevIndicator } from '@/components/dev/DevIndicator';
+import { Heading } from '@/components/headings';
 
 interface ArticleHeaderProps {
   article: {
@@ -43,22 +44,7 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
     <div className="relative mb-16">
       <DevIndicator componentName="ArticleHeader" />
 
-      {/* Featured Image */}
-      {article.featuredImage && (
-        <div className="mb-8">
-          <div className="relative w-full h-64 md:h-96">
-            <Image
-              src={fixImageUrl(article.featuredImage.url)}
-              alt={article.featuredImage.alt || article.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        </div>
-      )}
-
-      <div className="grid gap-8 justify-center pt-32 pb-16 text-center">
+      <div className="grid gap-6 justify-center pt-32 pb-16 text-center">
         {/* Tags */}
         {article.tags && article.tags.length > 0 && (
           <div className="flex justify-center gap-2 flex-wrap mb-4">
@@ -69,24 +55,14 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
         )}
 
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-6 leading-tight">
+        <Heading variant="page-title" as="h1" className="">
           {article.title}
-        </h1>
+        </Heading>
 
         {/* Introduction */}
         {article.introduction && (
-          <div className="text-gray-700 leading-relaxed px-4 mb-8">
-            <RichText
-              data={article.introduction}
-              className="rich-text grid gap-3"
-            />
-          </div>
-        )}
-
-        {/* Excerpt */}
-        {article.excerpt && (
-          <div className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed px-4">
-            {article.excerpt}
+          <div className="mx-auto max-w-6xl font-mono px-4">
+            <RichText data={article.introduction} className="grid gap-3" />
           </div>
         )}
 
@@ -106,6 +82,22 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
               : `Publicerad: ${formatDate(article.publishedDate || '')}`}
           </div>
         </div>
+
+        {/* Featured Image */}
+        {article.featuredImage && (
+          <div className="mb-8">
+            <div className="max-h-[80vh] flex items-center justify-center">
+              <Image
+                src={fixImageUrl(article.featuredImage.url)}
+                alt={article.featuredImage.alt || article.title}
+                width={article.featuredImage.width || 1200}
+                height={article.featuredImage.height || 800}
+                className="object-contain max-h-full h-full w-auto rounded-lg object-center"
+                priority
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -2,11 +2,15 @@ import React from 'react';
 import {
   RichText,
   JSXConvertersFunction,
+  JSXConverters,
 } from '@payloadcms/richtext-lexical/react';
+import {
+  SerializedParagraphNode,
+  SerializedQuoteNode,
+} from '@payloadcms/richtext-lexical';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import {
   QABlock,
-  QuoteBlock,
   ImageBlock,
   ArticleCTABlock,
   ArticleTextBlock,
@@ -17,15 +21,40 @@ interface ArticleContentProps {
   content: any; // RichText content from Payload with inline blocks
 }
 
-// JSX Converter for blocks
+// Custom paragraph converter for articles
+const articleParagraphConverter: JSXConverters<SerializedParagraphNode> = {
+  paragraph: ({ node, nodesToJSX }) => {
+    const text = nodesToJSX({ nodes: node.children });
+
+    return <p className="max-w-xl mx-auto px-4">{text}</p>;
+  },
+};
+
+// Custom blockquote converter for articles
+const articleBlockquoteConverter: JSXConverters<SerializedQuoteNode> = {
+  quote: ({ node, nodesToJSX }) => {
+    const text = nodesToJSX({ nodes: node.children });
+
+    return (
+      <blockquote className="relative max-w-6xl w-full mx-auto px-4 text-center font-display text-xl py-8">
+        <hr className="mx-auto w-16 mb-4" />
+        {text}
+        <hr className="mx-auto w-16 mt-6" />
+      </blockquote>
+    );
+  },
+};
+
+// JSX Converter for blocks and HTML elements
 const jsxConverter: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
+  ...articleParagraphConverter,
+  ...articleBlockquoteConverter,
   blocks: {
     textBlock: ({ node }) => <ArticleTextBlock content={node.fields.content} />,
     image: ({ node }) => (
       <ImageBlock image={node.fields.image} caption={node.fields.caption} />
     ),
-    quote: ({ node }) => <QuoteBlock content={node.fields.content} />,
     video: ({ node }) => (
       <VideoBlock
         host={node.fields.host}
@@ -51,16 +80,13 @@ const jsxConverter: JSXConvertersFunction = ({ defaultConverters }) => ({
 
 export default function ArticleContent({ content }: ArticleContentProps) {
   return (
-    <main className="grid grid-cols-12 gap-4 pb-8">
+    <main className="relative">
       <DevIndicator componentName="ArticleContent" />
-
-      <div className="col-start-1 col-end-13">
-        <RichText
-          data={content}
-          className="rich-text grid gap-3"
-          converters={jsxConverter}
-        />
-      </div>
+      <RichText
+        data={content}
+        className="grid gap-4 justify-center pb-8"
+        converters={jsxConverter}
+      />
     </main>
   );
 }

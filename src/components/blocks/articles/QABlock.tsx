@@ -11,7 +11,7 @@ interface QABlockProps {
 
 export default function QABlock({ question, answer }: QABlockProps) {
   return (
-    <div className="relative max-w-xl mx-auto px-4 grid gap-3 col-start-1 col-end-13 pt-3 first:pt-0">
+    <div className="relative max-w-xl mx-auto px-4 grid gap-3 pt-3 first:pt-0">
       <DevIndicator componentName="QABlock" />
       <RichText data={question} className="font-mono text-center uppercase" />
       <RichText data={answer} className="text-justify" />

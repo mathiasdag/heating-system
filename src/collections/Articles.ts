@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload';
 import { lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical';
-import Quote from '@/blocks/articles/Quote';
 import Image from '@/blocks/articles/Image';
 import Video from '@/blocks/articles/Video';
 import TextBlock from '@/blocks/articles/TextBlock';
@@ -160,7 +159,7 @@ const Articles: CollectionConfig = {
                 features: ({ defaultFeatures }) => [
                   ...defaultFeatures,
                   BlocksFeature({
-                    blocks: [TextBlock, Image, Quote, Video, CTA, QA],
+                    blocks: [TextBlock, Image, Video, CTA, QA],
                   }),
                 ],
               }),

@@ -40,8 +40,6 @@ export function transformRichTextLinks(data: unknown): unknown {
           typeof doc === 'object' &&
           doc !== null
         ) {
-          console.log('Processing internal link doc:', doc);
-
           const docObj = doc as {
             value?: { slug?: string; relationTo?: string };
             relationTo?: string;
@@ -50,8 +48,6 @@ export function transformRichTextLinks(data: unknown): unknown {
           // Check if relationTo is at the top level or inside value
           const relationTo = docObj.relationTo || docObj.value?.relationTo;
           const slug = docObj.value?.slug;
-
-          console.log('relationTo:', relationTo, 'slug:', slug);
 
           if (slug) {
             // Fix the URL for internal links
@@ -66,7 +62,6 @@ export function transformRichTextLinks(data: unknown): unknown {
 
             // Update the URL field
             (nodeObj.fields as { url: string }).url = correctUrl;
-            console.log('Fixed internal link URL:', correctUrl);
           }
         }
       }

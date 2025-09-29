@@ -53,10 +53,6 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [currentAsset, setCurrentAsset] = useState<any>(null);
 
-  // Debug logging
-  console.log('HighlightOverlay received showcase:', showcase);
-  console.log('Showcase assets:', showcase.assets);
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleCurrentAssetChange = (index: number, asset: any) => {
     setCurrentAssetIndex(index);

@@ -27,7 +27,6 @@ const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
       if (headerRef.current) {
         const { scrollHeight, clientHeight } = headerRef.current;
         const hasScroll = scrollHeight > clientHeight + 1; // Add small buffer for precision
-        console.log('Scroll check:', { scrollHeight, clientHeight, hasScroll });
         setIsScrollable(hasScroll);
       }
     };

@@ -22,7 +22,6 @@ export default function HorizontalMarqueeBlock({
   userCards,
 }: HorizontalMarqueeBlockProps) {
   // Debug: Log the speed value and try different speed calculations
-  console.log('HorizontalMarqueeBlock - speed:', speed, 'type:', typeof speed);
 
   // Try different speed calculations to see which one works
   const speedValue = Number(speed);
@@ -42,12 +41,6 @@ export default function HorizontalMarqueeBlock({
   // Also try inverted (higher CMS = slower)
   const invertedPixelSpeed =
     maxPixelSpeed - normalizedSpeed * (maxPixelSpeed - minPixelSpeed);
-
-  console.log('Speed calculations:', {
-    speedValue,
-    pixelSpeed: Math.round(pixelSpeed),
-    invertedPixelSpeed: Math.round(invertedPixelSpeed),
-  });
 
   if (!userCards || userCards.length === 0) {
     return null;

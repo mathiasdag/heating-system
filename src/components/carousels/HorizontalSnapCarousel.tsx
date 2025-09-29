@@ -44,16 +44,6 @@ const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
     const tolerance = 2;
     const isScrollable = totalContentWidth > visibleWidth + tolerance;
 
-    // Debug logging (remove in production)
-    console.log('HorizontalSnapCarousel calcLayout:', {
-      containerWidth,
-      cardWidth,
-      totalContentWidth,
-      visibleWidth,
-      isScrollable,
-      childrenCount: children.length,
-    });
-
     // 24px = space-x-6 (1.5rem)
     return {
       showDots: containerWidth < cardWidth * 2 + 24,

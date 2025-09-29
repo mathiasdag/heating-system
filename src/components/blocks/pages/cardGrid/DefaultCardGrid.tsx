@@ -72,7 +72,7 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
             <MediaCard
               key={idx}
               className={clsx(
-                'grow-0 shrink-0 w-[80vw] sm:w-[400px] border-r border-text snap-center'
+                'grow-0 shrink-0 w-[80vw] sm:w-[20em] border-r border-text snap-center'
               )}
               {...card}
               buttonVariant={'primary'}

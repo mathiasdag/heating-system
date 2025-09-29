@@ -82,15 +82,11 @@ export default async function HomePage() {
     (block: any) => block.blockType !== 'header'
   );
 
-  return (
-    <div data-content-type="page">
-      {headerBlock ? (
-        <HomepageHeaderBlock {...JSON.parse(JSON.stringify(headerBlock))}>
-          {otherBlocks.map((block: any, i: number) => renderBlock(block, i))}
-        </HomepageHeaderBlock>
-      ) : (
-        blocks.map((block: any, i: number) => renderBlock(block, i))
-      )}
-    </div>
+  return headerBlock ? (
+    <HomepageHeaderBlock {...JSON.parse(JSON.stringify(headerBlock))}>
+      {otherBlocks.map((block: any, i: number) => renderBlock(block, i))}
+    </HomepageHeaderBlock>
+  ) : (
+    blocks.map((block: any, i: number) => renderBlock(block, i))
   );
 }

@@ -120,6 +120,14 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const htmlClass = useCustomFonts
     ? `${sans.variable} ${mono.variable} ${display.variable} ${ballPill.variable} font-sans bg-bg dark:bg-dark-bg text-text dark:text-dark-text`
     : '';
+
+  // Get pathname from headers to determine if we're on homepage
+  const headersList = await import('next/headers').then(m => m.headers());
+  const pathname = headersList.get('x-pathname') || '/';
+  const isHomepage = pathname === '/';
+
+  const mainClassName = 'min-h-screen';
+
   return (
     <html lang="sv" className={htmlClass} suppressHydrationWarning>
       <body>
@@ -132,8 +140,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             <UrlBasedTheme>
               <BackgroundLoader>
                 <NavigationWrapper navigation={navigation} />
-                <main className="min-h-screen">{children}</main>
-                <Footer />
+                <main className={mainClassName}>
+                  {children}
+                  <Footer />
+                </main>
                 <AdminContainer>
                   <RevalidateButton />
                   <ExitPreviewButton />

@@ -6,7 +6,7 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import { AppLink } from '@/components/ui';
 import { HorizontalSnapCarousel } from '@/components/carousels';
-import { OverlayCard, InfoOverlay } from '@/components/blocks/overlay';
+import { InfoOverlay } from '@/components/blocks/overlay';
 import { routeLink, LinkGroup } from '@/utils/linkRouter';
 
 interface Card {

@@ -210,11 +210,6 @@ export class PayloadAPI {
 
       const url = `${API_BASE_URL}/${collection}?${params.toString()}`;
 
-      // Log API call for debugging (development only)
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`🔍 findBySlug API Call: ${url}`);
-      }
-
       try {
         const response = await fetch(url, {
           method: 'GET',

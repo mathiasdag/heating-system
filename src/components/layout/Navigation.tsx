@@ -24,19 +24,18 @@ const NAV_DIMENSIONS = {
   PADDING: {
     SMALL: 'px-[.4rem]',
     MEDIUM: 'px-[.5rem] sm:px-[.4rem]',
-    LARGE: 'px-[.6rem]'
+    LARGE: 'px-[.6rem]',
   },
   SPACING: {
     GAP: 'gap-[.12em]',
-    GAP_SMALL: 'gap-[.15em]',
-    MARGIN_TOP: 'mt-[3.1em] sm:mt-[2.65em]',
-    MARGIN_LEFT: 'ml-2',
-    MARGIN_LEFT_LARGE: 'ml-8'
+    MARGIN_TOP: 'mt-[3.6em] sm:mt-[2.65em]',
+    MARGIN_LEFT: 'ml-4 sm:ml-2',
+    MARGIN_LEFT_LARGE: 'ml-8',
   },
   Z_INDEX: {
     LOW: 'z-20 sm:z-30',
-    HIGH: 'z-30'
-  }
+    HIGH: 'z-30',
+  },
 };
 
 export interface NavigationLink extends LinkGroup {
@@ -123,7 +122,7 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
   mounted,
 }) => {
   const navButtonClasses = clsx(
-    `fixed top-2 left-2 ${NAV_DIMENSIONS.Z_INDEX.HIGH} ${NAV_DIMENSIONS.BORDER_RADIUS}`,
+    `fixed top-4 left-4 sm:top-2 sm:left-2 ${NAV_DIMENSIONS.Z_INDEX.HIGH} ${NAV_DIMENSIONS.BORDER_RADIUS}`,
     `cursor-pointer text-white ${NAV_DIMENSIONS.WIDTH} ${NAV_DIMENSIONS.HEIGHT}`,
     'flex items-center justify-center',
     'border-text',
@@ -152,7 +151,9 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
 };
 
 const Logo: React.FC = () => {
-  const logoContainerClasses = clsx(`fixed top-2 right-2 ${NAV_DIMENSIONS.Z_INDEX.HIGH}`);
+  const logoContainerClasses = clsx(
+    `fixed top-4 right-4 sm:top-2 sm:right-2 ${NAV_DIMENSIONS.Z_INDEX.HIGH}`
+  );
 
   return (
     <FadeIn
@@ -232,7 +233,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
         />
       </div>
       {hasSubmenu && (
-        <div className={`${NAV_DIMENSIONS.SPACING.MARGIN_LEFT_LARGE} grid ${NAV_DIMENSIONS.SPACING.GAP_SMALL} mt-[.15em]`}>
+        <div
+          className={`${NAV_DIMENSIONS.SPACING.MARGIN_LEFT_LARGE} grid ${NAV_DIMENSIONS.SPACING.GAP} mt-[.15em]`}
+        >
           {item.children!.map(child => (
             <MenuItem
               key={`${child.link.text}-${level + 1}`}
@@ -276,17 +279,21 @@ const MenuOverlay: React.FC<MenuOverlayProps> = ({
       closeOnOutsideClick={true}
       zIndex={30}
     >
-      <ul className={`grid ${NAV_DIMENSIONS.SPACING.GAP} ${NAV_DIMENSIONS.SPACING.MARGIN_LEFT} ${NAV_DIMENSIONS.SPACING.MARGIN_TOP}`}>
-        {menuItems.map((item, index) => (
-          <li key={index}>
-            <MenuItem
-              item={item}
-              onLinkClick={onLinkClick}
-              isDarkMode={isDarkMode}
-            />
-          </li>
-        ))}
-      </ul>
+      <div className="h-full overflow-y-auto mix-blend-multiply">
+        <ul
+          className={`grid ${NAV_DIMENSIONS.SPACING.GAP} ${NAV_DIMENSIONS.SPACING.MARGIN_LEFT} ${NAV_DIMENSIONS.SPACING.MARGIN_TOP} place-content-start pb-16`}
+        >
+          {menuItems.map((item, index) => (
+            <li key={index}>
+              <MenuItem
+                item={item}
+                onLinkClick={onLinkClick}
+                isDarkMode={isDarkMode}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </Overlay>
   );
 };

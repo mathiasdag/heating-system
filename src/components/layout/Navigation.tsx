@@ -13,6 +13,32 @@ import Overlay from '@/components/ui/Overlay';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 
+// Navigation styling constants
+const NAV_DIMENSIONS = {
+  HEIGHT: 'h-10 sm:h-8',
+  WIDTH: 'w-10 sm:w-8',
+  BORDER_RADIUS: 'rounded-md sm:rounded-sm',
+  ICON_SIZE: 'w-1/2 h-1/2',
+  LOGO_SIZE: 'w-24 sm:w-22 md:w-24 2xl:w-[6.5em]',
+  TEXT_SIZE: 'sm:text-md',
+  PADDING: {
+    SMALL: 'px-[.4rem]',
+    MEDIUM: 'px-[.5rem] sm:px-[.4rem]',
+    LARGE: 'px-[.6rem]'
+  },
+  SPACING: {
+    GAP: 'gap-[.12em]',
+    GAP_SMALL: 'gap-[.15em]',
+    MARGIN_TOP: 'mt-[3.1em] sm:mt-[2.65em]',
+    MARGIN_LEFT: 'ml-2',
+    MARGIN_LEFT_LARGE: 'ml-8'
+  },
+  Z_INDEX: {
+    LOW: 'z-20 sm:z-30',
+    HIGH: 'z-30'
+  }
+};
+
 export interface NavigationLink extends LinkGroup {
   reference?: unknown;
 }
@@ -53,7 +79,7 @@ const HighlightLink: React.FC<HighlightLinkProps> = ({
   const href = linkResult.href || '#';
 
   const highlightLinkClasses = clsx(
-    'fixed z-30 bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.65em] h-8 rounded-sm',
+    `fixed ${NAV_DIMENSIONS.Z_INDEX.LOW} bottom-2 left-2 right-2 md:right-auto md:bottom-auto md:top-2 md:left-[2.65em] ${NAV_DIMENSIONS.HEIGHT} ${NAV_DIMENSIONS.BORDER_RADIUS}`,
     !mounted && 'mix-blend-multiply bg-text',
     mounted && isDarkMode && 'text-text border border-white',
     mounted && !isDarkMode && 'mix-blend-multiply bg-text text-white'
@@ -65,10 +91,10 @@ const HighlightLink: React.FC<HighlightLinkProps> = ({
         href={href}
         onClick={onClick}
         className={clsx(
-          'rounded-sm cursor-pointer md:max-w-sm',
-          'text-md h-full',
+          `${NAV_DIMENSIONS.BORDER_RADIUS} cursor-pointer md:max-w-sm`,
+          `${NAV_DIMENSIONS.TEXT_SIZE} h-full`,
           'flex items-center justify-center',
-          !isMarqueeing && 'px-[.6rem]'
+          !isMarqueeing && NAV_DIMENSIONS.PADDING.LARGE
         )}
       >
         <MarqueeText
@@ -97,8 +123,8 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
   mounted,
 }) => {
   const navButtonClasses = clsx(
-    'fixed top-2 left-2 z-30 rounded-sm',
-    'cursor-pointer text-white w-8 h-8',
+    `fixed top-2 left-2 ${NAV_DIMENSIONS.Z_INDEX.HIGH} ${NAV_DIMENSIONS.BORDER_RADIUS}`,
+    `cursor-pointer text-white ${NAV_DIMENSIONS.WIDTH} ${NAV_DIMENSIONS.HEIGHT}`,
     'flex items-center justify-center',
     'border-text',
     !mounted && 'mix-blend-multiply bg-text',
@@ -117,16 +143,16 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
       aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
     >
       {isOpen ? (
-        <CloseNavIcon className="w-4 h-4" />
+        <CloseNavIcon className={NAV_DIMENSIONS.ICON_SIZE} />
       ) : (
-        <OpenNavIcon className="w-4 h-4" />
+        <OpenNavIcon className={NAV_DIMENSIONS.ICON_SIZE} />
       )}
     </FadeIn>
   );
 };
 
 const Logo: React.FC = () => {
-  const logoContainerClasses = clsx('fixed top-2 right-2 z-30');
+  const logoContainerClasses = clsx(`fixed top-2 right-2 ${NAV_DIMENSIONS.Z_INDEX.HIGH}`);
 
   return (
     <FadeIn
@@ -138,7 +164,7 @@ const Logo: React.FC = () => {
       <Link href="/">
         <VarmeverketIcon
           size={120}
-          className="text-text w-20 sm:w-22 md:w-24 2xl:w-[6.5em] h-auto"
+          className={`text-text ${NAV_DIMENSIONS.LOGO_SIZE} h-auto`}
         />
       </Link>
     </FadeIn>
@@ -157,8 +183,8 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
   isDarkMode,
 }) => {
   const linkClasses = clsx(
-    'rounded-sm cursor-pointer',
-    'text-md h-8',
+    `${NAV_DIMENSIONS.BORDER_RADIUS} cursor-pointer`,
+    `${NAV_DIMENSIONS.TEXT_SIZE} h-8`,
     'flex items-center justify-center',
     isDarkMode
       ? 'text-text border border-text'
@@ -173,7 +199,7 @@ const NavigationLink: React.FC<NavigationLinkProps> = ({
     <Link
       href={href}
       onClick={onClick}
-      className={clsx(linkClasses, 'px-[.4rem]')}
+      className={clsx(linkClasses, NAV_DIMENSIONS.PADDING.MEDIUM)}
     >
       {itemText}
     </Link>
@@ -206,7 +232,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
         />
       </div>
       {hasSubmenu && (
-        <div className="ml-8 grid gap-[.15em] mt-[.15em]">
+        <div className={`${NAV_DIMENSIONS.SPACING.MARGIN_LEFT_LARGE} grid ${NAV_DIMENSIONS.SPACING.GAP_SMALL} mt-[.15em]`}>
           {item.children!.map(child => (
             <MenuItem
               key={`${child.link.text}-${level + 1}`}
@@ -250,7 +276,7 @@ const MenuOverlay: React.FC<MenuOverlayProps> = ({
       closeOnOutsideClick={true}
       zIndex={30}
     >
-      <ul className="grid gap-[.12em] ml-2 mt-[2.65em]">
+      <ul className={`grid ${NAV_DIMENSIONS.SPACING.GAP} ${NAV_DIMENSIONS.SPACING.MARGIN_LEFT} ${NAV_DIMENSIONS.SPACING.MARGIN_TOP}`}>
         {menuItems.map((item, index) => (
           <li key={index}>
             <MenuItem

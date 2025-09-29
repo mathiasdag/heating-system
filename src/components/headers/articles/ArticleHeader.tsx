@@ -47,8 +47,10 @@ export default function ArticleHeader({
     });
   };
 
-  const beforeAssets = header?.assets?.filter(asset => asset.placement === 'before') || [];
-  const afterAssets = header?.assets?.filter(asset => asset.placement === 'after') || [];
+  const beforeAssets =
+    header?.assets?.filter(asset => asset.placement === 'before') || [];
+  const afterAssets =
+    header?.assets?.filter(asset => asset.placement === 'after') || [];
 
   return (
     <div className="relative mb-16">

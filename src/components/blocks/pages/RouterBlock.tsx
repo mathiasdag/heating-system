@@ -22,12 +22,12 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
   links,
 }) => {
   return (
-    <section className="py-24 grid relative">
+    <section className="grid relative">
       <DevIndicator componentName="RouterBlock" />
       <FadeInUp timing="normal">
         <BlockHeader headline={headline} description={description} />
       </FadeInUp>
-      <hr className="mx-4 my-2" />
+      <hr className="mx-2 my-2" />
 
       <div className="relative flex justify-center items-center py-24">
         {/* Central vertical line */}
@@ -59,7 +59,7 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
         </div>
       </div>
 
-      <hr className="mx-4 my-2" />
+      <hr className="mx-2 my-2" />
     </section>
   );
 };

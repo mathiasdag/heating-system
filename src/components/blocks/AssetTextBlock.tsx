@@ -45,7 +45,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
       <DevIndicator componentName="AssetTextBlock" position="top-right" />
 
       <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 items-center">
           {/* Asset Content */}
           <div
             className={clsx(
@@ -76,8 +76,13 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
 
             {/* Link */}
             {link && (
-              <div className="mt-6">
-                <AppLink link={link} variant="outline" size="md">
+              <div className="mt-8 px-2 mb-2 sm:mb-0 sm:mt-6">
+                <AppLink
+                  link={link}
+                  variant="outline"
+                  size="md"
+                  className="w-full text-center sm:w-auto"
+                >
                   {link.text || 'Läs mer'}
                 </AppLink>
               </div>

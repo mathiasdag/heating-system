@@ -27,17 +27,17 @@ interface AppActionProps {
 
 const sizeStyles = {
   sm: 'px-2 pt-[.4em] pb-1',
-  md: 'px-4 pt-[.65em] pb-[.45em]',
+  md: 'px-4 py-2.5',
   lg: 'px-4 pt-[1.1em] pb-4',
 };
 
 const baseStyles = {
   primary:
-    'uppercase bg-text text-white mix-blend-multiply rounded-sm block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-text text-white mix-blend-multiply rounded-md sm:rounded-sm block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   secondary:
-    'uppercase bg-accent rounded-sm block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-accent rounded-md sm:rounded-sm block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   outline:
-    'uppercase border border-text rounded-sm inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase border border-text rounded-md sm:rounded-sm inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   minimal: 'block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
 };
 

@@ -71,8 +71,10 @@ export default function SpaceHeader({ spaceData, header }: SpaceHeaderProps) {
     return null;
   };
 
-  const beforeAssets = header?.assets?.filter(asset => asset.placement === 'before') || [];
-  const afterAssets = header?.assets?.filter(asset => asset.placement === 'after') || [];
+  const beforeAssets =
+    header?.assets?.filter(asset => asset.placement === 'before') || [];
+  const afterAssets =
+    header?.assets?.filter(asset => asset.placement === 'after') || [];
   const heroAsset = spaceData.heroAsset;
 
   return (
@@ -97,7 +99,10 @@ export default function SpaceHeader({ spaceData, header }: SpaceHeaderProps) {
           {beforeAssets.length > 0 && (
             <div className="mb-8">
               {beforeAssets.map((asset, index) => (
-                <div key={index} className="max-h-[40vh] flex items-center justify-center">
+                <div
+                  key={index}
+                  className="max-h-[40vh] flex items-center justify-center"
+                >
                   {asset.type === 'image' && asset.image && (
                     <Image
                       src={fixImageUrl(asset.image.url)}
@@ -171,7 +176,10 @@ export default function SpaceHeader({ spaceData, header }: SpaceHeaderProps) {
           {afterAssets.length > 0 && (
             <div className="mt-8">
               {afterAssets.map((asset, index) => (
-                <div key={index} className="max-h-[40vh] flex items-center justify-center">
+                <div
+                  key={index}
+                  className="max-h-[40vh] flex items-center justify-center"
+                >
                   {asset.type === 'image' && asset.image && (
                     <Image
                       src={fixImageUrl(asset.image.url)}

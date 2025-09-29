@@ -62,9 +62,9 @@ export const ExitPreviewButton: React.FC<ExitPreviewButtonProps> = ({
   return (
     <button
       onClick={handleExitPreview}
-      className={`text-center grow px-4 py-3 rounded-sm hover:bg-white/10 ${className || ''}`}
+      className={`text-center grow px-2 py-2.5 sm:py-1 rounded-sm hover:bg-white/10 ${className || ''}`}
     >
-      <span className="uppercase">Exit preview</span>
+      Exit preview
     </button>
   );
 };

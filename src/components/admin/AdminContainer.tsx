@@ -19,7 +19,7 @@ export const AdminContainer: React.FC<AdminContainerProps> = ({
 }) => {
   return (
     <div
-      className={`fixed bottom-11 left-2 sm:left-auto md:bottom-2 right-2 z-50 mix-blend-multiply bg-text text-bg flex flex-row rounded-md divide-x ${className || ''}`}
+      className={`fixed bottom-[3.1rem] sm:bottom-11 left-2 sm:left-auto md:bottom-2 right-2 z-20 sm:z-30 mix-blend-difference bg-text text-bg flex flex-row rounded-md divide-x ${className || ''}`}
     >
       {children}
     </div>

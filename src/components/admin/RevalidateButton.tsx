@@ -42,7 +42,7 @@ const RevalidateButton: React.FC = () => {
     <button
       onClick={handleRevalidate}
       disabled={isLoading}
-      className="grow px-4 py-3 rounded-sm hover:bg-white/10 uppercase"
+      className="grow px-2 py-2.5 sm:py-1 rounded-sm hover:bg-white/10 text-bg"
     >
       {isLoading ? (
         <>

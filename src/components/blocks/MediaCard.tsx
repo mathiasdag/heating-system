@@ -45,11 +45,11 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   return (
     <div
       className={clsx(
-        'flex flex-col rounded-sm aspect-window',
-        'px-6 relative',
+        'flex flex-col rounded-sm min-h-[70vw] sm:min-h-[400px]',
+        'px-3 sm:px-6 relative',
         hasValidLink && buttonVariant === 'primary-full'
-          ? 'justify-between pb-4 pt-6'
-          : 'justify-center py-6',
+          ? 'justify-between pb-4 pt-8 sm:pt-6'
+          : 'justify-center py-8 sm:py-6',
         className
       )}
     >

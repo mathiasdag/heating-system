@@ -53,12 +53,12 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
     <div data-content-type="page" className="grid gap-32 pb-32">
       {/* Render standalone header if it exists */}
       {(page as any).header && (
-        <PageHeader 
-          text={(page as any).header.text} 
-          assets={(page as any).header.assets} 
+        <PageHeader
+          text={(page as any).header.text}
+          assets={(page as any).header.assets}
         />
       )}
-      
+
       {(page as any).layout?.map((block: any, i: number) => {
         const cleanBlock = JSON.parse(JSON.stringify(block));
         switch (block.blockType) {

@@ -24,7 +24,7 @@ async function SpacePage({ params }: SpacePageProps) {
   const { slug } = params;
 
   // Fetch the space with REST API
-  const space = await PayloadAPI.findBySlug('spaces', slug, 10) as any;
+  const space = (await PayloadAPI.findBySlug('spaces', slug, 10)) as any;
 
   // If space doesn't exist, return 404
   if (!space) {

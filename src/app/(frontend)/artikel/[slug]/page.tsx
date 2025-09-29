@@ -15,7 +15,12 @@ async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
 
   // Use the dedicated findBySlug method which handles the query properly
-  const article = await PayloadAPI.findBySlug('articles', slug, 10, false) as any;
+  const article = (await PayloadAPI.findBySlug(
+    'articles',
+    slug,
+    10,
+    false
+  )) as any;
 
   // In production, check if article is published
   if (

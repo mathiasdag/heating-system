@@ -20,7 +20,7 @@ export const DevIndicator: React.FC<DevIndicatorProps> = ({
 
   return (
     <div
-      className={`absolute select-none ${positionClasses[position]} z-20 border border-text text-xs px-0.5 pt-0.5 rounded-md font-sans opacity-10 hover:opacity-100 hover:bg-text hover:text-bg transition-opacity mix-blend-multiply`}
+      className={`absolute select-none ${positionClasses[position]} z-20 border border-text text-xs px-0.5 pt-0.5 rounded-md font-sans opacity-10 mix-blend-difference hover:opacity-100 hover:bg-text hover:text-bg transition-opacity`}
       title={`Component: ${componentName}`}
     >
       {componentName}

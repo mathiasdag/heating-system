@@ -67,18 +67,18 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
               : 'overflow-x-hidden justify-center'
           }`}
         >
-          <div className="snap-end grow-0 shrink-0 w-12 border-r border-text" />
+          <div className="snap-none grow-0 shrink-0 w-24 border-r border-text" />
           {cards.map((card, idx) => (
             <MediaCard
               key={idx}
               className={clsx(
-                'grow-0 shrink-0 w-[360px] sm:w-[400px] border-r border-text snap-center'
+                'grow-0 shrink-0 w-[80vw] sm:w-[400px] border-r border-text snap-center'
               )}
               {...card}
               buttonVariant={'primary'}
             />
           ))}
-          <div className="snap-start grow-0 shrink-0 w-12" />
+          <div className="snap-none grow-0 shrink-0 w-24" />
         </div>
       </div>
       <hr className="mx-2 my-2" />

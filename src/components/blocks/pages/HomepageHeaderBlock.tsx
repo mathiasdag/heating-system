@@ -83,13 +83,13 @@ export default function HomepageHeaderBlock({
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 bottom-[calc(50vh-2rem)] sm:bottom-0 z-0 bg-surface-dark">
+      <div className="fixed inset-x-0 top-0 h-[50vh] sm:h-full z-0 bg-surface-dark">
         <DevIndicator
           componentName="HomepageHeaderBlock"
           position="top-right"
         />
         <FadeIn
-          className="font-ballPill absolute inset-0 -translate-y-4 flex items-center justify-center select-none uppercase text-lg sm:text-xl text-surface-dark deboss-text"
+          className="font-ballPill absolute inset-0 -translate-y-4 flex items-center justify-center select-none uppercase text-xl text-surface-dark deboss-text"
           variant="fade"
           timing="slow"
           once={false}
@@ -101,10 +101,10 @@ export default function HomepageHeaderBlock({
 
       <motion.div
         ref={containerRef}
-        className="mt-[50vh] sm:mt-[calc(100vh-2rem)] relative z-10 bg-bg rounded-t-xl grid gap-32 pb-32"
+        className="mt-[calc(50vh-2rem)] sm:mt-[calc(100vh-2rem)] relative z-10 bg-bg rounded-t-3xl grid gap-32 pb-32"
       >
         <FadeIn
-          className="flex items-center justify-center px-2 text-center pt-8 sm:pt-16 md:pt-20"
+          className="flex items-center justify-center px-2 text-center pt-6 sm:pt-16 md:pt-20"
           timing="slow"
           delay={1}
         >

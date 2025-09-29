@@ -7,6 +7,7 @@ export type HeadingVariant =
   | 'article-title' // Article titles (H1)
   | 'page-header' // Page header titles (H1) - matches globals.css
   | 'section' // Section headings (H2)
+  | 'faq-title' // FAQ section titles (H2) - alternative styling
   | 'subsection' // Subsection headings (H3)
   | 'card-title' // Card/component titles (H3)
   | 'small-title' // Small titles (H4)
@@ -44,6 +45,11 @@ const variantConfig = {
   section: {
     defaultAs: 'h2' as const,
     className: 'font-sans text-lg leading-[1em] tracking-[-0.01em]',
+  },
+  'faq-title': {
+    defaultAs: 'h2' as const,
+    className:
+      'font-display text-xl uppercase leading-[1em] tracking-[-0.01em]',
   },
   subsection: {
     defaultAs: 'h3' as const,

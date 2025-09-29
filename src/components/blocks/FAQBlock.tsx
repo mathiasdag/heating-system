@@ -4,6 +4,8 @@ import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import QAList from '@/components/blocks/QAList';
+import { Heading } from '@/components/headings/Heading';
+import { jsxConverter } from '@/utils/richTextConverters';
 
 interface FAQItem {
   blockType: 'qa';
@@ -42,12 +44,16 @@ const FAQBlock: React.FC<FAQBlockProps> = ({
       {(headline || description) && (
         <div className="mb-8 text-center">
           {headline && (
-            <h2 className="font-display text-xl uppercase mb-4">{headline}</h2>
+            <Heading variant="faq-title" as="h2" className="mb-4 px-2">
+              {headline}
+            </Heading>
           )}
           {description && (
-            <div className="font-mono mx-autofont-mono text-center px-8 max-w-6xl mx-auto mb-4">
-              <RichText data={description} />
-            </div>
+            <RichText
+              data={description}
+              converters={jsxConverter}
+              className="grid justify-center"
+            />
           )}
         </div>
       )}

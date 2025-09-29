@@ -44,7 +44,6 @@ export default function HeaderBlockAssetsAbove({
   const renderAsset = (asset: Asset, key: number) => {
     const assetCount = assets.length;
     const height = Math.max(220 - (assetCount - 1) * 40, 120); // Minimum 120px
-    const className = 'rounded max-w-[50vw]';
 
     if (asset.type === 'image' && asset.image?.url) {
       // Calculate aspect ratio from original dimensions
@@ -52,7 +51,19 @@ export default function HeaderBlockAssetsAbove({
         asset.image.width && asset.image.height
           ? asset.image.width / asset.image.height
           : 1; // Default to square if no dimensions
-      const width = Math.round(height * aspectRatio);
+
+      // Determine if asset is landscape (wider than tall)
+      const isLandscape = aspectRatio > 1;
+
+      // If multiple assets, make all square at all screen widths
+      // If single landscape asset, make it square only on mobile
+      const shouldBeSquare =
+        assetCount > 1 || (assetCount === 1 && isLandscape);
+
+      const width = shouldBeSquare ? height : Math.round(height * aspectRatio);
+      const className = shouldBeSquare
+        ? 'rounded max-w-[50vw] aspect-square object-cover'
+        : 'rounded max-w-[50vw]';
 
       return (
         <Image
@@ -70,8 +81,12 @@ export default function HeaderBlockAssetsAbove({
     }
 
     if (asset.type === 'mux' && asset.mux) {
-      const width = Math.round(height * 1.5); // Default 3:2 aspect ratio for videos
-      const videoClassName = 'rounded overflow-hidden';
+      // If multiple assets, make all square at all screen widths
+      const shouldBeSquare = assetCount > 1;
+      const width = shouldBeSquare ? height : Math.round(height * 1.5); // Default 3:2 aspect ratio for videos
+      const videoClassName = shouldBeSquare
+        ? 'rounded overflow-hidden aspect-square'
+        : 'rounded overflow-hidden';
 
       return (
         <div
@@ -117,9 +132,8 @@ export default function HeaderBlockAssetsAbove({
       >
         <FadeInDown
           as="div"
-          className="flex gap-4 justify-center select-none pt-36 relative z-10"
+          className="flex gap-4 justify-center select-none pt-32 sm:pt-36 relative z-10"
           timing="fast"
-          delay={0.3}
         >
           {assets.map((asset, i) => (
             <React.Fragment key={i}>{renderAsset(asset, i)}</React.Fragment>
@@ -128,12 +142,7 @@ export default function HeaderBlockAssetsAbove({
       </motion.div>
 
       {/* Render rich text with enhanced motion effects */}
-      <FadeInUp
-        as="div"
-        className="max-w-7xl mx-auto px-4"
-        timing="fast"
-        delay={0.3}
-      >
+      <FadeInUp as="div" className="max-w-7xl mx-auto px-4" timing="fast">
         <RichText
           data={text}
           className="rich-text font-mono grid gap-3 hyphens-auto"

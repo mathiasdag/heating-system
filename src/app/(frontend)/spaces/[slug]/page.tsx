@@ -9,6 +9,7 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { HeaderBlock as SpacesHeaderBlock } from '@/components/blocks/spaces';
+import { SpaceHeader } from '@/components/headers';
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { SpacesPageWrapper } from '@/components/wrappers';
@@ -23,7 +24,7 @@ async function SpacePage({ params }: SpacePageProps) {
   const { slug } = params;
 
   // Fetch the space with REST API
-  const space = await PayloadAPI.findBySlug('spaces', slug, 10);
+  const space = await PayloadAPI.findBySlug('spaces', slug, 10) as any;
 
   // If space doesn't exist, return 404
   if (!space) {
@@ -34,7 +35,11 @@ async function SpacePage({ params }: SpacePageProps) {
     <SpacesPageWrapper>
       <div data-content-type="space">
         {/* Hero Section */}
-        <SpacesHeaderBlock spaceData={space} />
+        {space.header ? (
+          <SpaceHeader spaceData={space} header={space.header} />
+        ) : (
+          <SpacesHeaderBlock spaceData={space} />
+        )}
 
         {space?.layout?.map((block: any, i: number) => {
           const cleanBlock = JSON.parse(JSON.stringify(block));

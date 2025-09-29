@@ -1,5 +1,6 @@
 import { PayloadAPI } from '@/lib/api';
 import ArticleHeader from '@/components/blocks/articles/ArticleHeader';
+import { ArticleHeader as NewArticleHeader } from '@/components/headers';
 import ArticleContent from '@/components/blocks/articles/ArticleContent';
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -14,7 +15,7 @@ async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
 
   // Use the dedicated findBySlug method which handles the query properly
-  const article = await PayloadAPI.findBySlug('articles', slug, 10, false);
+  const article = await PayloadAPI.findBySlug('articles', slug, 10, false) as any;
 
   // In production, check if article is published
   if (
@@ -40,7 +41,11 @@ async function ArticlePage({ params }: ArticlePageProps) {
   return (
     <div data-content-type="article" className="min-h-screen grid gap-24 pb-36">
       {/* Article Header */}
-      <ArticleHeader article={article} />
+      {article.header ? (
+        <NewArticleHeader articleData={article} header={article.header} />
+      ) : (
+        <ArticleHeader article={article} />
+      )}
 
       {/* Main Content */}
       <ArticleContent content={article.content} />

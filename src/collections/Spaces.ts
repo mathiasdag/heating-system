@@ -84,10 +84,9 @@ const Spaces: CollectionConfig = {
                   },
                 },
                 {
-                  name: 'assets',
-                  type: 'array',
-                  label: 'Assets',
-                  minRows: 0,
+                  name: 'heroAsset',
+                  type: 'group',
+                  label: 'Hero Asset',
                   fields: [
                     {
                       name: 'type',
@@ -99,30 +98,13 @@ const Spaces: CollectionConfig = {
                       required: false,
                     },
                     {
-                      name: 'placement',
-                      type: 'select',
-                      label: 'Placement',
-                      options: [
-                        { label: 'Before Text', value: 'before' },
-                        { label: 'After Text', value: 'after' },
-                      ],
-                      defaultValue: 'before',
-                      required: true,
-                      admin: {
-                        description:
-                          'Choose where this asset should appear relative to the header text content',
-                      },
-                    },
-                    {
                       name: 'image',
                       type: 'upload',
                       relationTo: 'media',
                       required: false,
                       admin: {
-                        condition: (
-                          data: unknown,
-                          siblingData: Record<string, unknown>
-                        ) => siblingData?.type === 'image',
+                        condition: (data: unknown, siblingData: unknown) =>
+                          (siblingData as { type?: string })?.type === 'image',
                       },
                     },
                     {
@@ -130,10 +112,8 @@ const Spaces: CollectionConfig = {
                       type: 'text', // Store Mux asset ID or playback ID
                       required: false,
                       admin: {
-                        condition: (
-                          data: unknown,
-                          siblingData: Record<string, unknown>
-                        ) => siblingData?.type === 'mux',
+                        condition: (data: unknown, siblingData: unknown) =>
+                          (siblingData as { type?: string })?.type === 'mux',
                       },
                     },
                   ],
@@ -147,42 +127,6 @@ const Spaces: CollectionConfig = {
         {
           label: 'Content',
           fields: [
-            {
-              name: 'heroAsset',
-              type: 'group',
-              label: 'Hero Asset',
-              fields: [
-                {
-                  name: 'type',
-                  type: 'select',
-                  options: [
-                    { label: 'Image', value: 'image' },
-                    { label: 'Mux Video', value: 'mux' },
-                  ],
-                  required: false,
-                },
-                {
-                  name: 'image',
-                  type: 'upload',
-                  relationTo: 'media',
-                  required: false,
-                  admin: {
-                    condition: (data: unknown, siblingData: unknown) =>
-                      (siblingData as { type?: string })?.type === 'image',
-                  },
-                },
-                {
-                  name: 'mux',
-                  type: 'text', // Store Mux asset ID or playback ID
-                  required: false,
-                  admin: {
-                    condition: (data: unknown, siblingData: unknown) =>
-                      (siblingData as { type?: string })?.type === 'mux',
-                  },
-                },
-              ],
-              required: false,
-            },
             {
               name: 'layout',
               type: 'blocks',

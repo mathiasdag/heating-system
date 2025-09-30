@@ -79,9 +79,6 @@ const Spaces: CollectionConfig = {
                   name: 'text',
                   type: 'richText',
                   required: false,
-                  admin: {
-                    description: 'Main header text content for this space',
-                  },
                 },
                 {
                   name: 'heroAsset',

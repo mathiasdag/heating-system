@@ -17,9 +17,31 @@ interface HeaderBlockProps {
 }
 
 export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
-  const beforeAssets = assets.filter(asset => asset.placement === 'before');
-  const afterAssets = assets.filter(asset => asset.placement === 'after');
-  const hasAssets = assets.length > 0;
+  // Debug: Log the assets to see what we're working with
+  console.log('HeaderBlock assets:', assets);
+
+  // Filter assets that actually have content uploaded
+  const validAssets = assets.filter(asset => {
+    if (asset.type === 'image') {
+      const hasValidImage = asset.image?.url && asset.image.url.trim() !== '';
+      console.log('Image asset validation:', { asset, hasValidImage });
+      return hasValidImage;
+    }
+    if (asset.type === 'mux') {
+      const hasValidMux = asset.mux && asset.mux.trim() !== '';
+      console.log('Mux asset validation:', { asset, hasValidMux });
+      return hasValidMux;
+    }
+    return false;
+  });
+
+  console.log('Valid assets:', validAssets);
+
+  const beforeAssets = validAssets.filter(
+    asset => asset.placement === 'before'
+  );
+  const afterAssets = validAssets.filter(asset => asset.placement === 'after');
+  const hasAssets = validAssets.length > 0;
 
   // If no assets, render text-only version
   if (!hasAssets) {

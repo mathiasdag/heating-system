@@ -60,6 +60,24 @@ const defaultParagraphConverter: JSXConverters<SerializedParagraphNode> = {
   paragraph: ({ node, nodesToJSX }) => {
     const text = nodesToJSX({ nodes: node.children });
 
+    // Check if paragraph is empty (no text content or only whitespace/breaks)
+    const isEmpty =
+      !text ||
+      (typeof text === 'string' && text.trim() === '') ||
+      (React.isValidElement(text) && text.props.children === '') ||
+      (Array.isArray(text) &&
+        text.every(
+          child =>
+            !child ||
+            (typeof child === 'string' && child.trim() === '') ||
+            (React.isValidElement(child) && child.props.children === '')
+        ));
+
+    // Return null for empty paragraphs to prevent rendering
+    if (isEmpty) {
+      return null;
+    }
+
     return (
       <p className="font-mono max-w-6xl px-2 sm:px-0 hyphens-auto">{text}</p>
     );

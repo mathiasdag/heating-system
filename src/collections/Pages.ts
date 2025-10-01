@@ -14,6 +14,7 @@ import HighlightGrid from '@/blocks/global/HighlightGrid';
 import Calendar from '@/blocks/global/Calendar';
 import InfoOverlay from '@/blocks/global/InfoOverlay';
 import HorizontalMarqueeBlock from '@/blocks/global/HorizontalMarqueeBlock';
+import TextBlock from '@/blocks/pages/TextBlock';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -153,6 +154,7 @@ const Pages: CollectionConfig = {
                 Calendar,
                 InfoOverlay,
                 HorizontalMarqueeBlock,
+                TextBlock,
                 // Add more blocks here as needed
               ],
             },

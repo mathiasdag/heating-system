@@ -136,6 +136,18 @@ export const MarqueeText: React.FC<MarqueeTextProps> = ({
           <span className={spacing}>{children || text}</span>
           <span className={spacing}>{children || text}</span>
           <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
+          <span className={spacing}>{children || text}</span>
         </Marquee>
       ) : (
         <span className="whitespace-nowrap text-center">

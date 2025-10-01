@@ -90,6 +90,8 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
             return <CourseCatalogBlock key={i} {...cleanBlock} />;
           case 'text':
             return <TextBlock key={i} {...cleanBlock} />;
+          case 'textBlock':
+            return <TextBlock key={i} {...cleanBlock} />;
           case 'faq':
             return <FAQBlock key={i} {...cleanBlock} />;
           case 'minimalCarousel':

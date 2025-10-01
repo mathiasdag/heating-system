@@ -8,8 +8,25 @@ import { MarqueeText } from '@/components/ui';
 import { BlinkHover } from '@/components/ui';
 import { AppAction } from '@/components/ui';
 import { Tag } from '@/components/ui';
+import { FadeIn } from '@/components/ui';
+import { Heading } from '@/components/headings';
 import Image from 'next/image';
 import clsx from 'clsx';
+
+// Reusable marquee component to avoid duplication
+const StickyMarquee = ({
+  text,
+  position,
+}: {
+  text: string;
+  position: 'top' | 'bottom';
+}) => (
+  <div
+    className={`sticky ${position}-0 w-screen max-w-full z-20 py-1 uppercase overflow-hidden`}
+  >
+    <MarqueeText text={text} />
+  </div>
+);
 
 interface NavigationItem {
   blockType: 'common-card';
@@ -73,71 +90,72 @@ function ViewportItem({
 
   return (
     <div ref={ref} className="h-screen">
-      <div
-        className={clsx(
-          'fixed inset-0 flex items-center justify-center p-8 transition-opacity duration-300',
-          isActive && isViewportCovered
-            ? 'opacity-100'
-            : 'opacity-0 pointer-events-none'
-        )}
-      >
-        <div className="max-w-lg grid gap-4 text-center justify-items-center bg-accent p-8">
-          {/* Featured Image */}
-          {item.image && (
-            <Image
-              src={item.image.url}
-              alt={item.image.alt || item.title}
-              width={216}
-              height={216}
-              className="rounded-md w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-52 lg:h-52"
-            />
-          )}
+      {isActive && isViewportCovered && (
+        <FadeIn
+          timing="fast"
+          delay={0.1}
+          className="fixed inset-0 flex items-center justify-center p-8"
+        >
+          <div className="max-w-lg grid gap-4 text-center justify-items-center bg-accent p-8 pb-16">
+            {/* Featured Image */}
+            {item.image && (
+              <Image
+                src={item.image.url}
+                alt={item.image.alt || item.title}
+                width={216}
+                height={216}
+                className="rounded-md w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-52 lg:h-52"
+              />
+            )}
 
-          {/* Tags */}
-          {item.tags && item.tags.length > 0 && (
-            <div className="flex justify-center gap-[.15em] mt-2">
-              {item.tags.map((tag, tagIndex) => (
-                <Tag key={tag.id || tagIndex} name={tag.name} size="md" />
-              ))}
-            </div>
-          )}
+            {/* Tags */}
+            {item.tags && item.tags.length > 0 && (
+              <div className="flex justify-center gap-[.15em] mt-2">
+                {item.tags.map((tag, tagIndex) => (
+                  <Tag key={tag.id || tagIndex} name={tag.name} size="md" />
+                ))}
+              </div>
+            )}
 
-          {/* Title */}
-          <h3 className="font-display">{item.title}</h3>
+            {/* Title */}
+            <Heading variant="subsection" as="h3">
+              {item.title}
+            </Heading>
 
-          {/* Content */}
-          {item.body && (
-            <div className="mb-6 font-mono">
-              <RichText data={item.body} />
-            </div>
-          )}
+            {/* Content */}
+            {item.body && (
+              <div className="mb-6 font-mono">
+                <RichText data={item.body} />
+              </div>
+            )}
 
-          {/* Call to Action */}
-          {item.link?.text && (
-            <AppAction
-              href={
-                item.link?.type === 'external' && item.link?.url
-                  ? item.link.url
-                  : item.link?.type === 'internal' && item.link?.reference
-                    ? typeof item.link.reference === 'object' &&
-                      item.link.reference?.slug
-                      ? `/${item.link.reference?.slug}`
-                      : `/${item.link.reference}`
+            {/* Call to Action */}
+            {item.link?.text && (
+              <AppAction
+                href={
+                  item.link?.type === 'external' && item.link?.url
+                    ? item.link.url
+                    : item.link?.type === 'internal' && item.link?.reference
+                      ? typeof item.link.reference === 'object' &&
+                        item.link.reference?.slug
+                        ? `/${item.link.reference?.slug}`
+                        : `/${item.link.reference}`
+                      : undefined
+                }
+                variant="primary"
+                target={item.link?.type === 'external' ? '_blank' : undefined}
+                rel={
+                  item.link?.type === 'external'
+                    ? 'noopener noreferrer'
                     : undefined
-              }
-              variant="primary"
-              target={item.link?.type === 'external' ? '_blank' : undefined}
-              rel={
-                item.link?.type === 'external'
-                  ? 'noopener noreferrer'
-                  : undefined
-              }
-            >
-              {item.link.text}
-            </AppAction>
-          )}
-        </div>
-      </div>
+                }
+              >
+                {item.link.text}
+              </AppAction>
+            )}
+          </div>
+        </FadeIn>
+      )}
     </div>
   );
 }
@@ -148,7 +166,9 @@ export default function CourseCatalogBlock({
 }: CourseCatalogProps) {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const [navigationOverflows, setNavigationOverflows] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigationRef = useRef<HTMLDivElement>(null);
 
   // Get all navigation items flattened
   const allNavigationItems = navigationSections.flatMap(section =>
@@ -176,6 +196,24 @@ export default function CourseCatalogBlock({
 
   // Track when the accent container covers the entire viewport
   const [isViewportCovered, setIsViewportCovered] = useState(false);
+
+  // Check if navigation overflows its container
+  useEffect(() => {
+    const checkNavigationOverflow = () => {
+      if (navigationRef.current && isLargeScreen) {
+        const navRect = navigationRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const availableHeight = viewportHeight - 64; // Account for bottom marquee (16px * 4)
+
+        setNavigationOverflows(navRect.height > availableHeight);
+      }
+    };
+
+    checkNavigationOverflow();
+    window.addEventListener('resize', checkNavigationOverflow);
+
+    return () => window.removeEventListener('resize', checkNavigationOverflow);
+  }, [isLargeScreen, navigationSections]);
 
   // Check screen size
   React.useEffect(() => {
@@ -232,12 +270,12 @@ export default function CourseCatalogBlock({
         interval={100}
         target=".title"
       >
-        <div className="w-[44px] h-[42px] flex items-center justify-center pt-[.2em] border border-text rounded-sm">
+        <div className="w-[44px] h-[42px] flex items-center justify-center border border-text rounded-sm">
           {(index + 1).toString().padStart(2, '0')}
         </div>
         <div
           className={clsx(
-            'max-w-xs h-[42px] px-3 flex items-center pt-[.2em] border border-text rounded-sm overflow-hidden whitespace-nowrap truncate text-ellipsis',
+            'max-w-xs h-[42px] px-3 flex items-center border border-text rounded-sm overflow-hidden whitespace-nowrap truncate text-ellipsis',
             isActive && 'text-transparent'
           )}
         >
@@ -248,7 +286,7 @@ export default function CourseCatalogBlock({
   };
 
   return (
-    <div className="relative bg-accent z-40" ref={containerRef}>
+    <div className="relative bg-accent z-40 my-8" ref={containerRef}>
       <DevIndicator
         componentName="CourseCatalogBlock"
         data={{
@@ -260,9 +298,7 @@ export default function CourseCatalogBlock({
       />
 
       {/* Top Marquee */}
-      <div className="sticky top-0 left-0 right-0 z-20 py-1 uppercase">
-        <MarqueeText text={headline} />
-      </div>
+      <StickyMarquee text={headline} position="top" />
 
       {/* Main Container - No separate scroll */}
       <div>
@@ -279,38 +315,41 @@ export default function CourseCatalogBlock({
         ))}
       </div>
 
-      {/* Fixed Navigation Menu - Only show on lg+ screens */}
-      {isLargeScreen && (
-        <div className="sticky inline-block left-0 bottom-16 px-4 pt-16">
-          {navigationSections.map((section, sectionIndex) => (
-            <div
-              key={`section-${sectionIndex}-${section.sectionId}`}
-              className="mb-8"
-            >
-              <h3 className="mb-4 font-sans uppercase">
-                {section.sectionTitle}
-              </h3>
-              <div className="inline-grid gap-[.15em]">
-                {section.navigationItems.map((navItem, navIndex) => {
-                  const globalIndex = allNavigationItems.findIndex(
-                    globalItem => globalItem.title === navItem.title
-                  );
-                  return renderNavigationItem(
-                    navItem,
-                    globalIndex,
-                    section.sectionTitle
-                  );
-                })}
+      {/* Fixed Navigation Menu - Only show on lg+ screens and when it fits */}
+      {isLargeScreen && isViewportCovered && (
+        <div
+          ref={navigationRef}
+          className={`fixed inline-block left-0 top-1/2 -translate-y-1/2 px-4 py-8 ${navigationOverflows ? 'invisible' : ''}`}
+        >
+          <FadeIn timing="slow" delay={0.3}>
+            {navigationSections.map((section, sectionIndex) => (
+              <div
+                key={`section-${sectionIndex}-${section.sectionId}`}
+                className="mb-5"
+              >
+                <h3 className="mb-2 font-sans uppercase">
+                  {section.sectionTitle}
+                </h3>
+                <div className="inline-grid gap-[.15em]">
+                  {section.navigationItems.map((navItem, navIndex) => {
+                    const globalIndex = allNavigationItems.findIndex(
+                      globalItem => globalItem.title === navItem.title
+                    );
+                    return renderNavigationItem(
+                      navItem,
+                      globalIndex,
+                      section.sectionTitle
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </FadeIn>
         </div>
       )}
 
       {/* Bottom Marquee */}
-      <div className="sticky bottom-0 left-0 top-16 right-0 z-20 py-1 uppercase">
-        <MarqueeText text={headline} />
-      </div>
+      <StickyMarquee text={headline} position="bottom" />
     </div>
   );
 }

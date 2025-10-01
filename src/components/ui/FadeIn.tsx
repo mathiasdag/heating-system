@@ -45,7 +45,7 @@ const variantConfig = {
     animate: { opacity: 1 },
   },
   fadeUp: {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 5 },
     animate: { opacity: 1, y: 0 },
   },
   fadeDown: {

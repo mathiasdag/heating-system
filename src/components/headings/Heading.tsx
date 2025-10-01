@@ -54,7 +54,7 @@ const variantConfig = {
   subsection: {
     defaultAs: 'h3' as const,
     className:
-      'font-display uppercase text-xl leading-[1em] tracking-[0.005em]',
+      'font-display uppercase text-lg leading-[1em] tracking-[0.005em]',
   },
   'card-title': {
     defaultAs: 'h3' as const,

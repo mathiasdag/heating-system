@@ -103,6 +103,22 @@ const articleBlockquoteConverter: JSXConverters<SerializedQuoteNode> = {
 };
 
 /**
+ * Page-specific blockquote converter
+ * Used in pages with mono font and appropriate spacing
+ */
+const pageBlockquoteConverter: JSXConverters<SerializedQuoteNode> = {
+  quote: ({ node, nodesToJSX }) => {
+    const text = nodesToJSX({ nodes: node.children });
+
+    return (
+      <blockquote className="relative max-w-6xl w-full mx-auto px-4 text-center font-display text-lg">
+        {text}
+      </blockquote>
+    );
+  },
+};
+
+/**
  * Custom heading converter for all contexts
  * Uses the standardized heading system
  */
@@ -202,6 +218,7 @@ export const defaultConverter: JSXConvertersFunction<NodeTypes> = ({
 }) => ({
   ...defaultConverters,
   ...defaultParagraphConverter,
+  ...pageBlockquoteConverter,
   ...headingConverter,
 });
 

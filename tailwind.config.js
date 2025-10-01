@@ -89,7 +89,7 @@ module.exports = {
         lg: ['1.5rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }], // based on Monument Grotesk, globals.css variation for HAL Colant
         xl: [
           'clamp(2rem, 5vw, 3.25rem)',
-          { lineHeight: '1.1', letterSpacing: '-0.02em' },
+          { lineHeight: '1.15', letterSpacing: '-0.02em' },
         ],
         '2xl': [
           'clamp(2.5rem, 6vw, 6rem)',

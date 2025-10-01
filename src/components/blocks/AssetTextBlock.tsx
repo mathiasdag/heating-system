@@ -39,9 +39,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   const isStandalone = variant === 'standalone';
 
   return (
-    <div
-      className={clsx('px-2 relative', isStandalone ? 'mb-16 mt-8' : 'py-6')}
-    >
+    <div className={clsx('px-2 relative', isStandalone ? '' : 'py-6')}>
       <DevIndicator componentName="AssetTextBlock" position="top-right" />
 
       <div className="">

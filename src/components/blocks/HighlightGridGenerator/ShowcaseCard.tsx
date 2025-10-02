@@ -46,7 +46,7 @@ export default function ShowcaseCard({
             <motion.div
               animate={{
                 scale: isHovered ? 1.05 : 1,
-                filter: isHovered ? 'brightness(0.7)' : 'brightness(1)',
+                filter: isHovered ? 'brightness(0.9)' : 'brightness(1)',
               }}
               transition={{
                 duration: 0.4,
@@ -72,8 +72,9 @@ export default function ShowcaseCard({
               scale: isHovered ? 1.025 : 1,
             }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="absolute top-2 left-2 flex gap-0.5 text-bg mix-blend-difference z-10"
+            className="absolute top-3 left-3 flex gap-0.5 text-bg mix-blend-difference z-10"
           >
+            <Tag name={'Showcase'} size="md" />
             {item.year && <Tag name={item.year.toString()} size="md" />}
           </motion.div>
 
@@ -85,9 +86,9 @@ export default function ShowcaseCard({
               opacity: isHovered ? 1 : 0,
             }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="absolute top-[0.75em] right-3 text-bg mix-blend-difference z-10"
+            className="absolute top-4 right-4 text-bg mix-blend-difference z-10"
           >
-            <PlusIcon size={16} />
+            <PlusIcon size={16} strokeWidth={1.5} />
           </motion.div>
         </div>
 

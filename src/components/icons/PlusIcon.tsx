@@ -1,10 +1,14 @@
 import React from 'react';
-import { Icon, IconProps } from '@/components/icons/Icon';
+import { IconProps } from '@/components/icons/Icon';
 
-export const PlusIcon: React.FC<IconProps> = ({
+interface PlusIconProps extends IconProps {
+  strokeWidth?: number;
+}
+
+export const PlusIcon: React.FC<PlusIconProps> = ({
   size = 14,
   className = '',
-  color = '#EFEDE3',
+  strokeWidth = 1.8,
 }) => {
   return (
     <svg
@@ -14,12 +18,11 @@ export const PlusIcon: React.FC<IconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ color }}
     >
       <path
         d="M7.11475 0L7.11475 14M0 6.88525H14"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth={strokeWidth}
         fill="none"
       />
     </svg>

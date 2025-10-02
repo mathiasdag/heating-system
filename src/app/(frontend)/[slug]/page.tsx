@@ -19,7 +19,7 @@ import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
-import DynamicContentGeneratorBlock from '@/components/blocks/DynamicContentGeneratorBlock';
+import HighlightGridGeneratorBlock from '@/components/blocks/HighlightGridGeneratorBlock';
 import { notFound } from 'next/navigation';
 import { getPreviewData, isPreviewFromSearchParams } from '@/utils/preview';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
@@ -111,8 +111,8 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
             return <CalendarBlock key={i} {...cleanBlock} />;
           case 'horizontalMarquee':
             return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
-          case 'dynamicContentGenerator':
-            return <DynamicContentGeneratorBlock key={i} {...cleanBlock} />;
+          case 'highlightGridGenerator':
+            return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types as needed
           default:
             console.warn(`Unknown block type: ${block.blockType}`);

@@ -9,7 +9,7 @@ import Router from '@/blocks/pages/Router';
 import Carousel from '@/blocks/pages/Carousel';
 import List from '@/blocks/global/List';
 import CourseCatalog from '@/blocks/pages/CourseCatalog';
-import DynamicContentGenerator from '@/blocks/global/DynamicContentGenerator';
+import HighlightGridGenerator from '@/blocks/global/HighlightGridGenerator';
 import FAQ from '@/blocks/pages/FAQ';
 import HighlightGrid from '@/blocks/global/HighlightGrid';
 import Calendar from '@/blocks/global/Calendar';
@@ -144,7 +144,7 @@ const Pages: CollectionConfig = {
                 CardGrid,
                 Carousel,
                 CourseCatalog,
-                DynamicContentGenerator,
+                HighlightGridGenerator,
                 HorizontalCardBlock,
                 Router,
                 Spotlight,

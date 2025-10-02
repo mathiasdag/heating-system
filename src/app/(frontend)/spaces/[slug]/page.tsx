@@ -8,7 +8,7 @@ import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
-import DynamicContentGeneratorBlock from '@/components/blocks/DynamicContentGeneratorBlock';
+import HighlightGridGeneratorBlock from '@/components/blocks/HighlightGridGeneratorBlock';
 import { HeaderBlock as SpacesHeaderBlock } from '@/components/blocks/spaces';
 import { SpaceHeader } from '@/components/headers';
 import React from 'react';
@@ -72,8 +72,8 @@ async function SpacePage({ params }: SpacePageProps) {
               return <CalendarBlock key={i} {...cleanBlock} />;
             case 'horizontalMarquee':
               return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
-            case 'dynamicContentGenerator':
-              return <DynamicContentGeneratorBlock key={i} {...cleanBlock} />;
+            case 'highlightGridGenerator':
+              return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
             default:
               console.warn(`Unknown block type: ${block.blockType}`);
               return null;

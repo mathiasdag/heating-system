@@ -1,10 +1,10 @@
 import type { Block } from 'payload';
 
-const DynamicContentGenerator: Block = {
-  slug: 'dynamicContentGenerator',
+const HighlightGridGenerator: Block = {
+  slug: 'highlightGridGenerator',
   labels: {
-    singular: 'Dynamic Content Generator',
-    plural: 'Dynamic Content Generators',
+    singular: 'Highlight Grid Generator',
+    plural: 'Highlight Grid Generators',
   },
   fields: [
     {
@@ -34,21 +34,21 @@ const DynamicContentGenerator: Block = {
       type: 'relationship',
       relationTo: 'tags',
       hasMany: true,
-      required: true,
+      required: false,
       admin: {
         description:
-          'Select tags to filter content by (content must have at least one of these tags)',
+          'Select tags to filter content by (leave empty to show all content)',
       },
     },
     {
       name: 'maxItems',
       type: 'number',
       required: false,
-      defaultValue: 6,
+      defaultValue: 3,
       min: 1,
-      max: 20,
+      max: 12,
       admin: {
-        description: 'Maximum number of items to display (1-20)',
+        description: 'Maximum number of items to display (1-12)',
       },
     },
     {
@@ -72,4 +72,4 @@ const DynamicContentGenerator: Block = {
   ],
 };
 
-export default DynamicContentGenerator;
+export default HighlightGridGenerator;

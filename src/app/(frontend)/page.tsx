@@ -19,7 +19,7 @@ import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
-import DynamicContentGeneratorBlock from '@/components/blocks/DynamicContentGeneratorBlock';
+import HighlightGridGeneratorBlock from '@/components/blocks/HighlightGridGeneratorBlock';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 // Helper function to render blocks
@@ -66,8 +66,8 @@ function renderBlock(block: any, i: number) {
       return <CalendarBlock key={i} {...cleanBlock} />;
     case 'horizontalMarquee':
       return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
-    case 'dynamicContentGenerator':
-      return <DynamicContentGeneratorBlock key={i} {...cleanBlock} />;
+    case 'highlightGridGenerator':
+      return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
     // Add more cases for other block types
     default:
       return null;

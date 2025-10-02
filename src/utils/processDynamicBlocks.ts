@@ -7,7 +7,7 @@ import { DynamicContentAPI } from '@/lib/dynamicContent';
 export async function processDynamicBlocks(layout: any[]): Promise<any[]> {
   const processedLayout = await Promise.all(
     layout.map(async block => {
-      if (block.blockType === 'dynamicContentGenerator') {
+      if (block.blockType === 'highlightGridGenerator') {
         try {
           // Extract tag IDs from the relationship data
           const tagIds =
@@ -15,17 +15,7 @@ export async function processDynamicBlocks(layout: any[]): Promise<any[]> {
               typeof tag === 'string' ? tag : tag.id
             ) || [];
 
-          if (tagIds.length === 0) {
-            console.warn('DynamicContentGenerator: No tags selected');
-            return {
-              ...block,
-              generatedContent: {
-                articles: [],
-                showcases: [],
-                totalCount: 0,
-              },
-            };
-          }
+          // If no tags are selected, show all content (tagIds can be empty)
 
           // Fetch dynamic content
           const generatedContent = await DynamicContentAPI.getContentByTags(
@@ -44,7 +34,7 @@ export async function processDynamicBlocks(layout: any[]): Promise<any[]> {
           };
         } catch (error) {
           console.error(
-            'Error processing DynamicContentGenerator block:',
+            'Error processing HighlightGridGenerator block:',
             error
           );
           return {

@@ -7,10 +7,10 @@ import { fixImageUrl } from '@/utils/imageUrl';
 import HighlightOverlay from '@/components/blocks/HighlightOverlay';
 import { AnimatePresence } from 'framer-motion';
 
-interface DynamicContentGeneratorProps {
+interface HighlightGridGeneratorProps {
   headline: string;
   contentTypes: string[];
-  filterTags: Array<{
+  filterTags?: Array<{
     id: string;
     name: string;
     description?: string;
@@ -25,14 +25,14 @@ interface DynamicContentGeneratorProps {
   };
 }
 
-export default function DynamicContentGeneratorBlock({
+export default function HighlightGridGeneratorBlock({
   headline,
   contentTypes,
   filterTags,
   maxItems,
   sortBy,
   generatedContent,
-}: DynamicContentGeneratorProps) {
+}: HighlightGridGeneratorProps) {
   const [selectedHighlight, setSelectedHighlight] = useState<any>(null);
 
   const { articles, showcases, totalCount } = generatedContent;
@@ -81,17 +81,7 @@ export default function DynamicContentGeneratorBlock({
   if (displayContent.length === 0) {
     return (
       <div className="mt-8 relative">
-        <DevIndicator
-          componentName="DynamicContentGeneratorBlock"
-          data={{
-            contentTypes,
-            filterTags: filterTags.map(tag => tag.name),
-            maxItems,
-            sortBy,
-            totalFound: totalCount,
-            displaying: 0,
-          }}
-        />
+        <DevIndicator componentName="HighlightGridGeneratorBlock" />
 
         <div className="pb-32">
           <hr className="mx-2 my-2" />
@@ -101,8 +91,8 @@ export default function DynamicContentGeneratorBlock({
           </h2>
 
           <div className="text-center py-12 text-muted-foreground">
-            <p>No content found with the selected tags.</p>
-            {filterTags.length > 0 && (
+            <p>No content found.</p>
+            {filterTags && filterTags.length > 0 && (
               <p className="text-sm mt-2">
                 Tags: {filterTags.map(tag => tag.name).join(', ')}
               </p>
@@ -116,17 +106,7 @@ export default function DynamicContentGeneratorBlock({
 
   return (
     <div className="mt-8 relative">
-      <DevIndicator
-        componentName="DynamicContentGeneratorBlock"
-        data={{
-          contentTypes,
-          filterTags: filterTags.map(tag => tag.name),
-          maxItems,
-          sortBy,
-          totalFound: totalCount,
-          displaying: displayContent.length,
-        }}
-      />
+      <DevIndicator componentName="HighlightGridGeneratorBlock" />
 
       <div className="pb-32">
         <hr className="mx-2 my-2" />

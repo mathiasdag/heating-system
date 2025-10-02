@@ -69,6 +69,18 @@ const HighlightGridGenerator: Block = {
         description: 'How to sort the generated content',
       },
     },
+    {
+      name: 'variant',
+      type: 'select',
+      options: [
+        { label: 'With Images', value: 'withImages' },
+        { label: 'Text Only', value: 'textOnly' },
+      ],
+      defaultValue: 'withImages',
+      admin: {
+        description: 'Choose whether to display images or text-only layout',
+      },
+    },
   ],
 };
 

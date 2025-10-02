@@ -8,11 +8,13 @@ import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
+import DynamicContentGeneratorBlock from '@/components/blocks/DynamicContentGeneratorBlock';
 import { HeaderBlock as SpacesHeaderBlock } from '@/components/blocks/spaces';
 import { SpaceHeader } from '@/components/headers';
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { SpacesPageWrapper } from '@/components/wrappers';
+import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 interface SpacePageProps {
   params: {
@@ -31,17 +33,23 @@ async function SpacePage({ params }: SpacePageProps) {
     notFound();
   }
 
+  // Process dynamic blocks on the server side
+  const processedSpace = await processPageLayout(space);
+
   return (
     <SpacesPageWrapper>
       <div data-content-type="space">
         {/* Hero Section */}
-        {space.header ? (
-          <SpaceHeader spaceData={space} header={space.header} />
+        {processedSpace.header ? (
+          <SpaceHeader
+            spaceData={processedSpace}
+            header={processedSpace.header}
+          />
         ) : (
-          <SpacesHeaderBlock spaceData={space} />
+          <SpacesHeaderBlock spaceData={processedSpace} />
         )}
 
-        {space?.layout?.map((block: any, i: number) => {
+        {processedSpace?.layout?.map((block: any, i: number) => {
           const cleanBlock = JSON.parse(JSON.stringify(block));
           switch (block.blockType) {
             case 'assetText':
@@ -64,6 +72,8 @@ async function SpacePage({ params }: SpacePageProps) {
               return <CalendarBlock key={i} {...cleanBlock} />;
             case 'horizontalMarquee':
               return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
+            case 'dynamicContentGenerator':
+              return <DynamicContentGeneratorBlock key={i} {...cleanBlock} />;
             default:
               console.warn(`Unknown block type: ${block.blockType}`);
               return null;

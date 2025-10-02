@@ -19,6 +19,8 @@ import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
+import DynamicContentGeneratorBlock from '@/components/blocks/DynamicContentGeneratorBlock';
+import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 // Helper function to render blocks
 function renderBlock(block: any, i: number) {
@@ -64,6 +66,8 @@ function renderBlock(block: any, i: number) {
       return <CalendarBlock key={i} {...cleanBlock} />;
     case 'horizontalMarquee':
       return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
+    case 'dynamicContentGenerator':
+      return <DynamicContentGeneratorBlock key={i} {...cleanBlock} />;
     // Add more cases for other block types
     default:
       return null;
@@ -78,7 +82,9 @@ export default async function HomePage() {
     return <div>Page not found</div>;
   }
 
-  const blocks = (page as any).layout || [];
+  // Process dynamic blocks on the server side
+  const processedPage = await processPageLayout(page);
+  const blocks = (processedPage as any).layout || [];
   const headerBlock = blocks.find((block: any) => block.blockType === 'header');
   const otherBlocks = blocks.filter(
     (block: any) => block.blockType !== 'header'

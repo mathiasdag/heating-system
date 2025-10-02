@@ -19,8 +19,10 @@ import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
+import DynamicContentGeneratorBlock from '@/components/blocks/DynamicContentGeneratorBlock';
 import { notFound } from 'next/navigation';
 import { getPreviewData, isPreviewFromSearchParams } from '@/utils/preview';
+import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 interface PageProps {
   params: Promise<{
@@ -49,17 +51,20 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
     notFound();
   }
 
+  // Process dynamic blocks on the server side
+  const processedPage = await processPageLayout(page);
+
   return (
     <div data-content-type="page" className="grid gap-32 pb-32">
       {/* Render standalone header if it exists */}
-      {(page as any).header && (
+      {(processedPage as any).header && (
         <PageHeader
-          text={(page as any).header.text}
-          assets={(page as any).header.assets}
+          text={(processedPage as any).header.text}
+          assets={(processedPage as any).header.assets}
         />
       )}
 
-      {(page as any).layout?.map((block: any, i: number) => {
+      {(processedPage as any).layout?.map((block: any, i: number) => {
         const cleanBlock = JSON.parse(JSON.stringify(block));
         switch (block.blockType) {
           case 'assetText':
@@ -106,6 +111,8 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
             return <CalendarBlock key={i} {...cleanBlock} />;
           case 'horizontalMarquee':
             return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
+          case 'dynamicContentGenerator':
+            return <DynamicContentGeneratorBlock key={i} {...cleanBlock} />;
           // Add more cases for other block types as needed
           default:
             console.warn(`Unknown block type: ${block.blockType}`);

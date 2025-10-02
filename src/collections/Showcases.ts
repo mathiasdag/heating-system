@@ -30,6 +30,16 @@ const Showcases: CollectionConfig = {
       required: true,
     },
     {
+      name: 'tags',
+      type: 'relationship',
+      relationTo: 'tags' as const,
+      hasMany: true,
+      required: false,
+      admin: {
+        description: 'Select one or more tags for this showcase',
+      },
+    },
+    {
       name: 'assets',
       type: 'blocks',
       required: false,

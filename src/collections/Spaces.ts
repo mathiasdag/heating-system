@@ -6,6 +6,7 @@ import Text from '@/blocks/articles/Text';
 import MinimalCarousel from '@/blocks/global/MinimalCarousel';
 import CTA from '@/blocks/global/CTA';
 import HighlightGrid from '@/blocks/global/HighlightGrid';
+import DynamicContentGenerator from '@/blocks/global/DynamicContentGenerator';
 import Calendar from '@/blocks/global/Calendar';
 import Image from '@/blocks/articles/Image';
 import InfoOverlay from '@/blocks/global/InfoOverlay';
@@ -130,6 +131,7 @@ const Spaces: CollectionConfig = {
               required: false,
               blocks: [
                 HighlightGrid,
+                DynamicContentGenerator,
                 Image,
                 AssetText,
                 AssetTextContainer,

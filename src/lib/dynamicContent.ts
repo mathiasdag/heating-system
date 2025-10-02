@@ -33,9 +33,12 @@ export class DynamicContentAPI {
       depth = 2,
     } = options;
 
-    const where = tagIds.length > 0 ? {
-      tags: { in: tagIds },
-    } : {};
+    const where =
+      tagIds.length > 0
+        ? {
+            tags: { in: tagIds },
+          }
+        : {};
 
     // Add status filter for articles (showcases don't have status)
     const articleWhere = contentTypes.includes('articles')

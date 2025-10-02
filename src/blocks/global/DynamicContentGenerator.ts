@@ -1,10 +1,10 @@
 import type { Block } from 'payload';
 
-const HighlightGridGenerator: Block = {
-  slug: 'highlightGridGenerator',
+const DynamicContentGenerator: Block = {
+  slug: 'dynamicContentGenerator',
   labels: {
-    singular: 'Highlight Grid Generator',
-    plural: 'Highlight Grid Generators',
+    singular: 'Dynamic Content Generator',
+    plural: 'Dynamic Content Generators',
   },
   fields: [
     {
@@ -44,11 +44,11 @@ const HighlightGridGenerator: Block = {
       name: 'maxItems',
       type: 'number',
       required: false,
-      defaultValue: 3,
+      defaultValue: 6,
       min: 1,
-      max: 12,
+      max: 20,
       admin: {
-        description: 'Maximum number of items to display (1-12)',
+        description: 'Maximum number of items to display (1-20)',
       },
     },
     {
@@ -72,4 +72,4 @@ const HighlightGridGenerator: Block = {
   ],
 };
 
-export default HighlightGridGenerator;
+export default DynamicContentGenerator;

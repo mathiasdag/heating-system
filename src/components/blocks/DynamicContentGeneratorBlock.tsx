@@ -7,7 +7,7 @@ import { fixImageUrl } from '@/utils/imageUrl';
 import HighlightOverlay from '@/components/blocks/HighlightOverlay';
 import { AnimatePresence } from 'framer-motion';
 
-interface HighlightGridGeneratorProps {
+interface DynamicContentGeneratorProps {
   headline: string;
   contentTypes: string[];
   filterTags?: Array<{
@@ -25,17 +25,17 @@ interface HighlightGridGeneratorProps {
   };
 }
 
-export default function HighlightGridGeneratorBlock({
+export default function DynamicContentGeneratorBlock({
   headline,
   contentTypes,
   filterTags,
   maxItems,
   sortBy,
   generatedContent,
-}: HighlightGridGeneratorProps) {
+}: DynamicContentGeneratorProps) {
   const [selectedHighlight, setSelectedHighlight] = useState<any>(null);
 
-  const { articles, showcases } = generatedContent;
+  const { articles, showcases, totalCount } = generatedContent;
 
   // Combine and sort content for mixed display
   const allContent = [
@@ -79,14 +79,46 @@ export default function HighlightGridGeneratorBlock({
   };
 
   if (displayContent.length === 0) {
-    return null;
+    return (
+      <div className="mt-8 relative">
+        <DevIndicator componentName="DynamicContentGeneratorBlock" />
+
+        <div className="pb-32">
+          <hr className="mx-2 my-2" />
+          <div className="absolute left-1/2 top-2 bottom-2 w-px bg-text transform -translate-x-1/2"></div>
+          <h2 className="text-center font-mono uppercase py-0.5 my-32 relative bg-bg">
+            {headline}
+          </h2>
+
+          <div className="text-center py-12 text-muted-foreground">
+            <p>No content found.</p>
+            {filterTags && filterTags.length > 0 && (
+              <p className="text-sm mt-2">
+                Tags: {filterTags.map(tag => tag.name).join(', ')}
+              </p>
+            )}
+          </div>
+        </div>
+        <hr className="mx-2 my-2" />
+      </div>
+    );
   }
 
   return (
-    <div className="my-8 relative">
-      <DevIndicator componentName="HighlightGridGeneratorBlock" />
+    <div className="mt-8 relative">
+      <DevIndicator
+        componentName="DynamicContentGeneratorBlock"
+        data={{
+          contentTypes,
+          filterTags: filterTags?.map(tag => tag.name) || [],
+          maxItems,
+          sortBy,
+          totalFound: totalCount,
+          displaying: displayContent.length,
+        }}
+      />
 
-      <div className="pb-32 relative">
+      <div className="pb-32">
         <hr className="mx-2 my-2" />
         <div className="absolute left-1/2 top-2 bottom-2 w-px bg-text transform -translate-x-1/2"></div>
 
@@ -107,82 +139,45 @@ export default function HighlightGridGeneratorBlock({
         >
           <div className="basis-[1px] shrink-0 h-4"></div>
           {displayContent.map((item, index) => {
-            if (!item) {
-              return null;
-            }
-
             // Get image from either showcase (featuredImage) or article (featuredImage)
             const image = item.featuredImage;
 
-            // Render image-based card if image exists
-            if (image) {
-              return (
-                <button
-                  key={`${item._contentType}-${item.id}-${index}`}
-                  onClick={() => handleHighlightClick(item)}
-                  className="basis-64 grow shrink-0 text-left w-full max-w-80"
-                  style={{ scrollSnapAlign: 'center' }}
-                >
-                  <div className="relative">
-                    {/* Image */}
-                    <div className="relative aspect-[4/6] overflow-hidden">
-                      <Image
-                        src={fixImageUrl(image.url)}
-                        alt={image.alt || item.title || 'Content image'}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-
-                    {/* Content */}
-                    <div className="pt-1 leading-4">
-                      <h3 className="uppercase">{item.title}</h3>
-                      {item._contentType === 'showcase' && item.year && (
-                        <p className="text-sm text-muted-foreground">
-                          {item.year}
-                        </p>
-                      )}
-                      {item._contentType === 'article' && item.excerpt && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {item.excerpt}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </button>
-              );
+            if (!item || !image) {
+              return null;
             }
 
-            // Render text-based card if no image
             return (
               <button
                 key={`${item._contentType}-${item.id}-${index}`}
                 onClick={() => handleHighlightClick(item)}
-                className="basis-64 grow shrink-0 text-left w-full max-w-80 p-4 border border-text rounded-sm hover:bg-accent transition-colors"
+                className="basis-64 grow shrink-0 text-left w-full max-w-80"
                 style={{ scrollSnapAlign: 'center' }}
               >
-                <div className="space-y-2">
-                  <h3 className="uppercase text-lg font-mono">
-                    {item.title}
-                  </h3>
-                  {item._contentType === 'showcase' && item.year && (
-                    <p className="text-sm text-muted-foreground">
-                      Year: {item.year}
-                    </p>
-                  )}
-                  {item._contentType === 'article' && item.excerpt && (
-                    <p className="text-sm text-muted-foreground">
-                      {item.excerpt}
-                    </p>
-                  )}
-                  {item._contentType === 'article' && item.author && (
-                    <p className="text-xs text-muted-foreground">
-                      By{' '}
-                      {typeof item.author === 'object'
-                        ? item.author.firstName + ' ' + item.author.lastName
-                        : item.author}
-                    </p>
-                  )}
+                <div className="relative">
+                  {/* Image */}
+                  <div className="relative aspect-[4/6] overflow-hidden">
+                    <Image
+                      src={fixImageUrl(image.url)}
+                      alt={image.alt || item.title || 'Content image'}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="pt-1 leading-4">
+                    <h3 className="uppercase">{item.title}</h3>
+                    {item._contentType === 'showcase' && item.year && (
+                      <p className="text-sm text-muted-foreground">
+                        {item.year}
+                      </p>
+                    )}
+                    {item._contentType === 'article' && item.excerpt && (
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {item.excerpt}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </button>
             );

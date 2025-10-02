@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { fixImageUrl } from '@/utils/imageUrl';
 import HighlightOverlay from '@/components/blocks/HighlightOverlay';
+import { Tag } from '@/components/ui';
 import { AnimatePresence } from 'framer-motion';
 
 // Utility function to extract text from rich text content
@@ -30,6 +31,31 @@ const extractTextFromRichText = (richText: any): string => {
   }
 
   return '';
+};
+
+// Utility function to format date for tags
+const formatDateForTags = (dateString: string) => {
+  if (!dateString) return { year: null, month: null };
+
+  const date = new Date(dateString);
+  const year = date.getFullYear().toString();
+  const monthNames = [
+    'JAN',
+    'FEB',
+    'MAR',
+    'APR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DEC',
+  ];
+  const month = monthNames[date.getMonth()];
+
+  return { year, month };
 };
 
 interface HighlightGridGeneratorProps {
@@ -157,7 +183,7 @@ export default function HighlightGridGeneratorBlock({
                 <button
                   key={`${item._contentType}-${item.id}-${index}`}
                   onClick={() => handleHighlightClick(item)}
-                  className="basis-64 grow shrink-0 text-left w-full max-w-80"
+                  className="basis-64 sm:basis-72 grow shrink-0 text-left w-full max-w-80"
                   style={{ scrollSnapAlign: 'center' }}
                 >
                   <div className="relative">
@@ -172,13 +198,31 @@ export default function HighlightGridGeneratorBlock({
                     </div>
 
                     {/* Content */}
-                    <div className="pt-1 leading-4">
+                    <div className="pt-1.5 leading-4">
                       <h3 className="uppercase">{item.title}</h3>
-                      {item._contentType === 'showcase' && item.year && (
-                        <p className="text-sm text-muted-foreground">
-                          {item.year}
-                        </p>
-                      )}
+
+                      {/* Date Tags */}
+                      <div className="flex gap-1 mt-1">
+                        {item._contentType === 'showcase' && item.year && (
+                          <Tag name={item.year.toString()} size="sm" />
+                        )}
+                        {item._contentType === 'article' &&
+                          item.publishedDate && (
+                            <>
+                              {(() => {
+                                const { year, month } = formatDateForTags(
+                                  item.publishedDate
+                                );
+                                return (
+                                  <>
+                                    {year && <Tag name={year} size="sm" />}
+                                    {month && <Tag name={month} size="sm" />}
+                                  </>
+                                );
+                              })()}
+                            </>
+                          )}
+                      </div>
                     </div>
                   </div>
                 </button>
@@ -202,7 +246,7 @@ export default function HighlightGridGeneratorBlock({
               <button
                 key={`${item._contentType}-${item.id}-${index}`}
                 onClick={() => handleHighlightClick(item)}
-                className="basis-64 grow shrink-0 text-left w-full max-w-80"
+                className="basis-64 sm:basis-72 grow shrink-0 text-left w-full max-w-80"
                 style={{ scrollSnapAlign: 'center' }}
               >
                 <div className="relative">
@@ -224,8 +268,30 @@ export default function HighlightGridGeneratorBlock({
                 </div>
 
                 {/* Content */}
-                <div className="pt-1 leading-4">
+                <div className="pt-1.5 leading-4">
                   <h3 className="uppercase">{item.title}</h3>
+
+                  {/* Date Tags */}
+                  <div className="flex gap-1 mt-1">
+                    {item._contentType === 'showcase' && item.year && (
+                      <Tag name={item.year.toString()} size="sm" />
+                    )}
+                    {item._contentType === 'article' && item.publishedDate && (
+                      <>
+                        {(() => {
+                          const { year, month } = formatDateForTags(
+                            item.publishedDate
+                          );
+                          return (
+                            <>
+                              {year && <Tag name={year} size="sm" />}
+                              {month && <Tag name={month} size="sm" />}
+                            </>
+                          );
+                        })()}
+                      </>
+                    )}
+                  </div>
                 </div>
               </button>
             );

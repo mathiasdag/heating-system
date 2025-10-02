@@ -1,7 +1,8 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { AppLink } from '@/components/ui';
 import { MediaCard } from '@/components/blocks/MediaCard';
+import { HorizontalScrollContainer } from '@/components/ui/HorizontalScrollContainer';
 import clsx from 'clsx';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
@@ -12,7 +13,7 @@ interface Card {
   image?: { url: string; alt?: string };
   tags?: { id: string; name: string; description?: string }[];
   link?: {
-    type?: 'internal' | 'external';
+    type: 'internal' | 'external' | 'copy';
     text?: string;
     url?: string;
     doc?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -37,21 +38,6 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
   cards,
   link,
 }) => {
-  // Default variant uses lightweight overflow detection to decide layout behavior
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-
-  useEffect(() => {
-    function checkOverflow() {
-      const currentEl = scrollRef.current;
-      if (!currentEl) return;
-      setIsOverflowing(currentEl.scrollWidth > currentEl.clientWidth);
-    }
-    checkOverflow();
-    window.addEventListener('resize', checkOverflow);
-    return () => window.removeEventListener('resize', checkOverflow);
-  }, []);
-
   // Default variant: horizontal scroll list
   return (
     <section className={`grid relative`}>
@@ -59,15 +45,15 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
       <BlockHeader headline={headline} description={description} />
       <hr className="mx-2 my-2" />
       <div className="relative">
-        <div
-          ref={scrollRef}
-          className={`flex snap-x scrollbar-none snap-mandatory w-screen ${
-            isOverflowing
-              ? 'overflow-x-auto scroll-smooth justify-start'
-              : 'overflow-x-hidden justify-center'
-          }`}
+        <HorizontalScrollContainer
+          snapType="mandatory"
+          justifyWhenOverflowing="start"
+          justifyWhenNotOverflowing="center"
+          enableOverflowDetection={true}
+          showBorders={true}
+          leftSpacer={24}
+          rightSpacer={24}
         >
-          <div className="snap-none grow-0 shrink-0 w-24 border-r border-text" />
           {cards.map((card, idx) => (
             <MediaCard
               key={idx}
@@ -78,8 +64,7 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
               buttonVariant={'primary'}
             />
           ))}
-          <div className="snap-none grow-0 shrink-0 w-24" />
-        </div>
+        </HorizontalScrollContainer>
       </div>
       <hr className="mx-2 my-2" />
 

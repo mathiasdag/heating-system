@@ -6,9 +6,9 @@ interface TagProps {
 }
 
 const sizeClasses = {
-  sm: 'border border-text text-xs px-1.5 pt-[.15em] pb-[.05em]',
-  md: 'border border-text text-sm px-2 pt-[.25em] pb-[.15em]',
-  lg: 'border border-text text-base px-2 pt-1 pb-[.15em]',
+  sm: 'border border-current leading-4 text-xs px-1 py-0.25',
+  md: 'border border-current leading-4 text-sm px-1.5 pt-0.5 pb-[.05em]',
+  lg: 'border border-current leading-4 text-base px-2 pt-1 pb-[.15em]',
 };
 
 const emojiSizeClasses = {

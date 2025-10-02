@@ -1,8 +1,16 @@
 import type { CollectionConfig } from 'payload';
+import { authenticated } from '@/access/authenticated';
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
 import { commonHooks } from '@/utils/hooks';
 
 const Showcases: CollectionConfig = {
   slug: 'showcases',
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: () => true, // Allow public read access for showcases
+    update: authenticated,
+  },
   admin: {
     useAsTitle: 'title',
     group: 'Content',

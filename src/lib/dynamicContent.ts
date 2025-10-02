@@ -61,6 +61,9 @@ export class DynamicContentAPI {
           limit: contentTypes.length === 1 ? limit : Math.ceil(limit / 2), // Split limit if multiple types
           sort,
           depth: 3, // Need deeper depth for article content
+        }).catch(error => {
+          console.error('Error fetching articles:', error);
+          return { docs: [], totalDocs: 0 };
         })
       );
     } else {
@@ -79,6 +82,9 @@ export class DynamicContentAPI {
               ? '-createdAt'
               : sort, // Map publishedDate to createdAt for showcases
           depth: 3, // Need deeper depth for showcase assets
+        }).catch(error => {
+          console.error('Error fetching showcases:', error);
+          return { docs: [], totalDocs: 0 };
         })
       );
     } else {

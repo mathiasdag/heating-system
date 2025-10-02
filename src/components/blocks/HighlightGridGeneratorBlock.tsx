@@ -139,7 +139,7 @@ export default function HighlightGridGeneratorBlock({
             // For showcases: always try to find an image
             // For articles: get featuredImage if available
             let image = item.featuredImage;
-            
+
             // If showcase and no featuredImage, find first image in assets
             if (item._contentType === 'showcase' && !image && item.assets) {
               const imageAsset = item.assets.find(

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { fixImageUrl } from '@/utils/imageUrl';
-import HighlightOverlay from '@/components/blocks/HighlightOverlay';
+import { ShowcaseOverlay } from '@/components/ui/overlays';
 import { AnimatePresence } from 'framer-motion';
 
 interface HighlightGridBlockProps {
@@ -110,7 +110,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
                   {/* Image */}
                   <div className="relative aspect-[4/6] overflow-hidden">
                     <Image
-                        src={fixImageUrl(image.url)}
+                      src={fixImageUrl(image.url)}
                       alt={
                         image.alt || highlightData.title || 'Highlight image'
                       }
@@ -135,10 +135,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
       {/* Showcase Overlay */}
       <AnimatePresence>
         {selectedHighlight && (
-          <HighlightOverlay
-            showcase={selectedHighlight}
-            onClose={handleClose}
-          />
+          <ShowcaseOverlay showcase={selectedHighlight} onClose={handleClose} />
         )}
       </AnimatePresence>
     </div>

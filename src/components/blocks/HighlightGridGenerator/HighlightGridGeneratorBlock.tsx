@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import HighlightOverlay from '@/components/blocks/HighlightOverlay';
-import { AnimatePresence } from 'framer-motion';
+import { ContentOverlay } from '@/components/ui/overlays';
 import { HorizontalScrollContainer } from '@/components/ui/HorizontalScrollContainer';
 import {
   ShowcaseCard,
@@ -174,15 +173,11 @@ export default function HighlightGridGeneratorBlock({
         <hr className="mx-2 my-2" />
       </div>
 
-      {/* Showcase Overlay */}
-      <AnimatePresence>
-        {selectedHighlight && (
-          <HighlightOverlay
-            showcase={selectedHighlight}
-            onClose={handleClose}
-          />
-        )}
-      </AnimatePresence>
+      {/* Content Overlay */}
+      <ContentOverlay
+        selectedContent={selectedHighlight}
+        onClose={handleClose}
+      />
     </div>
   );
 }

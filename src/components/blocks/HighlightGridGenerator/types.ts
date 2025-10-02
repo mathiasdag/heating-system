@@ -9,13 +9,41 @@ export interface ContentItem {
     width?: number;
     height?: number;
   };
-  assets?: any[];
+  assets?: Array<{
+    id: string;
+    blockType: 'imageWithCaption' | 'videoWithCaption' | 'text';
+    image?: {
+      id: string;
+      url: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
+    caption?: string;
+    host?: string;
+    playbackId?: string;
+    autoplay?: boolean;
+    controls?: boolean;
+    title?: string;
+    content?: any;
+  }>;
   year?: number;
   publishedDate?: string;
   createdAt?: string;
+  lastModifiedDate?: string;
   excerpt?: string;
   introduction?: any;
   content?: any;
+  tags?: Array<{
+    id: string;
+    name: string;
+  }>;
+  author?: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    bylineDescription?: string;
+  };
   _contentType: 'article' | 'showcase';
 }
 

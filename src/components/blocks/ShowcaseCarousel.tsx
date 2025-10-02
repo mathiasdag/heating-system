@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import { ReusableCarousel, CarouselItem } from '@/components/carousels';
+import { fixImageUrl } from '@/utils/imageUrl';
 
 interface ShowcaseAsset extends CarouselItem {
   blockType: 'imageWithCaption' | 'videoWithCaption' | 'text';
@@ -55,7 +56,7 @@ const ShowcaseCarousel: React.FC<ShowcaseCarouselProps> = ({
             return (
               asset.image && (
                 <Image
-                  src={asset.image.url}
+                  src={fixImageUrl(asset.image.url)}
                   alt={asset.image.alt || asset.caption || ''}
                   width={asset.image.width}
                   height={asset.image.height}

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Overlay } from '@/components/ui';
 import ShowcaseCarousel from '@/components/blocks/ShowcaseCarousel';
 
-interface HighlightOverlayProps {
+interface ShowcaseOverlayProps {
   showcase: {
     id: string;
     title: string;
@@ -45,7 +45,7 @@ interface HighlightOverlayProps {
   onClose: () => void;
 }
 
-const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
+const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
   showcase,
   onClose,
 }) => {
@@ -62,16 +62,16 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
     <Overlay
       isOpen={true}
       onClose={onClose}
-      componentName="HighlightOverlay"
+      componentName="ShowcaseOverlay"
       closeOnOutsideClick={true}
-      backgroundClassName="bg-black/80"
+      backgroundClassName="bg-text"
     >
       <div
         className="relative w-full h-full"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="absolute top-0 left-0 p-2 flex gap-x-3 z-10">
+        <header className="absolute top-0 left-0 p-2 flex gap-x-3 z-10 text-bg">
           <span className="uppercase">{showcase.title}</span>
           <span>({showcase.year})</span>
           {showcase.assets && showcase.assets.length > 0 && (
@@ -86,12 +86,12 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
               )}
             </div>
           )}
-        </div>
+        </header>
 
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-0 right-0 p-2 z-20 hover:bg-gray-100 transition-colors"
+          className="absolute top-0 right-0 p-2 z-20 text-bg"
         >
           Stäng
         </button>
@@ -109,4 +109,4 @@ const HighlightOverlay: React.FC<HighlightOverlayProps> = ({
   );
 };
 
-export default HighlightOverlay;
+export default ShowcaseOverlay;

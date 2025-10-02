@@ -91,10 +91,10 @@ export default function ArticleCardWithoutImage({
         {/* Content */}
         <motion.div
           animate={{
-            y: isHovered ? -20 : 0,
+            y: isHovered ? -10 : 0,
             opacity: isHovered ? 0 : 1,
           }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
+          transition={{ duration: 0.15, ease: 'easeOut' }}
           className="uppercase px-0.5 pt-1.5"
         >
           {item.title}

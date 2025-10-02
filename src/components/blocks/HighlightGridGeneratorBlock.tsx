@@ -7,6 +7,31 @@ import { fixImageUrl } from '@/utils/imageUrl';
 import HighlightOverlay from '@/components/blocks/HighlightOverlay';
 import { AnimatePresence } from 'framer-motion';
 
+// Utility function to extract text from rich text content
+const extractTextFromRichText = (richText: any): string => {
+  if (!richText) return '';
+
+  if (typeof richText === 'string') {
+    return richText;
+  }
+
+  if (richText.root?.children) {
+    return richText.root.children
+      .map((child: any) => {
+        if (child.children) {
+          return child.children
+            .map((textChild: any) => textChild.text || '')
+            .join('');
+        }
+        return child.text || '';
+      })
+      .join(' ')
+      .trim();
+  }
+
+  return '';
+};
+
 interface HighlightGridGeneratorProps {
   headline: string;
   contentTypes: string[];
@@ -97,7 +122,7 @@ export default function HighlightGridGeneratorBlock({
 
         {/* Content Grid */}
         <div
-          className="flex gap-2 justify-center bg-bg pt-2 pb-1 relative overflow-x-auto scrollbar-none scroll-smooth"
+          className="flex gap-2 justify-center items-start bg-bg pt-2 pb-1 relative overflow-x-auto scrollbar-none scroll-smooth"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -111,8 +136,20 @@ export default function HighlightGridGeneratorBlock({
               return null;
             }
 
-            // Get image from either showcase (featuredImage) or article (featuredImage)
-            const image = item.featuredImage;
+            // For showcases: always try to find an image
+            // For articles: get featuredImage if available
+            let image = item.featuredImage;
+            
+            // If showcase and no featuredImage, find first image in assets
+            if (item._contentType === 'showcase' && !image && item.assets) {
+              const imageAsset = item.assets.find(
+                (asset: any) =>
+                  asset.blockType === 'imageWithCaption' && asset.image
+              );
+              if (imageAsset) {
+                image = imageAsset.image;
+              }
+            }
 
             // Render image-based card if image exists
             if (image) {
@@ -142,11 +179,6 @@ export default function HighlightGridGeneratorBlock({
                           {item.year}
                         </p>
                       )}
-                      {item._contentType === 'article' && item.excerpt && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {item.excerpt}
-                        </p>
-                      )}
                     </div>
                   </div>
                 </button>
@@ -154,35 +186,46 @@ export default function HighlightGridGeneratorBlock({
             }
 
             // Render text-based card if no image
+            // For articles: get content with fallbacks (excerpt -> introduction -> content)
+            let articleContent = '';
+            if (item._contentType === 'article') {
+              if (item.excerpt) {
+                articleContent = item.excerpt;
+              } else if (item.introduction) {
+                articleContent = extractTextFromRichText(item.introduction);
+              } else if (item.content) {
+                articleContent = extractTextFromRichText(item.content);
+              }
+            }
+
             return (
               <button
                 key={`${item._contentType}-${item.id}-${index}`}
                 onClick={() => handleHighlightClick(item)}
-                className="basis-64 grow shrink-0 text-left w-full max-w-80 p-4 border border-text rounded-sm hover:bg-accent transition-colors"
+                className="basis-64 grow shrink-0 text-left w-full max-w-80"
                 style={{ scrollSnapAlign: 'center' }}
               >
-                <div className="space-y-2">
-                  <h3 className="uppercase text-lg font-mono">
-                    {item.title}
-                  </h3>
-                  {item._contentType === 'showcase' && item.year && (
-                    <p className="text-sm text-muted-foreground">
-                      Year: {item.year}
-                    </p>
-                  )}
-                  {item._contentType === 'article' && item.excerpt && (
-                    <p className="text-sm text-muted-foreground">
-                      {item.excerpt}
-                    </p>
-                  )}
-                  {item._contentType === 'article' && item.author && (
-                    <p className="text-xs text-muted-foreground">
-                      By{' '}
-                      {typeof item.author === 'object'
-                        ? item.author.firstName + ' ' + item.author.lastName
-                        : item.author}
-                    </p>
-                  )}
+                <div className="relative">
+                  {/* Image */}
+                  <div className="relative aspect-[4/6] bg-surface overflow-hidden rounded-md">
+                    <div className="p-6 font-mono">
+                      {item._contentType === 'showcase' && item.year && (
+                        <p className="text-sm text-muted-foreground">
+                          {item.year}
+                        </p>
+                      )}
+                      {item._contentType === 'article' && articleContent && (
+                        <p className="text-sm text-muted-foreground line-clamp-[20]">
+                          {articleContent}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="pt-1 leading-4">
+                  <h3 className="uppercase">{item.title}</h3>
                 </div>
               </button>
             );

@@ -60,7 +60,7 @@ export class DynamicContentAPI {
           where: articleWhere,
           limit: contentTypes.length === 1 ? limit : Math.ceil(limit / 2), // Split limit if multiple types
           sort,
-          depth,
+          depth: 3, // Need deeper depth for article content
         })
       );
     } else {
@@ -78,7 +78,7 @@ export class DynamicContentAPI {
             sort === '-publishedDate' || sort === 'publishedDate'
               ? '-createdAt'
               : sort, // Map publishedDate to createdAt for showcases
-          depth,
+          depth: 3, // Need deeper depth for showcase assets
         })
       );
     } else {

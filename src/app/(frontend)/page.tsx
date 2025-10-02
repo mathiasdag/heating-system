@@ -19,7 +19,7 @@ import CTABlock from '@/components/blocks/CTABlock';
 import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
-import HighlightGridGeneratorBlock from '@/components/blocks/HighlightGridGeneratorBlock';
+import { HighlightGridGeneratorBlock } from '@/components/blocks/HighlightGridGenerator';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 // Helper function to render blocks

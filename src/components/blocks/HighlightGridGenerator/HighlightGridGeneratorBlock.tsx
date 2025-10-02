@@ -11,7 +11,7 @@ import {
   ArticleCardWithoutImage,
   findImageInAssets,
   type ContentItem,
-} from './HighlightGridGenerator';
+} from './index';
 
 interface HighlightGridGeneratorProps {
   headline: string;

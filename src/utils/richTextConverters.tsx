@@ -48,7 +48,7 @@ const articleParagraphConverter: JSXConverters<SerializedParagraphNode> = {
       return null;
     }
 
-    return <p className="max-w-xl px-2">{text}</p>;
+    return <p className="max-w-xl px-2 mx-auto">{text}</p>;
   },
 };
 
@@ -93,10 +93,8 @@ const articleBlockquoteConverter: JSXConverters<SerializedQuoteNode> = {
     const text = nodesToJSX({ nodes: node.children });
 
     return (
-      <blockquote className="relative max-w-6xl w-full mx-auto px-4 text-center font-display text-xl">
-        <hr className="mx-auto w-16 mb-4" />
+      <blockquote className="relative max-w-6xl w-full mx-auto px-4 py-8 text-center font-display text-xl">
         {text}
-        <hr className="mx-auto w-16 mt-6" />
       </blockquote>
     );
   },

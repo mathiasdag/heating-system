@@ -26,6 +26,17 @@
   backdrop-filter: blur(10px);
 }
 
+.bg-backdrop {
+  background-color: rgba(239, 237, 227, 0.8);
+  backdrop-filter: blur(20px);
+}
+
+strong {
+  font-weight: 400 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
 a {
   hyphens: none;
 }

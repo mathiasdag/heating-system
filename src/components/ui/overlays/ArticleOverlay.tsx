@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Overlay } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { fixImageUrl } from '@/utils/imageUrl';
@@ -15,8 +16,8 @@ interface ArticleOverlayProps {
     title: string;
     slug: string;
     excerpt?: string;
-    introduction?: any;
-    content?: any;
+    introduction?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    content?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     featuredImage?: {
       id: string;
       url: string;
@@ -44,6 +45,13 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
   article,
   onClose,
 }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll({
+    container: scrollRef,
+  });
+
+  const scale = useTransform(scrollY, [0, 150], [0.96, 1]);
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('sv-SE', {
       year: 'numeric',
@@ -58,34 +66,23 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
       onClose={onClose}
       componentName="ArticleOverlay"
       closeOnOutsideClick={true}
-      backgroundClassName="bg-white/95"
+      backgroundClassName="bg-black"
     >
       <div
-        className="relative w-full h-full overflow-y-auto"
+        ref={scrollRef}
+        className="relative w-full h-full overflow-y-auto px-2 md:px-6"
         onClick={e => e.stopPropagation()}
       >
         <DevIndicator componentName="ArticleOverlay" />
 
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="fixed top-4 right-4 z-20 p-2 bg-white/90 hover:bg-white transition-colors rounded-full shadow-lg"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M12 4L4 12M4 4L12 12"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-
         {/* Article Content */}
-        <div
+        <motion.div
           data-content-type="article"
-          className="min-h-screen grid gap-24 pb-36 pt-16"
+          className="relative min-h-[160vh] w-full grid gap-24 pb-36 pt-12 sm:pt-24 md:pt-36 bg-surface mx-auto mt-24 md:mt-36 max-w-6xl px-4 md:px-8 mb-36"
+          style={{
+            scale,
+            transformOrigin: 'bottom center',
+          }}
         >
           {/* Article Header */}
           <div className="relative">
@@ -100,9 +97,9 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
               )}
 
               {/* Title */}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-mono uppercase leading-tight">
+              <h2 className="text-xl font-display uppercase leading-tight">
                 {article.title}
-              </h1>
+              </h2>
 
               {/* Introduction */}
               {article.introduction && (
@@ -124,7 +121,7 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
                       : article.author.email}
                   </div>
                 )}
-                <div>
+                <div className="mt-1">
                   {article.lastModifiedDate
                     ? `Senast uppdaterad: ${formatDate(article.lastModifiedDate)}`
                     : `Publicerad: ${formatDate(article.publishedDate || '')}`}
@@ -154,7 +151,7 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
             <main className="relative px-4">
               <RichText
                 data={article.content}
-                className="grid gap-4 justify-center pb-8 max-w-4xl mx-auto"
+                className="grid gap-4 justify-center pb-8"
                 converters={articleConverter}
               />
             </main>
@@ -178,7 +175,16 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
               <div className="mt-4">{article.author.bylineDescription}</div>
             )}
           </footer>
-        </div>
+
+          <nav className="sticky bottom-0 inset-x-0 z-20 bg-gradient-to-t from-surface to-transparent p-4 h-24 flex justify-center items-end  pointer-events-none select-none">
+            <button
+              onClick={onClose}
+              className="bg-surface bg-opacity-15 backdrop-blur-sm px-4 py-2.5 rounded-md pointer-events-auto"
+            >
+              Stäng
+            </button>
+          </nav>
+        </motion.div>
       </div>
     </Overlay>
   );

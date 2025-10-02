@@ -32,7 +32,7 @@ export default function ArticleCTABlock({
 
   if (ctaType === 'marquee') {
     return (
-      <div className="relative max-w-3xl my-8 w-full mx-auto col-start-1 col-end-13 md:col-start-2 md:col-end-12">
+      <div className="relative max-w-3xl my-8 w-full mx-auto">
         <DevIndicator componentName="ArticleCTABlock (Marquee)" />
         <div className="text-center grid gap-8 py-12 px-16 bg-accent rounded-lg">
           <div className="grid gap-4">

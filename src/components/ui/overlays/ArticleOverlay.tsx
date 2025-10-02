@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Overlay } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
@@ -51,6 +51,32 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
   });
 
   const scale = useTransform(scrollY, [0, 150], [0.96, 1]);
+
+  // Instagram-style URL management
+  useEffect(() => {
+    const articleUrl = `/artikel/${article.slug}`;
+    const originalUrl = window.location.pathname;
+
+    // Push the article URL to history
+    window.history.pushState({ modal: true }, '', articleUrl);
+
+    // Handle back button
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state?.modal) {
+        onClose();
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      // Restore original URL when overlay closes
+      if (window.location.pathname === articleUrl) {
+        window.history.replaceState(null, '', originalUrl);
+      }
+    };
+  }, [article.slug, onClose]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('sv-SE', {

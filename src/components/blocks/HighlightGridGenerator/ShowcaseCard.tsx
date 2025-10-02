@@ -35,7 +35,7 @@ export default function ShowcaseCard({
       onClick={onClick}
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
-      className="basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center"
+      className="self-start basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center"
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.1 }}
     >

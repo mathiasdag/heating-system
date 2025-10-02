@@ -6,15 +6,13 @@ import clsx from 'clsx';
 interface HorizontalScrollContainerProps {
   children: React.ReactNode;
   className?: string;
-  gap?: string;
-  padding?: string;
   snapType?: 'mandatory' | 'proximity' | 'none';
   justifyWhenOverflowing?: 'start' | 'center' | 'end';
   justifyWhenNotOverflowing?: 'start' | 'center' | 'end';
   enableOverflowDetection?: boolean;
   showBorders?: boolean;
-  leftSpacer?: number;
-  rightSpacer?: number;
+  leftSpacer?: string | number;
+  rightSpacer?: string | number;
   style?: React.CSSProperties;
 }
 
@@ -23,15 +21,13 @@ export const HorizontalScrollContainer: React.FC<
 > = ({
   children,
   className = '',
-  gap = 'gap-2',
-  padding = 'pt-2 pb-2',
   snapType = 'mandatory',
   justifyWhenOverflowing = 'start',
   justifyWhenNotOverflowing = 'center',
   enableOverflowDetection = true,
   showBorders = false,
-  leftSpacer = 24,
-  rightSpacer = 24,
+  leftSpacer = '10%',
+  rightSpacer = '10%',
   style = {},
 }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -65,8 +61,6 @@ export const HorizontalScrollContainer: React.FC<
 
   const containerClasses = clsx(
     'flex w-screen scrollbar-none scroll-smooth select-none',
-    gap,
-    padding,
     snapClasses,
     justifyClass,
     {
@@ -76,16 +70,14 @@ export const HorizontalScrollContainer: React.FC<
     className
   );
 
-  const spacerClasses = clsx('snap-none grow-0 shrink-0', {
-    'border-r border-text': showBorders,
-  });
+  const spacerClasses = clsx('snap-none grow-0 shrink-0');
 
   const spacerStyle = {
-    width: `${leftSpacer}px`,
+    width: `${leftSpacer}`,
   };
 
   const rightSpacerStyle = {
-    width: `${rightSpacer}px`,
+    width: `${rightSpacer}`,
   };
 
   const combinedStyle = {
@@ -97,9 +89,12 @@ export const HorizontalScrollContainer: React.FC<
 
   return (
     <div ref={scrollRef} className={containerClasses} style={combinedStyle}>
-      <div className={spacerClasses} style={spacerStyle} />
+      <div
+        className={clsx(spacerClasses, showBorders && 'border-r border-text')}
+        style={spacerStyle}
+      />
       {children}
-      <div className={spacerClasses} style={rightSpacerStyle} />
+      <div className={clsx(spacerClasses, '')} style={rightSpacerStyle} />
     </div>
   );
 };

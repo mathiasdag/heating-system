@@ -46,19 +46,15 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
       <hr className="mx-2 my-2" />
       <div className="relative">
         <HorizontalScrollContainer
-          snapType="mandatory"
-          justifyWhenOverflowing="start"
-          justifyWhenNotOverflowing="center"
+          className=""
           enableOverflowDetection={true}
           showBorders={true}
-          leftSpacer={24}
-          rightSpacer={24}
         >
           {cards.map((card, idx) => (
             <MediaCard
               key={idx}
               className={clsx(
-                'grow-0 shrink-0 w-[80vw] sm:w-[20em] border-r border-text snap-center'
+                'grow-0 shrink-0 w-[80vw] sm:w-[20em] border-r border-text snap-center rounded-none'
               )}
               {...card}
               buttonVariant={'primary'}

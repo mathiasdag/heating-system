@@ -16,7 +16,7 @@ export default function ArticleCardWithoutImage({
     <button
       key={`article-${item.id}-${index}`}
       onClick={onClick}
-      className="basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center"
+      className="self-start basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center"
     >
       <div className="relative">
         <div className="relative aspect-[4/6] bg-surface overflow-hidden rounded-md p-6">

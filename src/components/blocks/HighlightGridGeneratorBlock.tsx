@@ -110,15 +110,10 @@ export default function HighlightGridGeneratorBlock({
 
         {/* Content Grid */}
         <HorizontalScrollContainer
-          className="items-start bg-bg mb-36 relative"
-          gap="gap-2"
-          padding="pt-2 pb-2"
-          snapType="mandatory"
-          justifyWhenOverflowing="start"
-          justifyWhenNotOverflowing="center"
+          className="bg-bg mb-36 relative gap-2 pt-2 pb-2"
           enableOverflowDetection={false}
-          leftSpacer={24}
-          rightSpacer={24}
+          leftSpacer="1px"
+          rightSpacer="1px"
         >
           {displayContent.map((item, index) => {
             if (!item) {

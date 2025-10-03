@@ -91,7 +91,7 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
       onClose={onClose}
       componentName="ArticleOverlay"
       closeOnOutsideClick={true}
-      backgroundClassName="bg-black"
+      backgroundClassName="bg-backdrop"
     >
       <div
         ref={scrollRef}

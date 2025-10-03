@@ -36,11 +36,12 @@ export default function ArticleCardWithImage({
           <div className="relative w-full h-full">
             <motion.div
               animate={{
-                filter: isHovered ? 'brightness(0.7)' : 'brightness(1)',
+                scale: isHovered ? 1.05 : 1,
+                filter: isHovered ? 'brightness(0.9)' : 'brightness(1)',
               }}
               transition={{
                 duration: 0.4,
-                ease: [0.25, 0.46, 0.45, 0.94],
+                ease: [0.25, 0.46, 0.45, 0.94], // Custom easing for smoother feel
               }}
               className="absolute inset-0"
               style={{ transformOrigin: 'center center' }}
@@ -90,32 +91,6 @@ export default function ArticleCardWithImage({
             className="absolute top-[0.75em] right-3 text-bg mix-blend-difference z-10"
           >
             <PlusIcon size={16} />
-          </motion.div>
-
-          {/* Article Hover Content */}
-          <motion.div
-            initial={{ y: '100%', opacity: 0 }}
-            animate={{
-              y: isHovered ? 0 : 10,
-              opacity: isHovered ? 1 : 0,
-            }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="absolute bottom-0 left-0 right-0 p-4 font-mono text-bg flex flex-col gap-3 bg-gradient-to-t from-black to-transparent"
-          >
-            {articleContent && (
-              <p className="line-clamp-[3] hyphens-auto">{articleContent}</p>
-            )}
-          </motion.div>
-
-          <motion.div
-            animate={{
-              y: isHovered ? 0 : -10,
-              opacity: isHovered ? 1 : 0,
-            }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="absolute inset-0 flex items-center justify-center z-10 p-6 text-center font-display text-[2em] leading-[1em] uppercase mb-8 text-bg"
-          >
-            {item.title}
           </motion.div>
         </div>
 

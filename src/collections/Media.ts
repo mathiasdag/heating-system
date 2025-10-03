@@ -12,5 +12,16 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    staticDir: 'media',
+    mimeTypes: ['image/*', 'video/*'],
+    adminThumbnail: ({ doc }) => {
+      // For images, use the image itself as thumbnail
+      if (doc.mimeType?.startsWith('image/')) {
+        return doc.url;
+      }
+      // For videos, we could generate a thumbnail or use a default
+      return null;
+    },
+  },
 };

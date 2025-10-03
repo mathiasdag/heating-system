@@ -26,7 +26,7 @@ interface HighlightGridBlockProps {
       year?: number;
       // Article fields
       heroAsset?: {
-        type?: 'image' | 'mux';
+        type?: 'image' | 'mux' | 'video';
         image?: {
           id: string;
           url: string;

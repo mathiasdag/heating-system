@@ -11,9 +11,15 @@ interface VideoSource {
 }
 
 interface VideoBlockProps {
-  host: 'mux';
+  host: 'mux' | 'video';
   // Remove playbackId from props
   sources?: VideoSource[]; // for multiple sources
+  videoFile?: {
+    url: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+  };
   autoplay?: boolean;
   controls?: boolean;
   adaptiveResolution?: boolean; // default true
@@ -25,6 +31,7 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
   host,
   // Remove playbackId from props
   sources = [],
+  videoFile,
   autoplay = false,
   controls = false,
   adaptiveResolution = true,
@@ -61,8 +68,10 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
         }
       };
       img.src = `https://image.mux.com/${currentSource.playbackId}/thumbnail.jpg?time=1`;
+    } else if (host === 'video' && videoFile?.width && videoFile?.height) {
+      setAspectRatio(videoFile.width / videoFile.height);
     }
-  }, [host, currentSource]);
+  }, [host, currentSource, videoFile]);
 
   if (host === 'mux' && currentSource?.playbackId) {
     return (
@@ -77,6 +86,21 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
           ...(controls === false ? { ['--controls' as any]: 'none' } : {}),
         }}
         {...(!adaptiveResolution ? { playbackEngine: 'mse' } : {})}
+      />
+    );
+  }
+
+  if (host === 'video' && videoFile?.url) {
+    return (
+      <video
+        src={videoFile.url}
+        autoPlay={autoplay}
+        muted={autoplay}
+        loop={autoplay}
+        controls={controls}
+        className="object-cover w-full h-full"
+        style={{ aspectRatio }}
+        poster={videoFile.alt} // Using alt as poster URL if provided
       />
     );
   }

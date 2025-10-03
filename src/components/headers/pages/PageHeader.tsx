@@ -4,10 +4,11 @@ import PageHeaderStandard from './PageHeaderStandard';
 import PageHeaderTextOnly from './PageHeaderTextOnly';
 
 interface Asset {
-  type: 'image' | 'mux';
+  type: 'image' | 'mux' | 'video';
   placement: 'before' | 'after';
   image?: { url: string; alt?: string; width?: number; height?: number };
   mux?: string;
+  video?: { url: string; alt?: string; width?: number; height?: number };
 }
 
 interface PageHeaderProps {
@@ -24,6 +25,9 @@ export default function PageHeader({ text, assets = [] }: PageHeaderProps) {
     }
     if (asset.type === 'mux') {
       return asset.mux && asset.mux.trim() !== '';
+    }
+    if (asset.type === 'video') {
+      return asset.video?.url && asset.video.url.trim() !== '';
     }
     return false;
   });

@@ -10,7 +10,7 @@ interface AssetTextContainerBlockProps {
   assetTextBlocks: Array<{
     blockType: 'assetText';
     asset: {
-      type: 'image' | 'mux';
+      type: 'image' | 'mux' | 'video';
       image?: {
         id: string;
         url: string;

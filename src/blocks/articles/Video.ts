@@ -11,20 +11,23 @@ const Video: Block = {
       defaultValue: 'mux',
       options: [
         { label: 'Mux', value: 'mux' },
-        // Add more hosts here if needed
+        { label: 'Self-hosted', value: 'video' },
       ],
       admin: {
-        description: 'Select the video host. Currently only Mux is supported.',
+        description:
+          'Select the video host. Mux provides adaptive streaming, Self-hosted uses uploaded video files.',
       },
     },
     {
       name: 'sources',
       type: 'array',
-      label: 'Video Sources',
-      minRows: 1,
+      label: 'Mux Video Sources',
+      minRows: 0,
       admin: {
+        condition: (data: unknown, siblingData: unknown) =>
+          (siblingData as { host?: string })?.host === 'mux',
         description:
-          'Add one or more video sources for different screen sizes and/or qualities. The best match will be chosen automatically, or the user can select quality if adaptive resolution is off.',
+          'Add one or more Mux video sources for different screen sizes and/or qualities. The best match will be chosen automatically, or the user can select quality if adaptive resolution is off.',
       },
       fields: [
         {
@@ -44,6 +47,18 @@ const Video: Block = {
           },
         },
       ],
+    },
+    {
+      name: 'videoFile',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      admin: {
+        condition: (data: unknown, siblingData: unknown) =>
+          (siblingData as { host?: string })?.host === 'video',
+        description:
+          'Upload a video file (MP4, WebM, etc.) for self-hosted videos.',
+      },
     },
     {
       name: 'autoplay',
@@ -69,8 +84,10 @@ const Video: Block = {
       label: 'Adaptive Resolution',
       defaultValue: true,
       admin: {
+        condition: (data: unknown, siblingData: unknown) =>
+          (siblingData as { host?: string })?.host === 'mux',
         description:
-          'If unchecked, users can manually select video quality in the frontend.',
+          'If unchecked, users can manually select video quality in the frontend. Only available for Mux videos.',
       },
     },
   ],

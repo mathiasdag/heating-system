@@ -20,6 +20,7 @@ const Header: Block = {
           options: [
             { label: 'Image', value: 'image' },
             { label: 'Mux Video', value: 'mux' },
+            { label: 'Self-hosted Video', value: 'video' },
           ],
           required: false,
         },
@@ -55,6 +56,16 @@ const Header: Block = {
           admin: {
             condition: (data: unknown, siblingData: Record<string, unknown>) =>
               siblingData?.type === 'mux',
+          },
+        },
+        {
+          name: 'video',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          admin: {
+            condition: (data: unknown, siblingData: Record<string, unknown>) =>
+              siblingData?.type === 'video',
           },
         },
       ],

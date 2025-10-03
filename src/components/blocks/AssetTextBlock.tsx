@@ -10,7 +10,7 @@ import clsx from 'clsx';
 
 interface AssetTextBlockProps {
   asset: {
-    type: 'image' | 'mux';
+    type: 'image' | 'mux' | 'video';
     image?: {
       id: string;
       url: string;
@@ -19,6 +19,13 @@ interface AssetTextBlockProps {
       height?: number;
     };
     mux?: string;
+    video?: {
+      id: string;
+      url: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
   };
   text: unknown; // Lexical RichText type
   textPosition: 'left' | 'right';

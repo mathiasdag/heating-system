@@ -92,6 +92,7 @@ const Spaces: CollectionConfig = {
                       options: [
                         { label: 'Image', value: 'image' },
                         { label: 'Mux Video', value: 'mux' },
+                        { label: 'Self-hosted Video', value: 'video' },
                       ],
                       required: false,
                     },
@@ -112,6 +113,16 @@ const Spaces: CollectionConfig = {
                       admin: {
                         condition: (data: unknown, siblingData: unknown) =>
                           (siblingData as { type?: string })?.type === 'mux',
+                      },
+                    },
+                    {
+                      name: 'video',
+                      type: 'upload',
+                      relationTo: 'media',
+                      required: false,
+                      admin: {
+                        condition: (data: unknown, siblingData: unknown) =>
+                          (siblingData as { type?: string })?.type === 'video',
                       },
                     },
                   ],

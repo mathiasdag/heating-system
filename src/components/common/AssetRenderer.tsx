@@ -6,7 +6,7 @@ import { fixImageUrl } from '@/utils/imageUrl';
 
 interface AssetRendererProps {
   asset: {
-    type: 'image' | 'mux';
+    type: 'image' | 'mux' | 'video';
     image?: {
       id: string;
       url: string;
@@ -15,6 +15,13 @@ interface AssetRendererProps {
       height?: number;
     };
     mux?: string;
+    video?: {
+      id: string;
+      url: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
   };
   className?: string;
 }
@@ -49,6 +56,19 @@ const AssetRenderer: React.FC<AssetRendererProps> = ({ asset, className }) => {
             minWidth: 0,
           },
         ]}
+        controls={false}
+        autoplay={true}
+        adaptiveResolution={true}
+        className={finalClassName}
+      />
+    );
+  }
+
+  if (asset.type === 'video' && asset.video) {
+    return (
+      <VideoBlock
+        host="video"
+        videoFile={asset.video}
         controls={false}
         autoplay={true}
         adaptiveResolution={true}

@@ -14,6 +14,7 @@ const AssetText: Block = {
           options: [
             { label: 'Image', value: 'image' },
             { label: 'Mux Video', value: 'mux' },
+            { label: 'Self-hosted Video', value: 'video' },
           ],
           required: true,
           defaultValue: 'image',
@@ -35,6 +36,18 @@ const AssetText: Block = {
           admin: {
             condition: (data: unknown, siblingData: unknown) =>
               (siblingData as { type?: string })?.type === 'mux',
+            description: 'Mux playback ID',
+          },
+        },
+        {
+          name: 'video',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          admin: {
+            condition: (data: unknown, siblingData: unknown) =>
+              (siblingData as { type?: string })?.type === 'video',
+            description: 'Upload a video file (MP4, WebM, etc.)',
           },
         },
       ],

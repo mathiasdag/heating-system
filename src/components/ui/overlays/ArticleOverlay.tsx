@@ -52,7 +52,6 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
 
   const scale = useTransform(scrollY, [0, 150], [0.96, 1]);
 
-  // Instagram-style URL management
   useEffect(() => {
     const articleUrl = `/artikel/${article.slug}`;
     const originalUrl = window.location.pathname;

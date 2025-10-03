@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import HighlightOverlay from '@/components/blocks/HighlightOverlay';
+import { ShowcaseOverlay } from '@/components/ui/overlays';
 
 interface ShowcasePageWrapperProps {
   showcase: any;
@@ -16,7 +16,7 @@ const ShowcasePageWrapper: React.FC<ShowcasePageWrapperProps> = ({
     router.back();
   };
 
-  return <HighlightOverlay showcase={showcase} onClose={handleClose} />;
+  return <ShowcaseOverlay showcase={showcase} onClose={handleClose} />;
 };
 
 export default ShowcasePageWrapper;

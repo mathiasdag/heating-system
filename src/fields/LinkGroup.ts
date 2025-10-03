@@ -31,6 +31,9 @@ const LinkGroup: Field = {
         condition: (data: unknown, siblingData: Record<string, unknown>) =>
           siblingData?.type === 'internal',
         description: 'Select a page, space, or article to link to',
+        allowCreate: false,
+        isClearable: true,
+        appearance: 'drawer',
       },
     },
     {

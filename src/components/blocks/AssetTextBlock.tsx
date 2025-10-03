@@ -55,7 +55,12 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
       <DevIndicator componentName="AssetTextBlock" position="top-right" />
 
       <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-x-8 gap-y-6 items-center">
+        <div
+          className={clsx(
+            'grid grid-cols-1 gap-x-8 gap-y-4 items-center',
+            isTextLeft ? 'md:grid-cols-[1fr_1.3fr]' : 'md:grid-cols-[1.3fr_1fr]'
+          )}
+        >
           {/* Asset Content */}
           <div
             className={clsx(

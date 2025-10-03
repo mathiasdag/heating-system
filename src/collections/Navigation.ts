@@ -7,7 +7,6 @@ const Navigation: CollectionConfig = {
   slug: 'navigation',
   admin: {
     useAsTitle: 'name',
-    description: 'Main navigation menu configuration',
   },
   access: publicAccess,
   fields: [
@@ -16,16 +15,9 @@ const Navigation: CollectionConfig = {
       type: 'text',
       required: true,
       admin: {
+        position: 'sidebar',
         description:
           'Name for this navigation (e.g., "Main Navigation", "Footer Navigation")',
-      },
-    },
-    {
-      name: 'description',
-      type: 'text',
-      required: false,
-      admin: {
-        description: 'Optional description of this navigation',
       },
     },
     {
@@ -33,6 +25,7 @@ const Navigation: CollectionConfig = {
       type: 'group',
       required: false,
       admin: {
+        position: 'sidebar',
         description: 'Highlighted item shown in closed navigation state',
       },
       fields: LinkGroup.fields as Field[],

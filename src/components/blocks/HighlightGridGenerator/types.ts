@@ -54,4 +54,5 @@ export interface CardProps {
   onHoverStart: () => void;
   onHoverEnd: () => void;
   onClick: () => void;
+  isHomepage?: boolean;
 }

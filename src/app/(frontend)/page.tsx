@@ -67,7 +67,7 @@ function renderBlock(block: any, i: number) {
     case 'horizontalMarquee':
       return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
     case 'highlightGridGenerator':
-      return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
+      return <HighlightGridGeneratorBlock key={i} {...cleanBlock} isHomepage={true} />;
     // Add more cases for other block types
     default:
       return null;

@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
 import { Tag } from '@/components/ui';
 import { PlusIcon } from '@/components/icons/PlusIcon';
@@ -13,10 +12,9 @@ export default function ArticleCardWithoutImage({
   item,
   index,
   onClick,
+  isHomepage = false,
 }: Omit<CardProps, 'isHovered' | 'onHoverStart' | 'onHoverEnd'>) {
   const [isHovered, setIsHovered] = useState(false);
-  const pathname = usePathname();
-  const isHomepage = pathname === '/';
   const articleContent = getArticleContent(item);
 
   return (
@@ -25,14 +23,14 @@ export default function ArticleCardWithoutImage({
       onClick={onClick}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="self-start basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center"
+      className="self-start basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center focus:outline-none"
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.1 }}
     >
       <div className="relative">
         <div
           className={clsx(
-            'relative aspect-[4/6] overflow-hidden rounded-md p-6 font-mono z-10 relative',
+            'relative aspect-[4/6] overflow-hidden rounded-md p-6 font-mono z-10',
             {
               'bg-accent': isHomepage,
               'bg-surface': !isHomepage,

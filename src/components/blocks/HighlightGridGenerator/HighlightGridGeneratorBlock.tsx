@@ -22,6 +22,7 @@ interface HighlightGridGeneratorProps {
   }>;
   maxItems: number;
   sortBy: string;
+  isHomepage?: boolean;
   // Server-side populated content
   generatedContent: {
     articles: Record<string, unknown>[];
@@ -35,6 +36,7 @@ export default function HighlightGridGeneratorBlock({
   contentTypes,
   maxItems,
   sortBy,
+  isHomepage = false,
   generatedContent,
 }: HighlightGridGeneratorProps) {
   const [selectedHighlight, setSelectedHighlight] =
@@ -162,6 +164,7 @@ export default function HighlightGridGeneratorBlock({
                   item={item}
                   index={index}
                   onClick={() => handleHighlightClick(item)}
+                  isHomepage={isHomepage}
                 />
               );
             }

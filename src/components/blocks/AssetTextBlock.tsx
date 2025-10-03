@@ -48,7 +48,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
       <DevIndicator componentName="AssetTextBlock" position="top-right" />
 
       <div className="">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-x-8 gap-y-6 items-center">
           {/* Asset Content */}
           <div
             className={clsx(
@@ -67,7 +67,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           {/* Text Content */}
           <div
             className={clsx(
-              'place-self-start order-2',
+              'place-self-start order-2 py-8',
               !isTextLeft ? 'md:order-2' : 'md:order-1'
             )}
           >

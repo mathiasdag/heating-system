@@ -36,7 +36,7 @@ export default function ShowcaseCard({
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
       className="self-start basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center"
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.99 }}
       transition={{ duration: 0.1 }}
     >
       <div className="relative">
@@ -93,9 +93,16 @@ export default function ShowcaseCard({
         </div>
 
         {/* Content */}
-        <div className="px-0.5 pt-1.5 leading-4">
-          <div className="uppercase">{item.title}</div>
-        </div>
+        <motion.div
+          animate={{
+            y: isHovered ? -10 : 0,
+            opacity: isHovered ? 0 : 1,
+          }}
+          transition={{ duration: 0.15, ease: 'easeOut' }}
+          className="uppercase px-0.5 pt-1.5"
+        >
+          {item.title}
+        </motion.div>
       </div>
     </motion.button>
   );

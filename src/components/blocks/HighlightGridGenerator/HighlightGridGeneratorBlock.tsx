@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { ContentOverlay } from '@/components/ui/overlays';
 import { HorizontalScrollContainer } from '@/components/ui/HorizontalScrollContainer';
@@ -85,6 +86,7 @@ export default function HighlightGridGeneratorBlock({
   const displayContent = allContent.slice(0, maxItems);
 
   const handleHighlightClick = (highlightData: ContentItem) => {
+    // For showcases, open the overlay
     setSelectedHighlight(highlightData);
   };
 
@@ -154,7 +156,7 @@ export default function HighlightGridGeneratorBlock({
                   isHovered={isHovered}
                   onHoverStart={() => setHoveredCard(cardId)}
                   onHoverEnd={() => setHoveredCard(null)}
-                  onClick={() => handleHighlightClick(item)}
+                  onClick={() => {}} // No-op since Link handles navigation
                 />
               );
             } else if (item._contentType === 'article' && !hasImage) {
@@ -163,7 +165,7 @@ export default function HighlightGridGeneratorBlock({
                   key={cardId}
                   item={item}
                   index={index}
-                  onClick={() => handleHighlightClick(item)}
+                  onClick={() => {}} // No-op since Link handles navigation
                 />
               );
             }

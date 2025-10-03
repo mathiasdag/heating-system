@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import { clsx } from 'clsx';
 import { Tag } from '@/components/ui';
 import { PlusIcon } from '@/components/icons/PlusIcon';
 import { formatDateForTags, getArticleContent } from './utils';
@@ -13,6 +15,8 @@ export default function ArticleCardWithoutImage({
   onClick,
 }: Omit<CardProps, 'isHovered' | 'onHoverStart' | 'onHoverEnd'>) {
   const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
+  const isHomepage = pathname === '/';
   const articleContent = getArticleContent(item);
 
   return (
@@ -26,7 +30,15 @@ export default function ArticleCardWithoutImage({
       transition={{ duration: 0.1 }}
     >
       <div className="relative">
-        <div className="relative aspect-[4/6] bg-surface overflow-hidden rounded-md p-6 font-mono z-10 relative">
+        <div
+          className={clsx(
+            'relative aspect-[4/6] overflow-hidden rounded-md p-6 font-mono z-10 relative',
+            {
+              'bg-accent': isHomepage,
+              'bg-surface': !isHomepage,
+            }
+          )}
+        >
           <motion.div
             className="flex flex-col gap-3"
             animate={{
@@ -46,7 +58,7 @@ export default function ArticleCardWithoutImage({
 
             {/* Tags */}
             <div className="flex gap-0.5">
-              <Tag name="Article" size="md" />
+              <Tag name="Artikel" size="md" />
               {item.publishedDate && (
                 <>
                   {(() => {

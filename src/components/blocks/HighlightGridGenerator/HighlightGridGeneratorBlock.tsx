@@ -164,7 +164,6 @@ export default function HighlightGridGeneratorBlock({
                   item={item}
                   index={index}
                   onClick={() => handleHighlightClick(item)}
-                  isHomepage={isHomepage}
                 />
               );
             }

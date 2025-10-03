@@ -39,7 +39,12 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   const isStandalone = variant === 'standalone';
 
   return (
-    <div className={clsx('px-2 relative', isStandalone ? '' : 'py-6')}>
+    <div
+      className={clsx(
+        'px-2 relative max-w-8xl mx-auto',
+        isStandalone ? '' : 'py-6'
+      )}
+    >
       <DevIndicator componentName="AssetTextBlock" position="top-right" />
 
       <div className="">
@@ -74,7 +79,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
 
             {/* Link */}
             {link && (
-              <div className="mt-8 px-2 mb-2 sm:mb-0 sm:mt-6">
+              <div className="mt-8 mb-2 sm:mb-0 sm:mt-6">
                 <AppLink
                   link={link}
                   variant="outline"

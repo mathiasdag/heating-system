@@ -1,5 +1,4 @@
 import PayloadAPI from '@/lib/api';
-import { HeaderBlock } from '@/components/blocks/pages/header';
 import { PageHeader } from '@/components/headers';
 import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
@@ -71,8 +70,6 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
             return <AssetTextBlock key={i} {...cleanBlock} />;
           case 'assetTextContainer':
             return <AssetTextContainerBlock key={i} {...cleanBlock} />;
-          case 'header':
-            return <HeaderBlock key={i} {...cleanBlock} />;
           case 'spotlight':
             return <BiggerFeatureBlock key={i} {...cleanBlock} />;
           case 'horizontal-card-block':
@@ -101,8 +98,6 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
             return <FAQBlock key={i} {...cleanBlock} />;
           case 'minimalCarousel':
             return <SimpleCarouselBlock key={i} {...cleanBlock} />;
-          case 'assetText':
-            return <AssetTextBlock key={i} {...cleanBlock} />;
           case 'cta':
             return <CTABlock key={i} {...cleanBlock} />;
           case 'highlightGrid':

@@ -1,5 +1,4 @@
 import PayloadAPI from '@/lib/api';
-import { HeaderBlock } from '@/components/blocks/pages/header';
 import HomepageHeaderBlock from '@/components/blocks/pages/HomepageHeaderBlock';
 import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
@@ -67,7 +66,7 @@ function renderBlock(block: any, i: number) {
     case 'horizontalMarquee':
       return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
     case 'highlightGridGenerator':
-      return <HighlightGridGeneratorBlock key={i} {...cleanBlock} isHomepage={true} />;
+      return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
     // Add more cases for other block types
     default:
       return null;
@@ -85,16 +84,19 @@ export default async function HomePage() {
   // Process dynamic blocks on the server side
   const processedPage = await processPageLayout(page);
   const blocks = (processedPage as any).layout || [];
-  const headerBlock = blocks.find((block: any) => block.blockType === 'header');
-  const otherBlocks = blocks.filter(
-    (block: any) => block.blockType !== 'header'
-  );
 
-  return headerBlock ? (
-    <HomepageHeaderBlock {...JSON.parse(JSON.stringify(headerBlock))}>
-      {otherBlocks.map((block: any, i: number) => renderBlock(block, i))}
-    </HomepageHeaderBlock>
-  ) : (
-    blocks.map((block: any, i: number) => renderBlock(block, i))
+  return (
+    <div className="homepage">
+      {(processedPage as any).header ? (
+        <HomepageHeaderBlock
+          text={(processedPage as any).header.text}
+          assets={(processedPage as any).header.assets}
+        >
+          {blocks.map((block: any, i: number) => renderBlock(block, i))}
+        </HomepageHeaderBlock>
+      ) : (
+        blocks.map((block: any, i: number) => renderBlock(block, i))
+      )}
+    </div>
   );
 }

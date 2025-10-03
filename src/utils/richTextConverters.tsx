@@ -78,9 +78,7 @@ const defaultParagraphConverter: JSXConverters<SerializedParagraphNode> = {
       return null;
     }
 
-    return (
-      <p className="font-mono max-w-6xl px-2 sm:px-0 hyphens-auto">{text}</p>
-    );
+    return <p className="font-mono max-w-6xl hyphens-auto">{text}</p>;
   },
 };
 

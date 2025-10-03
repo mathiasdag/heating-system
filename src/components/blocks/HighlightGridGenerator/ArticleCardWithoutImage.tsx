@@ -34,7 +34,7 @@ export default function ArticleCardWithoutImage({
               y: isHovered ? '1em' : 0,
               opacity: isHovered ? 0 : 1,
             }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
           >
             {/* Content */}
             <div className="hyphens-auto">
@@ -71,7 +71,7 @@ export default function ArticleCardWithoutImage({
               y: isHovered ? 0 : -10,
               opacity: isHovered ? 1 : 0,
             }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             className="absolute top-4 left-4 z-10"
           >
             <PlusIcon size={16} strokeWidth={1.3} />
@@ -79,10 +79,10 @@ export default function ArticleCardWithoutImage({
 
           <motion.div
             animate={{
-              y: isHovered ? 0 : -10,
+              y: isHovered ? 0 : 10,
               opacity: isHovered ? 1 : 0,
             }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             className="absolute inset-0 flex items-center justify-center z-10 p-6 text-center font-display text-[2em] leading-[1em] uppercase mb-8"
           >
             {item.title}

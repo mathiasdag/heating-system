@@ -26,7 +26,7 @@ export default function ArticleCardWithImage({
       onClick={onClick}
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
-      className="self-start basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center"
+      className="self-start basis-64 sm:basis-72 grow-0 shrink-0 text-left w-full max-w-80 snap-center focus:outline-none"
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.1 }}
     >
@@ -96,49 +96,40 @@ export default function ArticleCardWithImage({
           <motion.div
             initial={{ y: '100%', opacity: 0 }}
             animate={{
-              y: isHovered ? 0 : '100%',
+              y: isHovered ? 0 : 10,
+              opacity: isHovered ? 1 : 0,
+            }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="absolute bottom-0 left-0 right-0 p-4 font-mono text-bg flex flex-col gap-3 bg-gradient-to-t from-black to-transparent"
+          >
+            {articleContent && (
+              <p className="line-clamp-[3] hyphens-auto">{articleContent}</p>
+            )}
+          </motion.div>
+
+          <motion.div
+            animate={{
+              y: isHovered ? 0 : -10,
               opacity: isHovered ? 1 : 0,
             }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="absolute bottom-0 left-0 right-0 bg-bg/90 backdrop-blur-sm p-4"
+            className="absolute inset-0 flex items-center justify-center z-10 p-6 text-center font-display text-[2em] leading-[1em] uppercase mb-8 text-bg"
           >
-            <div className="font-mono flex flex-col gap-3">
-              {/* Content */}
-              <div className="hyphens-auto">
-                {articleContent && (
-                  <p className="text-sm text-muted-foreground line-clamp-[8]">
-                    {articleContent}
-                  </p>
-                )}
-              </div>
-
-              {/* Tags */}
-              <div className="flex gap-0.5 uppercase">
-                <Tag name="Article" size="md" />
-                {item.publishedDate && (
-                  <>
-                    {(() => {
-                      const { year, month } = formatDateForTags(
-                        item.publishedDate
-                      );
-                      return (
-                        <>
-                          {year && <Tag name={year} size="md" />}
-                          {month && <Tag name={month} size="md" />}
-                        </>
-                      );
-                    })()}
-                  </>
-                )}
-              </div>
-            </div>
+            {item.title}
           </motion.div>
         </div>
 
         {/* Content */}
-        <div className="px-0.5 pt-1.5 leading-4">
-          <div className="uppercase">{item.title}</div>
-        </div>
+        <motion.div
+          animate={{
+            y: isHovered ? -10 : 0,
+            opacity: isHovered ? 0 : 1,
+          }}
+          transition={{ duration: 0.15, ease: 'easeOut' }}
+          className="uppercase px-0.5 pt-1.5"
+        >
+          {item.title}
+        </motion.div>
       </div>
     </motion.button>
   );

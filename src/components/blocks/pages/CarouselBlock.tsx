@@ -41,8 +41,29 @@ const customStyles = `
 
 interface CarouselBlockProps {
   headline?: string;
-  description?: any; // Rich text data
-  slides?: any[]; // Generic slides array
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
+  slides?: Array<{
+    id?: string;
+    title?: string;
+    content?: unknown;
+    image?: {
+      url: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
+    [key: string]: unknown;
+  }>;
 }
 
 const CarouselBlock: React.FC<CarouselBlockProps> = ({

@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { authenticated } from '@/access/authenticated';
-import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
+// import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
 import { commonHooks } from '@/utils/hooks';
 
 const Showcases: CollectionConfig = {

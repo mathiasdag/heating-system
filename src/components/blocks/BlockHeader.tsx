@@ -5,7 +5,17 @@ import { SectionHeading } from '@/components/headings';
 
 interface BlockHeaderProps {
   headline?: string;
-  description?: any; // Rich text data from Payload CMS
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   className?: string;
   headlineClassName?: string;
   descriptionClassName?: string;

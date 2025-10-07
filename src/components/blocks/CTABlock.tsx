@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { AppAction } from '@/components/ui';
@@ -9,7 +9,17 @@ import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 interface CTABlockProps {
   headline: string;
   ctaType: 'default' | 'rotating';
-  description?: any; // Lexical RichText type
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   link: LinkGroup;
 }
 

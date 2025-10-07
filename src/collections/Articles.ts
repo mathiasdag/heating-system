@@ -2,12 +2,12 @@ import type { CollectionConfig } from 'payload';
 import { lexicalEditor, BlocksFeature } from '@payloadcms/richtext-lexical';
 import Image from '@/blocks/articles/Image';
 import Video from '@/blocks/articles/Video';
-import TextBlock from '@/blocks/articles/TextBlock';
+// import TextBlock from '@/blocks/articles/TextBlock';
 import CTA from '@/blocks/global/CTA';
 import QA from '@/blocks/global/QA';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
-import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
+// import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
 import { commonHooks, commonVersioning } from '@/utils/hooks';
 
 const Articles: CollectionConfig = {

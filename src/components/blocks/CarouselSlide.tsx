@@ -30,7 +30,17 @@ interface LinkGroup {
 interface CarouselSlideProps {
   tags?: Tag[];
   subheadline?: string;
-  content?: any; // Rich text data
+  content?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   image?: Media;
   link?: LinkGroup;
 }

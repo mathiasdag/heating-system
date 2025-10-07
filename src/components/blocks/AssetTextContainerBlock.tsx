@@ -6,7 +6,17 @@ import { type LinkGroup } from '@/utils/linkRouter';
 
 interface AssetTextContainerBlockProps {
   headline?: string;
-  description?: any; // Rich text data from Payload CMS
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   assetTextBlocks: Array<{
     blockType: 'assetText';
     asset: {
@@ -20,7 +30,17 @@ interface AssetTextContainerBlockProps {
       };
       mux?: string;
     };
-    text: any; // Lexical RichText type
+    text: {
+      root: {
+        children: Array<{
+          type: string;
+          children?: Array<{
+            text?: string;
+            type?: string;
+          }>;
+        }>;
+      };
+    };
     textPosition: 'left' | 'right';
     link?: LinkGroup;
   }>;

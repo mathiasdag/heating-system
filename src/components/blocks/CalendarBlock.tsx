@@ -4,7 +4,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, useInView } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
-import { CalendarEventCard, CalendarEventOverlay } from '@/components/blocks/calendar';
+import {
+  CalendarEventCard,
+  CalendarEventOverlay,
+} from '@/components/blocks/calendar';
 import type { CalendarBlockProps, CalendarEvent } from '@/types/calendar';
 
 const CalendarBlock: React.FC<CalendarBlockProps> = ({

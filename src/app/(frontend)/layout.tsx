@@ -16,7 +16,6 @@ import {
   RevalidateButton,
   ExitPreviewButton,
 } from '@/components/admin';
-import { getPreviewData } from '@/utils/preview';
 import PayloadAPI from '@/lib/api';
 
 const sans = localFont({
@@ -123,8 +122,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   // Get pathname from headers to determine if we're on homepage
   const headersList = await import('next/headers').then(m => m.headers());
-  const pathname = headersList.get('x-pathname') || '/';
-  const isHomepage = pathname === '/';
+  // const pathname = headersList.get('x-pathname') || '/';
 
   const mainClassName = 'min-h-screen';
 

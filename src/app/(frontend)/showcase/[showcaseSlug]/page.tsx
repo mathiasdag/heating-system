@@ -4,16 +4,16 @@ import { notFound } from 'next/navigation';
 import { ShowcasePageWrapper } from '@/components/wrappers';
 
 interface ShowcasePageProps {
-  params: {
+  params: Promise<{
     showcaseSlug: string;
-  };
+  }>;
 }
 
 async function ShowcasePage({ params }: ShowcasePageProps) {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
 
-  const { showcaseSlug } = params;
+  const { showcaseSlug } = await params;
 
   if (!showcaseSlug) {
     notFound();
@@ -21,7 +21,7 @@ async function ShowcasePage({ params }: ShowcasePageProps) {
 
   // Fetch the showcase
   const { docs: [showcase] = [] } = await payload.find({
-    collection: 'showcases' as any,
+    collection: 'showcases' as const,
     where: { slug: { equals: showcaseSlug } },
     depth: 2, // Increased depth to populate blocks properly
   });

@@ -1,5 +1,9 @@
 // Base Icon component
-export { Icon, type IconProps, type BaseIconProps } from '@/components/icons/Icon';
+export {
+  Icon,
+  type IconProps,
+  type BaseIconProps,
+} from '@/components/icons/Icon';
 
 // Individual icons
 export { CheckIcon } from './CheckIcon';

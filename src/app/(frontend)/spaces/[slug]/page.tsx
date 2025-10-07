@@ -17,16 +17,16 @@ import { SpacesPageWrapper } from '@/components/wrappers';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 interface SpacePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function SpacePage({ params }: SpacePageProps) {
-  const { slug } = params;
+  const { slug } = await params;
 
   // Fetch the space with REST API
-  const space = (await PayloadAPI.findBySlug('spaces', slug, 10)) as any;
+  const space = await PayloadAPI.findBySlug('spaces', slug, 10);
 
   // If space doesn't exist, return 404
   if (!space) {
@@ -49,7 +49,7 @@ async function SpacePage({ params }: SpacePageProps) {
           <SpacesHeaderBlock spaceData={processedSpace} />
         )}
 
-        {processedSpace?.layout?.map((block: any, i: number) => {
+        {processedSpace?.layout?.map((block: Record<string, unknown>, i: number) => {
           const cleanBlock = JSON.parse(JSON.stringify(block));
           switch (block.blockType) {
             case 'assetText':

@@ -22,7 +22,7 @@ import { HighlightGridGeneratorBlock } from '@/components/blocks/HighlightGridGe
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 // Helper function to render blocks
-function renderBlock(block: any, i: number) {
+function renderBlock(block: Record<string, unknown>, i: number) {
   const cleanBlock = JSON.parse(JSON.stringify(block));
   switch (block.blockType) {
     case 'assetText':
@@ -83,19 +83,23 @@ export default async function HomePage() {
 
   // Process dynamic blocks on the server side
   const processedPage = await processPageLayout(page);
-  const blocks = (processedPage as any).layout || [];
+  const blocks = processedPage.layout || [];
 
   return (
     <div className="homepage">
-      {(processedPage as any).header ? (
+      {processedPage.header ? (
         <HomepageHeaderBlock
-          text={(processedPage as any).header.text}
-          assets={(processedPage as any).header.assets}
+          text={processedPage.header.text}
+          assets={processedPage.header.assets}
         >
-          {blocks.map((block: any, i: number) => renderBlock(block, i))}
+          {blocks.map((block: Record<string, unknown>, i: number) =>
+            renderBlock(block, i)
+          )}
         </HomepageHeaderBlock>
       ) : (
-        blocks.map((block: any, i: number) => renderBlock(block, i))
+        blocks.map((block: Record<string, unknown>, i: number) =>
+          renderBlock(block, i)
+        )
       )}
     </div>
   );

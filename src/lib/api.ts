@@ -84,7 +84,7 @@ async function fetchFromExternalAPI<T>(
         'Content-Type': 'application/json',
       },
       // Add cache control for better performance
-      next: { revalidate: 60 }, // Revalidate every 60 seconds
+      next: { revalidate: 300 }, // Revalidate every 5 minutes
     });
 
     if (!response.ok) {
@@ -216,7 +216,7 @@ export class PayloadAPI {
           headers: {
             'Content-Type': 'application/json',
           },
-          next: { revalidate: 60 },
+          next: { revalidate: 300 },
         });
 
         if (!response.ok) {

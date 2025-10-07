@@ -22,19 +22,7 @@ export default function ArticleContent({ content }: ArticleContentProps) {
     <main className="relative">
       <DevIndicator componentName="ArticleContent" />
       <RichText
-        data={
-          content as {
-            root: {
-              children: Array<{
-                type: string;
-                children?: Array<{
-                  text?: string;
-                  type?: string;
-                }>;
-              }>;
-            };
-          }
-        }
+        data={content as unknown as { root: Record<string, unknown> }}
         className="grid gap-4 justify-center pb-8"
         converters={articleConverter}
       />

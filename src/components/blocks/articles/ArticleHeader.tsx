@@ -74,16 +74,8 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
           <div className="mx-auto max-w-6xl font-mono px-4">
             <RichText
               data={
-                article.introduction as {
-                  root: {
-                    children: Array<{
-                      type: string;
-                      children?: Array<{
-                        text?: string;
-                        type?: string;
-                      }>;
-                    }>;
-                  };
+                article.introduction as unknown as {
+                  root: Record<string, unknown>;
                 }
               }
               className="grid gap-3"

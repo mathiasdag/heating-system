@@ -1,4 +1,4 @@
-import type { Block } from 'payload';
+import type { Block, Field } from 'payload';
 import LinkGroup from '@/fields/LinkGroup';
 
 const NavigationItem: Block = {
@@ -8,7 +8,7 @@ const NavigationItem: Block = {
     {
       name: 'link',
       type: 'group',
-      fields: [...(LinkGroup as { fields: unknown[] }).fields],
+      fields: [...(LinkGroup as { fields: Field[] }).fields],
       admin: {
         description:
           'Link configuration - use the "text" field for the menu item name',

@@ -1,6 +1,6 @@
 import PayloadAPI from '@/lib/api';
 import { PageHeader } from '@/components/headers';
-import BiggerFeatureBlock from '@/components/blocks/pages/BiggerFeatureBlock';
+import SpotlightBlock from '@/components/blocks/pages/SpotlightBlock';
 import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
 import React from 'react';
 import VideoBlock from '@/components/blocks/VideoBlock';
@@ -71,7 +71,7 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
           case 'assetTextContainer':
             return <AssetTextContainerBlock key={i} {...cleanBlock} />;
           case 'spotlight':
-            return <BiggerFeatureBlock key={i} {...cleanBlock} />;
+            return <SpotlightBlock key={i} {...cleanBlock} />;
           case 'horizontal-card-block':
             return <HorizontalCardBlock key={i} {...cleanBlock} />;
           case 'video':

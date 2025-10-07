@@ -13,7 +13,7 @@ import { AppLink } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import clsx from 'clsx';
 
-interface BiggerFeatureBlockProps {
+interface SpotlightBlockProps {
   headline?: string;
   subheadline?: string;
   description?: any;
@@ -26,7 +26,7 @@ interface BiggerFeatureBlockProps {
   };
 }
 
-const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
+const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
   headline,
   subheadline,
   description,
@@ -80,7 +80,7 @@ const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
         image?.url ? 'h-[250vh]' : ''
       )}
     >
-      <DevIndicator componentName="BiggerFeatureBlock" />
+      <DevIndicator componentName="SpotlightBlock" />
       <div
         className={clsx(
           'flex flex-col gap-8',
@@ -130,4 +130,4 @@ const BiggerFeatureBlock: React.FC<BiggerFeatureBlockProps> = ({
   );
 };
 
-export default BiggerFeatureBlock;
+export default SpotlightBlock;

@@ -91,7 +91,26 @@ async function SpacePage({ params }: SpacePageProps) {
             header={processedSpace.header}
           />
         ) : (
-          <SpacesHeaderBlock spaceData={processedSpace} />
+          <SpacesHeaderBlock
+            spaceData={
+              processedSpace as {
+                title?: string;
+                capacity?: number;
+                areaSize?: number;
+                heroAsset?: {
+                  type?: 'image' | 'mux';
+                  image?: {
+                    url: string;
+                    alt?: string;
+                    width?: number;
+                    height?: number;
+                  };
+                  mux?: string;
+                };
+                [key: string]: unknown;
+              }
+            }
+          />
         )}
 
         {processedSpace?.layout?.map(

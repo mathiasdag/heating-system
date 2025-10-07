@@ -17,13 +17,28 @@ import clsx from 'clsx';
 interface SpotlightBlockProps {
   headline?: string;
   subheadline?: string;
-  description?: any;
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   image?: { url: string; alt?: string; width?: number; height?: number };
   link?: {
     type?: 'internal' | 'external';
     text?: string;
     url?: string;
-    reference?: any;
+    reference?: {
+      id: string;
+      title?: string;
+      slug?: string;
+      [key: string]: unknown;
+    };
   };
 }
 

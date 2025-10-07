@@ -5,7 +5,7 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 
 export interface CarouselItem {
   id: string;
-  [key: string]: any; // Allow any additional properties
+  [key: string]: unknown; // Allow any additional properties
 }
 
 export interface ReusableCarouselProps {

@@ -36,7 +36,17 @@ interface NavigationItem {
     description?: string;
   }>;
   title: string;
-  body?: any;
+  body?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   image?: {
     url: string;
     alt?: string;
@@ -45,7 +55,12 @@ interface NavigationItem {
   };
   link?: {
     type: 'internal' | 'external' | 'copy';
-    reference?: any;
+    reference?: {
+      id: string;
+      title?: string;
+      slug?: string;
+      [key: string]: unknown;
+    };
     url?: string;
     text?: string;
   };

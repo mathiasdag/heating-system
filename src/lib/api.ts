@@ -27,7 +27,7 @@ interface ApiResponse<T> {
 
 interface FindOptions {
   collection: string;
-  where?: Record<string, any>;
+  where?: Record<string, unknown>;
   depth?: number;
   limit?: number;
   page?: number;
@@ -111,7 +111,7 @@ async function fetchFromExternalAPI<T>(
 }
 
 // Request deduplication cache
-const requestCache = new Map<string, Promise<any>>();
+const requestCache = new Map<string, Promise<unknown>>();
 
 /**
  * Unified API interface that works with both local and external backends

@@ -7,10 +7,25 @@ export interface CalendarEvent {
   title: string;
   startDate: string;
   endDate: string;
-  description?: any;
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   link?: {
     type: 'internal' | 'external';
-    reference?: any;
+    reference?: {
+      id: string;
+      title?: string;
+      slug?: string;
+      [key: string]: unknown;
+    };
     url?: string;
     text?: string;
   };
@@ -18,7 +33,17 @@ export interface CalendarEvent {
 
 export interface CalendarBlockProps {
   headline?: string;
-  description?: any;
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   events: CalendarEvent[];
 }
 

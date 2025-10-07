@@ -101,23 +101,43 @@ export class DynamicContentAPI {
     const filterArticlesByTags = (articles: unknown[]) => {
       if (tagIds.length === 0) return articles;
 
-      return articles.filter((article: any) => {
-        const articleTags = article?.tags || [];
-        return articleTags.some((tag: any) =>
-          tagIds.includes(tag.id || tag._id || tag)
-        );
-      });
+      return articles.filter(
+        (article: {
+          tags?: Array<{
+            id?: string;
+            _id?: string;
+            [key: string]: unknown;
+          }>;
+          [key: string]: unknown;
+        }) => {
+          const articleTags = article?.tags || [];
+          return articleTags.some(
+            (tag: { id?: string; _id?: string; [key: string]: unknown }) =>
+              tagIds.includes(tag.id || tag._id || tag)
+          );
+        }
+      );
     };
 
     const filterShowcasesByTags = (showcases: unknown[]) => {
       if (tagIds.length === 0) return showcases;
 
-      return showcases.filter((showcase: any) => {
-        const showcaseTags = showcase?.tags || [];
-        return showcaseTags.some((tag: any) =>
-          tagIds.includes(tag.id || tag._id || tag)
-        );
-      });
+      return showcases.filter(
+        (showcase: {
+          tags?: Array<{
+            id?: string;
+            _id?: string;
+            [key: string]: unknown;
+          }>;
+          [key: string]: unknown;
+        }) => {
+          const showcaseTags = showcase?.tags || [];
+          return showcaseTags.some(
+            (tag: { id?: string; _id?: string; [key: string]: unknown }) =>
+              tagIds.includes(tag.id || tag._id || tag)
+          );
+        }
+      );
     };
 
     // Apply client-side filtering

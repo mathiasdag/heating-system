@@ -17,7 +17,7 @@ export interface GraphQLResponse<T> {
  */
 async function graphqlRequest<T>(
   query: string,
-  variables?: Record<string, any>
+  variables?: Record<string, unknown>
 ): Promise<GraphQLResponse<T>> {
   const response = await fetch(GRAPHQL_ENDPOINT, {
     method: 'POST',
@@ -193,7 +193,10 @@ export class GraphQLAPI {
           id: string;
           title: string;
           slug: string;
-          layout: Array<any>;
+          layout: Array<{
+            blockType: string;
+            [key: string]: unknown;
+          }>;
         }>;
       };
     }>(GET_PAGE_BY_SLUG, { slug });
@@ -216,7 +219,10 @@ export class GraphQLAPI {
           id: string;
           title: string;
           slug: string;
-          layout: Array<any>;
+          layout: Array<{
+            blockType: string;
+            [key: string]: unknown;
+          }>;
         }>;
       };
     }>(GET_SPACE_BY_SLUG, { slug });
@@ -239,7 +245,10 @@ export class GraphQLAPI {
           id: string;
           title: string;
           slug: string;
-          layout: Array<any>;
+          layout: Array<{
+            blockType: string;
+            [key: string]: unknown;
+          }>;
         }>;
       };
     }>(GET_ARTICLE_BY_SLUG, { slug });

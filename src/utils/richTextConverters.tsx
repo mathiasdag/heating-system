@@ -169,7 +169,12 @@ const headingConverter: JSXConverters<SerializedHeadingNode> = {
  * Main JSX converter that combines all custom converters
  * This is the proper way to use converters with Payload CMS Lexical
  */
-type NodeTypes = DefaultNodeTypes | SerializedBlockNode<any>;
+type NodeTypes =
+  | DefaultNodeTypes
+  | SerializedBlockNode<{
+      blockType: string;
+      [key: string]: unknown;
+    }>;
 
 // Article converter - for article content with inline blocks
 export const articleConverter: JSXConvertersFunction<NodeTypes> = ({

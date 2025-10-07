@@ -4,7 +4,12 @@ import { useRouter } from 'next/navigation';
 import { ShowcaseOverlay } from '@/components/ui/overlays';
 
 interface ShowcasePageWrapperProps {
-  showcase: any;
+  showcase: {
+    id: string;
+    title: string;
+    slug: string;
+    [key: string]: unknown;
+  };
 }
 
 const ShowcasePageWrapper: React.FC<ShowcasePageWrapperProps> = ({

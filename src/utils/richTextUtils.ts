@@ -5,10 +5,30 @@
  * @param data - Lexical rich text data from Payload CMS
  * @returns Plain text string with all formatting removed
  */
-export function extractPlainText(data: any): string {
+export function extractPlainText(data: {
+  root?: {
+    children?: Array<{
+      type: string;
+      children?: Array<{
+        text?: string;
+        type?: string;
+      }>;
+      text?: string;
+    }>;
+  };
+}): string {
   if (!data || !data.root || !data.root.children) return '';
 
-  const extractText = (nodes: any[]): string => {
+  const extractText = (
+    nodes: Array<{
+      type: string;
+      children?: Array<{
+        text?: string;
+        type?: string;
+      }>;
+      text?: string;
+    }>
+  ): string => {
     return nodes
       .map(node => {
         if (node.type === 'text') {
@@ -31,6 +51,17 @@ export function extractPlainText(data: any): string {
  * @param data - Lexical rich text data from Payload CMS
  * @returns True if the rich text is empty or contains no text
  */
-export function isRichTextEmpty(data: any): boolean {
+export function isRichTextEmpty(data: {
+  root?: {
+    children?: Array<{
+      type: string;
+      children?: Array<{
+        text?: string;
+        type?: string;
+      }>;
+      text?: string;
+    }>;
+  };
+}): boolean {
   return extractPlainText(data).trim() === '';
 }

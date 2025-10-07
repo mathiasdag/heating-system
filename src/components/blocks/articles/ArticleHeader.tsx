@@ -10,7 +10,17 @@ interface ArticleHeaderProps {
   article: {
     title: string;
     excerpt?: string;
-    introduction?: any;
+    introduction?: {
+      root: {
+        children: Array<{
+          type: string;
+          children?: Array<{
+            text?: string;
+            type?: string;
+          }>;
+        }>;
+      };
+    };
     featuredImage?: {
       url: string;
       alt?: string;

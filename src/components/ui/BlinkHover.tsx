@@ -8,7 +8,7 @@ interface BlinkHoverProps {
   className?: string;
   style?: React.CSSProperties;
   target?: string; // CSS selector to target specific child element
-  [key: string]: any; // Allow other props to be passed through
+  [key: string]: unknown; // Allow other props to be passed through
 }
 
 export function BlinkHover({
@@ -31,7 +31,10 @@ export function BlinkHover({
       return Children.map(children, child => {
         if (isValidElement(child)) {
           // Check if this child matches the target selector
-          const childProps = child.props as any;
+          const childProps = child.props as {
+            className?: string;
+            [key: string]: unknown;
+          };
           const matchesTarget =
             (target === '.title' && childProps.className?.includes('title')) ||
             (target === '.number' &&

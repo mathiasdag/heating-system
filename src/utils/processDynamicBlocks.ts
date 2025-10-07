@@ -4,7 +4,27 @@ import { DynamicContentAPI } from '@/lib/dynamicContent';
  * Process dynamic blocks on the server side to populate content
  * This runs during page generation to fetch and inject dynamic content
  */
-export async function processDynamicBlocks(layout: any[]): Promise<any[]> {
+export async function processDynamicBlocks(
+  layout: Array<{
+    blockType: string;
+    filterTags?: Array<{
+      id?: string;
+      _id?: string;
+      [key: string]: unknown;
+    }>;
+    [key: string]: unknown;
+  }>
+): Promise<
+  Array<{
+    blockType: string;
+    filterTags?: Array<{
+      id?: string;
+      _id?: string;
+      [key: string]: unknown;
+    }>;
+    [key: string]: unknown;
+  }>
+> {
   const processedLayout = await Promise.all(
     layout.map(async block => {
       if (block.blockType === 'highlightGridGenerator') {
@@ -12,14 +32,20 @@ export async function processDynamicBlocks(layout: any[]): Promise<any[]> {
           // Extract tag IDs from the relationship data
           const tagIds =
             block.filterTags
-              ?.map((tag: any) => {
-                if (typeof tag === 'string') {
-                  return tag;
-                } else if (tag && typeof tag === 'object') {
-                  return tag.id || tag._id || tag;
+              ?.map(
+                (tag: {
+                  id?: string;
+                  _id?: string;
+                  [key: string]: unknown;
+                }) => {
+                  if (typeof tag === 'string') {
+                    return tag;
+                  } else if (tag && typeof tag === 'object') {
+                    return tag.id || tag._id || tag;
+                  }
+                  return null;
                 }
-                return null;
-              })
+              )
               .filter(Boolean) || [];
 
           // If no tags are selected, show all content (tagIds can be empty)
@@ -66,7 +92,19 @@ export async function processDynamicBlocks(layout: any[]): Promise<any[]> {
 /**
  * Process a single page's layout for dynamic content
  */
-export async function processPageLayout(page: any): Promise<any> {
+export async function processPageLayout(page: {
+  layout?: Array<{
+    blockType: string;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+}): Promise<{
+  layout?: Array<{
+    blockType: string;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+}> {
   if (!page.layout) {
     return page;
   }

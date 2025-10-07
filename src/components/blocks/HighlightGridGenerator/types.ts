@@ -25,15 +25,45 @@ export interface ContentItem {
     autoplay?: boolean;
     controls?: boolean;
     title?: string;
-    content?: any;
+    content?: {
+      root: {
+        children: Array<{
+          type: string;
+          children?: Array<{
+            text?: string;
+            type?: string;
+          }>;
+        }>;
+      };
+    };
   }>;
   year?: number;
   publishedDate?: string;
   createdAt?: string;
   lastModifiedDate?: string;
   excerpt?: string;
-  introduction?: any;
-  content?: any;
+  introduction?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
+  content?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   tags?: Array<{
     id: string;
     name: string;

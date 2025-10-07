@@ -45,7 +45,19 @@ export function fixImageUrl(url: string | undefined | null): string {
 /**
  * Fix image object with URL transformation
  */
-export function fixImageObject(image: any): any {
+export function fixImageObject(image: {
+  url?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  [key: string]: unknown;
+}): {
+  url?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  [key: string]: unknown;
+} {
   if (!image) return image;
 
   return {

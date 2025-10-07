@@ -2,7 +2,17 @@ import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 
 interface OverlayTextBlockProps {
-  content: any;
+  content: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
 }
 
 export default function OverlayTextBlock({ content }: OverlayTextBlockProps) {

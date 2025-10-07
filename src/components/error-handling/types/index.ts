@@ -37,7 +37,11 @@ export interface ErrorFallbackProps {
 }
 
 export interface WithErrorBoundaryOptions {
-  fallback?: React.ComponentType<any>;
+  fallback?: React.ComponentType<{
+    error?: Error;
+    resetError?: () => void;
+    [key: string]: unknown;
+  }>;
   onError?: (error: Error, errorInfo: React.ErrorInfo, errorId: string) => void;
   showDevIndicator?: boolean;
 }

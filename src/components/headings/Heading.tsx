@@ -32,15 +32,10 @@ const variantConfig = {
     className:
       'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] px-4 pt-8',
   },
-  'page-title': {
-    defaultAs: 'h1' as const,
-    className:
-      'font-sans uppercase text-2xl leading-[0.95em] tracking-[-0.01em]',
-  },
   'article-title': {
     defaultAs: 'h1' as const,
     className:
-      'font-sans uppercase text-3xl leading-[0.95em] tracking-[-0.01em]',
+      'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] px-4 pt-8',
   },
   section: {
     defaultAs: 'h2' as const,

@@ -1,10 +1,7 @@
-import Image from 'next/image';
 import React from 'react';
-import { RichText } from '@payloadcms/richtext-lexical/react';
-import { DevIndicator } from '@/components/dev/DevIndicator';
-import VideoBlock from '@/components/blocks/VideoBlock';
-import { Tag } from '@/components/ui';
-import { fixImageUrl } from '@/utils/imageUrl';
+import ArticleHeaderAssetsAbove from './ArticleHeaderAssetsAbove';
+import ArticleHeaderStandard from './ArticleHeaderStandard';
+import ArticleHeaderTextOnly from './ArticleHeaderTextOnly';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -38,132 +35,52 @@ export default function ArticleHeader({
   articleData,
   header,
 }: ArticleHeaderProps) {
-  // Format dates for display
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('sv-SE', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
+  // Filter assets that actually have content uploaded
+  const validAssets = (header?.assets || []).filter(asset => {
+    if (asset.type === 'image') {
+      return asset.image?.url && asset.image.url.trim() !== '';
+    }
+    if (asset.type === 'mux') {
+      return asset.mux && asset.mux.trim() !== '';
+    }
+    return false;
+  });
 
-  const beforeAssets =
-    header?.assets?.filter(asset => asset.placement === 'before') || [];
-  const afterAssets =
-    header?.assets?.filter(asset => asset.placement === 'after') || [];
-
-  return (
-    <div className="relative mb-16">
-      <DevIndicator componentName="ArticleHeader" />
-      <div className="grid gap-8 justify-center pt-32 pb-16 text-center">
-        {articleData.tags && articleData.tags.length > 0 && (
-          <div className="flex justify-center gap-2 flex-wrap mb-4">
-            {articleData.tags.map((tag, index) => (
-              <Tag key={tag.id || index} name={tag.name} size="md" />
-            ))}
-          </div>
-        )}
-
-        {/* Render assets before text */}
-        {beforeAssets.length > 0 && (
-          <div className="px-4 mx-auto">
-            {beforeAssets.map((asset, index) => (
-              <div
-                key={index}
-                className="max-h-[80vh] flex items-center justify-center"
-              >
-                {asset.type === 'image' && asset.image && (
-                  <Image
-                    src={fixImageUrl(asset.image.url)}
-                    alt={asset.image.alt || ''}
-                    width={asset.image.width || 1200}
-                    height={asset.image.height || 800}
-                    className="object-contain max-h-full h-full w-auto rounded-lg object-center"
-                  />
-                )}
-                {asset.type === 'mux' && asset.mux && (
-                  <div className="w-full aspect-video">
-                    <VideoBlock
-                      host="mux"
-                      sources={[
-                        {
-                          playbackId: asset.mux,
-                          minWidth: 0,
-                        },
-                      ]}
-                      controls={true}
-                      autoplay={false}
-                      adaptiveResolution={true}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {header?.text && (
-          <RichText
-            data={header.text}
-            className="rich-text px-4 grid gap-4 font-mono"
-          />
-        )}
-
-        {/* Author and Date Info */}
-        <div className="font-mono">
-          {articleData.author && (
-            <div className="">
-              Ord:&nbsp;
-              {articleData.author.firstName && articleData.author.lastName
-                ? `${articleData.author.firstName} ${articleData.author.lastName}`
-                : articleData.author.email}
-            </div>
-          )}
-          <div>
-            {articleData.lastModifiedDate
-              ? `Senast uppdaterad: ${formatDate(articleData.lastModifiedDate)}`
-              : `Publicerad: ${formatDate(articleData.publishedDate || '')}`}
-          </div>
-        </div>
-
-        {/* Render assets after text */}
-        {afterAssets.length > 0 && (
-          <div className="px-4 mx-auto">
-            {afterAssets.map((asset, index) => (
-              <div
-                key={index}
-                className="max-h-[80vh] flex items-center justify-center"
-              >
-                {asset.type === 'image' && asset.image && (
-                  <Image
-                    src={fixImageUrl(asset.image.url)}
-                    alt={asset.image.alt || ''}
-                    width={asset.image.width || 1200}
-                    height={asset.image.height || 800}
-                    className="object-contain max-h-full h-full w-auto rounded-lg object-center"
-                  />
-                )}
-                {asset.type === 'mux' && asset.mux && (
-                  <div className="w-full aspect-video">
-                    <VideoBlock
-                      host="mux"
-                      sources={[
-                        {
-                          playbackId: asset.mux,
-                          minWidth: 0,
-                        },
-                      ]}
-                      controls={true}
-                      autoplay={false}
-                      adaptiveResolution={true}
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+  const beforeAssets = validAssets.filter(
+    asset => asset.placement === 'before'
   );
+  const afterAssets = validAssets.filter(asset => asset.placement === 'after');
+  const hasAssets = validAssets.length > 0;
+
+  // If no assets, render text-only version
+  if (!hasAssets) {
+    return (
+      <ArticleHeaderTextOnly articleData={articleData} text={header?.text} />
+    );
+  }
+
+  // If has assets above text, use assets above variant
+  if (beforeAssets.length > 0) {
+    return (
+      <ArticleHeaderAssetsAbove
+        articleData={articleData}
+        text={header?.text}
+        assets={beforeAssets}
+      />
+    );
+  }
+
+  // If has assets below text, use standard variant
+  if (afterAssets.length > 0) {
+    return (
+      <ArticleHeaderStandard
+        articleData={articleData}
+        text={header?.text}
+        assets={afterAssets}
+      />
+    );
+  }
+
+  // Fallback (shouldn't reach here)
+  return null;
 }

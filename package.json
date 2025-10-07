@@ -20,7 +20,6 @@
     "@payloadcms/richtext-lexical": "^3.44.0",
     "@tailwindcss/typography": "^0.5.16",
     "clsx": "^2.1.1",
-    "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.0",
     "graphql": "^16.11.0",

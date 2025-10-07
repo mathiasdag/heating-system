@@ -1,6 +1,5 @@
 import { PayloadAPI } from '@/lib/api';
-import ArticleHeader from '@/components/blocks/articles/ArticleHeader';
-import { ArticleHeader as NewArticleHeader } from '@/components/headers';
+import { ArticleHeader } from '@/components/headers';
 import ArticleContent from '@/components/blocks/articles/ArticleContent';
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -76,32 +75,30 @@ async function ArticlePage({ params }: ArticlePageProps) {
     });
   };
 
+  console.log(article);
+
   return (
     <div data-content-type="article" className="min-h-screen grid gap-24 pb-36">
       {/* Article Header */}
-      {article.header ? (
-        <NewArticleHeader
-          articleData={article}
-          header={
-            article.header as {
-              text?: string;
-              assets?: Array<{
-                type: 'image' | 'mux';
-                placement: 'before' | 'after';
-                image?: {
-                  url: string;
-                  alt?: string;
-                  width?: number;
-                  height?: number;
-                };
-                mux?: string;
-              }>;
-            }
+      <ArticleHeader
+        articleData={article}
+        header={
+          article.header as {
+            text?: string;
+            assets?: Array<{
+              type: 'image' | 'mux';
+              placement: 'before' | 'after';
+              image?: {
+                url: string;
+                alt?: string;
+                width?: number;
+                height?: number;
+              };
+              mux?: string;
+            }>;
           }
-        />
-      ) : (
-        <ArticleHeader article={article} />
-      )}
+        }
+      />
 
       {/* Main Content */}
       <ArticleContent

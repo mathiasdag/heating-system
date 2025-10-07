@@ -46,7 +46,10 @@ interface HomepageData {
 }
 
 // Helper function to render blocks
-function renderBlock(block: HomepageData['layout'][0], i: number) {
+function renderBlock(
+  block: { blockType: string; [key: string]: unknown },
+  i: number
+) {
   const cleanBlock = JSON.parse(JSON.stringify(block));
   switch (block.blockType) {
     case 'assetText':
@@ -117,16 +120,36 @@ export default async function HomePage() {
     <div className="homepage">
       {processedPage.header ? (
         <HomepageHeaderBlock
-          text={processedPage.header.text}
-          assets={processedPage.header.assets}
+          text={(processedPage as HomepageData).header!.text}
+          assets={
+            (processedPage as HomepageData).header!.assets as Array<{
+              type: 'image' | 'mux' | 'video';
+              placement: 'before' | 'after';
+              image?: {
+                url: string;
+                alt?: string;
+                width?: number;
+                height?: number;
+              };
+              mux?: string;
+              video?: {
+                url: string;
+                alt?: string;
+                width?: number;
+                height?: number;
+              };
+            }>
+          }
         >
-          {blocks.map((block: HomepageData['layout'][0], i: number) =>
-            renderBlock(block, i)
+          {blocks.map(
+            (block: { blockType: string; [key: string]: unknown }, i: number) =>
+              renderBlock(block, i)
           )}
         </HomepageHeaderBlock>
       ) : (
-        blocks.map((block: HomepageData['layout'][0], i: number) =>
-          renderBlock(block, i)
+        blocks.map(
+          (block: { blockType: string; [key: string]: unknown }, i: number) =>
+            renderBlock(block, i)
         )
       )}
     </div>

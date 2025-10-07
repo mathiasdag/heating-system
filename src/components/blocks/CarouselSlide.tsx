@@ -6,6 +6,8 @@ import { Tag } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
+import { fixImageUrl } from '@/utils/imageUrl';
+import { Heading } from '@/components/headings';
 
 interface Tag {
   id: string;
@@ -90,41 +92,6 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   };
 
   return (
-    <div className="relative">
-      <DevIndicator componentName="CarouselSlide" />
-      <div className="grid xl:grid-cols-2 aspect-video items-end max-w-6xl mx-auto bg-surface rounded-2xl relative">
-        {/* Right Image - First on mobile */}
-        {image && (
-          <div className="absolute inset-0">
-            <Image
-              src={image.url}
-              alt={image.alt || 'Carousel image'}
-              width={image.width || 800}
-              height={image.height || 600}
-              className="w-full h-full rounded-2xl object-cover"
-            />
-          </div>
-        )}
-
-        {/* Left Content - Second on mobile */}
-        <div className="flex-1 space-y-4 px-8 pt-12 pb-12 relative z-10">
-          {/* Subheadline */}
-          {subheadline && (
-            <h3 className="text-2xl font-display uppercase">{subheadline}</h3>
-          )}
-
-          {/* Content */}
-          {content && (
-            <div className="font-mono">
-              <RichText data={content} />
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
     <div className="">
       <DevIndicator componentName="CarouselSlide" />
       <div className="grid xl:grid-cols-2 items-center max-w-6xl mx-auto bg-surface rounded-2xl relative">
@@ -132,7 +99,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
         {image && (
           <div className="relative aspect-[4/3] xl:aspect-square xl:h-full order-1 xl:order-2">
             <Image
-              src={image.url}
+              src={fixImageUrl(image.url)}
               alt={image.alt || 'Carousel image'}
               width={image.width || 800}
               height={image.height || 600}
@@ -154,7 +121,9 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
           {/* Subheadline */}
           {subheadline && (
-            <h3 className="text-2xl font-display uppercase">{subheadline}</h3>
+            <Heading variant="card-title" as="h3">
+              {title}
+            </Heading>
           )}
 
           {/* Content */}

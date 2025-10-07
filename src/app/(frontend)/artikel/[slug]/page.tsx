@@ -80,13 +80,45 @@ async function ArticlePage({ params }: ArticlePageProps) {
     <div data-content-type="article" className="min-h-screen grid gap-24 pb-36">
       {/* Article Header */}
       {article.header ? (
-        <NewArticleHeader articleData={article} header={article.header} />
+        <NewArticleHeader
+          articleData={article}
+          header={
+            article.header as {
+              text?: string;
+              assets?: Array<{
+                type: 'image' | 'mux';
+                placement: 'before' | 'after';
+                image?: {
+                  url: string;
+                  alt?: string;
+                  width?: number;
+                  height?: number;
+                };
+                mux?: string;
+              }>;
+            }
+          }
+        />
       ) : (
         <ArticleHeader article={article} />
       )}
 
       {/* Main Content */}
-      <ArticleContent content={article.content} />
+      <ArticleContent
+        content={
+          article.content as unknown as {
+            root: {
+              children: Array<{
+                type: string;
+                children?: Array<{
+                  text?: string;
+                  type?: string;
+                }>;
+              }>;
+            };
+          }
+        }
+      />
 
       {/* Footer */}
       <footer className="font-mono mx-auto w-full max-w-xl px-2 -mt-24">

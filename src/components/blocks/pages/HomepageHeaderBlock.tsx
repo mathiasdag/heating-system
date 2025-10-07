@@ -32,27 +32,30 @@ export default function HomepageHeaderBlock({
 }: HomepageHeaderBlockProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const richTextRef = useRef<HTMLDivElement>(null);
   const [isInViewport, setIsInViewport] = useState(true);
+
+  console.log(isInViewport);
 
   // Get the first asset (video or image) for the fullscreen background
   const backgroundAsset =
     assets.find(asset => asset.placement === 'before') || assets[0];
 
-  // Intersection Observer to detect when video is in viewport
+  // Intersection Observer to detect when RichText content is in viewport
   useEffect(() => {
-    if (!videoRef.current) return;
+    if (!richTextRef.current) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsInViewport(entry.isIntersecting);
       },
       {
-        threshold: 0.1, // Trigger when 10% of the video is visible
-        rootMargin: '50px', // Start checking 50px before entering viewport
+        threshold: 0.1, // Trigger when 10% of the RichText is visible
+        rootMargin: '500px 0px 0px 0px', // Start checking 500px before entering viewport
       }
     );
 
-    observer.observe(videoRef.current);
+    observer.observe(richTextRef.current);
 
     return () => {
       observer.disconnect();
@@ -139,6 +142,7 @@ export default function HomepageHeaderBlock({
         className="mt-[50vh] sm:mt-[calc(100vh-2rem)] relative z-10 bg-bg rounded-t-xl grid gap-32 pb-32"
       >
         <FadeIn
+          ref={richTextRef}
           className="flex items-center justify-center px-4 text-center pt-8 sm:pt-16 md:pt-20"
           timing="slow"
           delay={1}

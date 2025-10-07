@@ -118,7 +118,7 @@ async function ArticlePage({ params }: ArticlePageProps) {
       />
 
       {/* Footer */}
-      <footer className="font-mono mx-auto w-full max-w-xl px-2 -mt-24">
+      <footer className="font-mono mx-auto w-full max-w-xl px-4 -mt-24">
         ———
         <div>
           Ord: &nbsp;

@@ -51,7 +51,7 @@ const articleParagraphConverter: JSXConverters<SerializedParagraphNode> = {
       return null;
     }
 
-    return <p className="max-w-xl px-2 mx-auto">{text}</p>;
+    return <p className="max-w-xl px-4 mx-auto">{text}</p>;
   },
 };
 

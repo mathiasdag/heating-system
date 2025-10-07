@@ -35,7 +35,7 @@ const variantConfig = {
   'article-title': {
     defaultAs: 'h1' as const,
     className:
-      'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] px-4 pt-8',
+      'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] px-4',
   },
   section: {
     defaultAs: 'h2' as const,

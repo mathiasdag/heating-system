@@ -5,7 +5,7 @@ import { AppLink } from '@/components/ui';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';
 import { defaultConverter } from '@/utils/richTextConverters';
-import AssetRenderer from '@/components/common/AssetRenderer';
+import MediaAsset from '@/components/common/MediaAsset';
 import clsx from 'clsx';
 
 interface AssetTextBlockProps {
@@ -68,7 +68,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
               !isTextLeft ? 'md:order-1' : 'justify-self-end md:order-2'
             )}
           >
-            <AssetRenderer
+            <MediaAsset
               asset={asset}
               className={
                 !isStandalone ? 'aspect-[4/3] object-cover rounded-lg' : ''

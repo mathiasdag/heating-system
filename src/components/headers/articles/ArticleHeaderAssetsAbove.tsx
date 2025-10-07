@@ -1,15 +1,13 @@
 'use client';
 
-import Image from 'next/image';
 import React, { useRef } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import VideoBlock from '@/components/blocks/VideoBlock';
 import { FadeInUp, FadeInDown } from '@/components/ui/FadeIn';
 import { Tag } from '@/components/ui';
-import { fixImageUrl } from '@/utils/imageUrl';
 import { Heading } from '@/components/headings';
+import MediaAsset from '@/components/common/MediaAsset';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -49,7 +47,7 @@ export default function ArticleHeaderAssetsAbove({
   });
 
   // Add subtle scale effect for more dynamic feel
-  const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
   const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   // Format dates for display
@@ -80,79 +78,14 @@ export default function ArticleHeaderAssetsAbove({
     return checkChildren(richTextData.root.children);
   };
 
-  const renderAsset = (asset: Asset, key: number) => {
-    const assetCount = assets.length;
-    const height = Math.max(220 - (assetCount - 1) * 40, 120);
-
-    if (asset.type === 'image' && asset.image?.url) {
-      const aspectRatio =
-        asset.image.width && asset.image.height
-          ? asset.image.width / asset.image.height
-          : 1;
-      const isLandscape = aspectRatio > 1;
-      const shouldBeSquare =
-        assetCount > 1 || (assetCount === 1 && isLandscape);
-      const width = shouldBeSquare ? height : Math.round(height * aspectRatio);
-      const className = shouldBeSquare
-        ? 'rounded max-w-[50vw] aspect-square object-cover'
-        : 'rounded max-w-[50vw]';
-
-      return (
-        <Image
-          key={key}
-          src={fixImageUrl(asset.image.url)}
-          alt={asset.image.alt || ''}
-          width={width}
-          height={height}
-          className={className}
-          priority
-          quality={75}
-          sizes="(max-width: 768px) 50vw, 30vw"
-        />
-      );
-    }
-
-    if (asset.type === 'mux' && asset.mux) {
-      const shouldBeSquare = assetCount > 1;
-      const width = shouldBeSquare ? height : Math.round(height * 1.5);
-      const videoClassName = shouldBeSquare
-        ? 'rounded overflow-hidden aspect-square'
-        : 'rounded overflow-hidden';
-
-      return (
-        <div
-          key={key}
-          style={{ height: `${height}px`, width: `${width}px` }}
-          className={videoClassName}
-        >
-          <VideoBlock
-            host="mux"
-            sources={[
-              {
-                playbackId: asset.mux,
-                minWidth: 0,
-              },
-            ]}
-            controls={false}
-            autoplay={true}
-            loop={true}
-            adaptiveResolution={true}
-          />
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   return (
-    <div ref={ref} className="relative mb-16">
+    <div ref={ref} className="relative">
       <DevIndicator
         componentName="ArticleHeaderAssetsAbove"
         position="top-right"
       />
 
-      <div className="grid gap-8 justify-center pt-32 pb-16 text-center">
+      <div className="grid gap-4 justify-center pt-32 text-center">
         {/* Tags */}
         {articleData.tags && articleData.tags.length > 0 && (
           <div className="flex justify-center gap-2 flex-wrap mb-4">
@@ -177,7 +110,14 @@ export default function ArticleHeaderAssetsAbove({
             timing="fast"
           >
             {assets.map((asset, i) => (
-              <React.Fragment key={i}>{renderAsset(asset, i)}</React.Fragment>
+              <MediaAsset
+                key={i}
+                asset={asset}
+                assetCount={assets.length}
+                height={Math.max(320 - (assets.length - 1) * 60, 160)}
+                priority={true}
+                sizes="(max-width: 768px) 50vw, 30vw"
+              />
             ))}
           </FadeInDown>
         </motion.div>
@@ -207,7 +147,7 @@ export default function ArticleHeaderAssetsAbove({
         )}
 
         {/* Author and Date Info */}
-        <div className="font-mono">
+        <div className="font-mono mt-4">
           {articleData.author && (
             <div className="">
               Ord:&nbsp;

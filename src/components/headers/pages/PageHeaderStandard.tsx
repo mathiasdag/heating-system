@@ -1,15 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import React, { useRef } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import VideoBlock from '@/components/blocks/VideoBlock';
 import { FadeIn } from '@/components/ui';
-// import clsx from 'clsx';
-import { fixImageUrl } from '@/utils/imageUrl';
 import { jsxConverter } from '@/utils/richTextConverters';
+import MediaAsset from '@/components/common/MediaAsset';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -43,49 +40,6 @@ export default function PageHeaderStandard({
 
   // Asset scale - inverse of text scale for dynamic balance
   const assetScale = useTransform(scrollYProgress, [0, 0.1], [0.95, 1]);
-
-  const renderAsset = (asset: Asset, key: number) => {
-    const height = asset.image?.height || 600;
-    const width = asset.image?.width || 800;
-    const className = 'rounded object-cover';
-
-    if (asset.type === 'image' && asset.image?.url) {
-      return (
-        <Image
-          key={key}
-          src={fixImageUrl(asset.image.url)}
-          alt={asset.image.alt || ''}
-          width={width}
-          height={height}
-          className={className}
-        />
-      );
-    }
-
-    if (asset.type === 'mux' && asset.mux) {
-      const videoClassName = 'rounded overflow-hidden';
-
-      return (
-        <div key={key} className={videoClassName}>
-          <VideoBlock
-            host="mux"
-            sources={[
-              {
-                playbackId: asset.mux,
-                minWidth: 0,
-              },
-            ]}
-            controls={false}
-            autoplay={true}
-            loop={true}
-            adaptiveResolution={true}
-          />
-        </div>
-      );
-    }
-
-    return null;
-  };
 
   return (
     <div ref={ref} className="px-2 text-center relative">
@@ -134,7 +88,17 @@ export default function PageHeaderStandard({
           >
             {assets.map((asset, i) => (
               <div key={i} className={assets.length > 1 ? 'flex-1' : ''}>
-                {renderAsset(asset, i)}
+                <MediaAsset
+                  asset={asset}
+                  height={asset.image?.height || 600}
+                  width={asset.image?.width || 800}
+                  className="rounded object-cover"
+                  videoClassName="rounded overflow-hidden"
+                  controls={false}
+                  autoplay={true}
+                  loop={true}
+                  adaptiveResolution={true}
+                />
               </div>
             ))}
           </FadeIn>

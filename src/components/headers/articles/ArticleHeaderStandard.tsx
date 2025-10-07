@@ -1,15 +1,13 @@
 'use client';
 
-import Image from 'next/image';
 import React, { useRef } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import VideoBlock from '@/components/blocks/VideoBlock';
 import { FadeIn } from '@/components/ui';
 import { Tag } from '@/components/ui';
-import { fixImageUrl } from '@/utils/imageUrl';
 import { Heading } from '@/components/headings';
+import MediaAsset from '@/components/common/MediaAsset';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -79,49 +77,6 @@ export default function ArticleHeaderStandard({
     };
 
     return checkChildren(richTextData.root.children);
-  };
-
-  const renderAsset = (asset: Asset, key: number) => {
-    const height = asset.image?.height || 600;
-    const width = asset.image?.width || 800;
-    const className = 'rounded object-cover';
-
-    if (asset.type === 'image' && asset.image?.url) {
-      return (
-        <Image
-          key={key}
-          src={fixImageUrl(asset.image.url)}
-          alt={asset.image.alt || ''}
-          width={width}
-          height={height}
-          className={className}
-        />
-      );
-    }
-
-    if (asset.type === 'mux' && asset.mux) {
-      const videoClassName = 'rounded overflow-hidden';
-
-      return (
-        <div key={key} className={videoClassName}>
-          <VideoBlock
-            host="mux"
-            sources={[
-              {
-                playbackId: asset.mux,
-                minWidth: 0,
-              },
-            ]}
-            controls={false}
-            autoplay={true}
-            loop={true}
-            adaptiveResolution={true}
-          />
-        </div>
-      );
-    }
-
-    return null;
   };
 
   return (
@@ -210,7 +165,17 @@ export default function ArticleHeaderStandard({
             >
               {assets.map((asset, i) => (
                 <div key={i} className={assets.length > 1 ? 'flex-1' : ''}>
-                  {renderAsset(asset, i)}
+                  <MediaAsset
+                    asset={asset}
+                    height={asset.image?.height || 600}
+                    width={asset.image?.width || 800}
+                    className="rounded object-cover"
+                    videoClassName="rounded overflow-hidden"
+                    controls={false}
+                    autoplay={true}
+                    loop={true}
+                    adaptiveResolution={true}
+                  />
                 </div>
               ))}
             </FadeIn>

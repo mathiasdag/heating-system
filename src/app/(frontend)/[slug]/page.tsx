@@ -23,6 +23,30 @@ import { notFound } from 'next/navigation';
 import { getPreviewData, isPreviewFromSearchParams } from '@/utils/preview';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
+// Define proper types for page data
+interface PageData {
+  id: string;
+  title: string;
+  slug: string;
+  header?: {
+    text?: string;
+    assets?: Array<{
+      type: string;
+      image?: {
+        url: string;
+        alt?: string;
+        width?: number;
+        height?: number;
+      };
+    }>;
+  };
+  layout?: Array<{
+    blockType: string;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+}
+
 interface PageProps {
   params: Promise<{
     slug: string;
@@ -43,7 +67,12 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
     );
 
   // Fetch the page with REST API (draft if in preview mode)
-  const page = await PayloadAPI.findBySlug('pages', slug, 10, isPreview);
+  const page = (await PayloadAPI.findBySlug(
+    'pages',
+    slug,
+    10,
+    isPreview
+  )) as PageData | null;
 
   // If page doesn't exist, return 404
   if (!page) {
@@ -63,63 +92,57 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
         />
       )}
 
-      {processedPage.layout?.map(
-        (block: Record<string, unknown>, i: number) => {
-          const cleanBlock = JSON.parse(JSON.stringify(block));
-          switch (block.blockType) {
-            case 'assetText':
-              return <AssetTextBlock key={i} {...cleanBlock} />;
-            case 'assetTextContainer':
-              return <AssetTextContainerBlock key={i} {...cleanBlock} />;
-            case 'spotlight':
-              return <SpotlightBlock key={i} {...cleanBlock} />;
-            case 'horizontal-card-block':
-              return <HorizontalCardBlock key={i} {...cleanBlock} />;
-            case 'video':
-              return <VideoBlock key={i} {...cleanBlock} />;
-            case 'card-grid':
-              return <CardGridBlock key={i} {...cleanBlock} />;
-            case 'orange-card-grid':
-              return (
-                <CardGridBlock
-                  key={i}
-                  {...cleanBlock}
-                  backgroundColor="orange"
-                />
-              );
-            case 'router':
-              return <RouterBlock key={i} {...cleanBlock} />;
-            case 'carousel':
-              return <CarouselBlock key={i} {...cleanBlock} />;
-            case 'list':
-              return <ListBlock key={i} {...cleanBlock} />;
-            case 'courseCatalog':
-              return <CourseCatalogBlock key={i} {...cleanBlock} />;
-            case 'text':
-              return <TextBlock key={i} {...cleanBlock} />;
-            case 'textBlock':
-              return <TextBlock key={i} {...cleanBlock} />;
-            case 'faq':
-              return <FAQBlock key={i} {...cleanBlock} />;
-            case 'minimalCarousel':
-              return <SimpleCarouselBlock key={i} {...cleanBlock} />;
-            case 'cta':
-              return <CTABlock key={i} {...cleanBlock} />;
-            case 'highlightGrid':
-              return <HighlightGridBlock key={i} {...cleanBlock} />;
-            case 'calendar':
-              return <CalendarBlock key={i} {...cleanBlock} />;
-            case 'horizontalMarquee':
-              return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
-            case 'highlightGridGenerator':
-              return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
-            // Add more cases for other block types as needed
-            default:
-              console.warn(`Unknown block type: ${block.blockType}`);
-              return null;
-          }
+      {processedPage.layout?.map((block: PageData['layout'][0], i: number) => {
+        const cleanBlock = JSON.parse(JSON.stringify(block));
+        switch (block.blockType) {
+          case 'assetText':
+            return <AssetTextBlock key={i} {...cleanBlock} />;
+          case 'assetTextContainer':
+            return <AssetTextContainerBlock key={i} {...cleanBlock} />;
+          case 'spotlight':
+            return <SpotlightBlock key={i} {...cleanBlock} />;
+          case 'horizontal-card-block':
+            return <HorizontalCardBlock key={i} {...cleanBlock} />;
+          case 'video':
+            return <VideoBlock key={i} {...cleanBlock} />;
+          case 'card-grid':
+            return <CardGridBlock key={i} {...cleanBlock} />;
+          case 'orange-card-grid':
+            return (
+              <CardGridBlock key={i} {...cleanBlock} backgroundColor="orange" />
+            );
+          case 'router':
+            return <RouterBlock key={i} {...cleanBlock} />;
+          case 'carousel':
+            return <CarouselBlock key={i} {...cleanBlock} />;
+          case 'list':
+            return <ListBlock key={i} {...cleanBlock} />;
+          case 'courseCatalog':
+            return <CourseCatalogBlock key={i} {...cleanBlock} />;
+          case 'text':
+            return <TextBlock key={i} {...cleanBlock} />;
+          case 'textBlock':
+            return <TextBlock key={i} {...cleanBlock} />;
+          case 'faq':
+            return <FAQBlock key={i} {...cleanBlock} />;
+          case 'minimalCarousel':
+            return <SimpleCarouselBlock key={i} {...cleanBlock} />;
+          case 'cta':
+            return <CTABlock key={i} {...cleanBlock} />;
+          case 'highlightGrid':
+            return <HighlightGridBlock key={i} {...cleanBlock} />;
+          case 'calendar':
+            return <CalendarBlock key={i} {...cleanBlock} />;
+          case 'horizontalMarquee':
+            return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
+          case 'highlightGridGenerator':
+            return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
+          // Add more cases for other block types as needed
+          default:
+            console.warn(`Unknown block type: ${block.blockType}`);
+            return null;
         }
-      )}
+      })}
     </div>
   );
 }

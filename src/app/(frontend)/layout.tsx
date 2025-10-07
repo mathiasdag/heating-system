@@ -121,7 +121,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     : '';
 
   // Get pathname from headers to determine if we're on homepage
-  const headersList = await import('next/headers').then(m => m.headers());
+  // const headersList = await import('next/headers').then(m => m.headers());
   // const pathname = headersList.get('x-pathname') || '/';
 
   const mainClassName = 'min-h-screen';

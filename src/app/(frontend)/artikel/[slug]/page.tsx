@@ -5,6 +5,39 @@ import ArticleContent from '@/components/blocks/articles/ArticleContent';
 import React from 'react';
 import { notFound } from 'next/navigation';
 
+// Define proper types for article data
+interface ArticleData {
+  id: string;
+  title: string;
+  slug: string;
+  status?: string;
+  publishedDate?: string;
+  lastModifiedDate?: string;
+  author: {
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    bylineDescription?: string;
+  };
+  header?: {
+    text?: string;
+    assets?: Array<{
+      type: string;
+      image?: {
+        url: string;
+        alt?: string;
+        width?: number;
+        height?: number;
+      };
+    }>;
+  };
+  content?: Array<{
+    blockType: string;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+}
+
 interface ArticlePageProps {
   params: Promise<{
     slug: string;
@@ -15,7 +48,12 @@ async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
 
   // Use the dedicated findBySlug method which handles the query properly
-  const article = await PayloadAPI.findBySlug('articles', slug, 10, false);
+  const article = (await PayloadAPI.findBySlug(
+    'articles',
+    slug,
+    10,
+    false
+  )) as ArticleData | null;
 
   // In production, check if article is published
   if (

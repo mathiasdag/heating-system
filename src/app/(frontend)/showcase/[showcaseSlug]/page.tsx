@@ -3,6 +3,14 @@ import config from '@/payload.config';
 import { notFound } from 'next/navigation';
 import { ShowcasePageWrapper } from '@/components/wrappers';
 
+// Define proper types for showcase data
+// interface ShowcaseData {
+//   id: string;
+//   title: string;
+//   slug: string;
+//   [key: string]: unknown;
+// }
+
 interface ShowcasePageProps {
   params: Promise<{
     showcaseSlug: string;

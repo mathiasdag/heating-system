@@ -21,8 +21,32 @@ import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { HighlightGridGeneratorBlock } from '@/components/blocks/HighlightGridGenerator';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
+// Define proper types for homepage data
+interface HomepageData {
+  id: string;
+  title: string;
+  slug: string;
+  header?: {
+    text?: string;
+    assets?: Array<{
+      type: string;
+      image?: {
+        url: string;
+        alt?: string;
+        width?: number;
+        height?: number;
+      };
+    }>;
+  };
+  layout?: Array<{
+    blockType: string;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+}
+
 // Helper function to render blocks
-function renderBlock(block: Record<string, unknown>, i: number) {
+function renderBlock(block: HomepageData['layout'][0], i: number) {
   const cleanBlock = JSON.parse(JSON.stringify(block));
   switch (block.blockType) {
     case 'assetText':
@@ -75,7 +99,11 @@ function renderBlock(block: Record<string, unknown>, i: number) {
 
 export default async function HomePage() {
   // Fetch the homepage with REST API using slug
-  const page = await PayloadAPI.findBySlug('pages', 'hem', 10);
+  const page = (await PayloadAPI.findBySlug(
+    'pages',
+    'hem',
+    10
+  )) as HomepageData | null;
 
   if (!page) {
     return <div>Page not found</div>;
@@ -92,12 +120,12 @@ export default async function HomePage() {
           text={processedPage.header.text}
           assets={processedPage.header.assets}
         >
-          {blocks.map((block: Record<string, unknown>, i: number) =>
+          {blocks.map((block: HomepageData['layout'][0], i: number) =>
             renderBlock(block, i)
           )}
         </HomepageHeaderBlock>
       ) : (
-        blocks.map((block: Record<string, unknown>, i: number) =>
+        blocks.map((block: HomepageData['layout'][0], i: number) =>
           renderBlock(block, i)
         )
       )}

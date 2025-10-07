@@ -16,6 +16,30 @@ import { notFound } from 'next/navigation';
 import { SpacesPageWrapper } from '@/components/wrappers';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
+// Define proper types for space data
+interface SpaceData {
+  id: string;
+  title: string;
+  slug: string;
+  header?: {
+    text?: string;
+    assets?: Array<{
+      type: string;
+      image?: {
+        url: string;
+        alt?: string;
+        width?: number;
+        height?: number;
+      };
+    }>;
+  };
+  layout?: Array<{
+    blockType: string;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
+}
+
 interface SpacePageProps {
   params: Promise<{
     slug: string;
@@ -26,7 +50,11 @@ async function SpacePage({ params }: SpacePageProps) {
   const { slug } = await params;
 
   // Fetch the space with REST API
-  const space = await PayloadAPI.findBySlug('spaces', slug, 10);
+  const space = (await PayloadAPI.findBySlug(
+    'spaces',
+    slug,
+    10
+  )) as SpaceData | null;
 
   // If space doesn't exist, return 404
   if (!space) {
@@ -49,36 +77,38 @@ async function SpacePage({ params }: SpacePageProps) {
           <SpacesHeaderBlock spaceData={processedSpace} />
         )}
 
-        {processedSpace?.layout?.map((block: Record<string, unknown>, i: number) => {
-          const cleanBlock = JSON.parse(JSON.stringify(block));
-          switch (block.blockType) {
-            case 'assetText':
-              return <AssetTextBlock key={i} {...cleanBlock} />;
-            case 'assetTextContainer':
-              return <AssetTextContainerBlock key={i} {...cleanBlock} />;
-            case 'list':
-              return <ListBlock key={i} {...cleanBlock} />;
-            case 'text':
-              return <TextBlock key={i} {...cleanBlock} />;
-            case 'minimalCarousel':
-              return <SimpleCarouselBlock key={i} {...cleanBlock} />;
-            case 'assetText':
-              return <AssetTextBlock key={i} {...cleanBlock} />;
-            case 'cta':
-              return <CTABlock key={i} {...cleanBlock} />;
-            case 'highlightGrid':
-              return <HighlightGridBlock key={i} {...cleanBlock} />;
-            case 'calendar':
-              return <CalendarBlock key={i} {...cleanBlock} />;
-            case 'horizontalMarquee':
-              return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
-            case 'highlightGridGenerator':
-              return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
-            default:
-              console.warn(`Unknown block type: ${block.blockType}`);
-              return null;
+        {processedSpace?.layout?.map(
+          (block: SpaceData['layout'][0], i: number) => {
+            const cleanBlock = JSON.parse(JSON.stringify(block));
+            switch (block.blockType) {
+              case 'assetText':
+                return <AssetTextBlock key={i} {...cleanBlock} />;
+              case 'assetTextContainer':
+                return <AssetTextContainerBlock key={i} {...cleanBlock} />;
+              case 'list':
+                return <ListBlock key={i} {...cleanBlock} />;
+              case 'text':
+                return <TextBlock key={i} {...cleanBlock} />;
+              case 'minimalCarousel':
+                return <SimpleCarouselBlock key={i} {...cleanBlock} />;
+              case 'assetText':
+                return <AssetTextBlock key={i} {...cleanBlock} />;
+              case 'cta':
+                return <CTABlock key={i} {...cleanBlock} />;
+              case 'highlightGrid':
+                return <HighlightGridBlock key={i} {...cleanBlock} />;
+              case 'calendar':
+                return <CalendarBlock key={i} {...cleanBlock} />;
+              case 'horizontalMarquee':
+                return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
+              case 'highlightGridGenerator':
+                return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
+              default:
+                console.warn(`Unknown block type: ${block.blockType}`);
+                return null;
+            }
           }
-        })}
+        )}
       </div>
     </SpacesPageWrapper>
   );

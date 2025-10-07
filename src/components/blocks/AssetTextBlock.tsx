@@ -48,7 +48,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   return (
     <div
       className={clsx(
-        'px-2 relative max-w-8xl mx-auto',
+        'px-4 relative max-w-8xl mx-auto',
         isStandalone ? '' : 'py-6'
       )}
     >
@@ -57,7 +57,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
       <div className="">
         <div
           className={clsx(
-            'grid grid-cols-1 gap-x-8 gap-y-4 items-center',
+            'grid grid-cols-1 gap-x-12 gap-y-4 items-center',
             isTextLeft ? 'md:grid-cols-[1fr_1.3fr]' : 'md:grid-cols-[1.3fr_1fr]'
           )}
         >
@@ -79,7 +79,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           {/* Text Content */}
           <div
             className={clsx(
-              'place-self-start order-2 py-8',
+              'place-self-start order-2',
               !isTextLeft ? 'md:order-2' : 'md:order-1'
             )}
           >

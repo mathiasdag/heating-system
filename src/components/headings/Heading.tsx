@@ -44,7 +44,7 @@ const variantConfig = {
   },
   section: {
     defaultAs: 'h2' as const,
-    className: 'font-sans text-lg leading-[1em] tracking-[-0.01em]',
+    className: 'font-sans text-lg leading-[1em] tracking-[-0.01em] pt-8',
   },
   'faq-title': {
     defaultAs: 'h2' as const,

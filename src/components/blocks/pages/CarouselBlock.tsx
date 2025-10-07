@@ -99,7 +99,10 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
         <div className="embla overflow-hidden" ref={emblaRef}>
           <div className="embla__container flex">
             {slides.map((slide, index) => (
-              <div key={index} className="embla__slide flex-[0_0_100%] min-w-0">
+              <div
+                key={index}
+                className="embla__slide flex-[0_0_100%] min-w-0 h-full"
+              >
                 <CarouselSlide {...slide} />
               </div>
             ))}

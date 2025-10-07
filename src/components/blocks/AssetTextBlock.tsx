@@ -2,6 +2,7 @@ import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { AppLink } from '@/components/ui';
+import { FadeIn } from '@/components/ui/FadeIn';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';
 import { defaultConverter } from '@/utils/richTextConverters';
@@ -46,15 +47,13 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   const isStandalone = variant === 'standalone';
 
   return (
-    <div
-      className={clsx(
-        'px-4 relative max-w-8xl mx-auto animate-fade-in',
-        isStandalone ? '' : 'py-6'
-      )}
+    <FadeIn
+      className={clsx('relative', isStandalone ? '' : 'py-6')}
+      timing="normal"
     >
       <DevIndicator componentName="AssetTextBlock" position="top-right" />
 
-      <div className="">
+      <div className="mx-2 px-2 max-w-8xl mx-auto">
         <div
           className={clsx(
             'grid grid-cols-1 gap-x-12 gap-y-4 items-center',
@@ -64,7 +63,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           {/* Asset Content */}
           <div
             className={clsx(
-              'inline order-1 self-start sticky top-4',
+              'inline order-1 self-start md:sticky md:top-4',
               !isTextLeft ? 'md:order-1' : 'justify-self-end md:order-2'
             )}
           >
@@ -105,7 +104,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </FadeIn>
   );
 };
 

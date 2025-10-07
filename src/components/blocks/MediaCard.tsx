@@ -8,6 +8,7 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { fixImageUrl } from '@/utils/imageUrl';
 import { Heading } from '@/components/headings';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
+import { cardConverter } from '@/utils/richTextConverters';
 
 interface TagType {
   id: string;
@@ -57,8 +58,8 @@ export const MediaCard: React.FC<MediaCardProps> = ({
       className={clsx(
         'flex flex-col rounded-sm min-h-[70vw] sm:min-h-[400px]',
         'px-3 sm:px-6 relative',
-        hasValidLink && buttonVariant === 'primary-full'
-          ? 'justify-between pb-4 pt-8 sm:pt-6'
+        hasValidLink && buttonVariant === 'primary'
+          ? 'h-full justify-between pb-4 pt-8'
           : 'justify-center py-8 sm:py-6',
         className
       )}
@@ -90,7 +91,11 @@ export const MediaCard: React.FC<MediaCardProps> = ({
             />
           </div>
         )}
-        <RichText data={body} className="text-center font-mono px-2" />
+        <RichText
+          data={body}
+          className="text-center font-mono grid gap-3"
+          converters={cardConverter}
+        />
       </div>
       {hasValidLink && linkResult && (
         <AppLink
@@ -98,7 +103,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
           variant={buttonVariant}
           className={clsx(
             'mx-auto mt-2',
-            buttonVariant === 'primary-full' && 'w-full'
+            buttonVariant === 'primary' && 'w-full'
           )}
         >
           {link!.text}

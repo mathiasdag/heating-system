@@ -25,107 +25,107 @@ import VideoBlock from '@/components/blocks/VideoBlock';
 import SignatureBlock from '@/components/blocks/global/SignatureBlock';
 import ListItem from '@/components/ui/ListItem';
 
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
 /**
- * Article-specific paragraph converter
- * Used in articles with centered, max-width styling
+ * Check if a paragraph is empty (no text content or only whitespace/breaks)
  */
-const articleParagraphConverter: JSXConverters<SerializedParagraphNode> = {
-  paragraph: ({ node, nodesToJSX }) => {
+const isEmptyParagraph = (text: any): boolean => {
+  return (
+    !text ||
+    (typeof text === 'string' && text.trim() === '') ||
+    (React.isValidElement(text) && text.props.children === '') ||
+    (Array.isArray(text) &&
+      text.every(
+        child =>
+          !child ||
+          (typeof child === 'string' && child.trim() === '') ||
+          (React.isValidElement(child) && child.props.children === '')
+      ))
+  );
+};
+
+// ============================================================================
+// PARAGRAPH CONVERTERS
+// ============================================================================
+
+export const paragraphConverters = {
+  // Centered, narrow width for articles
+  article: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
-
-    // Check if paragraph is empty (no text content or only whitespace/breaks)
-    const isEmpty =
-      !text ||
-      (typeof text === 'string' && text.trim() === '') ||
-      (React.isValidElement(text) && text.props.children === '') ||
-      (Array.isArray(text) &&
-        text.every(
-          child =>
-            !child ||
-            (typeof child === 'string' && child.trim() === '') ||
-            (React.isValidElement(child) && child.props.children === '')
-        ));
-
-    // Return null for empty paragraphs to prevent rendering
-    if (isEmpty) {
-      return null;
-    }
-
+    if (isEmptyParagraph(text)) return null;
     return <p className="max-w-xl px-4 mx-auto">{text}</p>;
   },
-};
 
-/**
- * Default paragraph converter
- * Used in blocks, cards, and other components
- */
-const defaultParagraphConverter: JSXConverters<SerializedParagraphNode> = {
-  paragraph: ({ node, nodesToJSX }) => {
+  // Default mono font for blocks/cards
+  default: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
-
-    // Check if paragraph is empty (no text content or only whitespace/breaks)
-    const isEmpty =
-      !text ||
-      (typeof text === 'string' && text.trim() === '') ||
-      (React.isValidElement(text) && text.props.children === '') ||
-      (Array.isArray(text) &&
-        text.every(
-          child =>
-            !child ||
-            (typeof child === 'string' && child.trim() === '') ||
-            (React.isValidElement(child) && child.props.children === '')
-        ));
-
-    // Return null for empty paragraphs to prevent rendering
-    if (isEmpty) {
-      return null;
-    }
-
+    if (isEmptyParagraph(text)) return null;
     return <p className="font-mono max-w-6xl hyphens-auto">{text}</p>;
+  },
+
+  // Compact for cards
+  card: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    if (isEmptyParagraph(text)) return null;
+    return <p className="text-sm font-mono">{text}</p>;
+  },
+
+  // No styling, just the paragraph
+  plain: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    if (isEmptyParagraph(text)) return null;
+    return <p>{text}</p>;
   },
 };
 
-/**
- * Article-specific blockquote converter
- * Used in articles with centered styling and horizontal rules
- */
-const articleBlockquoteConverter: JSXConverters<SerializedQuoteNode> = {
-  quote: ({ node, nodesToJSX }) => {
-    const text = nodesToJSX({ nodes: node.children });
+// ============================================================================
+// BLOCKQUOTE CONVERTERS
+// ============================================================================
 
+export const blockquoteConverters = {
+  // Large, centered for articles
+  article: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
     return (
       <blockquote className="relative max-w-6xl w-full mx-auto px-4 py-8 text-center font-display text-xl">
         {text}
       </blockquote>
     );
   },
-};
 
-/**
- * Page-specific blockquote converter
- * Used in pages with mono font and appropriate spacing
- */
-const pageBlockquoteConverter: JSXConverters<SerializedQuoteNode> = {
-  quote: ({ node, nodesToJSX }) => {
+  // Medium for pages
+  page: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
-
     return (
       <blockquote className="relative max-w-6xl w-full mx-auto px-4 text-center font-display text-lg">
         {text}
       </blockquote>
     );
   },
+
+  // Compact for cards
+  card: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    return (
+      <blockquote className="text-sm font-mono italic text-center">
+        {text}
+      </blockquote>
+    );
+  },
 };
 
-/**
- * Custom heading converter for all contexts
- * Uses the standardized heading system
- */
-const headingConverter: JSXConverters<SerializedHeadingNode> = {
-  heading: ({ node, nodesToJSX }) => {
+// ============================================================================
+// HEADING CONVERTERS
+// ============================================================================
+
+export const headingConverters = {
+  // Standard heading mapping
+  default: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
 
-    // Map heading tags to appropriate variants
     switch (node.tag) {
       case 'h1':
         return (
@@ -166,37 +166,106 @@ const headingConverter: JSXConverters<SerializedHeadingNode> = {
         );
     }
   },
-};
 
-/**
- * Custom list converter for all contexts
- * Uses the ListItem component for consistent styling
- */
-const listConverter: JSXConverters<
-  SerializedListNode | SerializedListItemNode
-> = {
-  list: ({ node, nodesToJSX }) => {
-    const children = nodesToJSX({ nodes: node.children });
-    const NodeTag = node.tag;
-
-    return <NodeTag className="space-y-[-1px] py-1">{children}</NodeTag>;
-  },
-  listitem: ({ node, nodesToJSX, parent }) => {
-    const children = nodesToJSX({ nodes: node.children });
-
-    // Handle regular lists (bullet, number)
+  // All headings as small titles
+  small: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
     return (
-      <ListItem variant="bullet" size="sm">
-        {children}
-      </ListItem>
+      <Heading variant="small-title" as={node.tag}>
+        {text}
+      </Heading>
+    );
+  },
+
+  card: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    return (
+      <Heading variant="small-card-title" as={node.tag}>
+        {text}
+      </Heading>
+    );
+  },
+
+  // All headings as labels
+  label: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    return (
+      <Heading variant="label" as={node.tag}>
+        {text}
+      </Heading>
     );
   },
 };
 
-/**
- * Main JSX converter that combines all custom converters
- * This is the proper way to use converters with Payload CMS Lexical
- */
+// ============================================================================
+// LIST CONVERTERS
+// ============================================================================
+
+export const listConverters = {
+  // Standard list with ListItem component
+  default: {
+    list: ({ node, nodesToJSX }: any) => {
+      const children = nodesToJSX({ nodes: node.children });
+      const NodeTag = node.tag;
+      return <NodeTag className="space-y-[-1px] py-1">{children}</NodeTag>;
+    },
+    listitem: ({ node, nodesToJSX }: any) => {
+      const children = nodesToJSX({ nodes: node.children });
+      return (
+        <ListItem variant="bullet" size="sm">
+          {children}
+        </ListItem>
+      );
+    },
+  },
+
+  // Compact lists for cards
+  card: {
+    list: ({ node, nodesToJSX }: any) => {
+      const children = nodesToJSX({ nodes: node.children });
+      const NodeTag = node.tag;
+      return <NodeTag className="space-y-1 text-sm">{children}</NodeTag>;
+    },
+    listitem: ({ node, nodesToJSX }: any) => {
+      const children = nodesToJSX({ nodes: node.children });
+      return <li className="font-mono">{children}</li>;
+    },
+  },
+
+  lined: {
+    list: ({ node, nodesToJSX }: any) => {
+      const children = nodesToJSX({ nodes: node.children });
+      const NodeTag = node.tag;
+      return (
+        <NodeTag className="space-y-1 divide-y divide-text text-sm">
+          {children}
+        </NodeTag>
+      );
+    },
+    listitem: ({ node, nodesToJSX }: any) => {
+      const children = nodesToJSX({ nodes: node.children });
+      return <li className="pt-3 mb-3 first:pt-0 last:pb-0">{children}</li>;
+    },
+  },
+
+  // Plain lists without custom styling
+  plain: {
+    list: ({ node, nodesToJSX }: any) => {
+      const children = nodesToJSX({ nodes: node.children });
+      const NodeTag = node.tag;
+      return <NodeTag>{children}</NodeTag>;
+    },
+    listitem: ({ node, nodesToJSX }: any) => {
+      const children = nodesToJSX({ nodes: node.children });
+      return <li>{children}</li>;
+    },
+  },
+};
+
+// ============================================================================
+// CONVERTER BUILDER
+// ============================================================================
+
 type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<{
@@ -204,53 +273,117 @@ type NodeTypes =
       [key: string]: unknown;
     }>;
 
+/**
+ * Build a converter by cherry-picking different renderings
+ */
+export const buildConverter = (options: {
+  paragraph?: keyof typeof paragraphConverters;
+  blockquote?: keyof typeof blockquoteConverters;
+  heading?: keyof typeof headingConverters;
+  list?: keyof typeof listConverters;
+  includeBlocks?: boolean;
+}): JSXConvertersFunction<NodeTypes> => {
+  return ({ defaultConverters }) => {
+    const converter: any = { ...defaultConverters };
+
+    // Add paragraph converter
+    if (options.paragraph) {
+      converter.paragraph = paragraphConverters[options.paragraph];
+    }
+
+    // Add blockquote converter
+    if (options.blockquote) {
+      converter.quote = blockquoteConverters[options.blockquote];
+    }
+
+    // Add heading converter
+    if (options.heading) {
+      converter.heading = headingConverters[options.heading];
+    }
+
+    // Add list converters
+    if (options.list) {
+      const listConverter = listConverters[options.list];
+      converter.list = listConverter.list;
+      converter.listitem = listConverter.listitem;
+    }
+
+    // Add article blocks if requested
+    if (options.includeBlocks) {
+      converter.blocks = {
+        textBlock: ({ node }: any) => (
+          <ArticleTextBlock content={node.fields.content} />
+        ),
+        image: ({ node }: any) => (
+          <ImageBlock image={node.fields.image} caption={node.fields.caption} />
+        ),
+        video: ({ node }: any) => (
+          <VideoBlock
+            host={node.fields.host}
+            sources={node.fields.sources}
+            autoplay={node.fields.autoplay}
+            controls={node.fields.controls}
+            adaptiveResolution={node.fields.adaptiveResolution}
+          />
+        ),
+        cta: ({ node }: any) => (
+          <ArticleCTABlock
+            headline={node.fields.headline}
+            ctaType={node.fields.ctaType}
+            description={node.fields.description}
+            link={node.fields.link}
+          />
+        ),
+        qa: ({ node }: any) => (
+          <QABlock
+            question={node.fields.question}
+            answer={node.fields.answer}
+          />
+        ),
+        signature: ({ node }: any) => (
+          <SignatureBlock text={node.fields.text} />
+        ),
+      };
+    }
+
+    return converter;
+  };
+};
+
+// ============================================================================
+// PREDEFINED CONVERTERS
+// ============================================================================
+
 // Article converter - for article content with inline blocks
-export const articleConverter: JSXConvertersFunction<NodeTypes> = ({
-  defaultConverters,
-}) => ({
-  ...defaultConverters,
-  ...articleParagraphConverter,
-  ...articleBlockquoteConverter,
-  ...headingConverter,
-  ...listConverter,
-  blocks: {
-    textBlock: ({ node }) => <ArticleTextBlock content={node.fields.content} />,
-    image: ({ node }) => (
-      <ImageBlock image={node.fields.image} caption={node.fields.caption} />
-    ),
-    video: ({ node }) => (
-      <VideoBlock
-        host={node.fields.host}
-        sources={node.fields.sources}
-        autoplay={node.fields.autoplay}
-        controls={node.fields.controls}
-        adaptiveResolution={node.fields.adaptiveResolution}
-      />
-    ),
-    cta: ({ node }) => (
-      <ArticleCTABlock
-        headline={node.fields.headline}
-        ctaType={node.fields.ctaType}
-        description={node.fields.description}
-        link={node.fields.link}
-      />
-    ),
-    qa: ({ node }) => (
-      <QABlock question={node.fields.question} answer={node.fields.answer} />
-    ),
-    signature: ({ node }) => <SignatureBlock text={node.fields.text} />,
-  },
+export const articleConverter = buildConverter({
+  paragraph: 'article',
+  blockquote: 'article',
+  heading: 'default',
+  list: 'default',
+  includeBlocks: true,
 });
 
 // Default converter - for blocks, cards, etc.
-export const defaultConverter: JSXConvertersFunction<NodeTypes> = ({
-  defaultConverters,
-}) => ({
-  ...defaultConverters,
-  ...defaultParagraphConverter,
-  ...pageBlockquoteConverter,
-  ...headingConverter,
-  ...listConverter,
+export const defaultConverter = buildConverter({
+  paragraph: 'default',
+  blockquote: 'page',
+  heading: 'default',
+  list: 'default',
+});
+
+// Card converter - for compact card content
+export const cardConverter = buildConverter({
+  paragraph: 'card',
+  blockquote: 'card',
+  heading: 'card',
+  list: 'lined',
+});
+
+// Plain converter - minimal styling
+export const plainConverter = buildConverter({
+  paragraph: 'plain',
+  heading: 'label',
+  list: 'plain',
 });
 
 // Legacy export for backward compatibility

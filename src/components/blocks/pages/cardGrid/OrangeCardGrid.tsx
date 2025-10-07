@@ -109,7 +109,7 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
                 {row.map((card, colIdx) => (
                   <div
                     key={colIdx}
-                    className="flex flex-col justify-between border-r first:border-l border-text px-5 pb-3 pt-5 aspect-window overflow-hidden"
+                    className="flex flex-col justify-between border-r first:border-l border-text px-2 aspect-window overflow-hidden"
                   >
                     <MediaCard {...card} buttonVariant={'primary'} />
                   </div>

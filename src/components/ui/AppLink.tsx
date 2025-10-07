@@ -33,11 +33,11 @@ const sizeStyles = {
 
 const baseStyles = {
   primary:
-    'uppercase bg-text text-white mix-blend-multiply rounded-md sm:rounded-sm block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-text text-white mix-blend-multiply rounded-md block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   secondary:
-    'uppercase bg-accent rounded-md sm:rounded-sm block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-accent rounded-md block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   outline:
-    'uppercase border border-text rounded-md sm:rounded-sm inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase border border-text rounded-md inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   minimal: 'block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
 };
 

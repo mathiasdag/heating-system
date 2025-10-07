@@ -60,6 +60,11 @@ const variantConfig = {
     defaultAs: 'h4' as const,
     className: 'font-display uppercase text-md',
   },
+  'small-card-title': {
+    defaultAs: 'h4' as const,
+    className:
+      'font-mono uppercase pb-2 pt-2 [&:has(+_ul)]:border-b [&:has(+_ul)]:border-text',
+  },
   'building-title': {
     defaultAs: 'h1' as const,
     className: 'font-ballPill text-3xl hyphens-auto break-words',

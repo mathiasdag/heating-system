@@ -46,7 +46,7 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
                   <FadeInUp timing="normal" delay={0.2 + idx * 0.1}>
                     <AppLink
                       link={link.link}
-                      className="text-4xl sm:text-6xl md:text-7xl font-ballPill uppercase bg-bg pt-2"
+                      className="text-4xl sm:text-6xl md:text-7xl font-ballPill uppercase bg-bg py-1"
                       variant="minimal"
                     >
                       {link.link.text}

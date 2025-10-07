@@ -104,13 +104,13 @@ export default function HomepageHeaderBlock({
         className="mt-[50vh] sm:mt-[calc(100vh-2rem)] relative z-10 bg-bg rounded-t-xl grid gap-32 pb-32"
       >
         <FadeIn
-          className="flex items-center justify-center px-2 text-center pt-8 sm:pt-16 md:pt-20"
+          className="flex items-center justify-center px-4 text-center pt-8 sm:pt-16 md:pt-20"
           timing="slow"
           delay={1}
         >
           <RichText
             data={text}
-            className="grid gap-3"
+            className="flex flex-col items-center gap-3"
             converters={jsxConverter}
           />
         </FadeIn>

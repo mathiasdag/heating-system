@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
+import { fixImageUrl } from '@/utils/imageUrl';
 import {
   motion,
   useAnimation,
@@ -43,7 +44,7 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
   });
 
   // Image movement based on scroll progress
-  const imageY = useTransform(scrollYProgress, [0.2, 0.7], ['0%', '-500%']);
+  const imageY = useTransform(scrollYProgress, [0.2, 0.7], ['0%', '-150%']);
 
   React.useEffect(() => {
     if (inView) {
@@ -70,7 +71,7 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
     image && image.width && image.height ? image.width >= image.height : true;
   const imageClass = isLandscape
     ? 'w-[20em] max-w-[50vw]'
-    : 'w-[15em] max-w-[33vw]';
+    : 'w-[20em] md:w-[18em] max-w-[50vw]';
 
   return (
     <section
@@ -89,7 +90,9 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
         )}
       >
         <div className="pt-8 mx-auto grid max-w-8xl">
-          {headline ? <h2 className="font-display">{headline}</h2> : null}
+          {headline ? (
+            <div className="h2-style uppercase">{headline}</div>
+          ) : null}
           {subheadline && (
             <div className="h2-style max-w-8xl">{subheadline}</div>
           )}
@@ -109,17 +112,14 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
           ) : null}
         </div>
         {image?.url ? (
-          <div className="absolute top-1/2 translate-y-[calc(-50%-4em)]">
+          <div className="absolute top-1/2 translate-y-[calc(-50%-2em)] pointer-events-none">
             <motion.div style={{ y: imageY }}>
               <Image
-                src={image.url}
+                src={fixImageUrl(image.url)}
                 alt={image.alt || ''}
                 width={image.width || 320}
                 height={image.height || 240}
-                className={clsx(
-                  imageClass,
-                  'rounded-sm w-full h-auto object-contain mx-auto'
-                )}
+                className={clsx(imageClass, 'rounded-sm object-contain')}
                 priority
               />
             </motion.div>

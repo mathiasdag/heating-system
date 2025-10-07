@@ -75,7 +75,14 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
             <RichText
               data={
                 article.introduction as unknown as {
-                  root: Record<string, unknown>;
+                  root: {
+                    type: string;
+                    version: number;
+                    direction: string;
+                    format: number;
+                    indent: number;
+                    children: unknown[];
+                  };
                 }
               }
               className="grid gap-3"

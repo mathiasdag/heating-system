@@ -10,7 +10,7 @@ export default function ArticleTextBlock({ content }: ArticleTextBlockProps) {
   return (
     <div className="relative max-w-xl mx-auto px-4 col-start-1 col-end-13 pt-3 first:pt-0">
       <DevIndicator componentName="ArticleTextBlock" />
-      <RichText data={content} className="grid gap-3" />
+      <RichText data={content as never} className="grid gap-3" />
     </div>
   );
 }

@@ -18,19 +18,21 @@ interface QABlockProps {
 // Custom paragraph converter for QA content (filters empty paragraphs)
 const qaParagraphConverter: JSXConverters<SerializedParagraphNode> = {
   paragraph: ({ node, nodesToJSX }) => {
-    const text = nodesToJSX({ nodes: node.children });
+    const text = nodesToJSX({ nodes: node.children }) as unknown;
 
     // Check if paragraph is empty (no text content or only whitespace/breaks)
     const isEmpty =
       !text ||
-      (typeof text === 'string' && text.trim() === '') ||
-      (React.isValidElement(text) && text.props.children === '') ||
+      (typeof text === 'string' && (text as string).trim() === '') ||
+      (React.isValidElement(text) &&
+        (text as React.ReactElement).props.children === '') ||
       (Array.isArray(text) &&
         text.every(
           child =>
             !child ||
-            (typeof child === 'string' && child.trim() === '') ||
-            (React.isValidElement(child) && child.props.children === '')
+            (typeof child === 'string' && (child as string).trim() === '') ||
+            (React.isValidElement(child) &&
+              (child as React.ReactElement).props.children === '')
         ));
 
     // Return null for empty paragraphs to prevent rendering

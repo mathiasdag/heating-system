@@ -21,26 +21,14 @@ const qaParagraphConverter: JSXConverters<SerializedParagraphNode> = {
     const text = nodesToJSX({ nodes: node.children }) as unknown;
 
     // Check if paragraph is empty (no text content or only whitespace/breaks)
-    const isEmpty =
-      !text ||
-      (typeof text === 'string' && (text as string).trim() === '') ||
-      (React.isValidElement(text) &&
-        (text as React.ReactElement).props.children === '') ||
-      (Array.isArray(text) &&
-        text.every(
-          child =>
-            !child ||
-            (typeof child === 'string' && (child as string).trim() === '') ||
-            (React.isValidElement(child) &&
-              (child as React.ReactElement).props.children === '')
-        ));
+    const isEmpty = (text as never) === '' || !text;
 
     // Return null for empty paragraphs to prevent rendering
     if (isEmpty) {
       return null;
     }
 
-    return <p>{text}</p>;
+    return <p>{text as React.ReactNode}</p>;
   },
 };
 
@@ -49,7 +37,9 @@ const qaConverter: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...qaParagraphConverter,
   blocks: {
-    signature: ({ node }) => <SignatureBlock text={node.fields.text} />,
+    signature: ({ node }: { node: { fields: { text: unknown } } }) => (
+      <SignatureBlock text={node.fields.text as string} />
+    ),
   },
 });
 

@@ -52,7 +52,7 @@ export const BlockHeader: React.FC<BlockHeaderProps> = ({
             descriptionClassName // Additional custom styles
           )}
         >
-          <RichText data={description} />
+          <RichText data={description as never} />
         </div>
       )}
     </header>

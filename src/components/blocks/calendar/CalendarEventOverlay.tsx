@@ -69,7 +69,10 @@ const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
           </div>
           {event.description && (
             <div className="">
-              <RichText data={event.description} className="font-mono" />
+              <RichText
+                data={event.description as never}
+                className="font-mono"
+              />
             </div>
           )}
           {isScrollable && (

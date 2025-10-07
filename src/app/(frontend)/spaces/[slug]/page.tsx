@@ -70,7 +70,24 @@ async function SpacePage({ params }: SpacePageProps) {
         {/* Hero Section */}
         {processedSpace.header ? (
           <SpaceHeader
-            spaceData={processedSpace}
+            spaceData={
+              processedSpace as {
+                title?: string;
+                capacity?: number;
+                areaSize?: number;
+                heroAsset?: {
+                  type?: 'image' | 'mux';
+                  image?: {
+                    url: string;
+                    alt?: string;
+                    width?: number;
+                    height?: number;
+                  };
+                  mux?: string;
+                };
+                [key: string]: unknown;
+              }
+            }
             header={processedSpace.header}
           />
         ) : (

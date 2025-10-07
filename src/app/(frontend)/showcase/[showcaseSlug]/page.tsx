@@ -42,7 +42,16 @@ async function ShowcasePage({ params }: ShowcasePageProps) {
   // In the future, you might want to add a proper layout here
   return (
     <div className="min-h-screen bg-white">
-      <ShowcasePageWrapper showcase={showcase} />
+      <ShowcasePageWrapper
+        showcase={
+          showcase as {
+            id: string;
+            title: string;
+            slug: string;
+            [key: string]: unknown;
+          }
+        }
+      />
     </div>
   );
 }

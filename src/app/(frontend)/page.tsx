@@ -123,7 +123,7 @@ export default async function HomePage() {
           text={(processedPage as HomepageData).header!.text}
           assets={
             (processedPage as HomepageData).header!.assets as Array<{
-              type: 'image' | 'mux' | 'video';
+              type: 'image' | 'mux';
               placement: 'before' | 'after';
               image?: {
                 url: string;
@@ -132,12 +132,6 @@ export default async function HomePage() {
                 height?: number;
               };
               mux?: string;
-              video?: {
-                url: string;
-                alt?: string;
-                width?: number;
-                height?: number;
-              };
             }>
           }
         >

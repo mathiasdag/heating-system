@@ -76,13 +76,13 @@ export default function HighlightGridGeneratorBlock({
         <div className="absolute left-1/2 top-2 bottom-2 w-px bg-text transform -translate-x-1/2"></div>
 
         {/* Headline */}
-        <h2 className="text-center font-mono uppercase py-0.5 mb-32 mt-36 relative bg-bg">
+        <h2 className="text-center font-mono uppercase py-0.5 mb-24 mt-28 relative bg-bg">
           {headline}
         </h2>
 
         {/* Content Grid */}
         <HorizontalScrollContainer
-          className="bg-bg mb-36 relative gap-2 pt-2 pb-2"
+          className="bg-bg mb-28 relative gap-2 pt-2 pb-2"
           enableOverflowDetection={false}
           leftSpacer="1px"
           rightSpacer="1px"

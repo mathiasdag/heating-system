@@ -92,24 +92,24 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   };
 
   return (
-    <div className="">
+    <div className="select-none">
       <DevIndicator componentName="CarouselSlide" />
-      <div className="grid xl:grid-cols-2 items-center max-w-6xl mx-auto bg-surface rounded-2xl relative">
+      <div className="grid lg:grid-cols-2 items-center mx-auto bg-surface rounded-2xl relative">
         {/* Right Image - First on mobile */}
         {image && (
-          <div className="relative aspect-[4/3] xl:aspect-square xl:h-full order-1 xl:order-2">
+          <div className="relative aspect-[4/3] lg:aspect-square lg:h-full order-1 lg:order-2">
             <Image
               src={fixImageUrl(image.url)}
               alt={image.alt || 'Carousel image'}
               width={image.width || 800}
               height={image.height || 600}
-              className="w-full h-full rounded-t-lg xl:rounded-r-lg xl:rounded-t-none object-cover"
+              className="w-full h-full rounded-t-lg lg:rounded-r-lg lg:rounded-l-none object-cover"
             />
           </div>
         )}
 
         {/* Left Content - Second on mobile */}
-        <div className="flex-1 space-y-4 px-8 pt-12 pb-16 xl:px-12 xl:py-16 order-2 xl:order-1 min-w-0">
+        <div className="flex-1 space-y-4 px-8 pt-12 pb-16 lg:px-12 lg:py-16 order-2 lg:order-1 min-w-0">
           {/* Tags */}
           {tags && tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
@@ -122,7 +122,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
           {/* Subheadline */}
           {subheadline && (
             <Heading variant="card-title" as="h3">
-              {title}
+              {subheadline}
             </Heading>
           )}
 

@@ -64,7 +64,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
       )}
     >
       <DevIndicator componentName="MediaCard" />
-      <div className="grid gap-6 mb-4">
+      <div className="grid gap-6 mb-4 text-center">
         <header>
           <div className="flex justify-center mb-3 gap-[.15em] flex-wrap">
             {tags &&

@@ -350,3 +350,39 @@ details[open] summary .accordion-arrow {
       0 0 2px rgba(0, 0, 0, 0.1);
   }
 }
+
+.embla__container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 90%; /* Each slide covers 80% of the viewport */
+}
+
+.embla__container {
+  grid-column-gap: 1em;
+}
+
+.embla__slide:first-child {
+  margin-left: 1em;
+}
+
+.embla__slide:last-child {
+  margin-right: 1em;
+}
+
+@media (min-width: 1024px) {
+  .embla__container {
+    grid-auto-columns: 80%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .embla__container {
+    grid-auto-columns: 80%;
+  }
+}
+
+@media (min-width: 1536px) {
+  .embla__container {
+    grid-auto-columns: 70%;
+  }
+}

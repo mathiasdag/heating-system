@@ -11,6 +11,8 @@ import {
   SerializedHeadingNode,
   SerializedParagraphNode,
   SerializedQuoteNode,
+  SerializedListNode,
+  SerializedListItemNode,
 } from '@payloadcms/richtext-lexical';
 import { Heading } from '@/components/headings';
 import {
@@ -21,6 +23,7 @@ import {
 } from '@/components/blocks/articles';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import SignatureBlock from '@/components/blocks/global/SignatureBlock';
+import ListItem from '@/components/ui/ListItem';
 
 /**
  * Article-specific paragraph converter
@@ -166,6 +169,31 @@ const headingConverter: JSXConverters<SerializedHeadingNode> = {
 };
 
 /**
+ * Custom list converter for all contexts
+ * Uses the ListItem component for consistent styling
+ */
+const listConverter: JSXConverters<
+  SerializedListNode | SerializedListItemNode
+> = {
+  list: ({ node, nodesToJSX }) => {
+    const children = nodesToJSX({ nodes: node.children });
+    const NodeTag = node.tag;
+
+    return <NodeTag className="space-y-[-1px] py-1">{children}</NodeTag>;
+  },
+  listitem: ({ node, nodesToJSX, parent }) => {
+    const children = nodesToJSX({ nodes: node.children });
+
+    // Handle regular lists (bullet, number)
+    return (
+      <ListItem variant="bullet" size="sm">
+        {children}
+      </ListItem>
+    );
+  },
+};
+
+/**
  * Main JSX converter that combines all custom converters
  * This is the proper way to use converters with Payload CMS Lexical
  */
@@ -184,6 +212,7 @@ export const articleConverter: JSXConvertersFunction<NodeTypes> = ({
   ...articleParagraphConverter,
   ...articleBlockquoteConverter,
   ...headingConverter,
+  ...listConverter,
   blocks: {
     textBlock: ({ node }) => <ArticleTextBlock content={node.fields.content} />,
     image: ({ node }) => (
@@ -221,6 +250,7 @@ export const defaultConverter: JSXConvertersFunction<NodeTypes> = ({
   ...defaultParagraphConverter,
   ...pageBlockquoteConverter,
   ...headingConverter,
+  ...listConverter,
 });
 
 // Legacy export for backward compatibility

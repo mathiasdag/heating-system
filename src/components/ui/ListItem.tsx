@@ -6,7 +6,7 @@ import clsx from 'clsx';
 interface ListItemProps {
   children: React.ReactNode;
   className?: string;
-  variant?: 'outline' | 'background';
+  variant?: 'outline' | 'background' | 'bullet';
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -16,30 +16,35 @@ const ListItem: React.FC<ListItemProps> = ({
   variant = 'outline',
   size = 'md',
 }) => {
-  const baseClasses = 'rounded-lg text-center';
+  const baseClasses = '';
 
   const sizeClasses = {
-    sm: 'px-4 py-4 text-sm',
-    md: 'px-6 py-7 text-base',
-    lg: 'px-6 py-10 text-lg',
+    sm: 'rounded-md px-4 py-4 text-sm',
+    md: 'rounded-md px-6 py-7 text-base',
+    lg: 'rounded-lg px-6 py-10 text-lg',
   };
 
   const variantClasses = {
-    outline: 'border border-text',
-    background: 'bg-surface',
+    outline: 'border border-text text-center',
+    background: 'bg-surface text-center',
+    bullet: 'font-mono list-disc list-outside ml-8 pl-3 pb-1 last:pb-0',
   };
 
+  // Only apply size classes to outline and background variants
+  const shouldApplySizeClasses =
+    variant === 'outline' || variant === 'background';
+
   return (
-    <div
+    <li
       className={clsx(
         baseClasses,
-        sizeClasses[size],
+        shouldApplySizeClasses && sizeClasses[size],
         variantClasses[variant],
         className
       )}
     >
       {children}
-    </div>
+    </li>
   );
 };
 

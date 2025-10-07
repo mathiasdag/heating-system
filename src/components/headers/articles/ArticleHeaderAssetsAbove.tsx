@@ -88,7 +88,7 @@ export default function ArticleHeaderAssetsAbove({
       <div className="grid gap-4 justify-center pt-32 text-center">
         {/* Tags */}
         {articleData.tags && articleData.tags.length > 0 && (
-          <div className="flex justify-center gap-2 flex-wrap mb-4">
+          <div className="flex justify-center gap-2 flex-wrap">
             {articleData.tags.map((tag, index) => (
               <Tag key={tag.id || index} name={tag.name} size="md" />
             ))}
@@ -97,7 +97,7 @@ export default function ArticleHeaderAssetsAbove({
 
         {/* Render assets before text */}
         <motion.div
-          className="flex items-center justify-center"
+          className="flex items-center justify-center py-4"
           style={{
             scale,
             y,
@@ -108,6 +108,7 @@ export default function ArticleHeaderAssetsAbove({
             as="div"
             className="flex gap-4 justify-center select-none relative z-10"
             timing="fast"
+            delay={0.2}
           >
             {assets.map((asset, i) => (
               <MediaAsset
@@ -128,6 +129,7 @@ export default function ArticleHeaderAssetsAbove({
             as="div"
             className="px-4 grid gap-4 font-mono"
             timing="fast"
+            delay={0.2}
           >
             {/* Add article title as h1 if no h1 is found in RichText */}
             {articleData.title && !hasH1(text) && (

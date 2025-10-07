@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { jsxConverter } from '@/utils/richTextConverters';
 import { motion } from 'framer-motion';
@@ -31,10 +31,44 @@ export default function HomepageHeaderBlock({
   children,
 }: HomepageHeaderBlockProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isInViewport, setIsInViewport] = useState(true);
 
   // Get the first asset (video or image) for the fullscreen background
   const backgroundAsset =
     assets.find(asset => asset.placement === 'before') || assets[0];
+
+  // Intersection Observer to detect when video is in viewport
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInViewport(entry.isIntersecting);
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the video is visible
+        rootMargin: '50px', // Start checking 50px before entering viewport
+      }
+    );
+
+    observer.observe(videoRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // Control video playback based on viewport visibility
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    if (isInViewport) {
+      videoRef.current.play().catch(console.error);
+    } else {
+      videoRef.current.pause();
+    }
+  }, [isInViewport]);
 
   const renderBackgroundAsset = () => {
     if (!backgroundAsset) return null;
@@ -67,8 +101,9 @@ export default function HomepageHeaderBlock({
           className="w-full h-full"
         >
           <MuxPlayer
+            ref={videoRef}
             playbackId={backgroundAsset.mux}
-            autoPlay={true}
+            autoPlay={isInViewport}
             muted={true}
             loop={true}
             controls={false}
@@ -83,7 +118,7 @@ export default function HomepageHeaderBlock({
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 bottom-[calc(50vh-2rem)] sm:bottom-0 z-0 bg-surface-dark">
+      <div className="fixed inset-x-0 top-0 bottom-[calc(50vh-8rem)] sm:bottom-0 z-0 bg-surface-dark">
         <DevIndicator
           componentName="HomepageHeaderBlock"
           position="top-right"

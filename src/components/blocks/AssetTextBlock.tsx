@@ -48,7 +48,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   return (
     <div
       className={clsx(
-        'px-4 relative max-w-8xl mx-auto',
+        'px-4 relative max-w-8xl mx-auto animate-fade-in',
         isStandalone ? '' : 'py-6'
       )}
     >
@@ -64,7 +64,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           {/* Asset Content */}
           <div
             className={clsx(
-              'inline order-1 self-start',
+              'inline order-1 self-start sticky top-4',
               !isTextLeft ? 'md:order-1' : 'justify-self-end md:order-2'
             )}
           >

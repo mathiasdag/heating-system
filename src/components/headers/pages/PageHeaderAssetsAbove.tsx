@@ -38,7 +38,6 @@ export default function PageHeaderAssetsAbove({
   // Add slight y-axis movement for parallax effect
   const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
-
   return (
     <div ref={ref} className="px-2 text-center relative">
       <DevIndicator
@@ -59,6 +58,7 @@ export default function PageHeaderAssetsAbove({
           as="div"
           className="flex gap-4 justify-center select-none pt-32 sm:pt-36 relative z-10"
           timing="fast"
+          delay={0.2}
         >
           {assets.map((asset, i) => (
             <MediaAsset
@@ -79,7 +79,12 @@ export default function PageHeaderAssetsAbove({
       </motion.div>
 
       {/* Render rich text with enhanced motion effects */}
-      <FadeInUp as="div" className="max-w-7xl mx-auto px-4" timing="fast">
+      <FadeInUp
+        as="div"
+        className="max-w-7xl mx-auto px-4"
+        timing="fast"
+        delay={0.2}
+      >
         <RichText
           data={text}
           className="rich-text font-mono grid gap-3 hyphens-auto"

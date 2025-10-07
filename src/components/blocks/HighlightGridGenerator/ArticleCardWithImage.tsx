@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Tag } from '@/components/ui';
 import { PlusIcon } from '@/components/icons/PlusIcon';
 import { fixImageUrl } from '@/utils/imageUrl';
-import { formatDateForTags, getArticleContent } from './utils';
+import { formatDateForTags } from './utils';
 import type { CardProps } from './types';
 
 export default function ArticleCardWithImage({
@@ -16,10 +16,9 @@ export default function ArticleCardWithImage({
   isHovered,
   onHoverStart,
   onHoverEnd,
-  onClick,
 }: CardProps) {
   const cardId = `article-${item.id}-${index}`;
-  const articleContent = getArticleContent(item);
+  // const articleContent = getArticleContent(item);
 
   return (
     <Link

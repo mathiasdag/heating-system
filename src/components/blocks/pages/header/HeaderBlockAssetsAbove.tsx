@@ -6,8 +6,8 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import VideoBlock from '@/components/blocks/VideoBlock';
-import { FadeIn, FadeInUp, FadeInDown } from '@/components/ui/FadeIn';
-import clsx from 'clsx';
+import { FadeInUp, FadeInDown } from '@/components/ui/FadeIn';
+// import clsx from 'clsx';
 import { fixImageUrl } from '@/utils/imageUrl';
 import { jsxConverter } from '@/utils/richTextConverters';
 

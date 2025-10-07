@@ -39,8 +39,8 @@ export default function HorizontalMarqueeBlock({
     minPixelSpeed + normalizedSpeed * (maxPixelSpeed - minPixelSpeed);
 
   // Also try inverted (higher CMS = slower)
-  const invertedPixelSpeed =
-    maxPixelSpeed - normalizedSpeed * (maxPixelSpeed - minPixelSpeed);
+  // const invertedPixelSpeed =
+  //   maxPixelSpeed - normalizedSpeed * (maxPixelSpeed - minPixelSpeed);
 
   if (!userCards || userCards.length === 0) {
     return null;

@@ -30,7 +30,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
   onClose,
 }) => {
   const headerRef = useRef<HTMLDivElement>(null);
-  const [isScrollable, setIsScrollable] = useState(false);
+  const [, setIsScrollable] = useState(false);
 
   // Use the global router to resolve the link
   const linkResult = overlay.link ? routeLink(overlay.link as unknown) : null;

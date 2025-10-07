@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { useNotifications } from '@/contexts/NotificationContext';
 import { Notification } from './Notification';
@@ -7,7 +7,7 @@ import { Notification } from './Notification';
 export const NotificationContainer: React.FC = () => {
   const { notifications, removeNotification } = useNotifications();
   const [isHovered, setIsHovered] = useState(false);
-  const [dragConstraints, setDragConstraints] = useState({ top: 0, bottom: 0 });
+  // const [, setDragConstraints] = useState({ top: 0, bottom: 0 });
 
   // Handle ESC key to close the latest notification
   useEffect(() => {

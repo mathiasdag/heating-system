@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { MarqueeText } from '@/components/ui';
@@ -346,7 +346,7 @@ export default function CourseCatalogBlock({
                   {section.sectionTitle}
                 </h3>
                 <div className="inline-grid gap-[.15em]">
-                  {section.navigationItems.map((navItem, navIndex) => {
+                  {section.navigationItems.map(navItem => {
                     const globalIndex = allNavigationItems.findIndex(
                       globalItem => globalItem.title === navItem.title
                     );

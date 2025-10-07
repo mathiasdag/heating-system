@@ -71,11 +71,11 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
   description,
   slides = [],
 }) => {
+  const sliderRef = React.useRef<Slider>(null);
+
   if (!slides.length) {
     return null;
   }
-
-  const sliderRef = React.useRef<Slider>(null);
 
   const settings = {
     dots: slides.length > 1,

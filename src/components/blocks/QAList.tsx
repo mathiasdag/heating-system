@@ -50,7 +50,7 @@ const AccordionItem: React.FC<{
   qa: QAItem;
   index: number;
   headingLevel: 'h3' | 'h4';
-}> = ({ qa, index, headingLevel }) => {
+}> = ({ qa }) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 

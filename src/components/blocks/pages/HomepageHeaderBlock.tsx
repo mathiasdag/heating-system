@@ -6,7 +6,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { jsxConverter } from '@/utils/richTextConverters';
 import { motion } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import VideoBlock from '@/components/blocks/VideoBlock';
+// import VideoBlock from '@/components/blocks/VideoBlock';
 import MuxPlayer from '@mux/mux-player-react';
 import { fixImageUrl } from '@/utils/imageUrl';
 import { FadeIn } from '@/components/ui/FadeIn';

@@ -19,7 +19,6 @@ export interface HorizontalSnapCarouselProps {
 const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
   children,
   className = '',
-  cardClassName = '',
   showDevIndicator = false,
   getItemTitle = index => `Item ${index + 1}`,
 }) => {

@@ -81,7 +81,7 @@ URL: ${error.url}
               </div>
             ) : (
               <div className="divide-y divide-gray-200">
-                {errors.map((error, index) => (
+                {errors.map(error => (
                   <div key={error.errorId} className="p-3">
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex-1">

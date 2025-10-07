@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 const RevalidateButton: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+  const [, setMessage] = useState<string | null>(null);
 
   const handleRevalidate = async () => {
     setIsLoading(true);

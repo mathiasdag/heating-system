@@ -39,7 +39,7 @@ export const formatDateForTags = (dateString: string) => {
     'JUL',
     'AUG',
     'SEP',
-    'OCT',
+    'OKT',
     'NOV',
     'DEC',
   ];

@@ -8,8 +8,8 @@ export interface DynamicContentOptions {
 }
 
 export interface DynamicContentResult {
-  articles: any[];
-  showcases: any[];
+  articles: Record<string, unknown>[];
+  showcases: Record<string, unknown>[];
   totalCount: number;
 }
 
@@ -30,13 +30,14 @@ export class DynamicContentAPI {
       limit = 10,
       sort = '-publishedDate',
       status = 'published',
-      depth = 2,
     } = options;
 
     const where =
       tagIds.length > 0
         ? {
-            tags: { in: tagIds },
+            or: tagIds.map(tagId => ({
+              'tags.id': { equals: tagId },
+            })),
           }
         : {};
 
@@ -50,7 +51,10 @@ export class DynamicContentAPI {
 
     const showcaseWhere = contentTypes.includes('showcases') ? where : null;
 
-    const promises: Promise<any>[] = [];
+    const promises: Promise<{
+      docs: unknown[];
+      totalDocs: number;
+    }>[] = [];
 
     // Fetch articles if requested
     if (contentTypes.includes('articles') && articleWhere) {
@@ -58,16 +62,16 @@ export class DynamicContentAPI {
         PayloadAPI.find({
           collection: 'articles',
           where: articleWhere,
-          limit: contentTypes.length === 1 ? limit : Math.ceil(limit / 2), // Split limit if multiple types
+          limit: contentTypes.length === 1 ? limit : limit * 2, // Fetch more for mixed sorting
           sort,
-          depth: 3, // Need deeper depth for article content
+          depth: 2, // Reduced depth for better performance
         }).catch(error => {
           console.error('Error fetching articles:', error);
           return { docs: [], totalDocs: 0 };
         })
       );
     } else {
-      promises.push(Promise.resolve({ docs: [] }));
+      promises.push(Promise.resolve({ docs: [], totalDocs: 0 }));
     }
 
     // Fetch showcases if requested
@@ -76,34 +80,61 @@ export class DynamicContentAPI {
         PayloadAPI.find({
           collection: 'showcases',
           where: showcaseWhere,
-          limit: contentTypes.length === 1 ? limit : Math.ceil(limit / 2), // Split limit if multiple types
+          limit: contentTypes.length === 1 ? limit : limit * 2, // Fetch more for mixed sorting
           sort:
             sort === '-publishedDate' || sort === 'publishedDate'
               ? '-createdAt'
               : sort, // Map publishedDate to createdAt for showcases
-          depth: 3, // Need deeper depth for showcase assets
+          depth: 2, // Reduced depth for better performance
         }).catch(error => {
           console.error('Error fetching showcases:', error);
           return { docs: [], totalDocs: 0 };
         })
       );
     } else {
-      promises.push(Promise.resolve({ docs: [] }));
+      promises.push(Promise.resolve({ docs: [], totalDocs: 0 }));
     }
 
     const [articlesResult, showcasesResult] = await Promise.all(promises);
 
+    // Client-side filtering fallback if server-side filtering fails
+    const filterArticlesByTags = (articles: unknown[]) => {
+      if (tagIds.length === 0) return articles;
+
+      return articles.filter((article: any) => {
+        const articleTags = article?.tags || [];
+        return articleTags.some((tag: any) =>
+          tagIds.includes(tag.id || tag._id || tag)
+        );
+      });
+    };
+
+    const filterShowcasesByTags = (showcases: unknown[]) => {
+      if (tagIds.length === 0) return showcases;
+
+      return showcases.filter((showcase: any) => {
+        const showcaseTags = showcase?.tags || [];
+        return showcaseTags.some((tag: any) =>
+          tagIds.includes(tag.id || tag._id || tag)
+        );
+      });
+    };
+
+    // Apply client-side filtering
+    const filteredArticles = filterArticlesByTags(articlesResult.docs);
+    const filteredShowcases = filterShowcasesByTags(showcasesResult.docs);
+
     // Combine and sort results if we have multiple content types
-    let combinedResults: any[] = [];
+    let combinedResults: Record<string, unknown>[] = [];
 
     if (contentTypes.length > 1) {
       // Add type identifier to each item
-      const articles = articlesResult.docs.map((item: any) => ({
-        ...item,
+      const articles = filteredArticles.map((item: unknown) => ({
+        ...(item as Record<string, unknown>),
         _contentType: 'article',
       }));
-      const showcases = showcasesResult.docs.map((item: any) => ({
-        ...item,
+      const showcases = filteredShowcases.map((item: unknown) => ({
+        ...(item as Record<string, unknown>),
         _contentType: 'showcase',
       }));
 
@@ -112,20 +143,20 @@ export class DynamicContentAPI {
       // Sort combined results
       combinedResults.sort((a, b) => {
         if (sort === '-publishedDate' || sort === '-createdAt') {
-          const dateA = a.publishedDate || a.createdAt;
-          const dateB = b.publishedDate || b.createdAt;
+          const dateA = (a.publishedDate as string) || (a.createdAt as string);
+          const dateB = (b.publishedDate as string) || (b.createdAt as string);
           return new Date(dateB).getTime() - new Date(dateA).getTime();
         } else if (sort === 'publishedDate' || sort === 'createdAt') {
-          const dateA = a.publishedDate || a.createdAt;
-          const dateB = b.publishedDate || b.createdAt;
+          const dateA = (a.publishedDate as string) || (a.createdAt as string);
+          const dateB = (b.publishedDate as string) || (b.createdAt as string);
           return new Date(dateA).getTime() - new Date(dateB).getTime();
         } else if (sort === 'title') {
-          return a.title.localeCompare(b.title);
+          return (a.title as string).localeCompare(b.title as string);
         } else if (sort === '-title') {
-          return b.title.localeCompare(a.title);
+          return (b.title as string).localeCompare(a.title as string);
         } else if (sort === 'year' || sort === '-year') {
-          const yearA = a.year || 0;
-          const yearB = b.year || 0;
+          const yearA = (a.year as number) || 0;
+          const yearB = (b.year as number) || 0;
           return sort === 'year' ? yearA - yearB : yearB - yearA;
         }
         return 0;
@@ -138,23 +169,25 @@ export class DynamicContentAPI {
     return {
       articles:
         contentTypes.length === 1 && contentTypes.includes('articles')
-          ? articlesResult.docs
+          ? (filteredArticles as Record<string, unknown>[])
           : combinedResults
               .filter(item => item._contentType === 'article')
               .map(item => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { _contentType, ...rest } = item;
                 return rest;
               }),
       showcases:
         contentTypes.length === 1 && contentTypes.includes('showcases')
-          ? showcasesResult.docs
+          ? (filteredShowcases as Record<string, unknown>[])
           : combinedResults
               .filter(item => item._contentType === 'showcase')
               .map(item => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { _contentType, ...rest } = item;
                 return rest;
               }),
-      totalCount: articlesResult.totalDocs + showcasesResult.totalDocs,
+      totalCount: filteredArticles.length + filteredShowcases.length,
     };
   }
 

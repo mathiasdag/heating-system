@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { clsx } from 'clsx';
 import { Tag } from '@/components/ui';
 import { PlusIcon } from '@/components/icons/PlusIcon';
 import { formatDateForTags, getArticleContent } from './utils';
@@ -12,8 +11,7 @@ import type { CardProps } from './types';
 export default function ArticleCardWithoutImage({
   item,
   index,
-  onClick,
-}: Omit<CardProps, 'isHovered' | 'onHoverStart' | 'onHoverEnd'>) {
+}: Omit<CardProps, 'isHovered' | 'onHoverStart' | 'onHoverEnd' | 'onClick'>) {
   const [isHovered, setIsHovered] = useState(false);
   const articleContent = getArticleContent(item);
 
@@ -50,8 +48,7 @@ export default function ArticleCardWithoutImage({
               </div>
 
               {/* Tags */}
-              <div className="flex gap-0.5">
-                <Tag name="Artikel" size="md" />
+              <div className="flex gap-x-0.5 gap-y-[0.25em] flex-wrap -mx-0.5">
                 {item.publishedDate && (
                   <>
                     {(() => {

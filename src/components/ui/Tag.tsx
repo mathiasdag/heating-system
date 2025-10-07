@@ -7,7 +7,7 @@ interface TagProps {
 
 const sizeClasses = {
   sm: 'border border-current leading-4 text-xs px-1 py-0.25',
-  md: 'border border-current leading-4 text-sm px-1.5 pt-0.5 pb-[.05em]',
+  md: 'border border-current leading-4 text-sm px-1.5 pt-0.5 pb-[.15em]',
   lg: 'border border-current leading-4 text-base px-2 pt-1 pb-[.15em]',
 };
 
@@ -40,7 +40,11 @@ const Tag: React.FC<TagProps> = ({ name, size = 'md' }) => {
   const isEmoji = isOnlyEmoji(name);
   const sizeClass = isEmoji ? emojiSizeClasses[size] : sizeClasses[size];
 
-  return <div className={`rounded-full leading-4 ${sizeClass}`}>{name}</div>;
+  return (
+    <div className={`rounded-full whitespace-nowrap leading-4 ${sizeClass}`}>
+      {name}
+    </div>
+  );
 };
 
 export default Tag;

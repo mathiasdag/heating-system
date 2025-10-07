@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { ContentOverlay } from '@/components/ui/overlays';
 import { HorizontalScrollContainer } from '@/components/ui/HorizontalScrollContainer';
@@ -34,10 +33,6 @@ interface HighlightGridGeneratorProps {
 
 export default function HighlightGridGeneratorBlock({
   headline,
-  contentTypes,
-  maxItems,
-  sortBy,
-  isHomepage = false,
   generatedContent,
 }: HighlightGridGeneratorProps) {
   const [selectedHighlight, setSelectedHighlight] =
@@ -46,7 +41,7 @@ export default function HighlightGridGeneratorBlock({
 
   const { articles, showcases } = generatedContent;
 
-  // Combine and sort content for mixed display
+  // Combine content for display (API already handles sorting and limiting)
   const allContent: ContentItem[] = [
     ...articles.map(
       item => ({ ...item, _contentType: 'article' as const }) as ContentItem
@@ -56,34 +51,8 @@ export default function HighlightGridGeneratorBlock({
     ),
   ];
 
-  // Sort combined content if we have multiple types
-  if (contentTypes.length > 1) {
-    allContent.sort((a, b) => {
-      if (sortBy === '-publishedDate' || sortBy === '-createdAt') {
-        const dateA = a.publishedDate || a.createdAt;
-        const dateB = b.publishedDate || b.createdAt;
-        if (!dateA || !dateB) return 0;
-        return new Date(dateB).getTime() - new Date(dateA).getTime();
-      } else if (sortBy === 'publishedDate' || sortBy === 'createdAt') {
-        const dateA = a.publishedDate || a.createdAt;
-        const dateB = b.publishedDate || b.createdAt;
-        if (!dateA || !dateB) return 0;
-        return new Date(dateA).getTime() - new Date(dateB).getTime();
-      } else if (sortBy === 'title') {
-        return a.title.localeCompare(b.title);
-      } else if (sortBy === '-title') {
-        return b.title.localeCompare(a.title);
-      } else if (sortBy === 'year' || sortBy === '-year') {
-        const yearA = a.year || 0;
-        const yearB = b.year || 0;
-        return sortBy === 'year' ? yearA - yearB : yearB - yearA;
-      }
-      return 0;
-    });
-  }
-
-  // Limit results
-  const displayContent = allContent.slice(0, maxItems);
+  // Use the pre-sorted and limited content from the API
+  const displayContent = allContent;
 
   const handleHighlightClick = (highlightData: ContentItem) => {
     // For showcases, open the overlay

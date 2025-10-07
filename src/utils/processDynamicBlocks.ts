@@ -11,9 +11,16 @@ export async function processDynamicBlocks(layout: any[]): Promise<any[]> {
         try {
           // Extract tag IDs from the relationship data
           const tagIds =
-            block.filterTags?.map((tag: any) =>
-              typeof tag === 'string' ? tag : tag.id
-            ) || [];
+            block.filterTags
+              ?.map((tag: any) => {
+                if (typeof tag === 'string') {
+                  return tag;
+                } else if (tag && typeof tag === 'object') {
+                  return tag.id || tag._id || tag;
+                }
+                return null;
+              })
+              .filter(Boolean) || [];
 
           // If no tags are selected, show all content (tagIds can be empty)
 
@@ -24,7 +31,7 @@ export async function processDynamicBlocks(layout: any[]): Promise<any[]> {
             {
               limit: block.maxItems || 6,
               sort: block.sortBy || '-publishedDate',
-              depth: 2, // Deep enough to get related data
+              depth: 2, // Optimized depth for better performance
             }
           );
 

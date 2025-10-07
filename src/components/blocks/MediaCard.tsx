@@ -20,7 +20,17 @@ interface TagType {
 interface MediaCardProps {
   tags?: TagType[];
   title: string;
-  body?: any;
+  body?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   image?: { url: string; alt?: string; width?: number; height?: number };
   link?: LinkGroup;
   buttonVariant?: 'primary' | 'secondary' | 'outline';

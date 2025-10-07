@@ -83,7 +83,7 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
         className="object-cover w-full h-full"
         style={{
           aspectRatio,
-          ...(controls === false ? { ['--controls' as any]: 'none' } : {}),
+          ...(controls === false ? { ['--controls' as string]: 'none' } : {}),
         }}
         {...(!adaptiveResolution ? { playbackEngine: 'mse' } : {})}
       />

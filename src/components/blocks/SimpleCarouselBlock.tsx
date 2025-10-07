@@ -125,7 +125,16 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
     return mimeType?.startsWith('video/') || false;
   };
 
-  const renderAsset = (asset: any) => {
+  const renderAsset = (asset: {
+    asset: {
+      mimeType: string;
+      url: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
+    [key: string]: unknown;
+  }) => {
     if (isVideo(asset.asset.mimeType)) {
       return (
         <div className="w-full h-full">

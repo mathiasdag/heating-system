@@ -4,7 +4,17 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { jsxConverter } from '@/utils/richTextConverters';
 
 interface TextBlockProps {
-  content: any;
+  content: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
 }
 
 export default function TextBlock({ content }: TextBlockProps) {

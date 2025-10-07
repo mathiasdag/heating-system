@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ListItem, AnimatedArrow } from '@/components/ui';
@@ -8,8 +8,28 @@ import { extractPlainText } from '@/utils/richTextUtils';
 
 interface QAItem {
   blockType: 'qa';
-  question: any;
-  answer: any;
+  question: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
+  answer: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
 }
 
 interface QAGroup {

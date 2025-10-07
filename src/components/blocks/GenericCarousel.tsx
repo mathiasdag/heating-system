@@ -4,7 +4,17 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 
 interface GenericCarouselProps {
   headline?: string;
-  description?: any; // Rich text data
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   slides?: React.ReactNode[]; // Array of any React components
   className?: string;
 }

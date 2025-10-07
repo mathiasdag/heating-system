@@ -84,17 +84,19 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
             )}
           >
             <RichText
-              data={transformedText as {
-                root: {
-                  children: Array<{
-                    type: string;
-                    children?: Array<{
-                      text?: string;
-                      type?: string;
+              data={
+                transformedText as {
+                  root: {
+                    children: Array<{
+                      type: string;
+                      children?: Array<{
+                        text?: string;
+                        type?: string;
+                      }>;
                     }>;
-                  }>;
-                };
-              }}
+                  };
+                }
+              }
               className="grid gap-4"
               converters={defaultConverter}
             />

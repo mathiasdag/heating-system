@@ -4,7 +4,17 @@ import { articleConverter } from '@/utils/richTextConverters';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 
 interface ArticleContentProps {
-  content: any; // RichText content from Payload with inline blocks
+  content: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
 }
 
 export default function ArticleContent({ content }: ArticleContentProps) {

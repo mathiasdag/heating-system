@@ -12,7 +12,17 @@ interface ListItem {
 
 interface ListBlockProps {
   headline?: string;
-  description?: any;
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   items: ListItem[];
 }
 

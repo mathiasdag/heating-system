@@ -11,7 +11,12 @@ interface FeatureBlockProps {
     type?: 'internal' | 'external';
     text?: string;
     url?: string;
-    reference?: any; // Could be a page object or ID
+    reference?: {
+      id: string;
+      title?: string;
+      slug?: string;
+      [key: string]: unknown;
+    };
   };
 }
 

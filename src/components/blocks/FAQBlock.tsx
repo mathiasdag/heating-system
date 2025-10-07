@@ -9,8 +9,28 @@ import { jsxConverter } from '@/utils/richTextConverters';
 
 interface FAQItem {
   blockType: 'qa';
-  question: any;
-  answer: any;
+  question: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
+  answer: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
 }
 
 interface QAGroupItem {
@@ -23,7 +43,17 @@ type FAQBlockItem = FAQItem | QAGroupItem;
 
 interface FAQBlockProps {
   headline?: string;
-  description?: any;
+  description?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
+  };
   items: FAQBlockItem[];
   layout?: 'accordion' | 'list';
 }

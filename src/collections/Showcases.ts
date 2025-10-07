@@ -123,7 +123,12 @@ const Showcases: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeValidate: [commonHooks.slugFromTitle],
+    beforeValidate: [
+      commonHooks.slugFromTitle as unknown as (args: {
+        data?: Record<string, unknown>;
+        operation: string;
+      }) => Record<string, unknown>,
+    ],
   },
 };
 

@@ -15,10 +15,10 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: 'media',
     mimeTypes: ['image/*', 'video/*'],
-    adminThumbnail: ({ doc }) => {
+    adminThumbnail: ({ doc }: { doc: Record<string, unknown> }) => {
       // For images, use the image itself as thumbnail
-      if (doc.mimeType?.startsWith('image/')) {
-        return doc.url;
+      if ((doc.mimeType as string)?.startsWith('image/')) {
+        return doc.url as string;
       }
       // For videos, we could generate a thumbnail or use a default
       return null;

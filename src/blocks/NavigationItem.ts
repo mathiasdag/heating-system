@@ -8,7 +8,7 @@ const NavigationItem: Block = {
     {
       name: 'link',
       type: 'group',
-      fields: LinkGroup.fields,
+      fields: [...(LinkGroup as { fields: unknown[] }).fields],
       admin: {
         description:
           'Link configuration - use the "text" field for the menu item name',
@@ -30,7 +30,8 @@ const NavigationItem: Block = {
             {
               name: 'link',
               type: 'group',
-              fields: LinkGroup.fields,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              fields: [...(LinkGroup as any).fields],
               admin: {
                 description:
                   'Link configuration - use the "text" field for the menu item name',
@@ -52,7 +53,8 @@ const NavigationItem: Block = {
                     {
                       name: 'link',
                       type: 'group',
-                      fields: LinkGroup.fields,
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      fields: [...(LinkGroup as any).fields],
                       admin: {
                         description:
                           'Link configuration - use the "text" field for the menu item name',
@@ -74,7 +76,8 @@ const NavigationItem: Block = {
                             {
                               name: 'link',
                               type: 'group',
-                              fields: LinkGroup.fields,
+                              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                              fields: [...(LinkGroup as any).fields],
                               admin: {
                                 description:
                                   'Link configuration - use the "text" field for the menu item name',

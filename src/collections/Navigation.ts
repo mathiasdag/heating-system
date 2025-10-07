@@ -28,7 +28,7 @@ const Navigation: CollectionConfig = {
         position: 'sidebar',
         description: 'Highlighted item shown in closed navigation state',
       },
-      fields: LinkGroup.fields as Field[],
+      fields: [...(LinkGroup as { fields: Field[] }).fields] as Field[],
     },
     {
       name: 'menuItems',
@@ -41,7 +41,12 @@ const Navigation: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeValidate: [commonHooks.initializeNestedArrays],
+    beforeValidate: [
+      commonHooks.initializeNestedArrays as unknown as (args: {
+        data?: Record<string, unknown>;
+        operation: string;
+      }) => Record<string, unknown>,
+    ],
   },
 };
 

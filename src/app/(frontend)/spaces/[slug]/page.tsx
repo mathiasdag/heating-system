@@ -114,7 +114,7 @@ async function SpacePage({ params }: SpacePageProps) {
         )}
 
         {processedSpace?.layout?.map(
-          (block: SpaceData['layout'][0], i: number) => {
+          (block: { blockType: string; [key: string]: unknown }, i: number) => {
             const cleanBlock = JSON.parse(JSON.stringify(block));
             switch (block.blockType) {
               case 'assetText':

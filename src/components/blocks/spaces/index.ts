@@ -1,1 +1,1 @@
-export { default as HeaderBlock } from './HeaderBlock';
+// No exports - all space blocks have been migrated to the header system

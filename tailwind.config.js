@@ -95,7 +95,7 @@ module.exports = {
           'clamp(2.5rem, 6vw, 6rem)',
           { lineHeight: '1', letterSpacing: '-0.02em' },
         ],
-        vvCustom: [
+        '3xl': [
           'clamp(2rem, 10vw, 8rem)',
           { lineHeight: '1', letterSpacing: '-0.02em' },
         ],

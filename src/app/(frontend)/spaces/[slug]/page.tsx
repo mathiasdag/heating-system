@@ -9,7 +9,6 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { HighlightGridGeneratorBlock } from '@/components/blocks/HighlightGridGenerator';
-import { HeaderBlock as SpacesHeaderBlock } from '@/components/blocks/spaces';
 import { SpaceHeader } from '@/components/headers';
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -17,22 +16,41 @@ import { SpacesPageWrapper } from '@/components/wrappers';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 // Define proper types for space data
+interface SpaceHeaderData {
+  text?: unknown;
+  assets?: Array<{
+    type: 'image' | 'mux';
+    image?: {
+      url: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
+    mux?: string;
+  }>;
+}
+
+interface SpaceDataForHeader {
+  title?: string;
+  capacity?: number;
+  areaSize?: number;
+  heroAsset?: {
+    type?: 'image' | 'mux';
+    image?: {
+      url: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
+    mux?: string;
+  };
+}
+
 interface SpaceData {
   id: string;
   title: string;
   slug: string;
-  header?: {
-    text?: string;
-    assets?: Array<{
-      type: string;
-      image?: {
-        url: string;
-        alt?: string;
-        width?: number;
-        height?: number;
-      };
-    }>;
-  };
+  header?: SpaceHeaderData;
   layout?: Array<{
     blockType: string;
     [key: string]: unknown;
@@ -68,50 +86,10 @@ async function SpacePage({ params }: SpacePageProps) {
     <SpacesPageWrapper>
       <div data-content-type="space">
         {/* Hero Section */}
-        {processedSpace.header ? (
-          <SpaceHeader
-            spaceData={
-              processedSpace as {
-                title?: string;
-                capacity?: number;
-                areaSize?: number;
-                heroAsset?: {
-                  type?: 'image' | 'mux';
-                  image?: {
-                    url: string;
-                    alt?: string;
-                    width?: number;
-                    height?: number;
-                  };
-                  mux?: string;
-                };
-                [key: string]: unknown;
-              }
-            }
-            header={processedSpace.header}
-          />
-        ) : (
-          <SpacesHeaderBlock
-            spaceData={
-              processedSpace as {
-                title?: string;
-                capacity?: number;
-                areaSize?: number;
-                heroAsset?: {
-                  type?: 'image' | 'mux';
-                  image?: {
-                    url: string;
-                    alt?: string;
-                    width?: number;
-                    height?: number;
-                  };
-                  mux?: string;
-                };
-                [key: string]: unknown;
-              }
-            }
-          />
-        )}
+        <SpaceHeader
+          spaceData={processedSpace as SpaceDataForHeader}
+          header={processedSpace.header as SpaceHeaderData | undefined}
+        />
 
         {processedSpace?.layout?.map(
           (block: { blockType: string; [key: string]: unknown }, i: number) => {

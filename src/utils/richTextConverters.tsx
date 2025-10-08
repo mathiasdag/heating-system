@@ -73,6 +73,12 @@ export const paragraphConverters = {
     return <p className="text-sm font-mono">{text}</p>;
   },
 
+  space: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    if (isEmptyParagraph(text)) return null;
+    return <p className="font-sans max-w-6xl hyphens-auto">{text}</p>;
+  },
+
   // No styling, just the paragraph
   plain: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });

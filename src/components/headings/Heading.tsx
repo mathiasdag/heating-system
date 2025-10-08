@@ -32,6 +32,11 @@ const variantConfig = {
     className:
       'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] px-4 pt-8',
   },
+  'space-header': {
+    defaultAs: 'h1' as const,
+    className:
+      'text-2xl xl:text-3xl text-center font-ballPill hyphens-auto break-words text-white',
+  },
   'article-title': {
     defaultAs: 'h1' as const,
     className:
@@ -71,7 +76,7 @@ const variantConfig = {
   },
   label: {
     defaultAs: 'h5' as const,
-    className: 'font-sans text-sm',
+    className: 'font-mono uppercase text-sm',
   },
 };
 

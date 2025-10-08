@@ -392,5 +392,12 @@ export const plainConverter = buildConverter({
   list: 'plain',
 });
 
+// Space converter - for space pages with label headings
+export const spaceConverter = buildConverter({
+  paragraph: 'space',
+  heading: 'label',
+  list: 'default',
+});
+
 // Legacy export for backward compatibility
 export const jsxConverter = defaultConverter;

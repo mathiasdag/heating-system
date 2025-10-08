@@ -41,11 +41,17 @@ export default function SpaceHeader({ spaceData, header }: SpaceHeaderProps) {
   const heroAsset = spaceData.heroAsset;
 
   return (
-    <div className="relative pb-24">
+    <div className="relative">
       <DevIndicator componentName="SpaceHeader" />
 
       {/* Hero Section */}
-      <div className="relative h-[50vh] sm:h-[80vh] min-h-[500px] overflow-hidden">
+      <div
+        className={`relative overflow-hidden pt-8 ${
+          heroAsset
+            ? 'h-[50vh] sm:h-[80vh] min-h-[500px]'
+            : 'h-[50vh] sm:h-[70vh] min-h-[450px]'
+        }`}
+      >
         {/* Background Asset */}
         {heroAsset && (
           <div className="absolute inset-0 opacity-90">

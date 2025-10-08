@@ -5,7 +5,7 @@ import { AppLink } from '@/components/ui';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';
-import { defaultConverter } from '@/utils/richTextConverters';
+import { defaultConverter, spaceConverter } from '@/utils/richTextConverters';
 import MediaAsset from '@/components/common/MediaAsset';
 import clsx from 'clsx';
 
@@ -32,6 +32,7 @@ interface AssetTextBlockProps {
   textPosition: 'left' | 'right';
   link?: LinkGroup;
   variant?: 'standalone' | 'inline';
+  pageType?: 'space' | 'page';
 }
 
 const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
@@ -40,11 +41,15 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   textPosition,
   link,
   variant = 'standalone',
+  pageType = 'page',
 }) => {
   const transformedText = transformRichTextLinks(text);
 
   const isTextLeft = textPosition === 'left';
   const isStandalone = variant === 'standalone';
+
+  // Choose converter based on page type
+  const converter = pageType === 'space' ? spaceConverter : defaultConverter;
 
   return (
     <FadeIn
@@ -53,7 +58,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
     >
       <DevIndicator componentName="AssetTextBlock" position="top-right" />
 
-      <div className="mx-2 px-2 max-w-8xl mx-auto">
+      <div className="px-2 max-w-8xl mx-auto">
         <div
           className={clsx(
             'grid grid-cols-1 gap-x-12 gap-y-4 items-center',
@@ -85,7 +90,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
             <RichText
               data={transformedText as never}
               className="grid gap-4"
-              converters={defaultConverter}
+              converters={converter}
             />
 
             {/* Link */}

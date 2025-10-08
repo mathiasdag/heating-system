@@ -84,7 +84,7 @@ async function SpacePage({ params }: SpacePageProps) {
 
   return (
     <SpacesPageWrapper>
-      <div data-content-type="space">
+      <div data-content-type="space" className="min-h-screen grid gap-24 pb-36">
         {/* Hero Section */}
         <SpaceHeader
           spaceData={processedSpace as SpaceDataForHeader}
@@ -96,7 +96,9 @@ async function SpacePage({ params }: SpacePageProps) {
             const cleanBlock = JSON.parse(JSON.stringify(block));
             switch (block.blockType) {
               case 'assetText':
-                return <AssetTextBlock key={i} {...cleanBlock} />;
+                return (
+                  <AssetTextBlock key={i} {...cleanBlock} pageType="space" />
+                );
               case 'assetTextContainer':
                 return <AssetTextContainerBlock key={i} {...cleanBlock} />;
               case 'list':
@@ -105,8 +107,6 @@ async function SpacePage({ params }: SpacePageProps) {
                 return <TextBlock key={i} {...cleanBlock} />;
               case 'minimalCarousel':
                 return <SimpleCarouselBlock key={i} {...cleanBlock} />;
-              case 'assetText':
-                return <AssetTextBlock key={i} {...cleanBlock} />;
               case 'cta':
                 return <CTABlock key={i} {...cleanBlock} />;
               case 'highlightGrid':

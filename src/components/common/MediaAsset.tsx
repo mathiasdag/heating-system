@@ -9,10 +9,19 @@ interface Asset {
   mux?: string;
 }
 
+// Raw media data from Payload CMS
+interface MediaData {
+  url: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  mimeType?: string;
+}
+
 type MediaAssetVariant = 'default' | 'hero' | 'compact' | 'gallery';
 
 interface MediaAssetProps {
-  asset: Asset;
+  asset: Asset | MediaData;
   variant?: MediaAssetVariant;
   assetCount?: number;
   height?: number;
@@ -26,6 +35,9 @@ interface MediaAssetProps {
   autoplay?: boolean;
   loop?: boolean;
   adaptiveResolution?: boolean;
+  preload?: boolean;
+  isVisible?: boolean;
+  draggable?: boolean;
 }
 
 const MediaAsset: React.FC<MediaAssetProps> = ({
@@ -43,6 +55,9 @@ const MediaAsset: React.FC<MediaAssetProps> = ({
   autoplay,
   loop,
   adaptiveResolution,
+  preload = false,
+  isVisible = true,
+  draggable = true,
 }) => {
   // Variant-based defaults
   const getVariantDefaults = (variant: MediaAssetVariant) => {
@@ -107,18 +122,43 @@ const MediaAsset: React.FC<MediaAssetProps> = ({
   };
 
   const defaults = getVariantDefaults(variant);
-  if (asset.type === 'image' && asset.image?.url) {
+
+  // Override priority for preloading
+  const finalPriority = preload ? true : defaults.priority;
+
+  // Convert MediaData to Asset format if needed
+  const normalizedAsset: Asset =
+    'type' in asset
+      ? (asset as Asset)
+      : {
+          type: asset.mimeType?.startsWith('video/') ? 'mux' : 'image',
+          image: asset.mimeType?.startsWith('video/')
+            ? undefined
+            : {
+                url: asset.url,
+                alt: asset.alt,
+                width: asset.width,
+                height: asset.height,
+              },
+          mux: asset.mimeType?.startsWith('video/')
+            ? asset.url.split('/').pop()
+            : undefined,
+        };
+  if (normalizedAsset.type === 'image' && normalizedAsset.image?.url) {
     // For hero variant, use fill layout for background images
     if (variant === 'hero') {
       return (
         <Image
-          src={fixImageUrl(asset.image.url)}
-          alt={asset.image.alt || ''}
+          src={fixImageUrl(normalizedAsset.image.url)}
+          alt={normalizedAsset.image.alt || ''}
           fill
           className={defaults.className}
-          priority={defaults.priority}
+          priority={finalPriority}
           quality={defaults.quality}
           sizes={defaults.sizes}
+          loading={finalPriority ? undefined : preload ? 'eager' : 'lazy'}
+          style={{ display: isVisible ? 'block' : 'none' }}
+          draggable={draggable}
         />
       );
     }
@@ -131,8 +171,8 @@ const MediaAsset: React.FC<MediaAssetProps> = ({
     // For assets above text (smaller, more dynamic sizing)
     if (assetCount > 1 || defaults.height < 400) {
       const aspectRatio =
-        asset.image.width && asset.image.height
-          ? asset.image.width / asset.image.height
+        normalizedAsset.image.width && normalizedAsset.image.height
+          ? normalizedAsset.image.width / normalizedAsset.image.height
           : 1;
       const isLandscape = aspectRatio > 1;
       const shouldBeSquare =
@@ -147,34 +187,40 @@ const MediaAsset: React.FC<MediaAssetProps> = ({
         : 'rounded max-w-[50vw]';
     } else {
       // For standard assets (use original dimensions or defaults)
-      finalWidth = asset.image.width || defaults.width || 800;
-      finalHeight = asset.image.height || defaults.height;
+      finalWidth = normalizedAsset.image.width || defaults.width || 800;
+      finalHeight = normalizedAsset.image.height || defaults.height;
     }
 
     return (
       <Image
-        src={fixImageUrl(asset.image.url)}
-        alt={asset.image.alt || ''}
+        src={fixImageUrl(normalizedAsset.image.url)}
+        alt={normalizedAsset.image.alt || ''}
         width={finalWidth}
         height={finalHeight}
         className={finalClassName}
-        priority={defaults.priority}
+        priority={finalPriority}
         quality={defaults.quality}
         sizes={defaults.sizes}
+        loading={finalPriority ? undefined : preload ? 'eager' : 'lazy'}
+        style={{ display: isVisible ? 'block' : 'none' }}
+        draggable={draggable}
       />
     );
   }
 
-  if (asset.type === 'mux' && asset.mux) {
+  if (normalizedAsset.type === 'mux' && normalizedAsset.mux) {
     // For hero variant, use full container
     if (variant === 'hero') {
       return (
-        <div className={defaults.videoClassName}>
+        <div
+          className={defaults.videoClassName}
+          style={{ display: isVisible ? 'block' : 'none' }}
+        >
           <VideoBlock
             host="mux"
             sources={[
               {
-                playbackId: asset.mux,
+                playbackId: normalizedAsset.mux,
                 minWidth: 0,
               },
             ]}
@@ -202,14 +248,18 @@ const MediaAsset: React.FC<MediaAssetProps> = ({
 
     return (
       <div
-        style={{ height: `${finalHeight}px`, width: `${finalWidth}px` }}
+        style={{
+          height: `${finalHeight}px`,
+          width: `${finalWidth}px`,
+          display: isVisible ? 'block' : 'none',
+        }}
         className={finalVideoClassName}
       >
         <VideoBlock
           host="mux"
           sources={[
             {
-              playbackId: asset.mux,
+              playbackId: normalizedAsset.mux,
               minWidth: 0,
             },
           ]}

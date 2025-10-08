@@ -34,17 +34,17 @@ const ListBlock: React.FC<ListBlockProps> = ({
   if (!items || items.length === 0) return null;
 
   return (
-    <div className="py-8 px-2">
+    <div className="relative py-8 px-2">
       <DevIndicator componentName="ListBlock" />
       <BlockHeader headline={headline} description={description} />
-      <div className="max-w-2xl mx-auto gap-1 justify-center flex flex-wrap">
+      <ul className="max-w-2xl mx-auto gap-1 justify-center flex flex-wrap">
         {items.map((item, index) => (
           <ListItem key={index} variant="background" size="md">
             <h4 className="font-sans uppercase mb-2">{item.title}</h4>
             <p className="font-mono">{item.description}</p>
           </ListItem>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

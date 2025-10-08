@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import VideoBlock from '@/components/blocks/VideoBlock';
+import MediaAsset from '@/components/common/MediaAsset';
 
 interface SimpleCarouselBlockProps {
   aspectRatio: 'landscape' | 'portrait' | 'square' | 'fourThree';
@@ -40,22 +39,18 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
   assets,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const nextSlide = () => {
-    setDirection(1);
     setCurrentIndex(prev => (prev + 1) % assets.length);
   };
 
   const prevSlide = () => {
-    setDirection(-1);
     setCurrentIndex(prev => (prev - 1 + assets.length) % assets.length);
   };
 
   const goToSlide = (index: number) => {
-    setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
   };
 
@@ -85,6 +80,16 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
     }
   };
 
+  const handleDragEnd = (event: unknown, info: { offset: { x: number } }) => {
+    const threshold = containerWidth * 0.2; // 20% of container width
+
+    if (info.offset.x > threshold) {
+      prevSlide();
+    } else if (info.offset.x < -threshold) {
+      nextSlide();
+    }
+  };
+
   const currentAsset = assets[currentIndex];
 
   // Measure container width
@@ -100,69 +105,31 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
     return () => window.removeEventListener('resize', updateWidth);
   }, [currentIndex]);
 
-  // Animation variants
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? containerWidth : -containerWidth,
-      scale: 0.8,
-      opacity: 1,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      scale: 1,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? containerWidth : -containerWidth,
-      scale: 0.8,
-      opacity: 1,
-    }),
-  };
-
-  const isVideo = (mimeType?: string) => {
-    return mimeType?.startsWith('video/') || false;
-  };
-
-  const renderAsset = (asset: {
+  const renderAsset = (
     asset: {
-      mimeType: string;
-      url: string;
-      alt?: string;
-      width?: number;
-      height?: number;
-    };
-    [key: string]: unknown;
-  }) => {
-    if (isVideo(asset.asset.mimeType)) {
-      return (
-        <div className="w-full h-full">
-          <VideoBlock
-            host="mux"
-            sources={[
-              {
-                playbackId: asset.asset.url.split('/').pop() || '',
-                minWidth: 0,
-              },
-            ]}
-            controls={true}
-            autoplay={false}
-            adaptiveResolution={true}
-          />
-        </div>
-      );
-    }
-
+      asset: {
+        mimeType?: string;
+        url: string;
+        alt?: string;
+        width?: number;
+        height?: number;
+      };
+      [key: string]: unknown;
+    },
+    isVisible: boolean = false
+  ) => {
     return (
-      <Image
-        src={asset.asset.url}
-        alt={asset.asset.alt || ''}
-        fill
-        className={`object-cover ${
+      <MediaAsset
+        asset={asset.asset}
+        variant="gallery"
+        className={`object-cover select-none ${
           aspectRatio === 'landscape' ? 'object-center' : 'object-cover'
         }`}
-        priority={currentIndex === 0}
+        controls={true}
+        autoplay={false}
+        preload={true}
+        isVisible={isVisible}
+        draggable={false}
       />
     );
   };
@@ -174,35 +141,25 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
       <div className={`${maxWidthClasses[aspectRatio]} mx-auto`}>
         {/* Carousel Container */}
         <div className="relative" ref={containerRef}>
-          <div
-            className={`relative overflow-hidden rounded-lg cursor-pointer ${aspectRatioClasses[aspectRatio]}`}
+          <motion.div
+            className={`relative overflow-hidden rounded-lg cursor-grab active:cursor-grabbing ${aspectRatioClasses[aspectRatio]}`}
             onClick={handleCarouselClick}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.1}
+            onDragEnd={handleDragEnd}
           >
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.div
-                key={currentIndex}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: 'linear', stiffness: 300, damping: 30 },
-                  scale: { type: 'linear', stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.15 },
-                }}
-                className="absolute inset-0 z-0"
-              >
-                {renderAsset(currentAsset)}
-                {/* Caption */}
-                {currentAsset.caption && (
-                  <div className="absolute bottom-0 inset-x-0 px-4 py-3 flex gap-2 z-10">
-                    <p className="text-sm">{currentAsset.caption}</p>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
+            {/* Current slide */}
+            <div className="absolute inset-0">
+              {renderAsset(currentAsset, true)}
+              {/* Caption */}
+              {currentAsset.caption && (
+                <div className="absolute bottom-0 inset-x-0 px-4 py-3 flex gap-2 z-10">
+                  <p className="text-sm">{currentAsset.caption}</p>
+                </div>
+              )}
+            </div>
+          </motion.div>
 
           {/* Slide Indicators */}
           {assets.length > 1 && (

@@ -64,14 +64,14 @@ const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
       onClose={onClose}
       componentName="ShowcaseOverlay"
       closeOnOutsideClick={true}
-      backgroundClassName="bg-text"
+      backgroundClassName="bg-crayonBlack"
     >
       <div
         className="relative w-full h-full"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <header className="absolute top-0 left-0 p-2 flex gap-x-3 z-10 text-bg">
+        <header className="absolute top-0 left-0 p-2 flex gap-x-3 z-10 text-offWhite">
           <span className="uppercase">{showcase.title}</span>
           <span>({showcase.year})</span>
           {showcase.assets && showcase.assets.length > 0 && (
@@ -91,7 +91,7 @@ const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-0 right-0 p-2 z-20 text-bg"
+          className="absolute top-0 right-0 p-2 z-20 text-offWhite"
         >
           Stäng
         </button>

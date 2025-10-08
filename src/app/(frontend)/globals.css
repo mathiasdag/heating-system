@@ -16,6 +16,10 @@
   --color-border: #0c0c0c;
   --color-accent: #e68456;
 
+  /* Global colors */
+  --color-offWhite: #efede3;
+  --color-crayonBlack: #141514;
+
   /* Theme transition duration */
   --theme-transition-duration: 0.15s;
   --theme-transition-easing: ease-out;

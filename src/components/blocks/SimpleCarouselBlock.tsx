@@ -160,6 +160,16 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
             className={`relative overflow-hidden rounded-lg cursor-pointer ${aspectRatioClasses[aspectRatio]}`}
             onClick={handleCarouselClick}
           >
+            {/* Preload all assets */}
+            {assets.map((asset, index) => (
+              <div
+                key={`preload-${index}`}
+                className="absolute inset-0 opacity-0 pointer-events-none"
+              >
+                {renderAsset(asset, false)}
+              </div>
+            ))}
+
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentIndex}

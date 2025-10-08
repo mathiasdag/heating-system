@@ -76,7 +76,7 @@ const variantConfig = {
   },
   label: {
     defaultAs: 'h5' as const,
-    className: 'font-mono uppercase text-sm px-4',
+    className: 'font-mono uppercase text-sm px-4 pb-2',
   },
 };
 

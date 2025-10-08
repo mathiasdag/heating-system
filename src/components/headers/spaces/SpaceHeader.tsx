@@ -41,7 +41,7 @@ export default function SpaceHeader({ spaceData, header }: SpaceHeaderProps) {
   const heroAsset = spaceData.heroAsset;
 
   return (
-    <div className="relative">
+    <div className="relative pb-24">
       <DevIndicator componentName="SpaceHeader" />
 
       {/* Hero Section */}
@@ -87,13 +87,11 @@ export default function SpaceHeader({ spaceData, header }: SpaceHeaderProps) {
         </div>
       </div>
       {header?.text && (
-        <div className="mb-8">
-          <RichText
-            data={header.text}
-            className="grid gap-3 justify-center text-center text-md lg:text-lg"
-            converters={spaceConverter}
-          />
-        </div>
+        <RichText
+          data={header.text}
+          className="grid gap-3 justify-center text-center text-md lg:text-lg px-2"
+          converters={spaceConverter}
+        />
       )}
     </div>
   );

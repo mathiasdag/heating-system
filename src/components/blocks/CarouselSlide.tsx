@@ -92,7 +92,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   };
 
   return (
-    <div className="select-none">
+    <div className="relative select-none">
       <DevIndicator componentName="CarouselSlide" />
       <div className="grid lg:grid-cols-2 items-center mx-auto bg-surface rounded-2xl relative">
         {/* Right Image - First on mobile */}

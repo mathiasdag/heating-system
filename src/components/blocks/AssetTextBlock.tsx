@@ -56,7 +56,10 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
       className={clsx('relative', isStandalone ? '' : 'py-6')}
       timing="normal"
     >
-      <DevIndicator componentName="AssetTextBlock" position="top-right" />
+      <DevIndicator
+        componentName="AssetTextBlock"
+        position={isTextLeft ? 'top-right' : 'top-left'}
+      />
 
       <div className="px-2 max-w-8xl mx-auto">
         <div

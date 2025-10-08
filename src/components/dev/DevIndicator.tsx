@@ -16,6 +16,7 @@ export const DevIndicator: React.FC<DevIndicatorProps> = ({
     'top-right': 'top-1 right-1',
     'bottom-left': 'bottom-1 left-1',
     'bottom-right': 'bottom-1 right-1',
+    'top-center': 'top-1 left-1/2 -translate-x-1/2',
   };
 
   return (

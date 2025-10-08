@@ -42,7 +42,7 @@ export default function SpaceHeader({ spaceData, header }: SpaceHeaderProps) {
 
   return (
     <div className="relative">
-      <DevIndicator componentName="SpaceHeader" />
+      <DevIndicator componentName="SpaceHeader" position="top-center" />
 
       {/* Hero Section */}
       <div

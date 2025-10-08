@@ -12,6 +12,7 @@ import {
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { AppLink } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
+import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 import clsx from 'clsx';
 
 interface SpotlightBlockProps {
@@ -29,17 +30,7 @@ interface SpotlightBlockProps {
     };
   };
   image?: { url: string; alt?: string; width?: number; height?: number };
-  link?: {
-    type?: 'internal' | 'external';
-    text?: string;
-    url?: string;
-    reference?: {
-      id: string;
-      title?: string;
-      slug?: string;
-      [key: string]: unknown;
-    };
-  };
+  link?: LinkGroup;
 }
 
 const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
@@ -71,16 +62,8 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
     }
   }, [inView, controls]);
 
-  let href: string | undefined = undefined;
-  if (link?.type === 'internal' && link?.reference) {
-    if (typeof link.reference === 'object' && link.reference?.slug) {
-      href = `/${link.reference?.slug}`;
-    } else if (typeof link.reference === 'string') {
-      href = `/${link.reference}`;
-    }
-  } else if (link?.type === 'external') {
-    href = link.url;
-  }
+  // Use standardized link routing
+  const linkResult = link ? routeLink(link) : null;
 
   const isLandscape =
     image && image.width && image.height ? image.width >= image.height : true;
@@ -120,8 +103,8 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
           )}
         </div>
         <div className="pb-8">
-          {href && typeof href === 'string' && link?.text ? (
-            <AppLink href={href} variant="outline">
+          {linkResult?.href && link?.text ? (
+            <AppLink href={linkResult.href} variant="outline">
               {link.text}
             </AppLink>
           ) : null}

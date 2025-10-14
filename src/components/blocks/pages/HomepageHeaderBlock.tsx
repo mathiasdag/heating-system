@@ -42,6 +42,8 @@ export default function HomepageHeaderBlock({
   const videoRef = useRef<any>(null);
   const richTextRef = useRef<HTMLDivElement>(null);
   const [isInViewport, setIsInViewport] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   // Get the first asset (video or image) for the fullscreen background - memoized
   const backgroundAsset = useMemo(
@@ -70,14 +72,25 @@ export default function HomepageHeaderBlock({
     };
   }, []);
 
-  // Control video playback based on viewport visibility
+  // Control video playback based on viewport visibility with better error handling
   useEffect(() => {
     if (!videoRef.current) return;
 
+    const video = videoRef.current;
+
     if (isInViewport) {
-      videoRef.current.play().catch(console.error);
+      // Only play if video is ready and not already playing
+      if (video.readyState >= 3 && video.paused) {
+        video.play().catch((error: unknown) => {
+          console.warn('Video play failed:', error);
+          // Don't throw error, just log it
+        });
+      }
     } else {
-      videoRef.current.pause();
+      // Pause video when not in viewport
+      if (!video.paused) {
+        video.pause();
+      }
     }
   }, [isInViewport]);
 
@@ -106,22 +119,57 @@ export default function HomepageHeaderBlock({
     }
 
     if (backgroundAsset.type === 'mux' && backgroundAsset.mux) {
+      // Fallback to poster image if video has error
+      if (videoError) {
+        return (
+          <div className={animationClasses}>
+            <Image
+              src={`https://image.mux.com/${backgroundAsset.mux}/thumbnail.jpg?time=0`}
+              alt="Video poster"
+              fill
+              className="w-full h-full object-cover"
+            />
+          </div>
+        );
+      }
+
       return (
         <div className={animationClasses}>
           <MuxPlayer
             ref={videoRef}
             playbackId={backgroundAsset.mux}
-            autoPlay={isInViewport}
+            autoPlay={isInViewport && videoLoaded}
             muted={true}
             loop={true}
+            preload="metadata"
+            poster={`https://image.mux.com/${backgroundAsset.mux}/thumbnail.jpg?time=0`}
             className="w-full h-full object-cover no-controls"
+            onError={error => {
+              console.warn('MuxPlayer error:', error);
+              setVideoError(true);
+            }}
+            onLoadStart={() => {
+              console.log('Video loading started');
+              setVideoLoaded(false);
+            }}
+            onCanPlay={() => {
+              console.log('Video can play');
+              setVideoLoaded(true);
+              setVideoError(false);
+            }}
+            onWaiting={() => {
+              console.log('Video waiting for data');
+            }}
+            onStalled={() => {
+              console.warn('Video stalled - buffer issue');
+            }}
           />
         </div>
       );
     }
 
     return null;
-  }, [backgroundAsset, isInViewport]);
+  }, [backgroundAsset, isInViewport, videoLoaded, videoError]);
 
   return (
     <>

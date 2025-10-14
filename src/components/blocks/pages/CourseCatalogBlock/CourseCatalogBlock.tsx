@@ -5,7 +5,7 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { StickyMarquee } from './StickyMarquee';
 import { ViewportItem } from './ViewportItem';
 import { Navigation } from './Navigation';
-import { CourseCatalogProps, NavigationItem } from './types';
+import { CourseCatalogProps } from './types';
 
 export default function CourseCatalogBlock({
   headline,
@@ -14,6 +14,11 @@ export default function CourseCatalogBlock({
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [navigationOverflows, setNavigationOverflows] = useState(false);
+
+  // Mobile navigation modes
+  const [isOverviewMode, setIsOverviewMode] = useState(true);
+  const [isDetailMode, setIsDetailMode] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const navigationRef = useRef<HTMLDivElement>(null);
 
@@ -29,11 +34,28 @@ export default function CourseCatalogBlock({
   // Handle navigation item click
   const handleItemClick = (index: number) => {
     setActiveItemIndex(index);
-    const targetElement = containerRef.current?.querySelector(
-      `[data-item-index="${index}"]`
-    );
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
+
+    if (isLargeScreen) {
+      // Desktop: scroll to item
+      const targetElement = containerRef.current?.querySelector(
+        `[data-item-index="${index}"]`
+      );
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Mobile: switch to detail mode
+      setIsOverviewMode(false);
+      setIsDetailMode(true);
+    }
+  };
+
+  // Handle mobile mode switching
+  const handleMobileModeSwitch = () => {
+    if (isDetailMode) {
+      // Return to overview mode
+      setIsDetailMode(false);
+      setIsOverviewMode(true);
     }
   };
 
@@ -104,21 +126,19 @@ export default function CourseCatalogBlock({
 
   return (
     <div className="relative bg-accent z-40 my-8" ref={containerRef}>
-      <DevIndicator
-        componentName="CourseCatalogBlock"
-        data={{
-          activeItemIndex,
-          isViewportCovered,
-          isLargeScreen,
-          totalItems: allNavigationItems.length,
-        }}
-      />
+      <DevIndicator componentName="CourseCatalogBlock" />
 
       {/* Top Marquee */}
       <StickyMarquee text={headline} position="top" />
 
-      {/* Main Container - No separate scroll */}
-      <div>
+      {/* Main Container with sliding animation */}
+      <div
+        className={`transition-transform duration-500 ease-in-out ${
+          !isLargeScreen && isOverviewMode
+            ? 'translate-x-full'
+            : 'translate-x-0'
+        }`}
+      >
         {allNavigationItems.map((item, index) => (
           <div key={`viewport-${index}`} data-item-index={index}>
             <ViewportItem
@@ -140,11 +160,13 @@ export default function CourseCatalogBlock({
         isLargeScreen={isLargeScreen}
         isViewportCovered={isViewportCovered}
         navigationOverflows={navigationOverflows}
+        isOverviewMode={isOverviewMode}
+        isDetailMode={isDetailMode}
         onItemClick={handleItemClick}
+        onMobileModeSwitch={handleMobileModeSwitch}
       />
 
-      {/* Bottom Marquee */}
-      <StickyMarquee text={headline} position="bottom" />
+      {isLargeScreen && <StickyMarquee text={headline} position="bottom" />}
     </div>
   );
 }

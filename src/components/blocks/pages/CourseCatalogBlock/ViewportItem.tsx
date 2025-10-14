@@ -1,3 +1,4 @@
+'use client';
 import React, { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';

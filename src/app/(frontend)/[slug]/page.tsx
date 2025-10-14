@@ -5,6 +5,7 @@ import HorizontalCardBlock from '@/components/blocks/pages/HorizontalCardBlock';
 import React from 'react';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import CardGridBlock from '@/components/blocks/pages/cardGrid/CardGridBlock';
+import { LogotypeWall } from '@/components/blocks/pages/logotypeWall';
 import RouterBlock from '@/components/blocks/pages/RouterBlock';
 import CarouselBlock from '@/components/blocks/pages/CarouselBlock';
 import ListBlock from '@/components/blocks/ListBlock';
@@ -133,6 +134,8 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
                   backgroundColor="orange"
                 />
               );
+            case 'logotype-wall':
+              return <LogotypeWall key={i} {...cleanBlock} />;
             case 'router':
               return <RouterBlock key={i} {...cleanBlock} />;
             case 'carousel':

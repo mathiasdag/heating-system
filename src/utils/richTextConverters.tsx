@@ -23,6 +23,7 @@ import {
 } from '@/components/blocks/articles';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import SignatureBlock from '@/components/blocks/global/SignatureBlock';
+import { LogotypeWall } from '@/components/blocks/pages/logotypeWall';
 import ListItem from '@/components/ui/ListItem';
 
 // ============================================================================
@@ -344,6 +345,13 @@ export const buildConverter = (options: {
           <QABlock
             question={node.fields.question}
             answer={node.fields.answer}
+          />
+        ),
+        'logotype-wall': ({ node }: any) => (
+          <LogotypeWall
+            headline={node.fields.headline}
+            description={node.fields.description}
+            logotypes={node.fields.logotypes}
           />
         ),
         signature: ({ node }: any) => (

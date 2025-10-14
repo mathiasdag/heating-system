@@ -5,6 +5,8 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { AppAction } from '@/components/ui';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
+import { useIsDark } from '@/hooks/useTheme';
+import clsx from 'clsx';
 
 interface CTABlockProps {
   headline: string;
@@ -30,13 +32,14 @@ const CTABlock: React.FC<CTABlockProps> = ({
   link,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const isDark = useIsDark();
 
   const renderLink = () => {
     return (
       <AppAction
         link={link}
-        variant="outline"
-        className="block w-full min-w-0 hover:bg-text hover:text-bg transition-colors duration-100"
+        variant={isDark ? 'outline' : 'primary'}
+        className="block w-full min-w-0 hover:bg-text hover:text-bg transition-colors duration-100 max-w-md mx-auto"
       >
         {(link.text || '').toUpperCase()}
       </AppAction>
@@ -81,9 +84,19 @@ const CTABlock: React.FC<CTABlockProps> = ({
 
   // Default type
   return (
-    <div className="w-full px-2 py-8 text-center relative max-w-5xl mx-auto">
+    <div
+      className={clsx(
+        'w-full px-2 py-8 text-center relative',
+        isDark ? 'max-w-5xl mx-auto' : ''
+      )}
+    >
       <DevIndicator componentName="CTABlock (Default)" />
-      <div className="border border-text px-8 sm:px-12 py-8 rounded-xl grid gap-6">
+      <div
+        className={clsx(
+          'px-8 sm:px-12 py-8 rounded-xl grid gap-6',
+          isDark ? 'border border-text' : ''
+        )}
+      >
         <h2 className="text-md">{headline}</h2>
 
         {description && <RichText data={description} className="font-mono" />}

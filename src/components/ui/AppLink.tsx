@@ -8,6 +8,7 @@ import {
   getExternalLinkAttributes,
 } from '@/utils/linkRouter';
 import { useNotification } from '@/hooks/useNotification';
+import clsx from 'clsx';
 
 interface AppActionProps {
   href?: string;
@@ -80,11 +81,12 @@ export const AppAction: React.FC<AppActionProps> = ({
     }
   };
 
-  const style =
-    baseStyles[variant] +
-    (variant === 'minimal' ? '' : ' ' + sizeStyles[size]) +
-    ' ' +
-    className;
+  const style = clsx(
+    baseStyles[variant],
+    variant !== 'minimal' && sizeStyles[size],
+    'transition-transform duration-75 ease-out active:scale-[0.99]',
+    className
+  );
 
   // Handle copy action
   if (linkResult.isCopy || actionType === 'copy') {

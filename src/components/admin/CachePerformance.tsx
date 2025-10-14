@@ -22,9 +22,9 @@ export function CachePerformance() {
     return (
       <button
         onClick={() => setIsVisible(true)}
-        className="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg z-50 hover:bg-blue-700"
+        className="grow px-2 py-2.5 sm:py-1 rounded-sm hover:bg-white/10 text-bg"
       >
-        📊 Cache Performance
+        Cache
       </button>
     );
   }
@@ -33,7 +33,7 @@ export function CachePerformance() {
     <div className="fixed bottom-4 right-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg p-4 z-50 max-w-md">
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-          📊 Cache Performance
+          Cache Performance
         </h3>
         <button
           onClick={() => setIsVisible(false)}

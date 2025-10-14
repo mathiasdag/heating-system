@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload';
 import AssetText from '@/blocks/global/AssetText';
 import AssetTextContainer from '@/blocks/global/AssetTextContainer';
 import LogotypeWall from '@/blocks/pages/LogotypeWall';
+import PartnerBlock from '@/blocks/global/PartnerBlock';
 import List from '@/blocks/global/List';
 import Text from '@/blocks/articles/Text';
 import MinimalCarousel from '@/blocks/global/MinimalCarousel';
@@ -148,6 +149,7 @@ const Spaces: CollectionConfig = {
                 AssetText,
                 AssetTextContainer,
                 LogotypeWall,
+                PartnerBlock,
                 CTA,
                 List,
                 MinimalCarousel,

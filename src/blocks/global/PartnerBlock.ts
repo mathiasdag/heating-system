@@ -2,6 +2,10 @@ import type { Block } from 'payload';
 
 const PartnerBlock: Block = {
   slug: 'partner-block',
+  labels: {
+    singular: 'Partner',
+    plural: 'Partners',
+  },
   fields: [
     {
       name: 'title',

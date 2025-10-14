@@ -8,10 +8,10 @@ const LogotypeWall: Block = {
     ...InlineHeader,
     {
       name: 'partners',
-      type: 'array',
+      type: 'blocks',
       label: 'Partners',
       minRows: 1,
-      fields: [...PartnerBlock.fields],
+      blocks: [PartnerBlock],
     },
   ],
 };

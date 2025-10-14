@@ -24,6 +24,7 @@ import {
 import VideoBlock from '@/components/blocks/VideoBlock';
 import SignatureBlock from '@/components/blocks/global/SignatureBlock';
 import { LogotypeWall } from '@/components/blocks/pages/logotypeWall';
+import { PartnerCard } from '@/components/blocks/PartnerCard';
 import ListItem from '@/components/ui/ListItem';
 
 // ============================================================================
@@ -352,6 +353,13 @@ export const buildConverter = (options: {
             headline={node.fields.headline}
             description={node.fields.description}
             partners={node.fields.partners}
+          />
+        ),
+        'partner-block': ({ node }: any) => (
+          <PartnerCard
+            title={node.fields.title}
+            image={node.fields.image}
+            url={node.fields.url}
           />
         ),
         signature: ({ node }: any) => (

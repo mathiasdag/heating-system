@@ -4,12 +4,13 @@ import Image from 'next/image';
 import React, { useRef, useEffect, useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { jsxConverter } from '@/utils/richTextConverters';
-import { motion } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 // import VideoBlock from '@/components/blocks/VideoBlock';
 import MuxPlayer from '@mux/mux-player-react';
 import { fixImageUrl } from '@/utils/imageUrl';
+import { motion } from 'framer-motion';
 import { FadeIn } from '@/components/ui/FadeIn';
+import clsx from 'clsx';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -31,11 +32,10 @@ export default function HomepageHeaderBlock({
   children,
 }: HomepageHeaderBlockProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const videoRef = useRef<any>(null);
   const richTextRef = useRef<HTMLDivElement>(null);
-  const [isInViewport, setIsInViewport] = useState(true);
-
-  console.log(isInViewport);
+  const [isInViewport, setIsInViewport] = useState(false);
 
   // Get the first asset (video or image) for the fullscreen background
   const backgroundAsset =
@@ -76,43 +76,39 @@ export default function HomepageHeaderBlock({
   const renderBackgroundAsset = () => {
     if (!backgroundAsset) return null;
 
+    const animationClasses = clsx(
+      'w-full h-full transition-all duration-500 ease-out',
+      isInViewport
+        ? 'opacity-100 scale-100 delay-[1500ms]'
+        : 'opacity-0 scale-110'
+    );
+
     if (backgroundAsset.type === 'image' && backgroundAsset.image?.url) {
       return (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1, ease: 'easeOut' }}
-          className="w-full h-full"
-        >
+        <div className={animationClasses}>
           <Image
             src={fixImageUrl(backgroundAsset.image.url)}
             alt={backgroundAsset.image.alt || ''}
             fill
-            className="object-cover h-full w-full"
+            className="w-full h-full object-cover"
             priority
           />
-        </motion.div>
+        </div>
       );
     }
 
     if (backgroundAsset.type === 'mux' && backgroundAsset.mux) {
       return (
-        <motion.div
-          initial={{ opacity: 0, scale: 1.2 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2, duration: 1, ease: 'easeOut' }}
-          className="w-full h-full"
-        >
+        <div className={animationClasses}>
           <MuxPlayer
             ref={videoRef}
             playbackId={backgroundAsset.mux}
             autoPlay={isInViewport}
             muted={true}
             loop={true}
-            controls={false}
             className="w-full h-full object-cover no-controls"
           />
-        </motion.div>
+        </div>
       );
     }
 

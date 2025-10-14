@@ -104,13 +104,6 @@ body {
     color var(--theme-transition-duration) var(--theme-transition-easing);
 }
 
-/* Prevent transitions on elements that shouldn't animate */
-*:not(html):not(body):not([class*='bg-']):not([class*='text-']):not(
-    [class*='border-']
-  ) {
-  transition: none;
-}
-
 /*.uppercase {
   letter-spacing: 0.03em;
   text-transform: uppercase;

@@ -1,42 +1,17 @@
 import type { Block } from 'payload';
 import { InlineHeader } from '@/fields/InlineHeader';
+import PartnerBlock from '@/blocks/global/PartnerBlock';
 
 const LogotypeWall: Block = {
   slug: 'logotype-wall',
   fields: [
     ...InlineHeader,
     {
-      name: 'logotypes',
+      name: 'partners',
       type: 'array',
-      label: 'Logotypes',
+      label: 'Partners',
       minRows: 1,
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-          required: true,
-          admin: {
-            description: 'The name or title of the logotype',
-          },
-        },
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
-          admin: {
-            description: 'The logotype image/logo',
-          },
-        },
-        {
-          name: 'url',
-          type: 'text',
-          required: false,
-          admin: {
-            description: 'Optional URL to link to when the logotype is clicked',
-          },
-        },
-      ],
+      fields: [...PartnerBlock.fields],
     },
   ],
 };

@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import { LogotypeCard } from '@/components/blocks/LogotypeCard';
+import { PartnerCard } from '@/components/blocks/PartnerCard';
 import { HorizontalScrollContainer } from '@/components/ui/HorizontalScrollContainer';
 import clsx from 'clsx';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 
-interface Logotype {
+interface Partner {
   title: string;
   image?: { url: string; alt?: string; width?: number; height?: number };
   url?: string;
@@ -15,13 +15,13 @@ interface Logotype {
 interface LogotypeWallProps {
   headline?: string;
   description?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  logotypes: Logotype[];
+  partners: Partner[];
 }
 
 export const LogotypeWall: React.FC<LogotypeWallProps> = ({
   headline,
   description,
-  logotypes,
+  partners,
 }) => {
   return (
     <section className={`grid relative`}>
@@ -34,13 +34,13 @@ export const LogotypeWall: React.FC<LogotypeWallProps> = ({
           enableOverflowDetection={true}
           showBorders={true}
         >
-          {logotypes.map((logotype, idx) => (
-            <LogotypeCard
+          {partners.map((partner, idx) => (
+            <PartnerCard
               key={idx}
               className={clsx(
                 'grow-0 shrink-0 w-[60vw] sm:w-[200px] border-r border-text snap-center rounded-none'
               )}
-              {...logotype}
+              {...partner}
             />
           ))}
         </HorizontalScrollContainer>

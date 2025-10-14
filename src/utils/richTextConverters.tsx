@@ -351,7 +351,7 @@ export const buildConverter = (options: {
           <LogotypeWall
             headline={node.fields.headline}
             description={node.fields.description}
-            logotypes={node.fields.logotypes}
+            partners={node.fields.partners}
           />
         ),
         signature: ({ node }: any) => (

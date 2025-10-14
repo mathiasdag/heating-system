@@ -4,10 +4,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { StickyMarquee } from './StickyMarquee';
 import { ViewportItem } from './ViewportItem';
-import { BlinkHover } from '@/components/ui';
-import { FadeIn } from '@/components/ui';
+import { Navigation } from './Navigation';
+import { CourseCatalogProps } from './types';
 import clsx from 'clsx';
-import { CourseCatalogProps, NavigationItem } from './types';
 
 export default function CourseCatalogBlock({
   headline,
@@ -15,6 +14,7 @@ export default function CourseCatalogBlock({
 }: CourseCatalogProps) {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const [isOverviewMode, setIsOverviewMode] = useState(true);
   const [navigationOverflows, setNavigationOverflows] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const navigationRef = useRef<HTMLDivElement>(null);
@@ -39,10 +39,22 @@ export default function CourseCatalogBlock({
     }
   };
 
-
   // Handle when an item comes into view - just update to the latest one
   const handleItemInView = (index: number) => {
     setActiveItemIndex(index);
+  };
+
+  // Handle mobile mode switching
+  const handleMobileModeSwitch = () => {
+    if (!isOverviewMode) {
+      // Return to overview mode
+      setIsOverviewMode(true);
+    }
+  };
+
+  // Handle switching to detail mode
+  const handleSwitchToDetailMode = () => {
+    setIsOverviewMode(false);
   };
 
   // Track when the accent container covers the entire viewport
@@ -105,37 +117,6 @@ export default function CourseCatalogBlock({
     };
   }, []);
 
-  // Render navigation item
-  const renderNavigationItem = (
-    item: NavigationItem,
-    index: number,
-    sectionTitle: string
-  ) => {
-    const isActive = activeItemIndex === index;
-
-    return (
-      <BlinkHover
-        key={`nav-${sectionTitle}-${item.title}-${index}`}
-        className="cursor-pointer inline-flex justify-self-start gap-[.15em]"
-        onClick={() => handleItemClick(index)}
-        interval={100}
-        target=".title"
-      >
-        <div className="w-[44px] h-[42px] flex items-center justify-center border border-text rounded-sm">
-          {(index + 1).toString().padStart(2, '0')}
-        </div>
-        <div
-          className={clsx(
-            'max-w-xs h-[42px] px-3 flex items-center border border-text rounded-sm overflow-hidden whitespace-nowrap truncate text-ellipsis',
-            isActive && 'text-transparent'
-          )}
-        >
-          <span className="title">{item.title}</span>
-        </div>
-      </BlinkHover>
-    );
-  };
-
   return (
     <div className="relative bg-accent z-40 my-8" ref={containerRef}>
       <DevIndicator componentName="CourseCatalogBlock" />
@@ -144,7 +125,12 @@ export default function CourseCatalogBlock({
       <StickyMarquee text={headline} position="top" />
 
       {/* Main Container - No separate scroll */}
-      <div>
+      <div
+        className={clsx(
+          'transition-transform duration-300',
+          !isOverviewMode ? 'opacity-100' : 'opacity-0'
+        )}
+      >
         {allNavigationItems.map((item, index) => (
           <div key={`viewport-${index}`} data-item-index={index}>
             <ViewportItem
@@ -158,38 +144,19 @@ export default function CourseCatalogBlock({
         ))}
       </div>
 
-      {/* Fixed Navigation Menu - Only show on lg+ screens and when it fits */}
-      {isLargeScreen && isViewportCovered && (
-        <div
-          ref={navigationRef}
-          className={`fixed inline-block left-0 top-1/2 -translate-y-1/2 px-4 py-8 ${navigationOverflows ? 'invisible' : ''}`}
-        >
-          <FadeIn timing="slow" delay={0.3}>
-            {navigationSections.map((section, sectionIndex) => (
-              <div
-                key={`section-${sectionIndex}-${section.sectionId}`}
-                className="mb-5"
-              >
-                <h3 className="mb-2 font-sans uppercase">
-                  {section.sectionTitle}
-                </h3>
-                <div className="inline-grid gap-[.15em]">
-                  {section.navigationItems.map(navItem => {
-                    const globalIndex = allNavigationItems.findIndex(
-                      globalItem => globalItem.title === navItem.title
-                    );
-                    return renderNavigationItem(
-                      navItem,
-                      globalIndex,
-                      section.sectionTitle
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </FadeIn>
-        </div>
-      )}
+      {/* Fixed Navigation Menu */}
+      <Navigation
+        navigationSections={navigationSections}
+        allNavigationItems={allNavigationItems}
+        activeItemIndex={activeItemIndex}
+        isLargeScreen={isLargeScreen}
+        isViewportCovered={isViewportCovered}
+        navigationOverflows={navigationOverflows}
+        isOverviewMode={isOverviewMode}
+        onItemClick={handleItemClick}
+        onMobileModeSwitch={handleMobileModeSwitch}
+        onSwitchToDetailMode={handleSwitchToDetailMode}
+      />
 
       {isLargeScreen && <StickyMarquee text={headline} position="bottom" />}
     </div>

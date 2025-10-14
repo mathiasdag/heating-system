@@ -12,9 +12,9 @@ interface NavigationProps {
   isViewportCovered: boolean;
   navigationOverflows: boolean;
   isOverviewMode: boolean;
-  isDetailMode: boolean;
   onItemClick: (index: number) => void;
   onMobileModeSwitch: () => void;
+  onSwitchToDetailMode: () => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
@@ -25,9 +25,9 @@ export const Navigation: React.FC<NavigationProps> = ({
   isViewportCovered,
   navigationOverflows,
   isOverviewMode,
-  isDetailMode,
   onItemClick,
   onMobileModeSwitch,
+  onSwitchToDetailMode,
 }) => {
   // Render navigation item
   const renderNavigationItem = (
@@ -41,30 +41,46 @@ export const Navigation: React.FC<NavigationProps> = ({
     return (
       <BlinkHover
         key={`nav-${sectionTitle}-${item.title}-${index}`}
-        className="cursor-pointer inline-flex justify-self-start gap-[.15em]"
+        className="cursor-pointer inline-flex justify-self-start gap-[.15em] max-w-[calc(100vw-1em)]"
         onClick={() => {
-          if (!isLargeScreen && isDetailMode) {
-            // In detail mode, clicking numbers returns to overview
-            onMobileModeSwitch();
-          } else {
-            // Normal click behavior
+          // On large screens, always go to item
+          // On mobile, only go to item in overview mode
+          if (isLargeScreen || isOverviewMode) {
             onItemClick(index);
+          }
+
+          // If on mobile and in overview mode, also change to detail mode
+          if (!isLargeScreen && isOverviewMode) {
+            onSwitchToDetailMode();
+          }
+
+          // If on mobile and NOT in overview mode, switch to overview mode
+          if (!isLargeScreen && !isOverviewMode) {
+            onMobileModeSwitch();
           }
         }}
         interval={100}
+        enabled={isLargeScreen}
         target=".title"
       >
-        <div className="w-[44px] h-[42px] flex items-center justify-center border border-text rounded-sm">
+        <div
+          className={clsx(
+            'w-10 h-10 flex items-center justify-center border border-text rounded-sm shrink-0',
+            !isLargeScreen && isActive && 'text-transparent'
+          )}
+        >
           {(index + 1).toString().padStart(2, '0')}
         </div>
         {showTitle && (
           <div
             className={clsx(
-              'max-w-xs h-[42px] px-3 flex items-center border border-text rounded-sm overflow-hidden whitespace-nowrap truncate text-ellipsis',
-              isActive && 'text-transparent'
+              'max-w-[calc(100vw-5em)] lg:max-w-xs h-10 px-3 flex items-center border border-text rounded-sm',
+              isLargeScreen && isActive && 'text-transparent'
             )}
           >
-            <span className="title">{item.title}</span>
+            <span className="title whitespace-nowrap truncate text-ellipsis w-full block">
+              {item.title}
+            </span>
           </div>
         )}
       </BlinkHover>
@@ -78,7 +94,11 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <div
-      className={`fixed inline-block left-0 top-1/2 -translate-y-1/2 px-4 py-8 ${navigationOverflows ? 'invisible' : ''}`}
+      className={clsx(
+        `fixed inline-block left-0 top-1/2 -translate-y-1/2 px-4 py-8 max-w-[calc(100vw-1em)] overflow-x-hidden`,
+        navigationOverflows ? 'invisible' : '',
+        !isOverviewMode && ''
+      )}
     >
       <FadeIn timing="slow" delay={0.3}>
         {navigationSections.map((section, sectionIndex) => (
@@ -86,8 +106,15 @@ export const Navigation: React.FC<NavigationProps> = ({
             key={`section-${sectionIndex}-${section.sectionId}`}
             className="mb-5"
           >
-            <h3 className="mb-2 font-sans uppercase">{section.sectionTitle}</h3>
-            <div className="inline-grid gap-[.15em]">
+            <h3
+              className={clsx(
+                'mb-2 font-sans uppercase',
+                !isOverviewMode && 'opacity-0'
+              )}
+            >
+              {section.sectionTitle}
+            </h3>
+            <div className="inline-grid gap-[.15em] max-w-[calc(100vw-1em)]">
               {section.navigationItems.map(navItem => {
                 const globalIndex = allNavigationItems.findIndex(
                   globalItem => globalItem.title === navItem.title

@@ -43,7 +43,7 @@ export const ViewportItem: React.FC<ViewportItemProps> = ({
         <FadeIn
           timing="fast"
           delay={0.1}
-          className="fixed inset-0 flex items-center justify-center p-8"
+          className="fixed inset-0 flex items-center justify-center p-2 lg:p-8 pl-12 lg:pl-8"
         >
           <div className="max-w-lg grid gap-4 text-center justify-items-center bg-accent p-8 pb-16">
             {/* Featured Image */}

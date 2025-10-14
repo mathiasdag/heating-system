@@ -111,7 +111,7 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
 
       {(processedPage as PageData).layout?.map(
         (block: { blockType: string; [key: string]: unknown }, i: number) => {
-          const cleanBlock = JSON.parse(JSON.stringify(block));
+          const cleanBlock = block;
           switch (block.blockType) {
             case 'assetText':
               return <AssetTextBlock key={i} {...cleanBlock} />;

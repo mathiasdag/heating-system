@@ -65,8 +65,7 @@ export class DynamicContentAPI {
           limit: contentTypes.length === 1 ? limit : limit * 2, // Fetch more for mixed sorting
           sort,
           depth: 2, // Reduced depth for better performance
-        }).catch(error => {
-          console.error('Error fetching articles:', error);
+        }).catch(() => {
           return { docs: [], totalDocs: 0 };
         })
       );
@@ -86,8 +85,7 @@ export class DynamicContentAPI {
               ? '-createdAt'
               : sort, // Map publishedDate to createdAt for showcases
           depth: 2, // Reduced depth for better performance
-        }).catch(error => {
-          console.error('Error fetching showcases:', error);
+        }).catch(() => {
           return { docs: [], totalDocs: 0 };
         })
       );

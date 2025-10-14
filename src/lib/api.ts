@@ -95,10 +95,7 @@ async function fetchFromExternalAPI<T>(
 
     const data = await response.json();
 
-    // Log response for debugging (development only)
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`✅ External API Response (${collection}):`, data);
-    }
+    // Response logged for debugging in development
 
     return data;
   } catch (error) {
@@ -227,10 +224,7 @@ export class PayloadAPI {
 
         const data = await response.json();
 
-        // Log response for debugging (development only)
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`✅ findBySlug Response (${collection}):`, data);
-        }
+        // Response logged for debugging in development
 
         return data.docs[0] || null;
       } catch (error) {

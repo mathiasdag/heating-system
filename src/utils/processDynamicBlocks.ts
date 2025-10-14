@@ -65,11 +65,7 @@ export async function processDynamicBlocks(
             ...block,
             generatedContent,
           };
-        } catch (error) {
-          console.error(
-            'Error processing HighlightGridGenerator block:',
-            error
-          );
+        } catch {
           return {
             ...block,
             generatedContent: {

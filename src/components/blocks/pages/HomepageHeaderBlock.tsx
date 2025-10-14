@@ -153,12 +153,6 @@ export default function HomepageHeaderBlock({
               setVideoLoaded(true);
               setVideoError(false);
             }}
-            onWaiting={() => {
-              // Video waiting for data
-            }}
-            onStalled={() => {
-              // Video stalled - buffer issue
-            }}
           />
         </div>
       );

@@ -69,9 +69,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             key={`section-${sectionIndex}-${section.sectionId}`}
             className="mb-5"
           >
-            <h3 className="mb-2 font-sans uppercase">
-              {section.sectionTitle}
-            </h3>
+            <h3 className="mb-2 font-sans uppercase">{section.sectionTitle}</h3>
             <div className="inline-grid gap-[.15em]">
               {section.navigationItems.map(navItem => {
                 const globalIndex = allNavigationItems.findIndex(

@@ -60,7 +60,7 @@ export default function HomepageHeaderBlock({
         setIsInViewport(entry.isIntersecting);
       },
       {
-        threshold: 0.1, // Trigger when 10% of the RichText is visible
+        threshold: 0, // Trigger when 10% of the RichText is visible
         rootMargin: '500px 0px 0px 0px', // Start checking 500px before entering viewport
       }
     );
@@ -79,33 +79,37 @@ export default function HomepageHeaderBlock({
     const video = videoRef.current;
 
     if (isInViewport) {
-      // Only play if video is ready and not already playing
-      if (video.readyState >= 3 && video.paused) {
-        video.play().catch(() => {
-          // Video play failed - handle silently
-        });
-      }
+      // Play video when in viewport
+      video.play().catch(() => {
+        // Video play failed - handle silently
+        console.log('Video play failed');
+      });
     } else {
       // Pause video when not in viewport
-      if (!video.paused) {
-        video.pause();
-      }
+      video.pause();
     }
   }, [isInViewport]);
 
   const renderBackgroundAsset = useCallback(() => {
     if (!backgroundAsset) return null;
 
-    const animationClasses = clsx(
-      'w-full h-full transition-all duration-500 ease-out',
-      isInViewport
-        ? 'opacity-100 scale-100 delay-[1500ms]'
-        : 'opacity-0 scale-110'
-    );
+    const animationProps = {
+      className: 'w-full h-full',
+      initial: { opacity: 0, scale: 1.1 },
+      animate: {
+        opacity: isInViewport ? 1 : 0,
+        scale: isInViewport ? 1 : 1.1,
+      },
+      transition: {
+        duration: 0.5,
+        ease: 'easeOut',
+        delay: isInViewport ? 1.5 : 0,
+      },
+    };
 
     if (backgroundAsset.type === 'image' && backgroundAsset.image?.url) {
       return (
-        <div className={animationClasses}>
+        <motion.div {...animationProps}>
           <Image
             src={fixImageUrl(backgroundAsset.image.url)}
             alt={backgroundAsset.image.alt || ''}
@@ -113,7 +117,7 @@ export default function HomepageHeaderBlock({
             className="w-full h-full object-cover"
             priority
           />
-        </div>
+        </motion.div>
       );
     }
 
@@ -121,26 +125,26 @@ export default function HomepageHeaderBlock({
       // Fallback to poster image if video has error
       if (videoError) {
         return (
-          <div className={animationClasses}>
+          <motion.div {...animationProps}>
             <Image
               src={`https://image.mux.com/${backgroundAsset.mux}/thumbnail.jpg?time=0`}
               alt="Video poster"
               fill
               className="w-full h-full object-cover"
             />
-          </div>
+          </motion.div>
         );
       }
 
       return (
-        <div className={animationClasses}>
+        <motion.div {...animationProps}>
           <MuxPlayer
             ref={videoRef}
             playbackId={backgroundAsset.mux}
-            autoPlay={isInViewport && videoLoaded}
+            autoPlay={false}
             muted={true}
             loop={true}
-            preload="metadata"
+            preload="auto"
             poster={`https://image.mux.com/${backgroundAsset.mux}/thumbnail.jpg?time=0`}
             className="w-full h-full object-cover no-controls"
             onError={() => {
@@ -154,7 +158,7 @@ export default function HomepageHeaderBlock({
               setVideoError(false);
             }}
           />
-        </div>
+        </motion.div>
       );
     }
 

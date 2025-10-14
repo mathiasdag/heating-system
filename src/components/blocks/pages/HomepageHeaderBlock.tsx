@@ -97,13 +97,13 @@ export default function HomepageHeaderBlock({
       className: 'w-full h-full',
       initial: { opacity: 0, scale: 1.1 },
       animate: {
-        opacity: isInViewport ? 1 : 0,
-        scale: isInViewport ? 1 : 1.1,
+        opacity: 1,
+        scale: 1,
       },
       transition: {
         duration: 0.5,
         ease: 'easeOut',
-        delay: isInViewport ? 1.5 : 0,
+        delay: 1.5,
       },
     };
 

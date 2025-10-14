@@ -21,45 +21,45 @@ export const PartnerCard: React.FC<PartnerCardProps> = ({
   const hasValidUrl = Boolean(url && url !== '#');
 
   const cardContent = (
-    <div
-      className={clsx(
-        'flex flex-col items-center justify-center',
-        'px-4 py-6 rounded-sm min-h-[120px]',
-        'border border-text/20 hover:border-text/40 transition-colors',
-        'bg-white/5 hover:bg-white/10',
-        className
-      )}
-    >
-      <DevIndicator componentName="PartnerCard" />
-      {image && (
-        <div className="relative w-full h-16 mb-3 flex items-center justify-center">
-          <Image
-            src={fixImageUrl(image.url)}
-            alt={image.alt || title}
-            width={image.width}
-            height={image.height}
-            className="object-contain max-w-full max-h-full"
-            quality={75}
-            priority={false}
-          />
-        </div>
-      )}
-      <h3 className="text-sm font-medium text-center text-text/80">{title}</h3>
-    </div>
+    <Image
+      src={fixImageUrl(image.url)}
+      alt={image.alt || title}
+      width={image.width}
+      height={image.height}
+      className="object-contain h-full w-2/3 max-w-36 mix-blend-multiply"
+      quality={75}
+      priority={false}
+    />
   );
+
+  const wrapperProps = {
+    className: clsx(
+      'flex items-center justify-center aspect-window w-[80vw] sm:w-[20em]',
+      'px-3 sm:px-6 pb-6 relative',
+      className
+    ),
+  };
 
   if (hasValidUrl) {
     return (
-      <AppLink
+      <a
         href={url!}
-        className="block hover:scale-105 transition-transform duration-200"
+        target="_blank"
+        rel="noopener noreferrer"
+        {...wrapperProps}
       >
+        <DevIndicator componentName="PartnerCard (with link" />
         {cardContent}
-      </AppLink>
+      </a>
     );
   }
 
-  return cardContent;
+  return (
+    <div {...wrapperProps}>
+      <DevIndicator componentName="PartnerCard (no link)" />
+      {cardContent}
+    </div>
+  );
 };
 
 export default PartnerCard;

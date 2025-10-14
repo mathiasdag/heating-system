@@ -23,6 +23,10 @@ export const LogotypeWall: React.FC<LogotypeWallProps> = ({
   description,
   partners,
 }) => {
+  if (partners.length === 0) {
+    return null;
+  }
+
   return (
     <section className={`grid relative`}>
       <DevIndicator componentName="LogotypeWall" />

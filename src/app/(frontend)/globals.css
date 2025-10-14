@@ -88,7 +88,8 @@ html {
 }
 
 /* Smooth transitions for all elements that change with theme */
-* {
+body,
+html {
   transition:
     background-color var(--theme-transition-duration)
       var(--theme-transition-easing),

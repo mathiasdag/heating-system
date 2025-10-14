@@ -5,6 +5,8 @@
  * and provides a unified interface for data fetching.
  */
 
+import { monitoredFetch } from '@/utils/cacheMonitor';
+
 // Environment configuration - always use external for frontend
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_PAYLOAD_API_URL ||
@@ -78,13 +80,13 @@ async function fetchFromExternalAPI<T>(
   const url = `${API_BASE_URL}/${collection}?${params.toString()}`;
 
   try {
-    const response = await fetch(url, {
+    const response = await monitoredFetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
       // Add cache control for better performance
-      next: { revalidate: 300 }, // Revalidate every 5 minutes
+      next: { revalidate: 1800 }, // Revalidate every 30 minutes
     });
 
     if (!response.ok) {
@@ -122,7 +124,7 @@ export class PayloadAPI {
     fetcher: () => Promise<T>
   ): Promise<T> {
     if (requestCache.has(cacheKey)) {
-      return requestCache.get(cacheKey);
+      return requestCache.get(cacheKey) as Promise<T>;
     }
 
     const promise = fetcher();
@@ -208,12 +210,12 @@ export class PayloadAPI {
       const url = `${API_BASE_URL}/${collection}?${params.toString()}`;
 
       try {
-        const response = await fetch(url, {
+        const response = await monitoredFetch(url, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          next: { revalidate: 300 },
+          next: { revalidate: 1800 },
         });
 
         if (!response.ok) {

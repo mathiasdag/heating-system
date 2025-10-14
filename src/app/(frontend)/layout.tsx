@@ -17,6 +17,7 @@ import {
   ExitPreviewButton,
 } from '@/components/admin';
 import PayloadAPI from '@/lib/api';
+import { initializeCacheWarming } from '@/utils/cacheWarmer';
 
 const sans = localFont({
   src: [
@@ -114,6 +115,9 @@ async function getNavigation() {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
+  
+  // Initialize cache warming in the background
+  initializeCacheWarming();
   const navigation = await getNavigation();
   const useCustomFonts = true;
   const htmlClass = useCustomFonts

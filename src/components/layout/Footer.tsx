@@ -40,26 +40,30 @@ const GridRow: React.FC<{
 );
 
 // Marquee component
-const MarqueeText: React.FC = () => (
-  <div
-    className="font-ballPill w-[86.5%] pt-[.1rem] pointer-events-none"
-    style={{
-      height: 'var(--marquee-size)',
-      fontSize: 'var(--marquee-size)',
-      lineHeight: 'var(--marquee-size)',
-    }}
-  >
-    <Marquee speed={50}>
-      {Array(5)
-        .fill(null)
-        .map((_, i) => (
-          <span key={i} className="mx-12">
-            VÄRMEVERKET
-          </span>
-        ))}
-    </Marquee>
-  </div>
-);
+const MarqueeText: React.FC = () => {
+  const marqueeSize = '11.6666';
+
+  return (
+    <div
+      className="font-ballPill w-[86.5%] pointer-events-none"
+      style={{
+        height: `${marqueeSize}vw`,
+        fontSize: `${marqueeSize}vw`,
+        lineHeight: `${marqueeSize * 1.3}vw`,
+      }}
+    >
+      <Marquee speed={50}>
+        {Array(5)
+          .fill(null)
+          .map((_, i) => (
+            <span key={i} className="mx-12">
+              VÄRMEVERKET
+            </span>
+          ))}
+      </Marquee>
+    </div>
+  );
+};
 
 // Helper function to generate grid columns
 const generateGridColumns = (count: number) =>

@@ -8,9 +8,6 @@
   line-height: 1.25em; /* or your preferred value */
   letter-spacing: -0.005em;
 
-  /* Marquee text sizing */
-  --marquee-size: 11.6666vw;
-
   /* Light mode colors */
   --color-bg: #efede3;
   --color-surface: #f9f7ec;

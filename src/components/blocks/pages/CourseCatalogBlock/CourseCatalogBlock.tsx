@@ -128,7 +128,7 @@ export default function CourseCatalogBlock({
       <div
         className={clsx(
           'transition-transform duration-300',
-          !isOverviewMode ? 'opacity-100' : 'opacity-0'
+          !isOverviewMode || isLargeScreen ? 'opacity-100' : 'opacity-0'
         )}
       >
         {allNavigationItems.map((item, index) => (

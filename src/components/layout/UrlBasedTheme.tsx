@@ -4,13 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 
 // Configuration for dark mode slugs
-const DARK_MODE_SLUGS = [
-  'spaces',
-  'event-spaces',
-  'coworking',
-  'studios',
-  'musikstudios',
-];
+const DARK_MODE_SLUGS = ['spaces', 'event-spaces', 'studios', 'musikstudios'];
 
 // Configuration for dark mode collections
 const DARK_MODE_COLLECTIONS = ['spaces'];

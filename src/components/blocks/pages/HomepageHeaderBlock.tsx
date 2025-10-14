@@ -1,7 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useRef, useEffect, useState } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { jsxConverter } from '@/utils/richTextConverters';
 import { DevIndicator } from '@/components/dev/DevIndicator';
@@ -37,9 +43,11 @@ export default function HomepageHeaderBlock({
   const richTextRef = useRef<HTMLDivElement>(null);
   const [isInViewport, setIsInViewport] = useState(false);
 
-  // Get the first asset (video or image) for the fullscreen background
-  const backgroundAsset =
-    assets.find(asset => asset.placement === 'before') || assets[0];
+  // Get the first asset (video or image) for the fullscreen background - memoized
+  const backgroundAsset = useMemo(
+    () => assets.find(asset => asset.placement === 'before') || assets[0],
+    [assets]
+  );
 
   // Intersection Observer to detect when RichText content is in viewport
   useEffect(() => {
@@ -73,7 +81,7 @@ export default function HomepageHeaderBlock({
     }
   }, [isInViewport]);
 
-  const renderBackgroundAsset = () => {
+  const renderBackgroundAsset = useCallback(() => {
     if (!backgroundAsset) return null;
 
     const animationClasses = clsx(
@@ -113,7 +121,7 @@ export default function HomepageHeaderBlock({
     }
 
     return null;
-  };
+  }, [backgroundAsset, isInViewport]);
 
   return (
     <>

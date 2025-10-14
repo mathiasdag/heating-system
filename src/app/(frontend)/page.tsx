@@ -50,7 +50,8 @@ function renderBlock(
   block: { blockType: string; [key: string]: unknown },
   i: number
 ) {
-  const cleanBlock = JSON.parse(JSON.stringify(block));
+  // Remove expensive deep clone - pass block directly
+  const cleanBlock = block;
   switch (block.blockType) {
     case 'assetText':
       return <AssetTextBlock key={i} {...cleanBlock} />;

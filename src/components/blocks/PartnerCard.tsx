@@ -26,7 +26,7 @@ export const PartnerCard: React.FC<PartnerCardProps> = ({
       alt={image.alt || title}
       width={image.width}
       height={image.height}
-      className="object-contain h-full w-2/3 max-w-36 mix-blend-multiply"
+      className="object-contain h-full w-36 max-w-[50%] mix-blend-multiply"
       quality={75}
       priority={false}
     />

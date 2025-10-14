@@ -86,7 +86,7 @@ class CacheWarmer {
    * Warm up specific pages
    */
   private async warmupPages(pages: string[]): Promise<void> {
-    const pagePromises = pages.map(async (slug) => {
+    const pagePromises = pages.map(async slug => {
       try {
         console.log(`  📄 Warming page: ${slug}`);
         await PayloadAPI.findBySlug('pages', slug, 10);
@@ -103,7 +103,7 @@ class CacheWarmer {
    * Warm up collections
    */
   private async warmupCollections(collections: string[]): Promise<void> {
-    const collectionPromises = collections.map(async (collection) => {
+    const collectionPromises = collections.map(async collection => {
       try {
         console.log(`  📚 Warming collection: ${collection}`);
         await PayloadAPI.find({
@@ -157,11 +157,7 @@ export const defaultWarmupConfig: WarmupConfig = {
     'residens',
     'partnerskap',
   ],
-  collections: [
-    'articles',
-    'showcases',
-    'navigation',
-  ],
+  collections: ['articles', 'showcases', 'navigation'],
   priority: 'high',
 };
 
@@ -176,11 +172,13 @@ export function initializeCacheWarming(): void {
 /**
  * Manual cache warming trigger
  */
-export async function triggerCacheWarming(config?: Partial<WarmupConfig>): Promise<void> {
+export async function triggerCacheWarming(
+  config?: Partial<WarmupConfig>
+): Promise<void> {
   const finalConfig = {
     ...defaultWarmupConfig,
     ...config,
   };
-  
+
   await cacheWarmer.warmup(finalConfig);
 }

@@ -45,15 +45,16 @@ class CacheMonitor {
    */
   private updateResponseTime(responseTime: number): void {
     this.responseTimes.push(responseTime);
-    
+
     // Keep only last 100 response times for memory efficiency
     if (this.responseTimes.length > 100) {
       this.responseTimes = this.responseTimes.slice(-100);
     }
 
     // Update average
-    this.metrics.averageResponseTime = 
-      this.responseTimes.reduce((sum, time) => sum + time, 0) / this.responseTimes.length;
+    this.metrics.averageResponseTime =
+      this.responseTimes.reduce((sum, time) => sum + time, 0) /
+      this.responseTimes.length;
 
     // Update slowest
     if (responseTime > this.metrics.slowestRequest) {
@@ -89,7 +90,9 @@ class CacheMonitor {
     console.log('📊 Cache Performance Summary:');
     console.log(`  Hit Rate: ${metrics.hitRate.toFixed(1)}%`);
     console.log(`  Total Requests: ${metrics.totalRequests}`);
-    console.log(`  Average Response Time: ${metrics.averageResponseTime.toFixed(0)}ms`);
+    console.log(
+      `  Average Response Time: ${metrics.averageResponseTime.toFixed(0)}ms`
+    );
     console.log(`  Slowest Request: ${metrics.slowestRequest}ms`);
   }
 
@@ -119,21 +122,21 @@ export async function monitoredFetch(
   options: RequestInit & { next?: { revalidate?: number } }
 ): Promise<Response> {
   const startTime = Date.now();
-  
+
   try {
     const response = await fetch(url, options);
     const responseTime = Date.now() - startTime;
-    
+
     // Determine if this was likely a cache hit or miss
     // Cache hits are typically much faster (< 50ms)
     const isCacheHit = responseTime < 50;
-    
+
     if (isCacheHit) {
       cacheMonitor.recordHit(responseTime);
     } else {
       cacheMonitor.recordMiss(responseTime);
     }
-    
+
     return response;
   } catch (error) {
     const responseTime = Date.now() - startTime;
@@ -151,31 +154,37 @@ export function getCacheInsights(): {
 } {
   const metrics = cacheMonitor.getMetrics();
   const recommendations: string[] = [];
-  
+
   let status: 'excellent' | 'good' | 'needs-improvement' = 'excellent';
-  
+
   // Analyze hit rate
   if (metrics.hitRate < 50) {
     status = 'needs-improvement';
-    recommendations.push('Consider increasing cache duration or implementing more aggressive caching');
+    recommendations.push(
+      'Consider increasing cache duration or implementing more aggressive caching'
+    );
   } else if (metrics.hitRate < 80) {
     status = 'good';
     recommendations.push('Cache performance is good but could be improved');
   }
-  
+
   // Analyze response times
   if (metrics.averageResponseTime > 1000) {
     status = 'needs-improvement';
-    recommendations.push('Response times are slow - consider optimizing API calls or increasing cache duration');
+    recommendations.push(
+      'Response times are slow - consider optimizing API calls or increasing cache duration'
+    );
   } else if (metrics.averageResponseTime > 500) {
     if (status === 'excellent') status = 'good';
     recommendations.push('Response times could be improved');
   }
-  
+
   // Analyze slowest requests
   if (metrics.slowestRequest > 5000) {
-    recommendations.push('Some requests are very slow - investigate specific endpoints');
+    recommendations.push(
+      'Some requests are very slow - investigate specific endpoints'
+    );
   }
-  
+
   return { status, recommendations };
 }

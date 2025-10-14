@@ -15,6 +15,7 @@ import {
   AdminContainer,
   RevalidateButton,
   ExitPreviewButton,
+  CachePerformance,
 } from '@/components/admin';
 import PayloadAPI from '@/lib/api';
 import { initializeCacheWarming } from '@/utils/cacheWarmer';
@@ -115,7 +116,7 @@ async function getNavigation() {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
-  
+
   // Initialize cache warming in the background
   initializeCacheWarming();
   const navigation = await getNavigation();
@@ -146,10 +147,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                   {children}
                   <Footer />
                 </main>
-                <AdminContainer>
-                  <RevalidateButton />
-                  <ExitPreviewButton />
-                </AdminContainer>
+        <AdminContainer>
+          <RevalidateButton />
+          <ExitPreviewButton />
+        </AdminContainer>
+        <CachePerformance />
                 <NotificationContainer />
               </BackgroundLoader>
             </UrlBasedTheme>

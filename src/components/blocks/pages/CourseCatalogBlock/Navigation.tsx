@@ -43,7 +43,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         key={`nav-${sectionTitle}-${item.title}-${index}`}
         className="cursor-pointer inline-flex justify-self-start gap-[.15em]"
         onClick={() => {
-          if (isDetailMode) {
+          if (!isLargeScreen && isDetailMode) {
             // In detail mode, clicking numbers returns to overview
             onMobileModeSwitch();
           } else {
@@ -71,54 +71,11 @@ export const Navigation: React.FC<NavigationProps> = ({
     );
   };
 
-  // Desktop: Only show on lg+ screens and when it fits
-  if (isLargeScreen && !isViewportCovered) {
+  // Only show on lg+ screens and when it fits
+  if (!isViewportCovered) {
     return null;
   }
 
-  // Mobile: Always show navigation
-  if (!isLargeScreen) {
-    return (
-      <div className="fixed bottom-4 left-4 right-4 z-50">
-        <div className="bg-accent/90 backdrop-blur-sm border border-text rounded-lg p-4">
-          <div className="flex flex-wrap gap-2 justify-center">
-            {allNavigationItems.map((item, index) => {
-              const isActive = activeItemIndex === index;
-              const showTitle = isOverviewMode;
-
-              return (
-                <BlinkHover
-                  key={`mobile-nav-${index}`}
-                  className="cursor-pointer"
-                  onClick={() => {
-                    if (isDetailMode) {
-                      onMobileModeSwitch();
-                    } else {
-                      onItemClick(index);
-                    }
-                  }}
-                  interval={100}
-                >
-                  <div className="flex items-center gap-2 px-3 py-2 border border-text rounded-sm">
-                    <div className="w-8 h-8 flex items-center justify-center border border-text rounded-sm text-sm">
-                      {(index + 1).toString().padStart(2, '0')}
-                    </div>
-                    {showTitle && (
-                      <span className="text-sm font-mono truncate max-w-32">
-                        {item.title}
-                      </span>
-                    )}
-                  </div>
-                </BlinkHover>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Desktop navigation
   return (
     <div
       className={`fixed inline-block left-0 top-1/2 -translate-y-1/2 px-4 py-8 ${navigationOverflows ? 'invisible' : ''}`}

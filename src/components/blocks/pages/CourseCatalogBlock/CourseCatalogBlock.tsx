@@ -4,8 +4,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { StickyMarquee } from './StickyMarquee';
 import { ViewportItem } from './ViewportItem';
-import { Navigation } from './Navigation';
-import { CourseCatalogProps } from './types';
+import { BlinkHover } from '@/components/ui';
+import { FadeIn } from '@/components/ui';
+import clsx from 'clsx';
+import { CourseCatalogProps, NavigationItem } from './types';
 
 export default function CourseCatalogBlock({
   headline,
@@ -14,11 +16,6 @@ export default function CourseCatalogBlock({
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [navigationOverflows, setNavigationOverflows] = useState(false);
-
-  // Mobile navigation modes
-  const [isOverviewMode, setIsOverviewMode] = useState(true);
-  const [isDetailMode, setIsDetailMode] = useState(false);
-
   const containerRef = useRef<HTMLDivElement>(null);
   const navigationRef = useRef<HTMLDivElement>(null);
 
@@ -34,30 +31,14 @@ export default function CourseCatalogBlock({
   // Handle navigation item click
   const handleItemClick = (index: number) => {
     setActiveItemIndex(index);
-
-    if (isLargeScreen) {
-      // Desktop: scroll to item
-      const targetElement = containerRef.current?.querySelector(
-        `[data-item-index="${index}"]`
-      );
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // Mobile: switch to detail mode
-      setIsOverviewMode(false);
-      setIsDetailMode(true);
+    const targetElement = containerRef.current?.querySelector(
+      `[data-item-index="${index}"]`
+    );
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // Handle mobile mode switching
-  const handleMobileModeSwitch = () => {
-    if (isDetailMode) {
-      // Return to overview mode
-      setIsDetailMode(false);
-      setIsOverviewMode(true);
-    }
-  };
 
   // Handle when an item comes into view - just update to the latest one
   const handleItemInView = (index: number) => {
@@ -124,6 +105,37 @@ export default function CourseCatalogBlock({
     };
   }, []);
 
+  // Render navigation item
+  const renderNavigationItem = (
+    item: NavigationItem,
+    index: number,
+    sectionTitle: string
+  ) => {
+    const isActive = activeItemIndex === index;
+
+    return (
+      <BlinkHover
+        key={`nav-${sectionTitle}-${item.title}-${index}`}
+        className="cursor-pointer inline-flex justify-self-start gap-[.15em]"
+        onClick={() => handleItemClick(index)}
+        interval={100}
+        target=".title"
+      >
+        <div className="w-[44px] h-[42px] flex items-center justify-center border border-text rounded-sm">
+          {(index + 1).toString().padStart(2, '0')}
+        </div>
+        <div
+          className={clsx(
+            'max-w-xs h-[42px] px-3 flex items-center border border-text rounded-sm overflow-hidden whitespace-nowrap truncate text-ellipsis',
+            isActive && 'text-transparent'
+          )}
+        >
+          <span className="title">{item.title}</span>
+        </div>
+      </BlinkHover>
+    );
+  };
+
   return (
     <div className="relative bg-accent z-40 my-8" ref={containerRef}>
       <DevIndicator componentName="CourseCatalogBlock" />
@@ -131,14 +143,8 @@ export default function CourseCatalogBlock({
       {/* Top Marquee */}
       <StickyMarquee text={headline} position="top" />
 
-      {/* Main Container with sliding animation */}
-      <div
-        className={`transition-transform duration-500 ease-in-out ${
-          !isLargeScreen && isOverviewMode
-            ? 'translate-x-full'
-            : 'translate-x-0'
-        }`}
-      >
+      {/* Main Container - No separate scroll */}
+      <div>
         {allNavigationItems.map((item, index) => (
           <div key={`viewport-${index}`} data-item-index={index}>
             <ViewportItem
@@ -152,19 +158,38 @@ export default function CourseCatalogBlock({
         ))}
       </div>
 
-      {/* Fixed Navigation Menu */}
-      <Navigation
-        navigationSections={navigationSections}
-        allNavigationItems={allNavigationItems}
-        activeItemIndex={activeItemIndex}
-        isLargeScreen={isLargeScreen}
-        isViewportCovered={isViewportCovered}
-        navigationOverflows={navigationOverflows}
-        isOverviewMode={isOverviewMode}
-        isDetailMode={isDetailMode}
-        onItemClick={handleItemClick}
-        onMobileModeSwitch={handleMobileModeSwitch}
-      />
+      {/* Fixed Navigation Menu - Only show on lg+ screens and when it fits */}
+      {isLargeScreen && isViewportCovered && (
+        <div
+          ref={navigationRef}
+          className={`fixed inline-block left-0 top-1/2 -translate-y-1/2 px-4 py-8 ${navigationOverflows ? 'invisible' : ''}`}
+        >
+          <FadeIn timing="slow" delay={0.3}>
+            {navigationSections.map((section, sectionIndex) => (
+              <div
+                key={`section-${sectionIndex}-${section.sectionId}`}
+                className="mb-5"
+              >
+                <h3 className="mb-2 font-sans uppercase">
+                  {section.sectionTitle}
+                </h3>
+                <div className="inline-grid gap-[.15em]">
+                  {section.navigationItems.map(navItem => {
+                    const globalIndex = allNavigationItems.findIndex(
+                      globalItem => globalItem.title === navItem.title
+                    );
+                    return renderNavigationItem(
+                      navItem,
+                      globalIndex,
+                      section.sectionTitle
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </FadeIn>
+        </div>
+      )}
 
       {isLargeScreen && <StickyMarquee text={headline} position="bottom" />}
     </div>

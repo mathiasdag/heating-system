@@ -81,9 +81,8 @@ export default function HomepageHeaderBlock({
     if (isInViewport) {
       // Only play if video is ready and not already playing
       if (video.readyState >= 3 && video.paused) {
-        video.play().catch((error: unknown) => {
-          console.warn('Video play failed:', error);
-          // Don't throw error, just log it
+        video.play().catch(() => {
+          // Video play failed - handle silently
         });
       }
     } else {
@@ -144,24 +143,21 @@ export default function HomepageHeaderBlock({
             preload="metadata"
             poster={`https://image.mux.com/${backgroundAsset.mux}/thumbnail.jpg?time=0`}
             className="w-full h-full object-cover no-controls"
-            onError={error => {
-              console.warn('MuxPlayer error:', error);
+            onError={() => {
               setVideoError(true);
             }}
             onLoadStart={() => {
-              console.log('Video loading started');
               setVideoLoaded(false);
             }}
             onCanPlay={() => {
-              console.log('Video can play');
               setVideoLoaded(true);
               setVideoError(false);
             }}
             onWaiting={() => {
-              console.log('Video waiting for data');
+              // Video waiting for data
             }}
             onStalled={() => {
-              console.warn('Video stalled - buffer issue');
+              // Video stalled - buffer issue
             }}
           />
         </div>

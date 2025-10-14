@@ -25,14 +25,18 @@ async function getCacheInsights() {
     // Performance Status
     const statusEmoji = {
       excellent: '🟢',
-      good: '🟡', 
-      'needs-improvement': '🔴'
+      good: '🟡',
+      'needs-improvement': '🔴',
     };
 
-    console.log(`Status: ${statusEmoji[insights.status]} ${insights.status.toUpperCase()}`);
+    console.log(
+      `Status: ${statusEmoji[insights.status]} ${insights.status.toUpperCase()}`
+    );
     console.log(`Hit Rate: ${metrics.hitRate.toFixed(1)}%`);
     console.log(`Total Requests: ${metrics.totalRequests}`);
-    console.log(`Average Response Time: ${metrics.averageResponseTime.toFixed(0)}ms`);
+    console.log(
+      `Average Response Time: ${metrics.averageResponseTime.toFixed(0)}ms`
+    );
     console.log(`Slowest Request: ${metrics.slowestRequest}ms`);
 
     // Recommendations
@@ -47,13 +51,15 @@ async function getCacheInsights() {
     // Performance Analysis
     console.log('\n📈 ANALYSIS:');
     console.log('─'.repeat(20));
-    
+
     if (metrics.hitRate >= 80) {
       console.log('✅ Excellent cache hit rate');
     } else if (metrics.hitRate >= 50) {
       console.log('⚠️  Cache hit rate could be improved');
     } else {
-      console.log('❌ Poor cache hit rate - consider increasing cache duration');
+      console.log(
+        '❌ Poor cache hit rate - consider increasing cache duration'
+      );
     }
 
     if (metrics.averageResponseTime < 500) {
@@ -69,8 +75,9 @@ async function getCacheInsights() {
     }
 
     console.log('\n' + '═'.repeat(50));
-    console.log(`Last updated: ${new Date(data.data.timestamp).toLocaleString()}\n`);
-
+    console.log(
+      `Last updated: ${new Date(data.data.timestamp).toLocaleString()}\n`
+    );
   } catch (error) {
     console.error('❌ Error fetching cache insights:', error.message);
     console.log('\n💡 Make sure your Next.js app is running on localhost:3000');

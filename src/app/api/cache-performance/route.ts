@@ -29,7 +29,7 @@ export async function POST() {
   try {
     // Reset cache metrics
     cacheMonitor.reset();
-    
+
     return NextResponse.json({
       success: true,
       message: 'Cache metrics reset successfully',

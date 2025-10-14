@@ -19,6 +19,7 @@ import {
 } from '@/components/admin';
 import PayloadAPI from '@/lib/api';
 import { initializeCacheWarming } from '@/utils/cacheWarmer';
+import '@/utils/testCacheMonitor';
 
 const sans = localFont({
   src: [
@@ -147,11 +148,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                   {children}
                   <Footer />
                 </main>
-        <AdminContainer>
-          <RevalidateButton />
-          <ExitPreviewButton />
-        </AdminContainer>
-        <CachePerformance />
+                <AdminContainer>
+                  <RevalidateButton />
+                  <ExitPreviewButton />
+                </AdminContainer>
+                <CachePerformance />
                 <NotificationContainer />
               </BackgroundLoader>
             </UrlBasedTheme>

@@ -41,13 +41,20 @@ const GridRow: React.FC<{
 
 // Marquee component
 const MarqueeText: React.FC = () => (
-  <div className="font-ballPill w-[86.5%] h-[12.6666vw] text-[12.6666vw] leading-[12.6666vw] pt-[.1rem] overflow-hidden pointer-events-none">
+  <div
+    className="font-ballPill w-[86.5%] pt-[.1rem] pointer-events-none"
+    style={{
+      height: 'var(--marquee-size)',
+      fontSize: 'var(--marquee-size)',
+      lineHeight: 'var(--marquee-size)',
+    }}
+  >
     <Marquee speed={50}>
       {Array(5)
         .fill(null)
         .map((_, i) => (
           <span key={i} className="mx-12">
-            VäRMEVERKET
+            VÄRMEVERKET
           </span>
         ))}
     </Marquee>
@@ -96,7 +103,7 @@ export const Footer: React.FC = () => {
         <GridRow hasBorders>{generateGridColumns(15)}</GridRow>
       </div>
       <div className="flex flex-col xl:flex-row gap-x-3 p-2 uppercase pb-12 md:pb-2">
-        <FooterLink>&copy; {new Date().getFullYear()} Varmeverket</FooterLink>
+        <FooterLink>&copy; {new Date().getFullYear()} Värmeverket</FooterLink>
         <FooterLink>Bredängsvägen 203, 127 34 Skärholmen</FooterLink>
         <FooterLink>Email</FooterLink>
         <FooterLink>Instagram</FooterLink>

@@ -71,42 +71,47 @@ export const MediaCard: React.FC<MediaCardProps> = ({
         <DevIndicator componentName="MediaCard" position="top-right" />
         <div
           className={clsx(
-            'gap-6 text-center flex flex-col justify-center aspect-window p-6 pb-12',
-            'transition-transform',
-            hasValidLink && linkResult && 'active:scale-[0.99] cursor-pointer',
-            'transition-transform duration-200',
-            // On mobile, always show the "hovered" state, on desktop use hover state
-            isMobile || isHovered
-              ? 'scale-[1.025] -translate-y-1'
-              : 'scale-100 translate-y-0'
+            'aspect-window p-6 pb-16 flex flex-col justify-center',
+            hasValidLink && linkResult && 'active:scale-[0.99] cursor-pointer'
           )}
         >
-          <header className={clsx()}>
-            <div className="mb-3">
-              <TagList tags={tags} size="md" />
-            </div>
-            <Heading variant="card-title" as="h3">
-              {title}
-            </Heading>
-          </header>
-          {image && (
-            <div className="h-40 relative px-8 flex justify-center">
-              <Image
-                src={fixImageUrl(image.url)}
-                alt={image.alt || title}
-                width={image.width}
-                height={image.height}
-                className="object-cover rounded h-full w-auto"
-                quality={75}
-                priority={false}
-              />
-            </div>
-          )}
-          <RichText
-            data={body}
-            className="text-center font-mono grid gap-3 overflow-hidden"
-            converters={cardConverter}
-          />
+          <div
+            className={clsx(
+              'flex flex-col gap-4 text-center justify-center',
+              'transition-transform duration-200',
+              // On mobile, always show the "hovered" state, on desktop use hover state
+              isMobile || isHovered
+                ? 'scale-[1.025] -translate-y-1'
+                : 'scale-100 translate-y-0'
+            )}
+          >
+            <header className={clsx()}>
+              <div className="mb-3">
+                <TagList tags={tags} size="md" />
+              </div>
+              <Heading variant="card-title" as="h3">
+                {title}
+              </Heading>
+            </header>
+            {image && (
+              <div className="h-40 relative px-8 flex justify-center">
+                <Image
+                  src={fixImageUrl(image.url)}
+                  alt={image.alt || title}
+                  width={image.width}
+                  height={image.height}
+                  className="object-cover rounded h-full w-auto"
+                  quality={75}
+                  priority={false}
+                />
+              </div>
+            )}
+            <RichText
+              data={body}
+              className="text-center font-mono grid gap-3 overflow-hidden"
+              converters={cardConverter}
+            />
+          </div>
         </div>
         {hasValidLink && linkResult && (
           <div

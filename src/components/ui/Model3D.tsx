@@ -73,7 +73,7 @@ export default function Model3D({
   return (
     <div className={cn('relative', className)} style={{ width, height }}>
       <Canvas
-        camera={{ position: [1, 2, 4], fov: 10 }}
+        camera={{ position: [1, 1, 4], fov: 10 }}
         style={{ width, height }}
       >
         <ambientLight intensity={0.5} />

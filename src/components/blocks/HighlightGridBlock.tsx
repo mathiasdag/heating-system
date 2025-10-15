@@ -61,6 +61,22 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
     setSelectedHighlight(null);
   };
 
+  // Filter out invalid highlights and check if any valid cards remain
+  const validHighlights = highlights.filter(highlight => {
+    const highlightData = highlight.value;
+    const image =
+      highlightData?.featuredImage ||
+      (highlightData?.heroAsset?.type === 'image'
+        ? highlightData.heroAsset.image
+        : null);
+    return highlightData && image;
+  });
+
+  // Don't render if no valid cards
+  if (validHighlights.length === 0) {
+    return null;
+  }
+
   return (
     <div className="mt-8 relative">
       <DevIndicator componentName="HighlightGridBlock" />
@@ -84,7 +100,7 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
           }}
         >
           <div className="basis-[1px] shrink-0 h-4"></div>
-          {highlights.map(highlight => {
+          {validHighlights.map(highlight => {
             // Extract the actual highlight data from the relationship structure
             const highlightData = highlight.value;
 
@@ -94,10 +110,6 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
               (highlightData?.heroAsset?.type === 'image'
                 ? highlightData.heroAsset.image
                 : null);
-
-            if (!highlightData || !image) {
-              return null;
-            }
 
             return (
               <button

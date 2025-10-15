@@ -71,7 +71,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
           {/* Asset Content */}
           <div
             className={clsx(
-              'inline order-1 self-start md:sticky md:top-4',
+              'inline order-1 self-start',
               !isTextLeft ? 'md:order-1' : 'justify-self-end md:order-2'
             )}
           >

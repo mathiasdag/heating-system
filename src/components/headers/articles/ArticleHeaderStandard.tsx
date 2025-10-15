@@ -5,7 +5,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { FadeIn } from '@/components/ui';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 import { Heading } from '@/components/headings';
 import MediaAsset from '@/components/common/MediaAsset';
 
@@ -88,13 +88,7 @@ export default function ArticleHeaderStandard({
 
       <div className="grid gap-8 justify-center pt-32 pb-16 text-center">
         {/* Tags */}
-        {articleData.tags && articleData.tags.length > 0 && (
-          <div className="flex justify-center gap-2 flex-wrap mb-4">
-            {articleData.tags.map((tag, index) => (
-              <Tag key={tag.id || index} name={tag.name} size="md" />
-            ))}
-          </div>
-        )}
+        <TagList tags={articleData.tags} size="md" className="mb-4" />
 
         <motion.div
           className="flex items-center justify-center fixed inset-x-0 top-0"

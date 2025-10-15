@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { AppLink } from '@/components/ui';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
 import { DevIndicator } from '@/components/dev/DevIndicator';
@@ -82,12 +82,8 @@ export const MediaCard: React.FC<MediaCardProps> = ({
           )}
         >
           <header className={clsx()}>
-            <div className="flex justify-center mb-3 gap-[.15em] flex-wrap">
-              {tags &&
-                tags.length > 0 &&
-                tags.map((tag, index) => (
-                  <Tag key={tag.id || index} name={tag.name} size="md" />
-                ))}
+            <div className="mb-3">
+              <TagList tags={tags} size="md" />
             </div>
             <Heading variant="card-title" as="h3">
               {title}
@@ -143,12 +139,8 @@ export const MediaCard: React.FC<MediaCardProps> = ({
       <DevIndicator componentName="MediaCard" />
       <div className="grid gap-6 mb-4 text-center">
         <header>
-          <div className="flex justify-center mb-3 gap-[.15em] flex-wrap">
-            {tags &&
-              tags.length > 0 &&
-              tags.map((tag, index) => (
-                <Tag key={tag.id || index} name={tag.name} size="md" />
-              ))}
+          <div className="mb-3">
+            <TagList tags={tags} size="md" />
           </div>
           <Heading variant="card-title" as="h3">
             {title}

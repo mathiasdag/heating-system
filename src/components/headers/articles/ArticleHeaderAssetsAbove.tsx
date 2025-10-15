@@ -5,7 +5,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { FadeInUp, FadeInDown } from '@/components/ui/FadeIn';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 import { Heading } from '@/components/headings';
 import MediaAsset from '@/components/common/MediaAsset';
 
@@ -87,13 +87,7 @@ export default function ArticleHeaderAssetsAbove({
 
       <div className="grid gap-4 justify-center pt-32 text-center">
         {/* Tags */}
-        {articleData.tags && articleData.tags.length > 0 && (
-          <div className="flex justify-center gap-2 flex-wrap">
-            {articleData.tags.map((tag, index) => (
-              <Tag key={tag.id || index} name={tag.name} size="md" />
-            ))}
-          </div>
-        )}
+        <TagList tags={articleData.tags} size="md" />
 
         {/* Render assets before text */}
         <motion.div

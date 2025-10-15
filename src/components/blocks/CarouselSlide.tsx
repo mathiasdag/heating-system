@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { AppAction } from '@/components/ui';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { routeLink, type LinkGroup as LinkGroupType } from '@/utils/linkRouter';
@@ -111,13 +111,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
         {/* Left Content - Second on mobile */}
         <div className="flex-1 space-y-4 px-8 pt-12 pb-16 lg:px-12 lg:py-16 order-2 lg:order-1 min-w-0">
           {/* Tags */}
-          {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag, index) => (
-                <Tag key={tag.id || index} name={tag.name} size="sm" />
-              ))}
-            </div>
-          )}
+          <TagList tags={tags} size="sm" className="justify-start gap-2" />
 
           {/* Subheadline */}
           {subheadline && (

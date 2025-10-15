@@ -90,7 +90,6 @@ export default function ArticleCardWithoutImage({
             </motion.div>
           </div>
 
-          {/* Content */}
           <motion.div
             animate={{
               y: isHovered ? -10 : 0,

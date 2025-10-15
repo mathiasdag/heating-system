@@ -4,7 +4,7 @@ import { useInView } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { FadeIn } from '@/components/ui';
 import { AppAction } from '@/components/ui';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 import { Heading } from '@/components/headings';
 import Image from 'next/image';
 import { fixImageUrl } from '@/utils/imageUrl';
@@ -58,13 +58,7 @@ export const ViewportItem: React.FC<ViewportItemProps> = ({
             )}
 
             {/* Tags */}
-            {item.tags && item.tags.length > 0 && (
-              <div className="flex justify-center gap-[.15em] mt-2">
-                {item.tags.map((tag, tagIndex) => (
-                  <Tag key={tag.id || tagIndex} name={tag.name} size="md" />
-                ))}
-              </div>
-            )}
+            <TagList tags={item.tags} size="md" className="mt-2" />
 
             {/* Title */}
             <Heading variant="subsection" as="h3">

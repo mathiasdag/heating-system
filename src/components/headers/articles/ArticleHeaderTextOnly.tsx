@@ -2,7 +2,7 @@ import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { FadeInUp } from '@/components/ui';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 import { Heading } from '@/components/headings';
 
 interface ArticleHeaderTextOnlyProps {
@@ -62,13 +62,7 @@ export default function ArticleHeaderTextOnly({
 
       <div className="grid gap-8 justify-center pt-32 pb-16 text-center">
         {/* Tags */}
-        {articleData.tags && articleData.tags.length > 0 && (
-          <div className="flex justify-center gap-2 flex-wrap mb-4">
-            {articleData.tags.map((tag, index) => (
-              <Tag key={tag.id || index} name={tag.name} size="md" />
-            ))}
-          </div>
-        )}
+        <TagList tags={articleData.tags} size="md" className="mb-4" />
 
         <FadeInUp as="div" timing="fast">
           <div className="px-4 grid gap-4 font-mono">

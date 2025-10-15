@@ -7,7 +7,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { fixImageUrl } from '@/utils/imageUrl';
 import { articleConverter } from '@/utils/richTextConverters';
 import Image from 'next/image';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 
 interface ArticleOverlayProps {
@@ -113,13 +113,7 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
           <div className="relative">
             <div className="grid gap-6 justify-center pt-8 text-center px-4">
               {/* Tags */}
-              {article.tags && article.tags.length > 0 && (
-                <div className="flex justify-center gap-1 flex-wrap mb-4">
-                  {article.tags.map((tag, index) => (
-                    <Tag key={tag.id || index} name={tag.name} size="md" />
-                  ))}
-                </div>
-              )}
+              <TagList tags={article.tags} size="md" className="mb-4" />
 
               {/* Title */}
               <h2 className="text-xl font-display uppercase leading-tight">

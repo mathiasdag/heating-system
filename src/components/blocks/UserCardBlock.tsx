@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { useUserData } from '@/hooks/useUserData';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 
 interface UserCardBlockProps {
   variant: 'textOnly' | 'compactCard' | 'mediumCard' | 'largeCard';
@@ -41,13 +41,7 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
   const renderTextOnly = () => (
     <div className="bg-surface w-72 text-center p-4 flex flex-col justify-center gap-2 rounded-xl">
       <h3 className="text-md whitespace-nowrap truncate">{fullName}</h3>
-      {tags && tags.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-1">
-          {tags.map(tag => (
-            <Tag key={tag.id} name={tag.name} size="sm" />
-          ))}
-        </div>
-      )}
+      <TagList tags={tags} size="sm" />
     </div>
   );
 
@@ -64,13 +58,7 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
       )}
       <div className="flex-1 min-w-0 flex gap-1 flex-col justify-center">
         <h3 className="text-base whitespace-nowrap truncate">{fullName}</h3>
-        {tags && tags.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {tags.map(tag => (
-              <Tag key={tag.id} name={tag.name} size="sm" />
-            ))}
-          </div>
-        )}
+        <TagList tags={tags} size="sm" className="justify-start gap-1" />
       </div>
     </div>
   );
@@ -86,13 +74,7 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
           className="w-36 h-36 object-cover mx-auto rounded-md mb-4"
         />
       )}
-      {tags && tags.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-1">
-          {tags.map(tag => (
-            <Tag key={tag.id} name={tag.name} size="sm" />
-          ))}
-        </div>
-      )}
+      <TagList tags={tags} size="sm" />
       <h3 className="font-display text-lg uppercase">{fullName}</h3>
     </div>
   );
@@ -108,13 +90,7 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
           className="w-36 h-36 object-cover mx-auto rounded-md mb-4"
         />
       )}
-      {tags && tags.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-1">
-          {tags.map(tag => (
-            <Tag key={tag.id} name={tag.name} size="sm" />
-          ))}
-        </div>
-      )}
+      <TagList tags={tags} size="sm" />
       <h3 className="font-display text-lg uppercase">{fullName}</h3>
       {bylineDescription && (
         <p className="font-mono mt-2 hyphens-auto">{bylineDescription}</p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { AppLink } from '@/components/ui';
 import { Tag } from '@/components/ui';
@@ -55,6 +55,11 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   );
   const buttonOnHoverVariant = buttonVariant === 'onHover';
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia('(pointer: coarse)').matches);
+  }, []);
 
   if (buttonOnHoverVariant) {
     return (
@@ -66,11 +71,12 @@ export const MediaCard: React.FC<MediaCardProps> = ({
         <DevIndicator componentName="MediaCard" position="top-right" />
         <div
           className={clsx(
-            'gap-6 text-center flex flex-col justify-center aspect-window p-6 pb-10',
-            'active:scale-[0.99] transition-transform',
-            hasValidLink && linkResult && 'cursor-pointer',
+            'gap-6 text-center flex flex-col justify-center aspect-window p-6 pb-12',
+            'transition-transform',
+            hasValidLink && linkResult && 'active:scale-[0.99] cursor-pointer',
             'transition-transform duration-200',
-            isHovered
+            // On mobile, always show the "hovered" state, on desktop use hover state
+            isMobile || isHovered
               ? 'scale-[1.025] -translate-y-1'
               : 'scale-100 translate-y-0'
           )}
@@ -110,7 +116,8 @@ export const MediaCard: React.FC<MediaCardProps> = ({
           <div
             className={clsx(
               'absolute top-4 left-5 z-10 transition-all duration-200 pointer-events-none',
-              isHovered
+              // On mobile, always show the plus icon, on desktop use hover state
+              isMobile || isHovered
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 -translate-y-1'
             )}

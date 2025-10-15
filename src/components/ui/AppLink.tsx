@@ -13,7 +13,7 @@ import clsx from 'clsx';
 interface AppActionProps {
   href?: string;
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'minimal';
+  variant?: 'primary' | 'secondary' | 'outline' | 'minimal' | 'noCSS';
   size?: 'sm' | 'md' | 'lg';
   asButton?: boolean;
   className?: string;
@@ -40,6 +40,7 @@ const baseStyles = {
   outline:
     'uppercase border border-text rounded-md inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   minimal: 'block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+  noCSS: '',
 };
 
 export const AppAction: React.FC<AppActionProps> = ({
@@ -82,9 +83,10 @@ export const AppAction: React.FC<AppActionProps> = ({
   };
 
   const style = clsx(
-    baseStyles[variant],
-    variant !== 'minimal' && sizeStyles[size],
-    'transition-transform duration-75 ease-out active:scale-[0.99]',
+    variant !== 'noCSS' && baseStyles[variant],
+    variant !== 'minimal' && variant !== 'noCSS' && sizeStyles[size],
+    variant !== 'noCSS' &&
+      'transition-transform duration-75 ease-out active:scale-[0.99]',
     className
   );
 

@@ -61,8 +61,10 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     setIsMobile(window.matchMedia('(pointer: coarse)').matches);
   }, []);
 
+  console.log(linkResult);
+
   if (buttonOnHoverVariant) {
-    return (
+    const cardContent = (
       <div
         className={clsx('', 'relative', className)}
         onMouseEnter={() => setIsHovered(true)}
@@ -128,6 +130,17 @@ export const MediaCard: React.FC<MediaCardProps> = ({
         )}
       </div>
     );
+
+    // Conditionally wrap with link
+    if (hasValidLink && linkResult) {
+      return (
+        <AppLink href={linkResult.href!} className="block" variant={'noCSS'}>
+          {cardContent}
+        </AppLink>
+      );
+    }
+
+    return cardContent;
   }
 
   return (

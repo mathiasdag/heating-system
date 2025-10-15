@@ -57,7 +57,7 @@ export const DefaultCardGrid: React.FC<DefaultCardGridProps> = ({
                 'grow-0 shrink-0 w-[80vw] sm:w-[20em] border-r border-text snap-center rounded-none'
               )}
               {...card}
-              buttonVariant={'primary'}
+              buttonVariant={cards.length > 3 ? 'onHover' : 'primary'}
             />
           ))}
         </HorizontalScrollContainer>

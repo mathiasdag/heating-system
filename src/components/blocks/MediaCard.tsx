@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { AppLink } from '@/components/ui';
 import { Tag } from '@/components/ui';
@@ -9,6 +9,7 @@ import { fixImageUrl } from '@/utils/imageUrl';
 import { Heading } from '@/components/headings';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 import { cardConverter } from '@/utils/richTextConverters';
+import { PlusIcon } from '../icons/PlusIcon';
 
 interface TagType {
   id: string;
@@ -52,11 +53,79 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   const hasValidLink = Boolean(
     linkResult?.href && linkResult.href !== '#' && link?.text
   );
+  const buttonOnHoverVariant = buttonVariant === 'onHover';
+  const [isHovered, setIsHovered] = useState(false);
+
+  if (buttonOnHoverVariant) {
+    return (
+      <div
+        className={clsx('', 'relative', className)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <DevIndicator componentName="MediaCard" position="top-right" />
+        <div
+          className={clsx(
+            'gap-6 text-center flex flex-col justify-center aspect-window p-6 pb-10',
+            'active:scale-[0.99] transition-transform',
+            hasValidLink && linkResult && 'cursor-pointer',
+            'transition-transform duration-200',
+            isHovered
+              ? 'scale-[1.025] -translate-y-1'
+              : 'scale-100 translate-y-0'
+          )}
+        >
+          <header className={clsx()}>
+            <div className="flex justify-center mb-3 gap-[.15em] flex-wrap">
+              {tags &&
+                tags.length > 0 &&
+                tags.map((tag, index) => (
+                  <Tag key={tag.id || index} name={tag.name} size="md" />
+                ))}
+            </div>
+            <Heading variant="card-title" as="h3">
+              {title}
+            </Heading>
+          </header>
+          {image && (
+            <div className="h-40 relative px-8 flex justify-center">
+              <Image
+                src={fixImageUrl(image.url)}
+                alt={image.alt || title}
+                width={image.width}
+                height={image.height}
+                className="object-cover rounded h-full w-auto"
+                quality={75}
+                priority={false}
+              />
+            </div>
+          )}
+          <RichText
+            data={body}
+            className="text-center font-mono grid gap-3 overflow-hidden"
+            converters={cardConverter}
+          />
+        </div>
+        {hasValidLink && linkResult && (
+          <div
+            className={clsx(
+              'absolute top-4 left-5 z-10 transition-all duration-200 pointer-events-none',
+              isHovered
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 -translate-y-1'
+            )}
+          >
+            <PlusIcon size={20} strokeWidth={1} />
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div
       className={clsx(
-        'flex flex-col rounded-sm min-h-[70vw] sm:min-h-[400px]',
+        'flex flex-col aspect-window',
         'px-3 sm:px-6 relative',
         hasValidLink && buttonVariant === 'primary'
           ? 'h-full justify-between pb-4 pt-8'

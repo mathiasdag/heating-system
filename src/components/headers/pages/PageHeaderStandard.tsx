@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { FadeIn } from '@/components/ui';
 import { jsxConverter } from '@/utils/richTextConverters';
 import MediaAsset from '@/components/common/MediaAsset';
+import clsx from 'clsx';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -33,20 +34,31 @@ export default function PageHeaderStandard({
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.4], [1, 1, 0]);
+  const [isVisible, setIsVisible] = useState(true);
 
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 1.05]);
+  const scale = useTransform(scrollYProgress, [0, 0.4], [1, 1.05]);
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
+
+  useEffect(() => {
+    const unsubscribe = opacity.on('change', latest => {
+      setIsVisible(latest > 0);
+    });
+    return unsubscribe;
+  }, [opacity]);
 
   // Asset scale - inverse of text scale for dynamic balance
   const assetScale = useTransform(scrollYProgress, [0, 0.1], [0.95, 1]);
 
   return (
-    <div ref={ref} className="px-2 text-center relative">
+    <div ref={ref} className="px-2 sm:px-4 text-center relative">
       <DevIndicator componentName="PageHeaderStandard" position="top-right" />
 
       <motion.div
-        className="flex items-center justify-center pt-36 pb-16 fixed inset-x-0 top-0"
+        className={clsx(
+          'flex items-center justify-center pt-36 pb-16 fixed inset-x-0 top-0',
+          !isVisible && 'pointer-events-none'
+        )}
         style={{
           opacity,
           scale,
@@ -92,12 +104,7 @@ export default function PageHeaderStandard({
                   asset={asset}
                   height={asset.image?.height || 600}
                   width={asset.image?.width || 800}
-                  className="rounded object-cover"
-                  videoClassName="rounded overflow-hidden"
-                  controls={false}
-                  autoplay={true}
-                  loop={true}
-                  adaptiveResolution={true}
+                  variant="pageHero"
                 />
               </div>
             ))}

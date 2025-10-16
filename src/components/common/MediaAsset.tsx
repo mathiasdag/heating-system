@@ -76,6 +76,20 @@ const MediaAsset: React.FC<MediaAssetProps> = ({
           loop: loop ?? true,
           adaptiveResolution: adaptiveResolution ?? true,
         };
+      case 'pageHero':
+        return {
+          height: height || 600,
+          width: width,
+          className: className || 'rounded-xl',
+          videoClassName: videoClassName || 'rounded-lg overflow-hidden',
+          priority: priority ?? false,
+          quality: quality || 85,
+          sizes: sizes || '100vw',
+          controls: controls ?? false,
+          autoplay: autoplay ?? true,
+          loop: loop ?? true,
+          adaptiveResolution: adaptiveResolution ?? true,
+        };
       case 'compact':
         return {
           height: height || 200,

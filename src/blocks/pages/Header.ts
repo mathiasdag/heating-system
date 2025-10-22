@@ -4,6 +4,22 @@ const Header: Block = {
   slug: 'header',
   fields: [
     {
+      name: 'variant',
+      type: 'select',
+      label: 'Header Variant',
+      options: [
+        { label: 'No assets', value: 'text-only' },
+        { label: 'Assets before text', value: 'assets-before' },
+        { label: 'Text before assets', value: 'text-before' },
+        { label: 'Full width asset with gradient', value: 'gradient' },
+      ],
+      defaultValue: 'text-only',
+      required: true,
+      admin: {
+        description: 'Choose the header display style',
+      },
+    },
+    {
       name: 'text',
       type: 'richText',
       required: true,

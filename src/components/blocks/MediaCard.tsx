@@ -61,8 +61,6 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     setIsMobile(window.matchMedia('(pointer: coarse)').matches);
   }, []);
 
-  console.log(linkResult);
-
   if (buttonOnHoverVariant) {
     const cardContent = (
       <div

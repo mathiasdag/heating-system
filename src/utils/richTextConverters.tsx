@@ -252,7 +252,7 @@ export const listConverters = {
     },
     listitem: ({ node, nodesToJSX }: any) => {
       const children = nodesToJSX({ nodes: node.children });
-      return <li className="pt-3 mb-3 first:pt-0 last:pb-0">{children}</li>;
+      return <li className="py-3 first:pt-0">{children}</li>;
     },
   },
 

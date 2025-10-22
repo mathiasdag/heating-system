@@ -38,7 +38,7 @@ const spaceConverter = buildConverter({
 });
 
 export default function SpaceHeader({ spaceData, header }: SpaceHeaderProps) {
-  const heroAsset = spaceData.heroAsset;
+  const heroAsset = spaceData.header?.heroAsset;
 
   return (
     <div className="relative">

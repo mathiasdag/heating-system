@@ -2,6 +2,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Marquee from 'react-fast-marquee';
+import Image from 'next/image';
 
 // Style constants
 const GRID_COLUMN_WIDTH = 'basis-[6.6666vw]';
@@ -112,6 +113,16 @@ export const Footer: React.FC = () => {
         <FooterLink>Email</FooterLink>
         <FooterLink>Instagram</FooterLink>
         <FooterLink>Terms of service</FooterLink>
+      </div>
+      <div>
+        <Image
+          src="/VV_ROSES.gif"
+          alt="Two spinning roses"
+          width={670}
+          height={520}
+          unoptimized
+          className="p-2 mt-28 w-28 h-auto mix-blend-multiply dark:invert dark:mix-blend-lighten"
+        />
       </div>
     </footer>
   );

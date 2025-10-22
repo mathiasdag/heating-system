@@ -85,7 +85,7 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
   const processedPage = await processPageLayout(page);
 
   return (
-    <div data-content-type="page" className="grid gap-32 pb-32">
+    <div data-content-type="page" className="grid gap-32 pb-48">
       {(processedPage as PageData).header && (
         <PageHeader
           text={(processedPage as PageData).header!.text}

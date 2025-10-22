@@ -90,7 +90,7 @@ const CarouselBlock: React.FC<CarouselBlockProps> = ({
   }
 
   return (
-    <section className="py-24 relative">
+    <section className="relative py-8">
       <DevIndicator componentName="CarouselBlock" position="top-left" />
       <BlockHeader headline={headline} description={description} />
 

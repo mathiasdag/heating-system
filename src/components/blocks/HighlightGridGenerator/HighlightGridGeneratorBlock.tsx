@@ -73,7 +73,7 @@ export default function HighlightGridGeneratorBlock({
 
       <div className="relative">
         <hr className="mx-2 my-2" />
-        <div className="absolute left-1/2 top-2 bottom-2 w-px bg-text transform -translate-x-1/2"></div>
+        <div className="absolute left-1/2 top-2 bottom-2 border-l border-text transform -translate-x-1/2"></div>
 
         {/* Headline */}
         <h2 className="text-center font-mono uppercase py-0.5 mb-24 mt-28 relative bg-bg">

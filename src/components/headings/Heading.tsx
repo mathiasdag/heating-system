@@ -59,7 +59,7 @@ const variantConfig = {
   'card-title': {
     defaultAs: 'h3' as const,
     className:
-      'font-display uppercase text-lg sm:text-[2em] leading-[1em] break-words tracking-[-0.01em]',
+      'font-display uppercase text-lg sm:text-[1.8em] leading-[1em] break-words tracking-[-0.01em]',
   },
   'small-title': {
     defaultAs: 'h4' as const,

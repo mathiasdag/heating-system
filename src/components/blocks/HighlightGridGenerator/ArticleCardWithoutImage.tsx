@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppLink } from '@/components/ui';
-import { Tag } from '@/components/ui';
+import { TagList } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
 import { DevIndicator } from '@/components/dev/DevIndicator';
@@ -14,6 +14,14 @@ export default function ArticleCardWithoutImage({
   index,
 }: Omit<CardProps, 'isHovered' | 'onHoverStart' | 'onHoverEnd' | 'onClick'>) {
   const articleContent = getArticleContent(item);
+
+  // Create tags array from published date
+  const tags = [];
+  if (item.publishedDate) {
+    const { year, month } = formatDateForTags(item.publishedDate);
+    if (year) tags.push({ id: year, name: year });
+    if (month) tags.push({ id: month, name: month });
+  }
 
   // Create body content for RichText
   const body = articleContent
@@ -45,26 +53,8 @@ export default function ArticleCardWithoutImage({
     >
       <DevIndicator componentName="ArticleCardWithoutImage" />
       <div className="grid gap-6 mb-4 sm:px-2 text-center hyphens-auto">
-        <header>
-          <div className="mb-3">
-            <div className="flex gap-x-0.5 gap-y-[0.25em] flex-wrap -mx-0.5 justify-center">
-              {item.publishedDate && (
-                <>
-                  {(() => {
-                    const { year, month } = formatDateForTags(
-                      item.publishedDate
-                    );
-                    return (
-                      <>
-                        {year && <Tag name={year} size="md" />}
-                        {month && <Tag name={month} size="md" />}
-                      </>
-                    );
-                  })()}
-                </>
-              )}
-            </div>
-          </div>
+        <header className="px-2 grid gap-3">
+          <TagList tags={tags} size="md" />
           <Heading variant="card-title" as="h3">
             {item.title}
           </Heading>

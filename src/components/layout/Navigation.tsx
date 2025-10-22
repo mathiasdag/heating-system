@@ -152,7 +152,7 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
 
 const Logo: React.FC = () => {
   const logoContainerClasses = clsx(
-    `absolute top-4 right-4 sm:top-2 sm:right-2`
+    `absolute top-4 right-4 sm:top-2 sm:right-2 z-10`
   );
 
   return (

@@ -29,7 +29,7 @@ export default function ArticleCardWithoutImage({
         transition={{ duration: 0.1 }}
       >
         <div className="relative">
-          <div className="relative aspect-[4/6] overflow-hidden rounded-md p-6 font-mono z-10 bg-surface [.homepage_&]:bg-accent">
+          <div className="relative aspect-[4/6] overflow-hidden rounded-md p-6 font-mono z-10 bg-surface">
             <motion.div
               className="flex flex-col gap-3"
               animate={{

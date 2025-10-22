@@ -121,7 +121,7 @@ export const Footer: React.FC = () => {
           width={670}
           height={520}
           unoptimized
-          className="p-2 mt-28 w-28 h-auto mix-blend-multiply dark:invert dark:mix-blend-lighten"
+          className="p-2 mt-20 w-28 h-auto mix-blend-multiply dark:invert dark:mix-blend-lighten"
         />
       </div>
     </footer>

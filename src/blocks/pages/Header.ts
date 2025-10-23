@@ -6,7 +6,7 @@ const Header: Block = {
     {
       name: 'variant',
       type: 'select',
-      label: 'Header Variant',
+      label: 'Variant',
       options: [
         { label: 'No assets', value: 'text-only' },
         { label: 'Assets before text', value: 'assets-before' },

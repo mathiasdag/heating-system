@@ -144,16 +144,21 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   return (
     <div
       className={clsx(
-        'flex flex-col aspect-window',
-        'px-3 sm:px-6 relative',
+        'flex flex-col aspect-window px-1',
+        'relative',
         hasValidLink && buttonVariant === 'primary'
-          ? 'h-full justify-between pb-4 pt-8'
-          : 'justify-center py-8 sm:py-6',
+          ? 'pb-11 h-full justify-between'
+          : 'justify-center',
         className
       )}
     >
       <DevIndicator componentName="MediaCard" />
-      <div className="grid gap-6 mb-4 text-center">
+      <div
+        className={clsx(
+          'grid gap-6 mb-4 text-center overflow-y-scroll px-2 sm:px-5',
+          hasValidLink && buttonVariant === 'primary' ? 'pt-8' : 'py-8 sm:py-6'
+        )}
+      >
         <header>
           <div className="mb-3">
             <TagList tags={tags} size="md" />
@@ -182,16 +187,15 @@ export const MediaCard: React.FC<MediaCardProps> = ({
         />
       </div>
       {hasValidLink && linkResult && (
-        <AppLink
-          href={linkResult.href!}
-          variant={buttonVariant}
-          className={clsx(
-            'mx-auto mt-2',
-            buttonVariant === 'primary' && 'w-full'
-          )}
-        >
-          {link!.text}
-        </AppLink>
+        <div className="absolute bottom-0 inset-x-0 px-3 py-3">
+          <AppLink
+            href={linkResult.href!}
+            variant={buttonVariant}
+            className={clsx('', buttonVariant === 'primary' && 'w-full')}
+          >
+            {link!.text}
+          </AppLink>
+        </div>
       )}
     </div>
   );

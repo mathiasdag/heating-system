@@ -47,9 +47,9 @@ export default function PageHeaderGradientHero({
 
       {/* Hero Section */}
       <div
-        className={clsx(`relative overflow-hidden pt-8
-          h-[50vh] sm:h-[70vh] min-h-[500px]
-        `)}
+        className={clsx(
+          `relative overflow-hidden pt-8 h-[50vh] sm:h-[80vh] min-h-[500px]`
+        )}
       >
         {/* Background Asset */}
         {heroAsset && (
@@ -59,7 +59,7 @@ export default function PageHeaderGradientHero({
         )}
 
         {/* Overlay */}
-        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-bg to-transparent -translate-y-0" />
+        <div className="absolute inset-x-0 bottom-0 h-0 bg-bg rounded-t-xl" />
       </div>
       {/* Content */}
       {text && (

@@ -1,95 +1,48 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AppLink } from '@/components/ui';
 import { MediaCard } from '@/components/blocks/MediaCard';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
+import { useHasHydrated, useResponsiveColumnCount, chunkArray } from './utils';
+import type { StackedCardGridProps } from './types';
 
-interface Card {
-  title: string;
-  description?: string;
-  image?: { url: string; alt?: string };
-  tags?: { id: string; name: string; description?: string }[];
-  link?: {
-    type?: 'internal' | 'external';
-    text?: string;
-    url?: string;
-    reference?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  };
-}
-
-interface OrangeCardGridProps {
-  headline?: string;
-  description?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  cards: Card[];
-  link?: {
-    type: 'internal' | 'external' | 'copy';
-    text?: string;
-    url?: string;
-    reference?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  };
-}
-
-function useHasHydrated() {
-  const [hasHydrated, setHasHydrated] = useState(false);
-  useEffect(() => {
-    setHasHydrated(true);
-  }, []);
-  return hasHydrated;
-}
-
-function useResponsiveColumnCount() {
-  const [columnCount, setColumnCount] = useState(1);
-  useEffect(() => {
-    function updateColumns() {
-      if (window.innerWidth >= 1280) {
-        setColumnCount(3);
-      } else if (window.innerWidth >= 1024) {
-        setColumnCount(2);
-      } else {
-        setColumnCount(1);
-      }
-    }
-    updateColumns();
-    window.addEventListener('resize', updateColumns);
-    return () => window.removeEventListener('resize', updateColumns);
-  }, []);
-  return columnCount;
-}
-
-function chunkArray<T>(arr: T[], size: number): T[][] {
-  const result: T[][] = [];
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size));
-  }
-  return result;
-}
-
-export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
+export const StackedCardGrid: React.FC<StackedCardGridProps> = ({
   headline,
   description,
   cards,
   link,
+  variant = 'default',
 }) => {
   const hasHydrated = useHasHydrated();
   const columnCount = useResponsiveColumnCount();
 
   if (!hasHydrated) {
     return (
-      <section className={`py-24 px-2 sm:px-4 grid gap-4 bg-accent`}>
+      <section
+        className={`py-24 px-2 sm:px-4 grid gap-4 ${variant === 'orange' ? 'bg-accent' : ''}`}
+      >
         <BlockHeader headline={headline} description={description} />
       </section>
     );
   }
 
-  const rows = chunkArray(cards, columnCount);
+  // Handle case where cards might be undefined or empty
+  const safeCards = cards || [];
+
+  const rows = chunkArray(safeCards, columnCount);
   const lastRow = rows[rows.length - 1] || [];
   const emptyCount =
     lastRow.length < columnCount ? columnCount - lastRow.length : 0;
 
+  // Check for link existence (support both doc and reference properties)
+  const hasLink = link && link.type && (link.url || link.doc || link.reference);
+
   return (
-    <section className={`py-24 px-2 sm:px-4 grid bg-accent relative`}>
-      <DevIndicator componentName="OrangeCardGrid" />
+    <section
+      className={`py-24 px-2 sm:px-4 grid ${variant === 'orange' ? 'bg-accent' : ''} relative`}
+    >
+      <DevIndicator componentName="StackedCardGrid" />
       <BlockHeader headline={headline} description={description} />
       <div className="py-2 mt-2 border-text border-t border-b">
         {rows.map((row, rowIdx) => (
@@ -128,7 +81,7 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
           </React.Fragment>
         ))}
       </div>
-      {link && link.type && (link.url || link.reference) && (
+      {hasLink && (
         <div className="mt-8 text-center">
           <AppLink
             link={link}
@@ -142,4 +95,4 @@ export const OrangeCardGrid: React.FC<OrangeCardGridProps> = ({
   );
 };
 
-export default OrangeCardGrid;
+export default StackedCardGrid;

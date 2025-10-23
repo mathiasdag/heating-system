@@ -15,13 +15,4 @@ export { default as Tag } from './Tag';
 export { TagList } from './TagList';
 export { default as Model3D } from './Model3D';
 export { AnimatedArrow } from './AnimatedArrow';
-export {
-  TextOnlyCard,
-  TextOnlyCardSkeleton,
-  CompactCard,
-  CompactCardSkeleton,
-  MediumCard,
-  MediumCardSkeleton,
-  LargeCard,
-  LargeCardSkeleton,
-} from './UserCard';
+export { TextOnlyCard, CompactCard, MediumCard, LargeCard } from './UserCard';

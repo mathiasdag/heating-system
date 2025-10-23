@@ -34,7 +34,7 @@ const sizeStyles = {
 
 const baseStyles = {
   primary:
-    'uppercase bg-text text-white mix-blend-multiply rounded-md block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+    'uppercase bg-text text-bg mix-blend-multiply rounded-md block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   secondary:
     'uppercase bg-accent rounded-md block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   outline:

@@ -5,7 +5,7 @@ import { AppLink } from '@/components/ui';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';
-import { defaultConverter, spaceConverter } from '@/utils/richTextConverters';
+import { assetTextConverter, spaceConverter } from '@/utils/richTextConverters';
 import MediaAsset from '@/components/common/MediaAsset';
 import clsx from 'clsx';
 
@@ -49,7 +49,7 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   const isStandalone = variant === 'standalone';
 
   // Choose converter based on page type
-  const converter = pageType === 'space' ? spaceConverter : defaultConverter;
+  const converter = pageType === 'space' ? spaceConverter : assetTextConverter;
 
   return (
     <FadeIn

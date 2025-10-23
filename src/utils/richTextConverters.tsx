@@ -114,6 +114,14 @@ export const blockquoteConverters = {
     );
   },
 
+  // Medium for asset text
+  default: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    return (
+      <blockquote className="relative font-display text-lg">{text}</blockquote>
+    );
+  },
+
   // Compact for cards
   card: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
@@ -389,6 +397,13 @@ export const articleConverter = buildConverter({
 export const defaultConverter = buildConverter({
   paragraph: 'default',
   blockquote: 'page',
+  heading: 'default',
+  list: 'default',
+});
+
+export const assetTextConverter = buildConverter({
+  paragraph: 'default',
+  blockquote: 'default',
   heading: 'default',
   list: 'default',
 });

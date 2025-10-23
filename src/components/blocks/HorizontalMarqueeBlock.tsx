@@ -27,9 +27,9 @@ export default function HorizontalMarqueeBlock({
   // react-fast-marquee typically expects speed in pixels per second
   // Let's try mapping CMS values (10-50) to reasonable pixel speeds (20-200)
   const minCmsSpeed = 10;
-  const maxCmsSpeed = 50;
+  const maxCmsSpeed = 30;
   const minPixelSpeed = 20;
-  const maxPixelSpeed = 200;
+  const maxPixelSpeed = 100;
 
   const normalizedSpeed =
     (speedValue - minCmsSpeed) / (maxCmsSpeed - minCmsSpeed);

@@ -52,7 +52,7 @@ function extractUserData(user: Record<string, unknown>) {
     | undefined;
 
   return {
-    fullName: [firstName, lastName].filter(Boolean).join(' ') || email,
+    fullName: [firstName, lastName].filter(Boolean).join(' '),
     tags,
     profilePicture,
     bylineDescription,

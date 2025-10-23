@@ -28,12 +28,12 @@ const HorizontalMarqueeBlock: Block = {
       name: 'speed',
       type: 'number',
       required: true,
-      defaultValue: 30,
+      defaultValue: 20,
       min: 10,
-      max: 50,
+      max: 30,
       admin: {
         description:
-          'Speed of the marquee animation (10 = slowest, 50 = fastest)',
+          'Speed of the marquee animation (10 = slowest, 30 = fastest)',
       },
     },
     {

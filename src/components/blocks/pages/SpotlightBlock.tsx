@@ -13,6 +13,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { AppLink } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
+import { defaultConverter } from '@/utils/richTextConverters';
 import clsx from 'clsx';
 
 interface SpotlightBlockProps {
@@ -99,7 +100,11 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
           {typeof description === 'string' || description == null ? (
             <div className="whitespace-pre-line">{description}</div>
           ) : (
-            <RichText data={description} />
+            <RichText
+              data={description}
+              converters={defaultConverter}
+              className=""
+            />
           )}
         </div>
         <div className="pb-8">

@@ -65,7 +65,14 @@ export const paragraphConverters = {
   default: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
     if (isEmptyParagraph(text)) return null;
-    return <p className="font-mono max-w-6xl hyphens-auto">{text}</p>;
+    return (
+      <p
+        className="font-mono max-w-6xl hyphens-auto"
+        style={{ textAlign: 'inherit' }}
+      >
+        {text}
+      </p>
+    );
   },
 
   // Compact for cards

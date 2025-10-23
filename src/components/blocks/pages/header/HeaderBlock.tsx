@@ -2,6 +2,7 @@ import React from 'react';
 import HeaderBlockAssetsAbove from './HeaderBlockAssetsAbove';
 import HeaderBlockStandard from './HeaderBlockStandard';
 import HeaderBlockTextOnly from './HeaderBlockTextOnly';
+import HeaderBlockHero from './HeaderBlockHero';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -14,11 +15,38 @@ interface HeaderBlockProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   text: any;
   assets?: Asset[];
+  // Hero variant props
+  heroAsset?: {
+    type?: 'image' | 'mux';
+    image?: { url: string; alt?: string; width?: number; height?: number };
+    mux?: string;
+  };
+  title?: string;
+  attributes?: Array<{
+    type: 'custom' | 'capacity' | 'area';
+    value: string | number;
+    unit?: string;
+  }>;
+  variant?: 'text-only' | 'assets-before' | 'text-before' | 'gradient';
 }
 
-export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
-  // Debug: Log the assets to see what we're working with
-  console.log('HeaderBlock assets:', assets);
+export default function HeaderBlock({
+  text,
+  assets = [],
+  heroAsset,
+  title,
+  attributes,
+  variant = 'text-only',
+}: HeaderBlockProps) {
+  // Handle gradient variant
+  if (variant === 'gradient') {
+    return null;
+  }
+
+  // Handle text-only variant
+  if (variant === 'text-only') {
+    return <HeaderBlockTextOnly text={text} />;
+  }
 
   // Filter assets that actually have content uploaded
   const validAssets = assets.filter(asset => {
@@ -37,27 +65,16 @@ export default function HeaderBlock({ text, assets = [] }: HeaderBlockProps) {
 
   console.log('Valid assets:', validAssets);
 
-  const beforeAssets = validAssets.filter(
-    asset => asset.placement === 'before'
-  );
-  const afterAssets = validAssets.filter(asset => asset.placement === 'after');
-  const hasAssets = validAssets.length > 0;
-
-  // If no assets, render text-only version
-  if (!hasAssets) {
-    return <HeaderBlockTextOnly text={text} />;
+  // Handle assets-before variant
+  if (variant === 'assets-before' && validAssets.length > 0) {
+    return <HeaderBlockAssetsAbove text={text} assets={validAssets} />;
   }
 
-  // If has assets above text, use assets above variant
-  if (beforeAssets.length > 0) {
-    return <HeaderBlockAssetsAbove text={text} assets={beforeAssets} />;
+  // Handle text-before variant
+  if (variant === 'text-before' && validAssets.length > 0) {
+    return <HeaderBlockStandard text={text} assets={validAssets} />;
   }
 
-  // If has assets below text, use standard variant
-  if (afterAssets.length > 0) {
-    return <HeaderBlockStandard text={text} assets={afterAssets} />;
-  }
-
-  // Fallback (shouldn't reach here)
-  return null;
+  // Fallback to text-only if no valid assets
+  return <HeaderBlockTextOnly text={text} />;
 }

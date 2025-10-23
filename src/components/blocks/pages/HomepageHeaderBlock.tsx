@@ -30,12 +30,24 @@ interface HomepageHeaderBlockProps {
   text: any;
   assets?: Asset[];
   children?: React.ReactNode;
+  // New gradient variant props
+  variant?: 'standard' | 'gradient';
+  heroAsset?: {
+    url: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+  };
+  title?: string;
 }
 
 export default function HomepageHeaderBlock({
   text,
   assets = [],
   children,
+  variant = 'standard',
+  heroAsset,
+  title,
 }: HomepageHeaderBlockProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

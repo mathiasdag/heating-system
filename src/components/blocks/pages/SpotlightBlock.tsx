@@ -103,7 +103,7 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
             <RichText
               data={description}
               converters={defaultConverter}
-              className=""
+              className="grid gap-3"
             />
           )}
         </div>

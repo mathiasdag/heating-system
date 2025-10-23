@@ -108,6 +108,7 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
               };
             }>
           }
+          variant={(processedPage as PageData).header!.variant}
         />
       )}
 

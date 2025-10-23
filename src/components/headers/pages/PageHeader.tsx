@@ -2,10 +2,10 @@ import React from 'react';
 import PageHeaderAssetsAbove from './PageHeaderAssetsAbove';
 import PageHeaderStandard from './PageHeaderStandard';
 import PageHeaderTextOnly from './PageHeaderTextOnly';
+import PageHeaderGradientHero from './PageHeaderGradientHero';
 
 interface Asset {
   type: 'image' | 'mux' | 'video';
-  placement: 'before' | 'after';
   image?: { url: string; alt?: string; width?: number; height?: number };
   mux?: string;
   video?: { url: string; alt?: string; width?: number; height?: number };
@@ -15,9 +15,14 @@ interface PageHeaderProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   text: any;
   assets?: Asset[];
+  variant?: 'text-only' | 'assets-before' | 'text-before' | 'gradient';
 }
 
-export default function PageHeader({ text, assets = [] }: PageHeaderProps) {
+export default function PageHeader({
+  text,
+  assets = [],
+  variant = 'text-only',
+}: PageHeaderProps) {
   // Filter assets that actually have content uploaded
   const validAssets = assets.filter(asset => {
     if (asset.type === 'image') {
@@ -32,27 +37,29 @@ export default function PageHeader({ text, assets = [] }: PageHeaderProps) {
     return false;
   });
 
-  const beforeAssets = validAssets.filter(
-    asset => asset.placement === 'before'
-  );
-  const afterAssets = validAssets.filter(asset => asset.placement === 'after');
   const hasAssets = validAssets.length > 0;
 
-  // If no assets, render text-only version
+  // If no valid assets, always use text-only regardless of variant
   if (!hasAssets) {
     return <PageHeaderTextOnly text={text} />;
   }
 
-  // If has assets above text, use assets above variant
-  if (beforeAssets.length > 0) {
-    return <PageHeaderAssetsAbove text={text} assets={beforeAssets} />;
-  }
+  // Render based on variant
+  switch (variant) {
+    case 'text-only':
+      return <PageHeaderTextOnly text={text} />;
 
-  // If has assets below text, use standard variant
-  if (afterAssets.length > 0) {
-    return <PageHeaderStandard text={text} assets={afterAssets} />;
-  }
+    case 'assets-before':
+      return <PageHeaderAssetsAbove text={text} assets={validAssets} />;
 
-  // Fallback (shouldn't reach here)
-  return null;
+    case 'text-before':
+      return <PageHeaderStandard text={text} assets={validAssets} />;
+
+    case 'gradient':
+      return <PageHeaderGradientHero text={text} assets={validAssets} />;
+
+    default:
+      // Fallback to text-only if no variant or invalid variant
+      return <PageHeaderTextOnly text={text} />;
+  }
 }

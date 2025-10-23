@@ -21,8 +21,6 @@ export default function HorizontalMarqueeBlock({
   speed,
   userCards,
 }: HorizontalMarqueeBlockProps) {
-  // Debug: Log the speed value and try different speed calculations
-
   // Try different speed calculations to see which one works
   const speedValue = Number(speed);
 
@@ -38,12 +36,23 @@ export default function HorizontalMarqueeBlock({
   const pixelSpeed =
     minPixelSpeed + normalizedSpeed * (maxPixelSpeed - minPixelSpeed);
 
-  // Also try inverted (higher CMS = slower)
-  // const invertedPixelSpeed =
-  //   maxPixelSpeed - normalizedSpeed * (maxPixelSpeed - minPixelSpeed);
-
   if (!userCards || userCards.length === 0) {
     return null;
+  }
+
+  // Calculate how many times to repeat each card to get at least 8 total cards
+  const minCards = 8;
+  const repeatCount = Math.ceil(minCards / userCards.length);
+
+  // Create array with repeated cards
+  const repeatedCards = [];
+  for (let i = 0; i < repeatCount; i++) {
+    userCards.forEach((userCard, index) => {
+      repeatedCards.push({
+        ...userCard,
+        key: `${i}-${index}`,
+      });
+    });
   }
 
   return (
@@ -51,20 +60,11 @@ export default function HorizontalMarqueeBlock({
       <DevIndicator componentName="HorizontalMarqueeBlock" />
       <BlockHeader headline={headline} description={description} />
 
-      <div className="overflow-hidden mt-8">
+      <div className="w-screen overflow-hidden mt-8">
         <Marquee speed={pixelSpeed} direction="left" gradient={false}>
-          <div className="flex items-center gap-4 ml-4">
-            {userCards.map((userCard, index) => (
-              <div key={index} className="flex-shrink-0">
-                <UserCardBlock
-                  variant={userCard.variant}
-                  user={userCard.user}
-                />
-              </div>
-            ))}
-            {/* Duplicate the cards for seamless loop */}
-            {userCards.map((userCard, index) => (
-              <div key={`duplicate-${index}`} className="flex-shrink-0">
+          <div className="flex items-center gap-4 ml-2">
+            {repeatedCards.map((userCard, index) => (
+              <div key={userCard.key} className="flex-shrink-0">
                 <UserCardBlock
                   variant={userCard.variant}
                   user={userCard.user}

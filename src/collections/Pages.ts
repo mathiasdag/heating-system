@@ -19,6 +19,7 @@ import InfoOverlay from '@/blocks/global/InfoOverlay';
 import HorizontalMarqueeBlock from '@/blocks/global/HorizontalMarqueeBlock';
 import TextBlock from '@/blocks/pages/TextBlock';
 import CTA from '@/blocks/global/CTA';
+import Model3D from '@/blocks/global/Model3D';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -196,6 +197,7 @@ const Pages: CollectionConfig = {
                 HorizontalMarqueeBlock,
                 TextBlock,
                 CTA,
+                Model3D,
                 // Add more blocks here as needed
               ],
             },

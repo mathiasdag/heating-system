@@ -7,6 +7,7 @@ import CTA from '@/blocks/global/CTA';
 import QA from '@/blocks/global/QA';
 import LogotypeWall from '@/blocks/pages/LogotypeWall';
 import PartnerBlock from '@/blocks/global/PartnerBlock';
+import Model3D from '@/blocks/global/Model3D';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 // import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -251,7 +252,15 @@ const Articles: CollectionConfig = {
                 features: ({ defaultFeatures }) => [
                   ...defaultFeatures,
                   BlocksFeature({
-                    blocks: [Image, Video, CTA, QA, LogotypeWall, PartnerBlock],
+                    blocks: [
+                      Image,
+                      Video,
+                      CTA,
+                      QA,
+                      LogotypeWall,
+                      PartnerBlock,
+                      Model3D,
+                    ],
                   }),
                 ],
               }),

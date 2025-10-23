@@ -25,6 +25,7 @@ import VideoBlock from '@/components/blocks/VideoBlock';
 import SignatureBlock from '@/components/blocks/global/SignatureBlock';
 import { LogotypeWall } from '@/components/blocks/pages/logotypeWall';
 import { PartnerCard } from '@/components/blocks/PartnerCard';
+import Model3DBlock from '@/components/blocks/Model3DBlock';
 import ListItem from '@/components/ui/ListItem';
 
 // ============================================================================
@@ -375,6 +376,14 @@ export const buildConverter = (options: {
             title={node.fields.title}
             image={node.fields.image}
             url={node.fields.url}
+          />
+        ),
+        '3D': ({ node }: any) => (
+          <Model3DBlock
+            model={node.fields.model}
+            autoRotate={node.fields.autoRotate}
+            autoRotateSpeed={node.fields.autoRotateSpeed}
+            height={node.fields.height}
           />
         ),
         signature: ({ node }: any) => (

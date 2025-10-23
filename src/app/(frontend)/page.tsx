@@ -21,6 +21,7 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { HighlightGridGeneratorBlock } from '@/components/blocks/HighlightGridGenerator';
+import Model3DBlock from '@/components/blocks/Model3DBlock';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
 
 // Define proper types for homepage data
@@ -101,6 +102,8 @@ function renderBlock(
       return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
     case 'highlightGridGenerator':
       return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
+    case '3D':
+      return <Model3DBlock key={i} {...cleanBlock} />;
     // Add more cases for other block types
     default:
       return null;

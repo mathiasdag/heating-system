@@ -13,6 +13,7 @@ import Calendar from '@/blocks/global/Calendar';
 import Image from '@/blocks/articles/Image';
 import InfoOverlay from '@/blocks/global/InfoOverlay';
 import HorizontalMarqueeBlock from '@/blocks/global/HorizontalMarqueeBlock';
+import Model3D from '@/blocks/global/Model3D';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -157,6 +158,7 @@ const Spaces: CollectionConfig = {
                 Calendar,
                 InfoOverlay,
                 HorizontalMarqueeBlock,
+                Model3D,
               ],
             },
           ],

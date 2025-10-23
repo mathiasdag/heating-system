@@ -120,6 +120,7 @@ const Pages: CollectionConfig = {
                       defaultValue: 'before',
                       required: true,
                       admin: {
+                        condition: () => false, // Hide the field
                         description:
                           'Choose where this asset should appear relative to the header text content',
                       },

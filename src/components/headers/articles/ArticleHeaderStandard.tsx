@@ -8,6 +8,7 @@ import { FadeIn } from '@/components/ui';
 import { TagList } from '@/components/ui';
 import { Heading } from '@/components/headings';
 import MediaAsset from '@/components/common/MediaAsset';
+import { defaultConverter } from '@/utils/richTextConverters';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -103,7 +104,13 @@ export default function ArticleHeaderStandard({
                 {articleData.title}
               </Heading>
             )}
-            {text && <RichText data={text} />}
+            {text && (
+              <RichText
+                data={text}
+                className="grid gap-3"
+                converters={defaultConverter}
+              />
+            )}
           </FadeIn>
         </motion.div>
 

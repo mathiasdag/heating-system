@@ -51,34 +51,30 @@ function Model({
   autoRotateSpeed?: number;
   onError: (error: Error) => void;
 }) {
-  try {
-    const { scene } = useGLTF(modelPath);
-    const modelRef = useRef<Group>(null);
-    const { viewport, size } = useThree();
+  // Always call hooks at the top level
+  const { scene } = useGLTF(modelPath);
+  const modelRef = useRef<Group>(null);
+  const { viewport, size } = useThree();
 
-    useFrame(state => {
-      if (modelRef.current && autoRotate) {
-        modelRef.current.rotation.y = state.clock.elapsedTime * autoRotateSpeed;
-      }
-    });
+  useFrame(state => {
+    if (modelRef.current && autoRotate) {
+      modelRef.current.rotation.y = state.clock.elapsedTime * autoRotateSpeed;
+    }
+  });
 
-    // Calculate responsive scale based on viewport and screen size
-    const minDimension = Math.min(viewport.width, viewport.height);
+  // Calculate responsive scale based on viewport and screen size
+  const minDimension = Math.min(viewport.width, viewport.height);
 
-    // More conservative scaling for better responsiveness
-    const baseScale = minDimension * 0.3;
-    const maxScale = Math.min(size.width, size.height) * 0.25;
-    const scale = Math.min(baseScale, maxScale, 2); // Cap at 2 to prevent huge models
+  // More conservative scaling for better responsiveness
+  const baseScale = minDimension * 0.3;
+  const maxScale = Math.min(size.width, size.height) * 0.25;
+  const scale = Math.min(baseScale, maxScale, 2); // Cap at 2 to prevent huge models
 
-    return (
-      <group ref={modelRef} scale={[scale, scale, scale]}>
-        <primitive object={scene} />
-      </group>
-    );
-  } catch (error) {
-    onError(error as Error);
-    return null;
-  }
+  return (
+    <group ref={modelRef} scale={[scale, scale, scale]}>
+      <primitive object={scene} />
+    </group>
+  );
 }
 
 // Loading fallback

@@ -30,6 +30,9 @@ const ListItem: React.FC<ListItemProps> = ({
     bullet: 'font-mono list-disc list-outside ml-8 pl-3 pb-1 last:pb-0',
   };
 
+  const hoverClasses =
+    'hover:rounded-none hover:-mx-1 transition-all duration-300';
+
   // Only apply size classes to outline and background variants
   const shouldApplySizeClasses =
     variant === 'outline' || variant === 'background';
@@ -39,6 +42,7 @@ const ListItem: React.FC<ListItemProps> = ({
       className={clsx(
         baseClasses,
         shouldApplySizeClasses && sizeClasses[size],
+        shouldApplySizeClasses && hoverClasses,
         variantClasses[variant],
         className
       )}

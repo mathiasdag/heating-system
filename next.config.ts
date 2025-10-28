@@ -30,6 +30,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/api/media/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.varmeverket.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async redirects() {

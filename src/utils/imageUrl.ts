@@ -1,45 +1,57 @@
 /**
- * Utility to fix image URLs for external backend
- * Frontend always fetches from external server, so images should too
+ * Utility to fix image URLs for S3 CDN
+ * Images are now served directly from S3 CDN at assets.varmeverket.com
  */
 
-// Get the external domain from environment variable
-const EXTERNAL_API_URL =
-  process.env.NEXT_PUBLIC_PAYLOAD_API_URL ||
-  'https://payload.cms.varmeverket.com/api';
-const EXTERNAL_DOMAIN = EXTERNAL_API_URL.replace('/api', '');
+// S3 CDN domain for assets
+const S3_CDN_DOMAIN = 'https://assets.varmeverket.com';
 
 /**
- * Fix image URL to always use external domain for frontend
+ * Fix image URL to use S3 CDN
  */
 export function fixImageUrl(url: string | undefined | null): string {
   if (!url) return '';
 
-  // If it's already a full URL with the correct domain, return as is
-  if (url.startsWith('http') && url.includes(EXTERNAL_DOMAIN)) {
+  // If it's already a full URL with the S3 CDN domain, return as is
+  if (url.startsWith('http') && url.includes('assets.varmeverket.com')) {
     return url;
   }
 
-  // If it's a full URL with localhost or wrong domain, replace the domain
-  if (url.startsWith('http')) {
+  // If it's a full URL with the old Payload domain, convert to S3 CDN
+  if (url.startsWith('http') && url.includes('payload.cms.varmeverket.com')) {
     try {
       const urlObj = new URL(url);
-      const fixedUrl = `${EXTERNAL_DOMAIN}${urlObj.pathname}${urlObj.search}`;
-      return fixedUrl;
+      // Extract filename from the old API path
+      const filename = urlObj.pathname.replace('/api/media/file/', '');
+      return `${S3_CDN_DOMAIN}/${filename}`;
     } catch {
       return url;
     }
   }
 
-  // If it's a relative path, prepend the external domain
-  if (url.startsWith('/')) {
-    const fixedUrl = `${EXTERNAL_DOMAIN}${url}`;
-    return fixedUrl;
+  // If it's a full URL with localhost or other domain, try to extract filename
+  if (url.startsWith('http')) {
+    try {
+      const urlObj = new URL(url);
+      const filename = urlObj.pathname.split('/').pop();
+      if (filename) {
+        return `${S3_CDN_DOMAIN}/${filename}`;
+      }
+    } catch {
+      return url;
+    }
   }
 
-  // If it's just a filename, assume it's in the media folder
-  const fixedUrl = `${EXTERNAL_DOMAIN}/api/media/file/${url}`;
-  return fixedUrl;
+  // If it's a relative path, extract filename and use S3 CDN
+  if (url.startsWith('/')) {
+    const filename = url.split('/').pop();
+    if (filename) {
+      return `${S3_CDN_DOMAIN}/${filename}`;
+    }
+  }
+
+  // If it's just a filename, use S3 CDN directly
+  return `${S3_CDN_DOMAIN}/${url}`;
 }
 
 /**
@@ -65,3 +77,4 @@ export function fixImageObject(image: {
     url: fixImageUrl(image.url),
   };
 }
+

@@ -66,7 +66,7 @@ export default function PageHeaderGradientHero({
         <FadeInUp as="div" timing="fast">
           <RichText
             data={text}
-            className="grid gap-3 justify-center mt-24"
+            className="grid gap-3 justify-center place-items-center mt-24 px-4 text-center"
             converters={defaultConverter}
           />
         </FadeInUp>

@@ -8,10 +8,8 @@ import { NextRequest, NextResponse } from 'next/server';
  * directly due to CORS restrictions.
  */
 
-const EXTERNAL_API_URL =
-  process.env.NEXT_PUBLIC_PAYLOAD_API_URL ||
-  'https://payload.cms.varmeverket.com/api';
-const EXTERNAL_DOMAIN = EXTERNAL_API_URL.replace('/api', '');
+// S3 CDN domain for assets
+const S3_CDN_DOMAIN = 'https://assets.varmeverket.com';
 
 export async function GET(
   request: NextRequest,
@@ -21,8 +19,8 @@ export async function GET(
     const { path } = await params;
     const filePath = path.join('/');
 
-    // Construct the external URL
-    const externalUrl = `${EXTERNAL_DOMAIN}/api/media/file/${filePath}`;
+    // Construct the S3 CDN URL
+    const externalUrl = `${S3_CDN_DOMAIN}/${filePath}`;
 
     // Fetch the file from the external server
     const response = await fetch(externalUrl, {

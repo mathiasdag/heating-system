@@ -80,24 +80,17 @@ export default function ArticleHeaderStandard({
   };
 
   return (
-    <div ref={ref} className="relative mb-16">
+    <div ref={ref} className="relative">
       <DevIndicator
         componentName="ArticleHeaderStandard"
         position="top-right"
       />
 
-      <div className="grid gap-8 justify-center pt-32 pb-16 text-center">
+      <div className="grid gap-8 justify-center pt-32 text-center">
         {/* Tags */}
         <TagList tags={articleData.tags} size="md" className="mb-4" />
 
-        <motion.div
-          className="flex items-center justify-center fixed inset-x-0 top-0"
-          style={{
-            opacity,
-            scale,
-            y,
-          }}
-        >
+        <motion.div className="flex items-center justify-center" style={{}}>
           <FadeIn
             as="div"
             className="px-4 grid gap-4 font-mono"
@@ -113,19 +106,6 @@ export default function ArticleHeaderStandard({
             {text && <RichText data={text} />}
           </FadeIn>
         </motion.div>
-
-        <div className="flex items-center justify-center opacity-0 pointer-events-none">
-          <div className="px-4 grid gap-4 font-mono">
-            {text && <RichText data={text} />}
-          </div>
-        </div>
-
-        {/* Fallback: Show title as h1 if no text at all */}
-        {!text && articleData.title && (
-          <Heading variant="article-title" as="h1">
-            {articleData.title}
-          </Heading>
-        )}
 
         {/* Author and Date Info */}
         <div className="font-mono">

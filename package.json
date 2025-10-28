@@ -3,8 +3,8 @@
   "version": "0.1.0-coupled-db",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:fast": "next dev --turbo",
+    "dev": "next dev --hostname local.addd",
+    "dev:fast": "next dev --turbo --hostname local.addd",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

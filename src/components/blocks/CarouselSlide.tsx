@@ -94,10 +94,10 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   return (
     <div className="relative select-none">
       <DevIndicator componentName="CarouselSlide" />
-      <div className="grid lg:grid-cols-2 items-center mx-auto bg-surface rounded-2xl relative">
+      <div className="grid lg:grid-cols-2 items-center mx-auto bg-surface-dark rounded-2xl relative">
         {/* Right Image - First on mobile */}
         {image && (
-          <div className="relative aspect-[4/3] lg:aspect-square lg:h-full order-1 lg:order-2">
+          <div className="relative aspect-[4/3] lg:aspect-[8/7] lg:h-full order-1 lg:order-2">
             <Image
               src={fixImageUrl(image.url)}
               alt={image.alt || 'Carousel image'}

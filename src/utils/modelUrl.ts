@@ -1,23 +1,22 @@
 /**
- * Utility to fix 3D model URLs for external backend
- * Uses local proxy to bypass CORS issues for GLB/GLTF files
+ * Utility to fix 3D model URLs for S3 CDN
+ * 3D models are now served directly from S3 CDN at assets.varmeverket.com
  */
 
-// Get the external domain from environment variable
-const EXTERNAL_API_URL =
-  process.env.NEXT_PUBLIC_PAYLOAD_API_URL ||
-  'https://payload.cms.varmeverket.com/api';
-const EXTERNAL_DOMAIN = EXTERNAL_API_URL.replace('/api', '');
+// S3 CDN domain for assets
+const S3_CDN_DOMAIN = 'https://assets.varmeverket.com';
 
 /**
- * Fix model URL to use local proxy to bypass CORS issues
- * This is specifically for 3D models (GLB/GLTF files) that can't be loaded directly
- * due to CORS restrictions from the external server. Works in both dev and production.
+ * Fix model URL to use S3 CDN directly
  */
 export function fixModelUrl(url: string | undefined | null): string {
   if (!url) return '';
 
-  // Always use the local proxy for 3D models to bypass CORS issues
+  // If it's already a full URL with the S3 CDN domain, return as is
+  if (url.startsWith('http') && url.includes('assets.varmeverket.com')) {
+    return url;
+  }
+
   // Extract filename from URL
   let filename = url;
   if (url.startsWith('http')) {
@@ -31,6 +30,5 @@ export function fixModelUrl(url: string | undefined | null): string {
     filename = url.split('/').pop() || url;
   }
 
-  // Use local proxy for 3D models in both development and production
-  return `/api/media-proxy/${filename}`;
+  return `${S3_CDN_DOMAIN}/${filename}`;
 }

@@ -37,8 +37,8 @@
 
 strong {
   font-weight: 400 !important;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  /*text-transform: uppercase;
+  letter-spacing: 0.03em;*/
 }
 
 a {
@@ -384,4 +384,16 @@ details[open] summary .accordion-arrow {
   .embla__container {
     grid-auto-columns: 70%;
   }
+}
+
+/* Hide scrollbars for all browsers */
+.scrollbar-hide {
+  /* Firefox */
+  scrollbar-width: none;
+  /* Safari and Chrome */
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

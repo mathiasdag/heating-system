@@ -30,7 +30,7 @@ const variantConfig = {
   'page-header': {
     defaultAs: 'h1' as const,
     className:
-      'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] px-4 pt-8',
+      'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] px-4 pt-8 pb-2',
   },
   'space-header': {
     defaultAs: 'h1' as const,

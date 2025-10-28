@@ -1,7 +1,7 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import { jsxConverter } from '@/utils/richTextConverters';
+import { defaultConverter } from '@/utils/richTextConverters';
 
 interface TextBlockProps {
   content: {
@@ -25,7 +25,7 @@ export default function TextBlock({ content }: TextBlockProps) {
       <RichText
         data={content}
         className="grid gap-3 justify-center"
-        converters={jsxConverter}
+        converters={defaultConverter}
       />
     </div>
   );

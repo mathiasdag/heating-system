@@ -43,37 +43,6 @@ export function fixImageUrl(url: string | undefined | null): string {
 }
 
 /**
- * Fix model URL to use local proxy in development to bypass CORS issues
- * This is specifically for 3D models (GLB/GLTF files) that can't be loaded directly
- * due to CORS restrictions from the external server.
- */
-export function fixModelUrl(url: string | undefined | null): string {
-  if (!url) return '';
-
-  // In development, use the local proxy to bypass CORS
-  if (process.env.NODE_ENV === 'development') {
-    // Extract filename from URL
-    let filename = url;
-    if (url.startsWith('http')) {
-      try {
-        const urlObj = new URL(url);
-        filename = urlObj.pathname.split('/').pop() || url;
-      } catch {
-        filename = url.split('/').pop() || url;
-      }
-    } else if (url.startsWith('/')) {
-      filename = url.split('/').pop() || url;
-    }
-
-    // Use local proxy for 3D models
-    return `/api/media-proxy/${filename}`;
-  }
-
-  // In production, use the external domain directly
-  return fixImageUrl(url);
-}
-
-/**
  * Fix image object with URL transformation
  */
 export function fixImageObject(image: {

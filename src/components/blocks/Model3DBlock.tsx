@@ -2,7 +2,7 @@
 
 import { Model3D } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import { fixModelUrl } from '@/utils/imageUrl';
+import { fixModelUrl } from '@/utils/modelUrl';
 
 interface Model3DBlockProps {
   model: {

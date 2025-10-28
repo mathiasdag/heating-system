@@ -44,9 +44,10 @@ export default function Model3DBlock({
           modelPath={fixModelUrl(model.url)}
           autoRotate={autoRotate}
           autoRotateSpeed={autoRotateSpeed}
-          enableZoom={true}
-          enablePan={true}
-          enableRotate={true}
+          enableZoom={false}
+          enablePan={false}
+          enableRotate={false}
+          interactive={false} // Disable all interactions for better performance
           height="100%"
           className="w-full h-full"
         />

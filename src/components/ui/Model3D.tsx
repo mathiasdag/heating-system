@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useRef } from 'react';
+import React, { Suspense, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
 import { Group } from 'three';
@@ -14,6 +14,7 @@ interface Model3DProps {
   enableZoom?: boolean;
   enablePan?: boolean;
   enableRotate?: boolean;
+  interactive?: boolean; // New prop to disable all interactions
   width?: number | string;
   height?: number | string;
 }
@@ -72,6 +73,7 @@ export default function Model3D({
   enableZoom = true,
   enablePan = true,
   enableRotate = true,
+  interactive = true, // Default to interactive
   width = '100%',
   height = '600px',
 }: Model3DProps) {
@@ -92,13 +94,19 @@ export default function Model3D({
           maxWidth: '100%',
         }}
         gl={{
-          antialias: true,
-          alpha: true,
+          antialias: false, // Disable antialiasing for better performance
+          alpha: true, // Keep alpha for transparency
+          powerPreference: 'high-performance', // Use dedicated GPU if available
+          stencil: false, // Disable stencil buffer
+          depth: true, // Keep depth buffer for 3D
+        }}
+        dpr={[1, 2]} // Limit device pixel ratio for performance
+        performance={{
+          min: 0.5, // Reduce quality when performance is low
         }}
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <pointLight position={[-10, -10, -5]} intensity={0.5} />
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[5, 5, 5]} intensity={0.8} />
 
         <Suspense fallback={<ModelLoader />}>
           <Model
@@ -108,13 +116,22 @@ export default function Model3D({
           />
         </Suspense>
 
-        <OrbitControls
-          enableZoom={enableZoom}
-          enablePan={enablePan}
-          enableRotate={enableRotate}
-          maxPolarAngle={Math.PI / 1.8} // Limit vertical rotation
-          minPolarAngle={Math.PI / 6} // Prevent flipping
-        />
+        {interactive && (
+          <OrbitControls
+            enableZoom={enableZoom}
+            enablePan={enablePan}
+            enableRotate={enableRotate}
+            maxPolarAngle={Math.PI / 1.8} // Limit vertical rotation
+            minPolarAngle={Math.PI / 6} // Prevent flipping
+            enableDamping={true}
+            dampingFactor={0.05}
+            // Disable scroll hijacking
+            touches={{
+              ONE: 2, // Only allow one finger for rotation
+              TWO: 0, // Disable two finger gestures (pinch/pan)
+            }}
+          />
+        )}
 
         <Environment preset="studio" />
       </Canvas>

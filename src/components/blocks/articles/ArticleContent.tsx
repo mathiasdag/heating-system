@@ -1,6 +1,6 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { articleConverter } from '@/utils/richTextConverters';
+import { articleConverter } from '@/utils/richTextConverters/index';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 
 interface ArticleContentProps {

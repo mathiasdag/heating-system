@@ -9,7 +9,7 @@ import VideoBlock from '@/components/blocks/VideoBlock';
 import { FadeInUp, FadeInDown } from '@/components/ui/FadeIn';
 // import clsx from 'clsx';
 import { fixImageUrl } from '@/utils/imageUrl';
-import { jsxConverter } from '@/utils/richTextConverters';
+import { jsxConverter } from '@/utils/richTextConverters/index';
 
 interface Asset {
   type: 'image' | 'mux';

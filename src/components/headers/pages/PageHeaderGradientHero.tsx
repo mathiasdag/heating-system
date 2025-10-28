@@ -2,7 +2,7 @@ import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import MediaAsset from '@/components/common/MediaAsset';
-import { defaultConverter } from '@/utils/richTextConverters';
+import { defaultConverter } from '@/utils/richTextConverters/index';
 import { FadeInUp } from '@/components/ui';
 import clsx from 'clsx';
 

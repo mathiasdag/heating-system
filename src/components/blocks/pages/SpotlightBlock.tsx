@@ -13,7 +13,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { AppLink } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
-import { defaultConverter } from '@/utils/richTextConverters';
+import { defaultConverter } from '@/utils/richTextConverters/index';
 import clsx from 'clsx';
 
 interface SpotlightBlockProps {

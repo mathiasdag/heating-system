@@ -5,7 +5,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { FadeIn } from '@/components/ui';
-import { jsxConverter } from '@/utils/richTextConverters';
+import { jsxConverter } from '@/utils/richTextConverters/index';
 import MediaAsset from '@/components/common/MediaAsset';
 import clsx from 'clsx';
 

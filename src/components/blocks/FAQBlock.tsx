@@ -5,7 +5,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import QAList from '@/components/blocks/QAList';
 import { Heading } from '@/components/headings/Heading';
-import { jsxConverter } from '@/utils/richTextConverters';
+import { jsxConverter } from '@/utils/richTextConverters/index';
 
 interface FAQItem {
   blockType: 'qa';

@@ -8,7 +8,7 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { fixImageUrl } from '@/utils/imageUrl';
 import { Heading } from '@/components/headings';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
-import { cardConverter } from '@/utils/richTextConverters';
+import { cardConverter } from '@/utils/richTextConverters/index';
 import { PlusIcon } from '../icons/PlusIcon';
 
 interface TagType {

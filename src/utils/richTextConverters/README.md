@@ -24,7 +24,10 @@ richTextConverters/
 ### Import from the main file (backward compatible)
 
 ```typescript
-import { articleConverter, defaultConverter } from '@/utils/richTextConverters';
+import {
+  articleConverter,
+  defaultConverter,
+} from '@/utils/richTextConverters/index';
 ```
 
 ### Import specific converters
@@ -33,7 +36,7 @@ import { articleConverter, defaultConverter } from '@/utils/richTextConverters';
 import {
   paragraphConverters,
   buildConverter,
-} from '@/utils/richTextConverters';
+} from '@/utils/richTextConverters/index';
 ```
 
 ## Converter Types
@@ -79,7 +82,7 @@ import {
 ## Building Custom Converters
 
 ```typescript
-import { buildConverter } from '@/utils/richTextConverters';
+import { buildConverter } from '@/utils/richTextConverters/index';
 
 const customConverter = buildConverter({
   paragraph: 'article',

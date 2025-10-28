@@ -9,7 +9,7 @@ import React, {
   useCallback,
 } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { jsxConverter } from '@/utils/richTextConverters';
+import { jsxConverter } from '@/utils/richTextConverters/index';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 // import VideoBlock from '@/components/blocks/VideoBlock';
 import MuxPlayer from '@mux/mux-player-react';

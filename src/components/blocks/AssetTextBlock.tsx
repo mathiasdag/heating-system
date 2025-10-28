@@ -5,7 +5,10 @@ import { AppLink } from '@/components/ui';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';
-import { assetTextConverter, spaceConverter } from '@/utils/richTextConverters';
+import {
+  assetTextConverter,
+  spaceConverter,
+} from '@/utils/richTextConverters/index';
 import MediaAsset from '@/components/common/MediaAsset';
 import clsx from 'clsx';
 

@@ -1,7 +1,10 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import { defaultConverter, articleConverter } from '@/utils/richTextConverters';
+import {
+  defaultConverter,
+  articleConverter,
+} from '@/utils/richTextConverters/index';
 
 interface TextBlockProps {
   content: {

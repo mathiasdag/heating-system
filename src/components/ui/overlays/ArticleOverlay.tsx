@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Overlay } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { fixImageUrl } from '@/utils/imageUrl';
-import { articleConverter } from '@/utils/richTextConverters';
+import { articleConverter } from '@/utils/richTextConverters/index';
 import Image from 'next/image';
 import { TagList } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';

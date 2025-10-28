@@ -5,7 +5,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { Heading } from '@/components/headings';
-import { cardConverter } from '@/utils/richTextConverters';
+import { cardConverter } from '@/utils/richTextConverters/index';
 import { formatDateForTags, getArticleContent } from './utils';
 import type { CardProps } from './types';
 

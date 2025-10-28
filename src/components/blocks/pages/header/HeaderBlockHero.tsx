@@ -3,7 +3,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { Attribute } from '@/components/ui';
 import MediaAsset from '@/components/common/MediaAsset';
-import { buildConverter } from '@/utils/richTextConverters';
+import { buildConverter } from '@/utils/richTextConverters/index';
 import { Heading } from '@/components/headings';
 
 interface Asset {

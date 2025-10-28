@@ -2,7 +2,7 @@ import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { FadeInUp } from '@/components/ui';
-import { jsxConverter } from '@/utils/richTextConverters';
+import { jsxConverter } from '@/utils/richTextConverters/index';
 
 interface PageHeaderTextOnlyProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -19,8 +19,8 @@ import {
   QABlock,
   ImageBlock,
   ArticleCTABlock,
-  ArticleTextBlock,
 } from '@/components/blocks/articles';
+import TextBlock from '@/components/blocks/TextBlock';
 import VideoBlock from '@/components/blocks/VideoBlock';
 import SignatureBlock from '@/components/blocks/global/SignatureBlock';
 import { LogotypeWall } from '@/components/blocks/pages/logotypeWall';
@@ -39,13 +39,13 @@ const isEmptyParagraph = (text: any): boolean => {
   return (
     !text ||
     (typeof text === 'string' && text.trim() === '') ||
-    (React.isValidElement(text) && text.props.children === '') ||
+    (React.isValidElement(text) && (text.props as any).children === '') ||
     (Array.isArray(text) &&
       text.every(
         child =>
           !child ||
           (typeof child === 'string' && child.trim() === '') ||
-          (React.isValidElement(child) && child.props.children === '')
+          (React.isValidElement(child) && (child.props as any).children === '')
       ))
   );
 };
@@ -204,7 +204,7 @@ export const headingConverters = {
   card: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
     return (
-      <Heading variant="small-card-title" as={node.tag}>
+      <Heading variant="small-title" as={node.tag}>
         {text}
       </Heading>
     );
@@ -336,7 +336,10 @@ export const buildConverter = (options: {
     if (options.includeBlocks) {
       converter.blocks = {
         textBlock: ({ node }: any) => (
-          <ArticleTextBlock content={node.fields.content} />
+          <TextBlock
+            content={node.fields.content}
+            variant={node.fields.variant || 'default'}
+          />
         ),
         image: ({ node }: any) => (
           <ImageBlock image={node.fields.image} caption={node.fields.caption} />

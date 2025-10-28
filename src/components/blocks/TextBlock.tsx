@@ -1,7 +1,7 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import { defaultConverter } from '@/utils/richTextConverters';
+import { defaultConverter, articleConverter } from '@/utils/richTextConverters';
 
 interface TextBlockProps {
   content: {
@@ -15,18 +15,35 @@ interface TextBlockProps {
       }>;
     };
   };
+  variant?: 'default' | 'article';
 }
 
-export default function TextBlock({ content }: TextBlockProps) {
+export default function TextBlock({
+  content,
+  variant = 'default',
+}: TextBlockProps) {
+  // Choose converter and styling based on variant
+  const converter = variant === 'article' ? articleConverter : defaultConverter;
+
+  const containerClasses =
+    variant === 'article' ? 'relative' : 'relative px-4 lg:px-8 text-center';
+
+  const richTextClasses =
+    variant === 'article'
+      ? 'grid gap-4 justify-center pb-8'
+      : 'grid gap-3 justify-center';
+
+  const WrapperComponent = variant === 'article' ? 'article' : 'section';
+
   return (
-    <div className="relative px-4 lg:px-8 text-center">
+    <WrapperComponent className={containerClasses}>
       <DevIndicator componentName="TextBlock" />
 
       <RichText
-        data={content}
-        className="grid gap-3 justify-center"
-        converters={defaultConverter}
+        data={content as never}
+        className={richTextClasses}
+        converters={converter}
       />
-    </div>
+    </WrapperComponent>
   );
 }

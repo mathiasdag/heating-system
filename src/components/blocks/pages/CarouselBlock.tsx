@@ -28,6 +28,7 @@ interface CarouselBlockProps {
       width?: number;
       height?: number;
     };
+    variant?: 'default' | 'hidden';
     [key: string]: unknown;
   }>;
   showArrows?: boolean;

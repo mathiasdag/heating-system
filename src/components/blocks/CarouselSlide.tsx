@@ -45,6 +45,7 @@ interface CarouselSlideProps {
   };
   image?: Media;
   link?: LinkGroupType;
+  variant?: 'default' | 'hidden';
 }
 
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
@@ -53,6 +54,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   content,
   image,
   link,
+  variant = 'default',
 }) => {
   const renderActionButton = (link: LinkGroup) => {
     const linkResult = routeLink(link);
@@ -90,6 +92,10 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       </AppAction>
     );
   };
+
+  if (variant === 'hidden') {
+    return null;
+  }
 
   return (
     <div className="relative select-none">

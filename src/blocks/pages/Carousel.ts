@@ -28,6 +28,15 @@ const Carousel: Block = {
           relationTo: 'media',
           required: true,
         },
+        {
+          name: 'variant',
+          type: 'select',
+          options: [
+            { label: 'Default', value: 'default' },
+            { label: 'Hidden', value: 'hidden' },
+          ],
+          defaultValue: 'default',
+        },
         LinkGroup,
       ],
     },

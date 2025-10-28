@@ -1,6 +1,6 @@
 'use client';
 
-import { Model3D } from '@/components/ui';
+import Model3D from '@/components/ui/Model3DLazy';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { fixModelUrl } from '@/utils/modelUrl';
 

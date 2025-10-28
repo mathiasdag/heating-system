@@ -41,7 +41,7 @@ const ListBlock: React.FC<ListBlockProps> = ({
         {items.map((item, index) => (
           <ListItem key={index} variant="background" size="md">
             <h4 className="font-sans uppercase mb-2">{item.title}</h4>
-            <p className="font-mono">{item.description}</p>
+            <p className="font-mono uppercase">{item.description}</p>
           </ListItem>
         ))}
       </ul>

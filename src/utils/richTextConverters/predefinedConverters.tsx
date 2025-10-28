@@ -5,7 +5,7 @@ export const articleConverter = buildConverter({
   paragraph: 'article',
   blockquote: 'article',
   heading: 'default',
-  list: 'default',
+  list: 'outlinedBoxes',
   includeBlocks: true,
 });
 

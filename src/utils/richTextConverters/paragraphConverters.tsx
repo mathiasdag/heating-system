@@ -6,7 +6,7 @@ export const paragraphConverters = {
   article: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
     if (isEmptyParagraph(text)) return null;
-    return <p className="max-w-xl px-4 mx-auto">{text}</p>;
+    return <p className="max-w-2xl w-full px-4 mx-auto">{text}</p>;
   },
 
   // Default mono font for blocks/cards

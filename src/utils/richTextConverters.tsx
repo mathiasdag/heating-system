@@ -383,7 +383,8 @@ export const buildConverter = (options: {
             model={node.fields.model}
             autoRotate={node.fields.autoRotate}
             autoRotateSpeed={node.fields.autoRotateSpeed}
-            height={node.fields.height}
+            aspectRatio={node.fields.aspectRatio}
+            height={node.fields.height} // Legacy field for backward compatibility
           />
         ),
         signature: ({ node }: any) => (

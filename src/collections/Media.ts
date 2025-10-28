@@ -14,7 +14,7 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     staticDir: 'media',
-    mimeTypes: ['image/*', 'video/*'],
+    mimeTypes: ['image/*', 'video/*', 'model/gltf-binary', 'model/gltf+json'],
     adminThumbnail: ({ doc }: { doc: Record<string, unknown> }) => {
       // For images, use the image itself as thumbnail
       if ((doc.mimeType as string)?.startsWith('image/')) {

@@ -2,6 +2,7 @@
 
 import { Model3D } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
+import { fixModelUrl } from '@/utils/imageUrl';
 
 interface Model3DBlockProps {
   model: {
@@ -12,28 +13,44 @@ interface Model3DBlockProps {
   };
   autoRotate?: boolean;
   autoRotateSpeed?: number;
-  height?: string;
+  aspectRatio?: string; // e.g., "16/9", "4/3", "1/1", "21/9"
+  height?: string; // Legacy field for backward compatibility
 }
 
 export default function Model3DBlock({
   model,
   autoRotate = true,
   autoRotateSpeed = 0.3,
-  height = '600px',
+  aspectRatio = '16/9', // Default aspect ratio
+  height, // Legacy field for backward compatibility
 }: Model3DBlockProps) {
-  return (
-    <div className="relative">
-      <DevIndicator componentName="Model3DBlock" position="top-center" />
+  // Use aspect ratio if available, otherwise fall back to height for backward compatibility
+  const containerStyle = aspectRatio
+    ? {
+        aspectRatio: aspectRatio,
+        maxWidth: '100%',
+      }
+    : {
+        height: height || '600px',
+        maxWidth: '100%',
+      };
 
-      <Model3D
-        modelPath={model.url}
-        autoRotate={autoRotate}
-        autoRotateSpeed={autoRotateSpeed}
-        enableZoom={true}
-        enablePan={true}
-        enableRotate={true}
-        height={height}
-      />
+  return (
+    <div className="relative w-full max-w-full overflow-hidden">
+      <DevIndicator componentName="Model3DBlock" position="top-left" />
+
+      <div className="w-full" style={containerStyle}>
+        <Model3D
+          modelPath={fixModelUrl(model.url)}
+          autoRotate={autoRotate}
+          autoRotateSpeed={autoRotateSpeed}
+          enableZoom={true}
+          enablePan={true}
+          enableRotate={true}
+          height="100%"
+          className="w-full h-full"
+        />
+      </div>
     </div>
   );
 }

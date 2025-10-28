@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useRef, useEffect, useState } from 'react';
+import { Suspense, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
 import { Group } from 'three';
@@ -30,7 +30,7 @@ function Model({
 }) {
   const { scene } = useGLTF(modelPath);
   const modelRef = useRef<Group>(null);
-  const { viewport } = useThree();
+  const { viewport, size } = useThree();
 
   useFrame(state => {
     if (modelRef.current && autoRotate) {
@@ -38,8 +38,13 @@ function Model({
     }
   });
 
-  // Scale model based on viewport size
-  const scale = Math.min(viewport.width, viewport.height) * 0.4;
+  // Calculate responsive scale based on viewport and screen size
+  const minDimension = Math.min(viewport.width, viewport.height);
+
+  // More conservative scaling for better responsiveness
+  const baseScale = minDimension * 0.3;
+  const maxScale = Math.min(size.width, size.height) * 0.25;
+  const scale = Math.min(baseScale, maxScale, 2); // Cap at 2 to prevent huge models
 
   return (
     <group ref={modelRef} scale={[scale, scale, scale]}>
@@ -68,13 +73,28 @@ export default function Model3D({
   enablePan = true,
   enableRotate = true,
   width = '100%',
-  height = '1200px',
+  height = '600px',
 }: Model3DProps) {
   return (
-    <div className={cn('relative', className)} style={{ width, height }}>
+    <div
+      className={cn('relative w-full overflow-hidden', className)}
+      style={{
+        width,
+        height,
+        maxWidth: '100%',
+      }}
+    >
       <Canvas
-        camera={{ position: [1, 1, 4], fov: 10 }}
-        style={{ width, height }}
+        camera={{ position: [1, 1, 4], fov: 50 }}
+        style={{
+          width: '100%',
+          height: '100%',
+          maxWidth: '100%',
+        }}
+        gl={{
+          antialias: true,
+          alpha: true,
+        }}
       >
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
@@ -92,6 +112,8 @@ export default function Model3D({
           enableZoom={enableZoom}
           enablePan={enablePan}
           enableRotate={enableRotate}
+          maxPolarAngle={Math.PI / 1.8} // Limit vertical rotation
+          minPolarAngle={Math.PI / 6} // Prevent flipping
         />
 
         <Environment preset="studio" />

@@ -13,16 +13,23 @@ import { jsxConverter } from '@/utils/richTextConverters/index';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 // import VideoBlock from '@/components/blocks/VideoBlock';
 import MuxPlayer from '@mux/mux-player-react';
-import { fixImageUrl } from '@/utils/imageUrl';
-import { motion } from 'framer-motion';
+import { fixImageUrl, fixVideoUrl } from '@/utils/imageUrl';
+import { motion, easeOut } from 'framer-motion';
 import { FadeIn } from '@/components/ui/FadeIn';
-import clsx from 'clsx';
 
 interface Asset {
-  type: 'image' | 'mux';
+  type: 'image' | 'mux' | 'video';
   placement: 'before' | 'after';
   image?: { url: string; alt?: string; width?: number; height?: number };
   mux?: string;
+  video?: {
+    url: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+    filename?: string;
+    mimeType?: string;
+  };
 }
 
 interface HomepageHeaderBlockProps {
@@ -45,16 +52,12 @@ export default function HomepageHeaderBlock({
   text,
   assets = [],
   children,
-  variant = 'standard',
-  heroAsset,
-  title,
 }: HomepageHeaderBlockProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const videoRef = useRef<any>(null);
   const richTextRef = useRef<HTMLDivElement>(null);
   const [isInViewport, setIsInViewport] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
 
   // Get the first asset (video or image) for the fullscreen background - memoized
@@ -62,6 +65,8 @@ export default function HomepageHeaderBlock({
     () => assets.find(asset => asset.placement === 'before') || assets[0],
     [assets]
   );
+
+  console.log(assets);
 
   // Intersection Observer to detect when RichText content is in viewport
   useEffect(() => {
@@ -106,7 +111,7 @@ export default function HomepageHeaderBlock({
     if (!backgroundAsset) return null;
 
     const animationProps = {
-      className: 'w-full h-full',
+      className: 'relative w-full h-full',
       initial: { opacity: 0, scale: 1.1 },
       animate: {
         opacity: 1,
@@ -114,7 +119,7 @@ export default function HomepageHeaderBlock({
       },
       transition: {
         duration: 0.5,
-        ease: 'easeOut',
+        ease: easeOut,
         delay: 1.5,
       },
     };
@@ -162,11 +167,29 @@ export default function HomepageHeaderBlock({
             onError={() => {
               setVideoError(true);
             }}
-            onLoadStart={() => {
-              setVideoLoaded(false);
+            onCanPlay={() => {
+              setVideoError(false);
+            }}
+          />
+        </motion.div>
+      );
+    }
+
+    if (backgroundAsset.type === 'video' && backgroundAsset.video?.url) {
+      return (
+        <motion.div {...animationProps}>
+          <video
+            ref={videoRef}
+            src={fixVideoUrl(backgroundAsset.video.url)}
+            autoPlay={false}
+            muted={true}
+            loop={true}
+            preload="auto"
+            className="w-full h-full object-cover"
+            onError={() => {
+              setVideoError(true);
             }}
             onCanPlay={() => {
-              setVideoLoaded(true);
               setVideoError(false);
             }}
           />
@@ -175,7 +198,7 @@ export default function HomepageHeaderBlock({
     }
 
     return null;
-  }, [backgroundAsset, isInViewport, videoLoaded, videoError]);
+  }, [backgroundAsset, videoError]);
 
   return (
     <>

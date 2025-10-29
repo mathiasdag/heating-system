@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { AppAction } from '@/components/ui';
 import { TagList } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import { cardConverter } from '@/utils/richTextConverters/index';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { routeLink, type LinkGroup as LinkGroupType } from '@/utils/linkRouter';
 import { fixImageUrl } from '@/utils/imageUrl';
@@ -56,7 +57,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   link,
   variant = 'default',
 }) => {
-  const renderActionButton = (link: LinkGroup) => {
+  const renderActionButton = (link: LinkGroupType) => {
     const linkResult = routeLink(link);
 
     if (linkResult.isExternal) {
@@ -100,10 +101,10 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   return (
     <div className="relative select-none">
       <DevIndicator componentName="CarouselSlide" />
-      <div className="grid lg:grid-cols-2 items-center mx-auto bg-surface-dark rounded-2xl relative">
+      <div className="grid lg:grid-cols-2 items-center h-full bg-surface-dark place-content-start rounded-2xl relative">
         {/* Right Image - First on mobile */}
         {image && (
-          <div className="relative aspect-[4/3] lg:aspect-[8/7] lg:h-full order-1 lg:order-2">
+          <div className="relative h-72 lg:h-full order-1 lg:order-2">
             <Image
               src={fixImageUrl(image.url)}
               alt={image.alt || 'Carousel image'}
@@ -115,7 +116,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
         )}
 
         {/* Left Content - Second on mobile */}
-        <div className="flex-1 space-y-4 px-8 pt-12 pb-16 lg:px-12 lg:py-16 order-2 lg:order-1 min-w-0">
+        <div className="flex-1 space-y-6 px-8 pt-10 pb-12 lg:px-12 lg:py-16 order-2 lg:order-1 min-w-0">
           {/* Tags */}
           <TagList tags={tags} size="sm" className="justify-start gap-2" />
 
@@ -128,9 +129,11 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
           {/* Content */}
           {content && (
-            <div className="font-mono">
-              <RichText data={content} />
-            </div>
+            <RichText
+              data={content}
+              converters={cardConverter}
+              className="grid gap-3"
+            />
           )}
 
           {/* Call to Action */}

@@ -155,7 +155,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
       <DevIndicator componentName="MediaCard" />
       <div
         className={clsx(
-          'grid gap-6 mb-4 text-center overflow-y-auto px-2 sm:px-5',
+          'grid gap-6 mb-4 text-center overflow-y-hidden px-2 sm:px-5',
           'scrollbar-hide', // Hide scrollbars for all browsers
           hasValidLink && buttonVariant === 'primary' ? 'pt-8' : 'py-8 sm:py-6'
         )}

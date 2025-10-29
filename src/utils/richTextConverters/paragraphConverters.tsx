@@ -27,7 +27,7 @@ export const paragraphConverters = {
   card: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
     if (isEmptyParagraph(text)) return null;
-    return <p className="text-sm font-mono">{text}</p>;
+    return <p className="text-sm font-mono hyphens-auto">{text}</p>;
   },
 
   space: ({ node, nodesToJSX }: any) => {

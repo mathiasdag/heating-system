@@ -1,21 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useRef, useMemo, useCallback } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { jsxConverter } from '@/utils/richTextConverters/index';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-// import VideoBlock from '@/components/blocks/VideoBlock';
-import MuxPlayer from '@mux/mux-player-react';
-import { fixImageUrl, fixVideoUrl } from '@/utils/imageUrl';
 import { motion, easeOut } from 'framer-motion';
 import { FadeIn } from '@/components/ui/FadeIn';
+import VideoPlayer from '@/components/common/VideoPlayer';
+import ImageRenderer from '@/components/common/ImageRenderer';
 
 interface Asset {
   type: 'image' | 'mux' | 'video';
@@ -54,11 +46,7 @@ export default function HomepageHeaderBlock({
   children,
 }: HomepageHeaderBlockProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const videoRef = useRef<any>(null);
   const richTextRef = useRef<HTMLDivElement>(null);
-  const [isInViewport, setIsInViewport] = useState(false);
-  const [videoError, setVideoError] = useState(false);
 
   // Get the first asset (video or image) for the fullscreen background - memoized
   const backgroundAsset = useMemo(
@@ -67,45 +55,6 @@ export default function HomepageHeaderBlock({
   );
 
   console.log(assets);
-
-  // Intersection Observer to detect when RichText content is in viewport
-  useEffect(() => {
-    if (!richTextRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInViewport(entry.isIntersecting);
-      },
-      {
-        threshold: 0, // Trigger when 10% of the RichText is visible
-        rootMargin: '500px 0px 0px 0px', // Start checking 500px before entering viewport
-      }
-    );
-
-    observer.observe(richTextRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  // Control video playback based on viewport visibility with better error handling
-  useEffect(() => {
-    if (!videoRef.current) return;
-
-    const video = videoRef.current;
-
-    if (isInViewport) {
-      // Play video when in viewport
-      video.play().catch(() => {
-        // Video play failed - handle silently
-        console.log('Video play failed');
-      });
-    } else {
-      // Pause video when not in viewport
-      video.pause();
-    }
-  }, [isInViewport]);
 
   const renderBackgroundAsset = useCallback(() => {
     if (!backgroundAsset) return null;
@@ -127,78 +76,60 @@ export default function HomepageHeaderBlock({
     if (backgroundAsset.type === 'image' && backgroundAsset.image?.url) {
       return (
         <motion.div {...animationProps}>
-          <Image
-            src={fixImageUrl(backgroundAsset.image.url)}
-            alt={backgroundAsset.image.alt || ''}
-            fill
+          <ImageRenderer
+            asset={
+              backgroundAsset as {
+                type: 'image';
+                image: {
+                  url: string;
+                  alt?: string;
+                  width?: number;
+                  height?: number;
+                };
+              }
+            }
+            variant="hero"
+            priority={true}
             className="w-full h-full object-cover"
-            priority
           />
         </motion.div>
       );
     }
 
-    if (backgroundAsset.type === 'mux' && backgroundAsset.mux) {
-      // Fallback to poster image if video has error
-      if (videoError) {
-        return (
-          <motion.div {...animationProps}>
-            <Image
-              src={`https://image.mux.com/${backgroundAsset.mux}/thumbnail.jpg?time=0`}
-              alt="Video poster"
-              fill
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        );
-      }
-
+    if (
+      (backgroundAsset.type === 'mux' || backgroundAsset.type === 'video') &&
+      (backgroundAsset.mux || backgroundAsset.video?.url)
+    ) {
       return (
         <motion.div {...animationProps}>
-          <MuxPlayer
-            ref={videoRef}
-            playbackId={backgroundAsset.mux}
-            autoPlay={false}
-            muted={true}
+          <VideoPlayer
+            asset={
+              backgroundAsset as {
+                type: 'mux' | 'video';
+                mux?: string;
+                video?: {
+                  url: string;
+                  alt?: string;
+                  width?: number;
+                  height?: number;
+                  filename?: string;
+                  mimeType?: string;
+                };
+              }
+            }
+            variant="hero"
+            controls={false}
+            autoplay={true}
             loop={true}
-            preload="auto"
-            poster={`https://image.mux.com/${backgroundAsset.mux}/thumbnail.jpg?time=0`}
-            className="w-full h-full object-cover no-controls"
-            onError={() => {
-              setVideoError(true);
-            }}
-            onCanPlay={() => {
-              setVideoError(false);
-            }}
-          />
-        </motion.div>
-      );
-    }
-
-    if (backgroundAsset.type === 'video' && backgroundAsset.video?.url) {
-      return (
-        <motion.div {...animationProps}>
-          <video
-            ref={videoRef}
-            src={fixVideoUrl(backgroundAsset.video.url)}
-            autoPlay={false}
-            muted={true}
-            loop={true}
-            preload="auto"
             className="w-full h-full object-cover"
-            onError={() => {
-              setVideoError(true);
-            }}
-            onCanPlay={() => {
-              setVideoError(false);
-            }}
+            videoClassName="w-full h-full"
           />
         </motion.div>
       );
     }
 
     return null;
-  }, [backgroundAsset, videoError]);
+  }, [backgroundAsset]);
 
   return (
     <>

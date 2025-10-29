@@ -1,12 +1,19 @@
-import Image from 'next/image';
 import React from 'react';
-import VideoBlock from '@/components/blocks/VideoBlock';
-import { fixImageUrl } from '@/utils/imageUrl';
+import ImageRenderer from '@/components/common/ImageRenderer';
+import VideoPlayer from '@/components/common/VideoPlayer';
 
 interface Asset {
-  type: 'image' | 'mux';
+  type: 'image' | 'mux' | 'video';
   image?: { url: string; alt?: string; width?: number; height?: number };
   mux?: string;
+  video?: {
+    url: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+    filename?: string;
+    mimeType?: string;
+  };
 }
 
 // Raw media data from Payload CMS
@@ -18,7 +25,12 @@ interface MediaData {
   mimeType?: string;
 }
 
-type MediaAssetVariant = 'default' | 'hero' | 'compact' | 'gallery';
+type MediaAssetVariant =
+  | 'default'
+  | 'hero'
+  | 'pageHero'
+  | 'compact'
+  | 'gallery';
 
 interface MediaAssetProps {
   asset: Asset | MediaData;
@@ -145,7 +157,7 @@ const MediaAsset: React.FC<MediaAssetProps> = ({
     'type' in asset
       ? (asset as Asset)
       : {
-          type: asset.mimeType?.startsWith('video/') ? 'mux' : 'image',
+          type: asset.mimeType?.startsWith('video/') ? 'video' : 'image',
           image: asset.mimeType?.startsWith('video/')
             ? undefined
             : {
@@ -154,134 +166,83 @@ const MediaAsset: React.FC<MediaAssetProps> = ({
                 width: asset.width,
                 height: asset.height,
               },
-          mux: asset.mimeType?.startsWith('video/')
-            ? asset.url.split('/').pop()
+          video: asset.mimeType?.startsWith('video/')
+            ? {
+                url: asset.url,
+                alt: asset.alt,
+                width: asset.width,
+                height: asset.height,
+                mimeType: asset.mimeType,
+              }
             : undefined,
         };
   if (normalizedAsset.type === 'image' && normalizedAsset.image?.url) {
-    // For hero variant, use fill layout for background images
-    if (variant === 'hero') {
-      return (
-        <Image
-          src={fixImageUrl(normalizedAsset.image.url)}
-          alt={normalizedAsset.image.alt || ''}
-          fill
-          className={defaults.className}
-          priority={finalPriority}
-          quality={defaults.quality}
-          sizes={defaults.sizes}
-          loading={finalPriority ? undefined : preload ? 'eager' : 'lazy'}
-          style={{ display: isVisible ? 'block' : 'none' }}
-          draggable={draggable}
-        />
-      );
-    }
-
-    // Calculate dimensions if not provided
-    let finalWidth = defaults.width;
-    let finalHeight = defaults.height;
-    let finalClassName = defaults.className;
-
-    // For assets above text (smaller, more dynamic sizing)
-    if (assetCount > 1 || defaults.height < 400) {
-      const aspectRatio =
-        normalizedAsset.image.width && normalizedAsset.image.height
-          ? normalizedAsset.image.width / normalizedAsset.image.height
-          : 1;
-      const isLandscape = aspectRatio > 1;
-      const shouldBeSquare =
-        assetCount > 1 || (assetCount === 1 && isLandscape);
-
-      finalHeight = Math.max(defaults.height - (assetCount - 1) * 40, 120);
-      finalWidth = shouldBeSquare
-        ? finalHeight
-        : Math.round(finalHeight * aspectRatio);
-      finalClassName = shouldBeSquare
-        ? 'rounded max-w-[50vw] aspect-square object-cover'
-        : 'rounded max-w-[50vw]';
-    } else {
-      // For standard assets (use original dimensions or defaults)
-      finalWidth = normalizedAsset.image.width || defaults.width || 800;
-      finalHeight = normalizedAsset.image.height || defaults.height;
-    }
-
     return (
-      <Image
-        src={fixImageUrl(normalizedAsset.image.url)}
-        alt={normalizedAsset.image.alt || ''}
-        width={finalWidth}
-        height={finalHeight}
-        className={finalClassName}
+      <ImageRenderer
+        asset={
+          normalizedAsset as {
+            type: 'image';
+            image: {
+              url: string;
+              alt?: string;
+              width?: number;
+              height?: number;
+            };
+          }
+        }
+        variant={variant}
         priority={finalPriority}
         quality={defaults.quality}
         sizes={defaults.sizes}
-        loading={finalPriority ? undefined : preload ? 'eager' : 'lazy'}
-        style={{ display: isVisible ? 'block' : 'none' }}
+        className={defaults.className}
+        isVisible={isVisible}
         draggable={draggable}
+        assetCount={assetCount}
       />
     );
   }
 
   if (normalizedAsset.type === 'mux' && normalizedAsset.mux) {
-    // For hero variant, use full container
-    if (variant === 'hero') {
-      return (
-        <div
-          className={defaults.videoClassName}
-          style={{ display: isVisible ? 'block' : 'none' }}
-        >
-          <VideoBlock
-            host="mux"
-            sources={[
-              {
-                playbackId: normalizedAsset.mux,
-                minWidth: 0,
-              },
-            ]}
-            controls={defaults.controls}
-            autoplay={defaults.autoplay}
-            adaptiveResolution={defaults.adaptiveResolution}
-          />
-        </div>
-      );
-    }
-
-    let finalWidth = defaults.width;
-    let finalHeight = defaults.height;
-    let finalVideoClassName = defaults.videoClassName;
-
-    // For assets above text (smaller, more dynamic sizing)
-    if (assetCount > 1 || defaults.height < 400) {
-      const shouldBeSquare = assetCount > 1;
-      finalHeight = Math.max(defaults.height - (assetCount - 1) * 40, 120);
-      finalWidth = shouldBeSquare ? finalHeight : Math.round(finalHeight * 1.5);
-      finalVideoClassName = shouldBeSquare
-        ? 'rounded overflow-hidden aspect-square'
-        : 'rounded overflow-hidden';
-    }
-
     return (
-      <div
-        style={{
-          height: `${finalHeight}px`,
-          width: `${finalWidth}px`,
-          display: isVisible ? 'block' : 'none',
-        }}
-        className={finalVideoClassName}
-      >
-        <VideoBlock
-          host="mux"
-          sources={[
-            {
-              playbackId: normalizedAsset.mux,
-              minWidth: 0,
-            },
-          ]}
-          controls={defaults.controls}
-          autoplay={defaults.autoplay}
-          adaptiveResolution={defaults.adaptiveResolution}
-        />
-      </div>
+      <VideoPlayer
+        asset={normalizedAsset as { type: 'mux'; mux: string }}
+        variant={variant}
+        controls={defaults.controls}
+        autoplay={defaults.autoplay}
+        loop={defaults.loop}
+        adaptiveResolution={defaults.adaptiveResolution}
+        className={defaults.className}
+        videoClassName={defaults.videoClassName}
+        isVisible={isVisible}
+      />
+    );
+  }
+
+  if (normalizedAsset.type === 'video' && normalizedAsset.video?.url) {
+    return (
+      <VideoPlayer
+        asset={
+          normalizedAsset as {
+            type: 'video';
+            video: {
+              url: string;
+              alt?: string;
+              width?: number;
+              height?: number;
+              filename?: string;
+              mimeType?: string;
+            };
+          }
+        }
+        variant={variant}
+        controls={defaults.controls}
+        autoplay={defaults.autoplay}
+        loop={defaults.loop}
+        adaptiveResolution={defaults.adaptiveResolution}
+        className={defaults.className}
+        videoClassName={defaults.videoClassName}
+        isVisible={isVisible}
+      />
     );
   }
 

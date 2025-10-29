@@ -1,6 +1,5 @@
 export { Footer } from './Footer';
-export { default as Navigation, type NavigationData } from './Navigation';
-export { default as NavigationWrapper } from './NavigationWrapper';
+export { Navigation as default, type NavigationData } from './navigation';
 export { BackgroundLoader } from './BackgroundLoader';
 export {
   UrlBasedTheme,

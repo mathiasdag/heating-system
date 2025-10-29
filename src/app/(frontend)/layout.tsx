@@ -1,8 +1,7 @@
 import React from 'react';
 import localFont from 'next/font/local';
 import './globals.css';
-import {
-  NavigationWrapper,
+import Navigation, {
   NavigationData,
   Footer,
   UrlBasedTheme,
@@ -143,7 +142,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <NotificationProvider>
             <UrlBasedTheme>
               <BackgroundLoader>
-                <NavigationWrapper navigation={navigation} />
+                {navigation && <Navigation navigation={navigation} />}
                 <main className={mainClassName}>
                   {children}
                   <Footer />

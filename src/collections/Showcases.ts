@@ -118,12 +118,22 @@ const Showcases: CollectionConfig = {
               type: 'checkbox',
               label: 'Autoplay',
               defaultValue: false,
+              admin: {
+                condition: () => false, // Hidden - carousel always autoplays
+                description:
+                  'Note: Videos in showcases always autoplay with no controls',
+              },
             },
             {
               name: 'controls',
               type: 'checkbox',
               label: 'Show Controls',
               defaultValue: false,
+              admin: {
+                condition: () => false, // Hidden - carousel always has no controls
+                description:
+                  'Note: Videos in showcases always have no controls',
+              },
             },
             {
               name: 'caption',

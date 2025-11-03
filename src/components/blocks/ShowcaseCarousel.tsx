@@ -84,8 +84,9 @@ const ShowcaseCarousel: React.FC<ShowcaseCarouselProps> = ({
                       minWidth: 0,
                     },
                   ]}
-                  controls={asset.controls ?? true}
-                  autoplay={asset.autoplay ?? false}
+                  controls={false}
+                  autoplay={true}
+                  loop={true}
                   adaptiveResolution={true}
                 />
               );
@@ -95,8 +96,9 @@ const ShowcaseCarousel: React.FC<ShowcaseCarouselProps> = ({
                 <VideoBlock
                   host="video"
                   videoFile={asset.video}
-                  controls={asset.controls ?? true}
-                  autoplay={asset.autoplay ?? false}
+                  controls={false}
+                  autoplay={true}
+                  loop={true}
                   adaptiveResolution={false}
                 />
               );

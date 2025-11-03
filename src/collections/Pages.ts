@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import AssetText from '@/blocks/global/AssetText';
 import AssetTextContainer from '@/blocks/global/AssetTextContainer';
-import Header from '@/blocks/pages/Header';
 import Spotlight from '@/blocks/pages/Spotlight';
 import HorizontalCardBlock from '@/blocks/pages/HorizontalCardBlock';
 import CardGrid from '@/blocks/pages/CardGrid';
@@ -189,7 +188,6 @@ const Pages: CollectionConfig = {
                 Spotlight,
                 AssetText,
                 AssetTextContainer,
-                Header,
                 List,
                 FAQ,
                 Calendar,

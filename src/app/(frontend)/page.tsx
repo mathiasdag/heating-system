@@ -60,8 +60,6 @@ function renderBlock(
       return <AssetTextBlock key={i} {...cleanBlock} />;
     case 'assetTextContainer':
       return <AssetTextContainerBlock key={i} {...cleanBlock} />;
-    case 'header':
-      return <HomepageHeaderBlock key={i} {...cleanBlock} />;
     case 'spotlight':
       return <SpotlightBlock key={i} {...cleanBlock} />;
     case 'horizontal-card-block':

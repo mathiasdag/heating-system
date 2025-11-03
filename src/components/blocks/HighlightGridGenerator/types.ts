@@ -22,6 +22,13 @@ export interface ContentItem {
     caption?: string;
     host?: string;
     playbackId?: string;
+    video?: {
+      id: string;
+      url: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
     autoplay?: boolean;
     controls?: boolean;
     title?: string;

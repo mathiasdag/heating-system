@@ -77,13 +77,41 @@ const Showcases: CollectionConfig = {
               label: 'Video Host',
               required: true,
               defaultValue: 'mux',
-              options: [{ label: 'Mux', value: 'mux' }],
+              options: [
+                { label: 'Mux', value: 'mux' },
+                { label: 'Self-hosted', value: 'video' },
+              ],
+              admin: {
+                description:
+                  'Select the video host. Mux provides adaptive streaming, Self-hosted uses uploaded video files.',
+              },
             },
             {
               name: 'playbackId',
               type: 'text',
               label: 'Mux Playback ID',
-              required: true,
+              required: false,
+              admin: {
+                condition: (
+                  data: unknown,
+                  siblingData: Record<string, unknown>
+                ) => siblingData?.host === 'mux',
+                description: 'Mux playback ID for Mux-hosted videos',
+              },
+            },
+            {
+              name: 'video',
+              type: 'upload',
+              relationTo: 'media',
+              required: false,
+              admin: {
+                condition: (
+                  data: unknown,
+                  siblingData: Record<string, unknown>
+                ) => siblingData?.host === 'video',
+                description:
+                  'Upload a video file (MP4, WebM, etc.) for self-hosted videos.',
+              },
             },
             {
               name: 'autoplay',

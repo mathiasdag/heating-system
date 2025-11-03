@@ -19,6 +19,13 @@ interface ShowcaseAsset extends CarouselItem {
   caption?: string;
   host?: string;
   playbackId?: string;
+  video?: {
+    id: string;
+    url: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+  };
   autoplay?: boolean;
   controls?: boolean;
   title?: string; // Title for text blocks
@@ -67,9 +74,8 @@ const ShowcaseCarousel: React.FC<ShowcaseCarouselProps> = ({
             );
 
           case 'videoWithCaption':
-            return (
-              asset.host === 'mux' &&
-              asset.playbackId && (
+            if (asset.host === 'mux' && asset.playbackId) {
+              return (
                 <VideoBlock
                   host="mux"
                   sources={[
@@ -82,8 +88,20 @@ const ShowcaseCarousel: React.FC<ShowcaseCarouselProps> = ({
                   autoplay={asset.autoplay ?? false}
                   adaptiveResolution={true}
                 />
-              )
-            );
+              );
+            }
+            if (asset.host === 'video' && asset.video) {
+              return (
+                <VideoBlock
+                  host="video"
+                  videoFile={asset.video}
+                  controls={asset.controls ?? true}
+                  autoplay={asset.autoplay ?? false}
+                  adaptiveResolution={false}
+                />
+              );
+            }
+            return null;
 
           case 'text':
             return (

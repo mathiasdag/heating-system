@@ -63,7 +63,7 @@ const Overlay: React.FC<OverlayProps> = ({
       style={{ zIndex }}
       onClick={closeOnOutsideClick ? handleOverlayClick : undefined}
     >
-      <DevIndicator componentName={componentName} position="bottom-right" />
+      <DevIndicator componentName={componentName} position="top-center" />
 
       {/* Content */}
       {children}

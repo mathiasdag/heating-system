@@ -21,6 +21,7 @@ interface VideoBlockProps {
   loop?: boolean;
   controls?: boolean;
   adaptiveResolution?: boolean; // default true
+  muted?: boolean;
 }
 
 const VideoBlock: React.FC<VideoBlockProps> = ({
@@ -31,6 +32,7 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
   loop = false,
   controls = false,
   adaptiveResolution = true,
+  muted = true,
 }) => {
   // Convert VideoBlock props to VideoPlayer asset format
   const asset = {
@@ -56,6 +58,7 @@ const VideoBlock: React.FC<VideoBlockProps> = ({
       autoplay={autoplay}
       loop={loop}
       adaptiveResolution={adaptiveResolution}
+      muted={muted}
     />
   );
 };

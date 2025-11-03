@@ -15,6 +15,8 @@ export { CapacityIcon } from './CapacityIcon';
 export { AreaIcon } from './AreaIcon';
 export { AccordionArrowIcon } from './AccordionArrowIcon';
 export { PlusIcon } from './PlusIcon';
+export { MuteIcon } from './MuteIcon';
+export { UnmuteIcon } from './UnmuteIcon';
 
 // Icon name type for type safety
 export type IconName =
@@ -26,7 +28,9 @@ export type IconName =
   | 'capacity'
   | 'area'
   | 'accordion-arrow'
-  | 'plus';
+  | 'plus'
+  | 'mute'
+  | 'unmute';
 
 // Icon mapping for dynamic usage
 import { CheckIcon } from './CheckIcon';
@@ -38,6 +42,8 @@ import { CapacityIcon } from './CapacityIcon';
 import { AreaIcon } from './AreaIcon';
 import { AccordionArrowIcon } from './AccordionArrowIcon';
 import { PlusIcon } from './PlusIcon';
+import { MuteIcon } from './MuteIcon';
+import { UnmuteIcon } from './UnmuteIcon';
 import { IconProps } from '@/components/icons/Icon';
 
 export const ICONS: Record<IconName, React.ComponentType<IconProps>> = {
@@ -50,4 +56,6 @@ export const ICONS: Record<IconName, React.ComponentType<IconProps>> = {
   area: AreaIcon,
   'accordion-arrow': AccordionArrowIcon,
   plus: PlusIcon,
+  mute: MuteIcon,
+  unmute: UnmuteIcon,
 };

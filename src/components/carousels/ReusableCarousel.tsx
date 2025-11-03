@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
+import { MuteIcon, UnmuteIcon } from '@/components/icons';
 
 export interface CarouselItem {
   id: string;
@@ -26,6 +27,10 @@ export interface ReusableCarouselProps {
   enableClickNavigation?: boolean;
   swipeThreshold?: number;
   debugMode?: boolean;
+  muteControl?: {
+    onMuteChange?: (isMuted: boolean) => void;
+    showOnItem?: (item: CarouselItem, index: number) => boolean;
+  };
   children: (
     item: CarouselItem,
     index: number,
@@ -48,9 +53,11 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
   enableClickNavigation = true,
   swipeThreshold = 50,
   debugMode = false,
+  muteControl,
   children,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -113,6 +120,19 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
       onCurrentItemChange(currentIndex, items[currentIndex]);
     }
   }, [currentIndex, items, onCurrentItemChange]);
+
+  // Call callback when mute state changes
+  useEffect(() => {
+    if (muteControl?.onMuteChange) {
+      muteControl.onMuteChange(isMuted);
+    }
+  }, [isMuted, muteControl]);
+
+  // Toggle mute state
+  const toggleMute = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation(); // Prevent carousel navigation
+    setIsMuted(prev => !prev);
+  }, []);
 
   // Auto-focus the carousel when it mounts
   useEffect(() => {
@@ -253,7 +273,7 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
 
   return (
     <div className={`w-full h-full ${className}`}>
-      <DevIndicator componentName="ReusableCarousel" position="bottom-right" />
+      <DevIndicator componentName="ReusableCarousel" position="bottom-left" />
 
       {/* Carousel Container */}
       <div
@@ -273,7 +293,7 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
         {/* Left navigation area */}
         {enableClickNavigation && (
           <div
-            className="absolute left-0 top-0 w-1/2 h-full z-5"
+            className="absolute left-0 top-0 w-1/2 h-full z-10"
             style={{ cursor: 'w-resize' }}
             onClick={e => {
               e.stopPropagation();
@@ -284,34 +304,18 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
 
         {/* Right navigation area - avoid top-right corner where close button might be */}
         {enableClickNavigation && (
-          <>
-            <div
-              className="absolute right-0 top-0 w-1/2 h-full z-5"
-              style={{
-                cursor: 'e-resize',
-                marginTop: '60px',
-                height: 'calc(100% - 60px)',
-              }}
-              onClick={e => {
-                e.stopPropagation();
-                nextSlide();
-              }}
-            />
-
-            {/* Small right navigation area for top section */}
-            <div
-              className="absolute right-0 top-0 w-1/2 z-5"
-              style={{
-                cursor: 'e-resize',
-                height: '60px',
-                marginRight: '60px',
-              }}
-              onClick={e => {
-                e.stopPropagation();
-                nextSlide();
-              }}
-            />
-          </>
+          <div
+            className="absolute right-0 top-0 w-1/2 h-full z-10"
+            style={{
+              cursor: 'e-resize',
+              marginTop: '60px',
+              height: 'calc(100% - 60px)',
+            }}
+            onClick={e => {
+              e.stopPropagation();
+              nextSlide();
+            }}
+          />
         )}
 
         {/* Render current item */}
@@ -381,6 +385,25 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
           </button>
         </>
       )}
+
+      {/* Mute Control Button */}
+      {muteControl &&
+        items.length > 0 &&
+        (() => {
+          const shouldShow = muteControl.showOnItem
+            ? muteControl.showOnItem(items[currentIndex], currentIndex)
+            : true;
+          return shouldShow ? (
+            <button
+              onClick={toggleMute}
+              className="absolute bottom-0 right-0 z-20 p-2 text-white cursor-pointer"
+              style={{ cursor: 'pointer' }}
+              aria-label={isMuted ? 'Unmute' : 'Mute'}
+            >
+              {isMuted ? <MuteIcon /> : <UnmuteIcon />}
+            </button>
+          ) : null;
+        })()}
     </div>
   );
 };

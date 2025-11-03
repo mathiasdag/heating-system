@@ -23,6 +23,7 @@ interface VideoPlayerProps {
   className?: string;
   videoClassName?: string;
   isVisible?: boolean;
+  muted?: boolean;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
@@ -35,6 +36,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   className,
   videoClassName,
   isVisible = true,
+  muted: mutedProp,
 }) => {
   // Variant-based defaults
   const getVariantDefaults = (variant: string) => {
@@ -98,7 +100,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         <MuxPlayer
           playbackId={asset.mux}
           autoPlay={defaults.autoplay}
-          muted={defaults.autoplay}
+          muted={mutedProp !== undefined ? mutedProp : defaults.autoplay}
           loop={defaults.loop}
           className="object-cover w-full h-full"
           style={{
@@ -122,7 +124,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         <video
           src={fixVideoUrl(asset.video.url)}
           autoPlay={defaults.autoplay}
-          muted={defaults.autoplay}
+          muted={mutedProp !== undefined ? mutedProp : defaults.autoplay}
           loop={defaults.loop}
           controls={defaults.controls}
           className="object-cover w-full h-full"

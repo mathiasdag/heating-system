@@ -67,13 +67,15 @@ export default function ArticleCardWithoutImage({
           />
         )}
       </div>
-      <AppLink
-        href={`/artikel/${item.slug}`}
-        variant="secondary"
-        className="mx-auto mt-2 w-full"
-      >
-        Läs mer
-      </AppLink>
+      <div className="absolute bottom-0 inset-x-0 px-3 py-3">
+        <AppLink
+          href={`/artikel/${item.slug}`}
+          variant="secondary"
+          className="mx-auto mt-2 w-full"
+        >
+          Läs mer
+        </AppLink>
+      </div>
     </div>
   );
 }

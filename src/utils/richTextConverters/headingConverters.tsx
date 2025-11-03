@@ -60,7 +60,7 @@ export const headingConverters = {
   card: ({ node, nodesToJSX }: any) => {
     const text = nodesToJSX({ nodes: node.children });
     return (
-      <Heading variant="small-title" as={node.tag}>
+      <Heading variant="small-card-title" as={node.tag}>
         {text}
       </Heading>
     );

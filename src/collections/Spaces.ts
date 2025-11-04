@@ -14,6 +14,11 @@ import Image from '@/blocks/articles/Image';
 import InfoOverlay from '@/blocks/global/InfoOverlay';
 import HorizontalMarqueeBlock from '@/blocks/global/HorizontalMarqueeBlock';
 import Model3D from '@/blocks/global/Model3D';
+import Carousel from '@/blocks/pages/Carousel';
+import CardGrid from '@/blocks/pages/CardGrid';
+import Router from '@/blocks/pages/Router';
+import Spotlight from '@/blocks/pages/Spotlight';
+import FAQ from '@/blocks/pages/FAQ';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -159,6 +164,11 @@ const Spaces: CollectionConfig = {
                 InfoOverlay,
                 HorizontalMarqueeBlock,
                 Model3D,
+                Carousel,
+                CardGrid,
+                Router,
+                Spotlight,
+                FAQ,
               ],
             },
           ],

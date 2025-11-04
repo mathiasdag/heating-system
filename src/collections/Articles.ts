@@ -8,6 +8,8 @@ import QA from '@/blocks/global/QA';
 import LogotypeWall from '@/blocks/pages/LogotypeWall';
 import PartnerBlock from '@/blocks/global/PartnerBlock';
 import Model3D from '@/blocks/global/Model3D';
+import MinimalCarousel from '@/blocks/global/MinimalCarousel';
+import CardGrid from '@/blocks/pages/CardGrid';
 import SEOFields from '@/fields/SEOFields';
 import { authenticated } from '@/access/authenticated';
 // import { authenticatedOrPublished } from '@/access/authenticatedOrPublished';
@@ -260,6 +262,8 @@ const Articles: CollectionConfig = {
                       LogotypeWall,
                       PartnerBlock,
                       Model3D,
+                      MinimalCarousel,
+                      CardGrid,
                     ],
                   }),
                 ],

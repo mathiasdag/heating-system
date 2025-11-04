@@ -110,7 +110,7 @@ export default function ArticleHeaderAssetsAbove({
         >
           <FadeInDown
             as="div"
-            className="flex gap-4 justify-center select-none relative z-10 px-2"
+            className="flex gap-4 justify-center select-none relative z-10"
             timing="fast"
             delay={0.2}
           >

@@ -68,11 +68,10 @@ export default function PageHeaderAssetsAbove({
               height={Math.max(220 - (assets.length - 1) * 40, 120)}
               priority={true}
               quality={75}
-              sizes="(max-width: 768px) 50vw, 30vw"
+              sizes="(max-width: 768px) 50vw, 100vw"
               controls={false}
               autoplay={true}
               loop={true}
-              adaptiveResolution={true}
             />
           ))}
         </FadeInDown>

@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * Media Proxy API Route
  *
- * This route proxies media files from the external Payload server to bypass CORS issues
- * in development. It's particularly useful for 3D models (GLB files) that can't be loaded
- * directly due to CORS restrictions.
+ * This route proxies media files from the external Payload server.
+ * NOTE: With CORS now enabled on the server, 3D models can be fetched directly
+ * from assets.varmeverket.com without needing this proxy. This route is kept
+ * as a fallback for other use cases or legacy support.
  */
 
 // S3 CDN domain for assets

@@ -45,7 +45,7 @@ const qaConverter: JSXConvertersFunction = ({ defaultConverters }) => ({
 
 export default function QABlock({ question, answer }: QABlockProps) {
   return (
-    <div className="relative max-w-xl w-full mx-auto px-4 grid gap-2 pt-3 first:pt-0">
+    <div className="relative max-w-2xl w-full mx-auto px-4 grid gap-2 pt-3 first:pt-0">
       <DevIndicator componentName="QABlock" />
       <RichText
         data={question}

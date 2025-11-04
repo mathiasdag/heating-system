@@ -66,7 +66,7 @@ const ImageRenderer: React.FC<ImageRendererProps> = ({
         };
       default: // 'default'
         return {
-          className: className || 'rounded object-cover',
+          className: className || 'rounded-lg object-cover',
           priority: priority ?? false,
           quality: quality || 75,
           sizes: sizes || '(max-width: 768px) 50vw, 30vw',

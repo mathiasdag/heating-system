@@ -1,19 +1,29 @@
 'use client';
 
 import React, { useRef } from 'react';
+import Image from 'next/image';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { FadeInUp, FadeInDown } from '@/components/ui/FadeIn';
 import { TagList } from '@/components/ui';
 import { Heading } from '@/components/headings';
-import MediaAsset from '@/components/common/MediaAsset';
+import VideoPlayer from '@/components/common/VideoPlayer';
+import { fixImageUrl } from '@/utils/imageUrl';
 
 interface Asset {
-  type: 'image' | 'mux';
+  type: 'image' | 'mux' | 'video';
   placement: 'before' | 'after';
   image?: { url: string; alt?: string; width?: number; height?: number };
   mux?: string;
+  video?: {
+    url: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+    filename?: string;
+    mimeType?: string;
+  };
 }
 
 interface ArticleHeaderAssetsAboveProps {
@@ -100,20 +110,50 @@ export default function ArticleHeaderAssetsAbove({
         >
           <FadeInDown
             as="div"
-            className="flex gap-4 justify-center select-none relative z-10"
+            className="flex gap-4 justify-center select-none relative z-10 px-2"
             timing="fast"
             delay={0.2}
           >
-            {assets.map((asset, i) => (
-              <MediaAsset
-                key={i}
-                asset={asset}
-                assetCount={assets.length}
-                height={Math.max(320 - (assets.length - 1) * 60, 160)}
-                priority={true}
-                sizes="(max-width: 768px) 50vw, 30vw"
-              />
-            ))}
+            {assets.map((asset, i) => {
+              if (asset.type === 'image' && asset.image) {
+                return (
+                  <Image
+                    key={i}
+                    src={fixImageUrl(asset.image.url)}
+                    alt={asset.image.alt || ''}
+                    width={asset.image.width || 800}
+                    height={asset.image.height || 400}
+                    priority={true}
+                    sizes="(max-width: 768px) 50vw, 100vw"
+                    className="rounded object-contain w-auto h-auto max-w-[80vw] sm:max-w-[50vw] max-h-[16em] sm:max-h-[24em]"
+                  />
+                );
+              }
+              if (
+                (asset.type === 'mux' && asset.mux) ||
+                (asset.type === 'video' && asset.video?.url)
+              ) {
+                const videoAsset =
+                  asset.type === 'mux'
+                    ? { type: 'mux' as const, mux: asset.mux }
+                    : { type: 'video' as const, video: asset.video };
+                return (
+                  <VideoPlayer
+                    key={i}
+                    asset={videoAsset}
+                    variant="default"
+                    autoplay={true}
+                    loop={true}
+                    controls={false}
+                    adaptiveResolution={true}
+                    className="rounded object-cover"
+                    videoClassName="rounded overflow-hidden"
+                    isVisible={true}
+                  />
+                );
+              }
+              return null;
+            })}
           </FadeInDown>
         </motion.div>
 

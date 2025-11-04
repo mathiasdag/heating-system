@@ -1,6 +1,7 @@
 /**
  * Utility to fix 3D model URLs for S3 CDN
- * 3D models are now served directly from S3 CDN at assets.varmeverket.com
+ * 3D models are served directly from S3 CDN at assets.varmeverket.com
+ * CORS is enabled, so direct fetching works without a proxy
  */
 
 // S3 CDN domain for assets
@@ -8,6 +9,7 @@ const S3_CDN_DOMAIN = 'https://assets.varmeverket.com';
 
 /**
  * Fix model URL to use S3 CDN directly
+ * With CORS enabled, these URLs can be fetched directly from the browser
  */
 export function fixModelUrl(url: string | undefined | null): string {
   if (!url) return '';

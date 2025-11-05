@@ -45,7 +45,7 @@ export default function PageHeaderHero({
       {/* Hero Section */}
       <div
         className={clsx(
-          `relative overflow-hidden pt-8 h-[50vh] sm:h-[60vh] min-h-[500px]`
+          `relative overflow-hidden pt-8 h-[50vh] sm:h-[65vh] min-h-[500px]`
         )}
       >
         {/* Background Asset */}
@@ -63,7 +63,7 @@ export default function PageHeaderHero({
         <FadeInUp as="div" timing="fast">
           <RichText
             data={text}
-            className="grid gap-3 justify-center place-items-center mt-24 px-4 text-center"
+            className="grid gap-3 justify-center place-items-center mt-20 px-4 text-center"
             converters={defaultConverter}
           />
         </FadeInUp>

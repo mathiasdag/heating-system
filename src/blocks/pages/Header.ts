@@ -11,7 +11,7 @@ const Header: Block = {
         { label: 'No assets', value: 'text-only' },
         { label: 'Assets before text', value: 'assets-before' },
         { label: 'Text before assets', value: 'text-before' },
-        { label: 'Full width asset with gradient', value: 'gradient' },
+        { label: 'Full viewport width', value: 'gradient' },
       ],
       defaultValue: 'text-only',
       required: true,

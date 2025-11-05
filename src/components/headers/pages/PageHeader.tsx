@@ -2,7 +2,7 @@ import React from 'react';
 import PageHeaderAssetsAbove from './PageHeaderAssetsAbove';
 import PageHeaderStandard from './PageHeaderStandard';
 import PageHeaderTextOnly from './PageHeaderTextOnly';
-import PageHeaderGradientHero from './PageHeaderGradientHero';
+import PageHeaderHero from './PageHeaderHero';
 
 interface Asset {
   type: 'image' | 'mux' | 'video';
@@ -56,7 +56,7 @@ export default function PageHeader({
       return <PageHeaderStandard text={text} assets={validAssets} />;
 
     case 'gradient':
-      return <PageHeaderGradientHero text={text} assets={validAssets} />;
+      return <PageHeaderHero text={text} assets={validAssets} />;
 
     default:
       // Fallback to text-only if no variant or invalid variant

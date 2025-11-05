@@ -77,7 +77,7 @@ const Pages: CollectionConfig = {
                     { label: 'Assets before text', value: 'assets-before' },
                     { label: 'Text before assets', value: 'text-before' },
                     {
-                      label: 'Full width asset with gradient',
+                      label: 'Full viewport width hero',
                       value: 'gradient',
                     },
                   ],

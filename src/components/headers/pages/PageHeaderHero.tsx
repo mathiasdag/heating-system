@@ -13,17 +13,17 @@ interface Asset {
   video?: { url: string; alt?: string; width?: number; height?: number };
 }
 
-interface PageHeaderGradientHeroProps {
+interface PageHeaderHeroProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   text: any;
   assets?: Asset[];
 }
 
 // Custom converter for page headers with label headlines
-export default function PageHeaderGradientHero({
+export default function PageHeaderHero({
   text,
   assets = [],
-}: PageHeaderGradientHeroProps) {
+}: PageHeaderHeroProps) {
   // Get the first valid asset for the hero background
   const heroAsset = assets.find(asset => {
     if (asset.type === 'image') {
@@ -40,15 +40,12 @@ export default function PageHeaderGradientHero({
 
   return (
     <div className="relative">
-      <DevIndicator
-        componentName="PageHeaderGradientHero"
-        position="top-center"
-      />
+      <DevIndicator componentName="PageHeaderHero" position="top-center" />
 
       {/* Hero Section */}
       <div
         className={clsx(
-          `relative overflow-hidden pt-8 h-[50vh] sm:h-[80vh] min-h-[500px]`
+          `relative overflow-hidden pt-8 h-[50vh] sm:h-[60vh] min-h-[500px]`
         )}
       >
         {/* Background Asset */}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import MuxPlayer from '@mux/mux-player-react';
 import { fixVideoUrl } from '@/utils/imageUrl';
 
@@ -24,6 +24,7 @@ interface VideoPlayerProps {
   videoClassName?: string;
   isVisible?: boolean;
   muted?: boolean;
+  playsInline?: boolean;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
@@ -37,6 +38,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   videoClassName,
   isVisible = true,
   muted: mutedProp,
+  playsInline = false,
 }) => {
   // Variant-based defaults
   const getVariantDefaults = (variant: string) => {
@@ -102,6 +104,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           autoPlay={defaults.autoplay}
           muted={mutedProp !== undefined ? mutedProp : defaults.autoplay}
           loop={defaults.loop}
+          playsInline={playsInline}
           className="object-cover w-full h-full"
           style={{
             aspectRatio: 16 / 9,
@@ -127,6 +130,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           muted={mutedProp !== undefined ? mutedProp : defaults.autoplay}
           loop={defaults.loop}
           controls={defaults.controls}
+          playsInline={playsInline}
           className="object-cover w-full h-full"
           style={{ aspectRatio: 16 / 9 }}
           poster={asset.video.alt}

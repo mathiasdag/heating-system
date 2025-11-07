@@ -121,6 +121,7 @@ export default function HomepageHeaderBlock({
             controls={false}
             autoplay={true}
             loop={true}
+            playsInline={true}
             className="w-full h-full object-cover"
             videoClassName="w-full h-full"
           />

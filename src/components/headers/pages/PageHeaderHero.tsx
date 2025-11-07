@@ -45,7 +45,7 @@ export default function PageHeaderHero({
       {/* Hero Section */}
       <div
         className={clsx(
-          `relative overflow-hidden pt-8 h-[50vh] sm:h-[65vh] min-h-[500px]`
+          `relative overflow-hidden pt-8 h-[50vh] sm:h-[80vh] min-h-[500px]`
         )}
       >
         {/* Background Asset */}

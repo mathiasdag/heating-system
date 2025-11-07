@@ -90,7 +90,7 @@ const CalendarBlock: React.FC<CalendarBlockProps> = ({
   };
 
   return (
-    <div className="py-24 px-2" ref={ref}>
+    <div className="relative px-2" ref={ref}>
       <DevIndicator componentName="CalendarBlock" />
       <BlockHeader headline={headline} description={description} />
 

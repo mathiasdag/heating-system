@@ -134,7 +134,7 @@ export default function HomepageHeaderBlock({
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 bottom-[calc(50vh-8rem)] sm:bottom-0 z-0 bg-surface-dark">
+      <div className="fixed inset-x-0 top-0 h-[calc(50vh+8rem)] sm:bottom-0 z-0 bg-surface-dark">
         <DevIndicator
           componentName="HomepageHeaderBlock"
           position="top-right"

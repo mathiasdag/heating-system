@@ -33,7 +33,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
       </div>
       {hasSubmenu && (
         <div
-          className={`${NAV_DIMENSIONS.SPACING.MARGIN_LEFT_LARGE} grid ${NAV_DIMENSIONS.SPACING.GAP} mt-[.15em]`}
+          className={`${NAV_DIMENSIONS.SPACING.MARGIN_LEFT_LARGE} grid ${NAV_DIMENSIONS.SPACING.GAP} mt-[.12em]`}
         >
           {item.children!.map(child => (
             <MenuItem

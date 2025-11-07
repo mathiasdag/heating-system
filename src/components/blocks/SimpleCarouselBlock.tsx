@@ -150,7 +150,7 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
   };
 
   return (
-    <div className="mb-16 mt-8 px-4 select-none relative">
+    <div className="my-8 px-4 select-none relative">
       <DevIndicator componentName="SimpleCarouselBlock" />
 
       <div className={`${maxWidthClasses[aspectRatio]} mx-auto`}>

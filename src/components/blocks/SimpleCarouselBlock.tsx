@@ -157,8 +157,8 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
         {/* Carousel Container */}
         <div className="relative" ref={containerRef}>
           <div
-            className={`relative overflow-hidden rounded-lg cursor-pointer ${aspectRatioClasses[aspectRatio]}`}
-            onClick={handleCarouselClick}
+            className={`relative overflow-hidden rounded-lg ${assets.length > 1 ? 'cursor-pointer' : ''} ${aspectRatioClasses[aspectRatio]}`}
+            onClick={assets.length > 1 ? handleCarouselClick : undefined}
           >
             {/* Preload all assets */}
             {assets.map((asset, index) => (

@@ -152,7 +152,7 @@ export default function HomepageHeaderBlock({
 
       <motion.div
         ref={containerRef}
-        className="mt-[50vh] sm:mt-[calc(100vh-2rem)] relative z-10 bg-bg rounded-t-xl grid gap-32 pb-48"
+        className="mt-[50vh] sm:mt-[calc(100vh-2rem)] relative z-10 bg-bg rounded-t-xl grid gap-24 pb-48"
       >
         <FadeIn
           ref={richTextRef}

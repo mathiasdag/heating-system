@@ -3,6 +3,8 @@ import React from 'react';
 import clsx from 'clsx';
 import Marquee from 'react-fast-marquee';
 import Image from 'next/image';
+import { AppAction } from '@/components/ui/AppLink';
+import { type LinkGroup, routeLink } from '@/utils/linkRouter';
 
 // Style constants
 const GRID_COLUMN_WIDTH = 'basis-[6.6666vw]';
@@ -42,7 +44,7 @@ const GridRow: React.FC<{
 
 // Marquee component
 const MarqueeText: React.FC = () => {
-  const marqueeSize = '11.6666';
+  const marqueeSize = 11.6666;
 
   return (
     <div
@@ -86,11 +88,15 @@ const SideColumn: React.FC<{ hasRightBorder?: boolean }> = ({
 );
 
 // Helper component for footer links
-const FooterLink: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+const FooterItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className={FOOTER_LINK_CLASS}>{children}</div>
 );
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  links?: Array<{ link: LinkGroup }>;
+}
+
+export const Footer: React.FC<FooterProps> = ({ links = [] }) => {
   return (
     <footer className="relative bg-bg">
       <div className="mx-2">
@@ -108,11 +114,26 @@ export const Footer: React.FC = () => {
         <GridRow hasBorders>{generateGridColumns(15)}</GridRow>
       </div>
       <div className="flex flex-col xl:flex-row gap-x-3 p-2 uppercase pb-12 md:pb-2">
-        <FooterLink>&copy; {new Date().getFullYear()} Värmeverket</FooterLink>
-        <FooterLink>Bredängsvägen 203, 127 34 Skärholmen</FooterLink>
-        <FooterLink>Email</FooterLink>
-        <FooterLink>Instagram</FooterLink>
-        <FooterLink>Terms of service</FooterLink>
+        <FooterItem>&copy; {new Date().getFullYear()} Värmeverket</FooterItem>
+        <FooterItem>Bredängsvägen 203, 127 34 Skärholmen</FooterItem>
+        {links.map((item, index) => {
+          const link = item.link;
+          const linkText = link.text || 'Link';
+          const linkResult = routeLink(link);
+          const hasValidLink = linkResult.href && linkResult.href !== '#';
+
+          return (
+            <FooterItem key={index}>
+              {hasValidLink || linkResult.isCopy ? (
+                <AppAction link={link} variant="noCSS">
+                  {linkText}
+                </AppAction>
+              ) : (
+                <span>{linkText}</span>
+              )}
+            </FooterItem>
+          );
+        })}
       </div>
       <div>
         <Image

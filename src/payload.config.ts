@@ -12,6 +12,7 @@ import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 
 import { Users, collections } from './schema/index';
+import { globals } from './globals/index';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -24,6 +25,7 @@ export default buildConfig({
     },
   },
   collections,
+  globals,
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

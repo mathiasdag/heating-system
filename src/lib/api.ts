@@ -238,6 +238,51 @@ export class PayloadAPI {
       }
     });
   }
+
+  /**
+   * Get a global configuration
+   */
+  static async getGlobal<T>(
+    global: string,
+    depth = 2,
+    draft = false
+  ): Promise<T | null> {
+    const cacheKey = `getGlobal-${global}-${depth}-${draft}`;
+
+    return this.deduplicatedRequest(cacheKey, async () => {
+      const params = new URLSearchParams();
+      params.append('depth', depth.toString());
+
+      // Add draft parameter for preview mode
+      if (draft) {
+        params.append('draft', 'true');
+      }
+
+      const url = `${API_BASE_URL}/globals/${global}?${params.toString()}`;
+
+      try {
+        const response = await monitoredFetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          next: { revalidate: 1800 },
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `API request failed: ${response.status} ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+        return data || null;
+      } catch (error) {
+        console.error(`❌ Failed to fetch global (${global}):`, error);
+        throw error;
+      }
+    });
+  }
 }
 
 // Export the API class and configuration

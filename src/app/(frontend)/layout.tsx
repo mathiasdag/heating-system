@@ -114,12 +114,26 @@ async function getNavigation() {
   }
 }
 
+async function getFooter() {
+  try {
+    const footer = await PayloadAPI.getGlobal<{ links?: Array<{ link: unknown }> }>(
+      'footer',
+      3
+    );
+    return footer;
+  } catch (error) {
+    console.error('Failed to fetch footer in layout:', error);
+    return null;
+  }
+}
+
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
 
   // Initialize cache warming in the background
   initializeCacheWarming();
   const navigation = await getNavigation();
+  const footer = await getFooter();
   const useCustomFonts = true;
   const htmlClass = useCustomFonts
     ? `${sans.variable} ${mono.variable} ${display.variable} ${ballPill.variable} font-sans bg-bg dark:bg-dark-bg text-text dark:text-dark-text`
@@ -145,7 +159,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
                 {navigation && <Navigation navigation={navigation} />}
                 <main className={mainClassName}>
                   {children}
-                  <Footer />
+                  <Footer links={footer?.links} />
                 </main>
                 <AdminContainer>
                   <RevalidateButton />

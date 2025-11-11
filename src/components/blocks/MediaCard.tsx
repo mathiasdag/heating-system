@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import { TagList } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
@@ -132,9 +132,9 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     // Conditionally wrap with link
     if (hasValidLink && linkResult) {
       return (
-        <AppLink href={linkResult.href!} className="block" variant={'noCSS'}>
+        <AppAction href={linkResult.href!} className="block" variant={'noCSS'}>
           {cardContent}
-        </AppLink>
+        </AppAction>
       );
     }
 
@@ -189,13 +189,13 @@ export const MediaCard: React.FC<MediaCardProps> = ({
       </div>
       {hasValidLink && linkResult && (
         <div className="absolute bottom-0 inset-x-0 px-3 py-3">
-          <AppLink
+          <AppAction
             href={linkResult.href!}
             variant={buttonVariant}
             className={clsx('', buttonVariant === 'primary' && 'w-full')}
           >
             {link!.text}
-          </AppLink>
+          </AppAction>
         </div>
       )}
     </div>

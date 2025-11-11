@@ -1,7 +1,7 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import Marquee from 'react-fast-marquee';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 import { createMarqueeText } from '@/utils/marquee';
@@ -44,13 +44,13 @@ export default function ArticleCTABlock({
           {linkResult.href &&
             typeof linkResult.href === 'string' &&
             link?.text && (
-              <AppLink
+              <AppAction
                 link={link}
                 variant="primary"
                 className="h-[2.333em] px-0"
               >
                 <Marquee speed={50}>{createMarqueeText(link.text)}</Marquee>
-              </AppLink>
+              </AppAction>
             )}
         </div>
       </div>
@@ -70,9 +70,9 @@ export default function ArticleCTABlock({
         {linkResult.href &&
           typeof linkResult.href === 'string' &&
           link?.text && (
-            <AppLink link={link} variant="secondary">
+            <AppAction link={link} variant="secondary">
               <Marquee speed={30}>{createMarqueeText(link.text)}</Marquee>
-            </AppLink>
+            </AppAction>
           )}
       </div>
     </div>

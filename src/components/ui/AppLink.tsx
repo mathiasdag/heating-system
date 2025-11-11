@@ -1,11 +1,12 @@
 'use client';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import React from 'react';
 import {
   routeLink,
   type LinkGroup,
   isExternalUrl,
   getExternalLinkAttributes,
+  isEmailAddress,
 } from '@/utils/linkRouter';
 import { useNotification } from '@/hooks/useNotification';
 import clsx from 'clsx';
@@ -149,11 +150,62 @@ export const AppAction: React.FC<AppActionProps> = ({
 
   // Handle internal links
   return (
-    <Link href={safeHref} className={style}>
+    <NextLink href={safeHref} className={style}>
       {children}
-    </Link>
+    </NextLink>
   );
 };
 
-// Keep the old name for backward compatibility
-export const AppLink = AppAction;
+/**
+ * Minimal link component that handles internal and external links from LinkGroup
+ * Skips copy functionality and complex styling - just renders the link
+ */
+export const AppLink: React.FC<{
+  link: LinkGroup;
+  children: React.ReactNode;
+  className?: string;
+}> = ({ link, children, className = '' }) => {
+  const linkResult = routeLink(link);
+
+  // Skip copy links - return just the text
+  if (linkResult.isCopy) {
+    return <span className={className}>{children}</span>;
+  }
+
+  // No valid href
+  if (!linkResult.href || linkResult.href === '#') {
+    return <span className={className}>{children}</span>;
+  }
+
+  // Check if href or original url is an email address (even if marked as internal)
+  const href = linkResult.href;
+  const originalUrl = link.url || '';
+  const isEmail = isEmailAddress(href) || isEmailAddress(originalUrl);
+  const emailAddress = isEmailAddress(href)
+    ? href
+    : isEmailAddress(originalUrl)
+      ? originalUrl
+      : null;
+
+  // External links or email addresses
+  if (linkResult.isExternal || isEmail) {
+    const emailHref = emailAddress ? `mailto:${emailAddress}` : href;
+    return (
+      <a
+        href={emailHref}
+        target={isEmail ? undefined : '_blank'}
+        rel={isEmail ? undefined : 'noopener noreferrer'}
+        className={className}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  // Internal links
+  return (
+    <NextLink href={href} className={className}>
+      {children}
+    </NextLink>
+  );
+};

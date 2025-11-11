@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 
 interface FeatureBlockProps {
@@ -75,9 +75,9 @@ export default function FeatureBlock({
             {link.text} &rarr;
           </Link>
         ) : href && typeof href === 'string' && link?.text ? (
-          <AppLink href={href} variant="secondary">
+          <AppAction href={href} variant="secondary">
             {link.text} &rarr;
-          </AppLink>
+          </AppAction>
         ) : null}
       </div>
     </div>

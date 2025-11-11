@@ -3,8 +3,8 @@ import React from 'react';
 import clsx from 'clsx';
 import Marquee from 'react-fast-marquee';
 import Image from 'next/image';
-import { AppAction } from '@/components/ui/AppLink';
-import { type LinkGroup, routeLink } from '@/utils/linkRouter';
+import { AppLink } from '@/components/ui';
+import { type LinkGroup } from '@/utils/linkRouter';
 
 // Style constants
 const GRID_COLUMN_WIDTH = 'basis-[6.6666vw]';
@@ -119,18 +119,10 @@ export const Footer: React.FC<FooterProps> = ({ links = [] }) => {
         {links.map((item, index) => {
           const link = item.link;
           const linkText = link.text || 'Link';
-          const linkResult = routeLink(link);
-          const hasValidLink = linkResult.href && linkResult.href !== '#';
 
           return (
             <FooterItem key={index}>
-              {hasValidLink || linkResult.isCopy ? (
-                <AppAction link={link} variant="noCSS">
-                  {linkText}
-                </AppAction>
-              ) : (
-                <span>{linkText}</span>
-              )}
+              <AppLink link={link}>{linkText}</AppLink>
             </FooterItem>
           );
         })}

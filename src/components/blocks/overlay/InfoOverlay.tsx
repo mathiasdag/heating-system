@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { AppLink, Overlay } from '@/components/ui';
+import { AppAction, Overlay } from '@/components/ui';
 import { routeLink } from '@/utils/linkRouter';
 import { createMarqueeText } from '@/utils/marquee';
 import Marquee from 'react-fast-marquee';
@@ -127,7 +127,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
 
         {linkResult && (linkResult as unknown)?.href && overlay.link && (
           <div className="bg-bg rounded-sm">
-            <AppLink
+            <AppAction
               link={overlay.link as unknown}
               variant="primary"
               className="w-full !px-0 !bg-accent !text-text"
@@ -138,7 +138,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
                   (overlay.link as unknown)?.text || 'Learn More'
                 )}
               </Marquee>
-            </AppLink>
+            </AppAction>
           </div>
         )}
       </div>

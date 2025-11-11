@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import { FadeInUp } from '@/components/ui';
@@ -44,13 +44,13 @@ const RouterBlock: React.FC<RouterBlockProps> = ({
               <div key={idx} className="text-center">
                 {href && (
                   <FadeInUp timing="normal" delay={0.2 + idx * 0.1}>
-                    <AppLink
+                    <AppAction
                       link={link.link}
                       className="text-4xl sm:text-6xl md:text-7xl font-ballPill uppercase bg-bg py-1"
                       variant="minimal"
                     >
                       {link.link.text}
-                    </AppLink>
+                    </AppAction>
                   </FadeInUp>
                 )}
               </div>

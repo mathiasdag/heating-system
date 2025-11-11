@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import { TagList } from '@/components/ui';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import clsx from 'clsx';
@@ -68,13 +68,13 @@ export default function ArticleCardWithoutImage({
         )}
       </div>
       <div className="absolute bottom-0 inset-x-0 px-3 py-3">
-        <AppLink
+        <AppAction
           href={`/artikel/${item.slug}`}
           variant="secondary"
           className="mx-auto mt-2 w-full"
         >
           Läs mer
-        </AppLink>
+        </AppAction>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import clsx from 'clsx';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { fixImageUrl } from '@/utils/imageUrl';

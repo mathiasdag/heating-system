@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { MediaCard } from '@/components/blocks/MediaCard';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import { HorizontalSnapCarousel } from '@/components/carousels';
 import { InfoOverlay } from '@/components/blocks/overlay';
 import { routeLink, LinkGroup } from '@/utils/linkRouter';
@@ -110,9 +110,9 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
 
       {linkResult?.href && link?.text && (
         <div className="flex justify-center mt-8">
-          <AppLink link={link} variant="primary">
+          <AppAction link={link} variant="primary">
             {link.text}
-          </AppLink>
+          </AppAction>
         </div>
       )}
 

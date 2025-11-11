@@ -1,4 +1,4 @@
-export { AppLink, AppAction } from './AppLink';
+export { AppAction, AppLink } from './AppLink';
 export { default as Attribute } from './Attribute';
 export { BlinkHover } from './BlinkHover';
 export { default as FadeIn, FadeInUp } from './FadeIn';

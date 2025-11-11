@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import { MediaCard } from '@/components/blocks/MediaCard';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
@@ -83,12 +83,12 @@ export const StackedCardGrid: React.FC<StackedCardGridProps> = ({
       </div>
       {hasLink && (
         <div className="mt-8 text-center">
-          <AppLink
+          <AppAction
             link={link}
             className="inline-block px-6 py-3 bg-text text-white rounded font-bold hover:bg-accent transition"
           >
             {link.text || 'See all'}
-          </AppLink>
+          </AppAction>
         </div>
       )}
     </section>

@@ -10,7 +10,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 import { defaultConverter } from '@/utils/richTextConverters/index';
@@ -109,9 +109,9 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
         </div>
         <div className="pb-8">
           {linkResult?.href && link?.text ? (
-            <AppLink href={linkResult.href} variant="outline">
+            <AppAction href={linkResult.href} variant="outline">
               {link.text}
-            </AppLink>
+            </AppAction>
           ) : null}
         </div>
         {image?.url ? (

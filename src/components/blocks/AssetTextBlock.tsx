@@ -1,7 +1,7 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import { AppLink } from '@/components/ui';
+import { AppAction } from '@/components/ui';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';
@@ -102,14 +102,14 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
             {/* Link */}
             {link && (
               <div className="mt-8 mb-2 sm:mb-0 sm:mt-6">
-                <AppLink
+                <AppAction
                   link={link}
                   variant="outline"
                   size="md"
                   className="w-full text-center sm:w-auto"
                 >
                   {link.text || 'Läs mer'}
-                </AppLink>
+                </AppAction>
               </div>
             )}
           </div>

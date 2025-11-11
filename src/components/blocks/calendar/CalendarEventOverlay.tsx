@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { formatEventDate, formatEventTime } from '@/utils/dateFormatting';
 import { downloadICS } from '@/utils/icsUtils';
-import { AppLink, Overlay } from '@/components/ui';
+import { AppAction, Overlay } from '@/components/ui';
 import type { CalendarEventOverlayProps } from '@/types/calendar';
 
 const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
@@ -101,7 +101,7 @@ const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
 
         {/* Event Link */}
         {event.link && (
-          <AppLink
+          <AppAction
             link={event.link}
             variant="minimal"
             className="flex items-center justify-center shrink-0 gap-2 w-full rounded-md p-4 uppercase bg-accent"
@@ -109,7 +109,7 @@ const CalendarEventOverlay: React.FC<CalendarEventOverlayProps> = ({
             <span className="translate-y-[.1em]">
               {event.link.text || 'Läs mer'}
             </span>
-          </AppLink>
+          </AppAction>
         )}
 
         <button

@@ -154,3 +154,10 @@ export function getExternalLinkAttributes() {
     rel: 'noopener noreferrer' as const,
   };
 }
+
+/**
+ * Check if a string is an email address
+ */
+export function isEmailAddress(str: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str);
+}

@@ -40,7 +40,7 @@ export const StackedCardGrid: React.FC<StackedCardGridProps> = ({
 
   return (
     <section
-      className={`py-8 px-2 sm:px-4 grid ${variant === 'orange' ? 'bg-accent' : ''} relative`}
+      className={`px-2 sm:px-4 grid ${variant === 'orange' ? 'bg-accent pb-24 pt-20' : 'py-8'} relative`}
     >
       <DevIndicator componentName="StackedCardGrid" />
       <BlockHeader headline={headline} description={description} />

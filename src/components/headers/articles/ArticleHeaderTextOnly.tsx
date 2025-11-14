@@ -4,6 +4,7 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { FadeInUp } from '@/components/ui';
 import { TagList } from '@/components/ui';
 import { Heading } from '@/components/headings';
+import { defaultConverter } from '@/utils/richTextConverters';
 
 interface ArticleHeaderTextOnlyProps {
   articleData: {
@@ -72,7 +73,13 @@ export default function ArticleHeaderTextOnly({
                 {articleData.title}
               </Heading>
             )}
-            {text && <RichText data={text} />}
+            {text && (
+              <RichText
+                data={text}
+                className="grid gap-3"
+                converters={defaultConverter}
+              />
+            )}
           </div>
         </FadeInUp>
 

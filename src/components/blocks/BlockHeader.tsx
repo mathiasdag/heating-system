@@ -52,7 +52,7 @@ export const BlockHeader: React.FC<BlockHeaderProps> = ({
             descriptionClassName // Additional custom styles
           )}
         >
-          <RichText data={description as never} />
+          <RichText data={description as never} className="grid gap-3" />
         </div>
       )}
     </header>

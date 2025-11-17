@@ -39,6 +39,7 @@ export const Tags: CollectionConfig = {
       hasMany: true,
       required: false,
       admin: {
+        hidden: true,
         description: 'Related content that uses this tag',
       },
     },

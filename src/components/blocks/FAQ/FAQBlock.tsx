@@ -3,43 +3,12 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import QAList from '@/components/blocks/QAList';
 import { Heading } from '@/components/headings/Heading';
 import { jsxConverter } from '@/utils/richTextConverters/index';
+import { QAList } from './QAList';
+import type { QAItem, QAGroup } from './types';
 
-interface FAQItem {
-  blockType: 'qa';
-  question: {
-    root: {
-      children: Array<{
-        type: string;
-        children?: Array<{
-          text?: string;
-          type?: string;
-        }>;
-      }>;
-    };
-  };
-  answer: {
-    root: {
-      children: Array<{
-        type: string;
-        children?: Array<{
-          text?: string;
-          type?: string;
-        }>;
-      }>;
-    };
-  };
-}
-
-interface QAGroupItem {
-  blockType: 'qaGroup';
-  title: string;
-  items: FAQItem[];
-}
-
-type FAQBlockItem = FAQItem | QAGroupItem;
+type FAQBlockItem = QAItem | QAGroup;
 
 interface FAQBlockProps {
   headline?: string;
@@ -58,7 +27,7 @@ interface FAQBlockProps {
   layout?: 'accordion' | 'list';
 }
 
-const FAQBlock: React.FC<FAQBlockProps> = ({
+export const FAQBlock: React.FC<FAQBlockProps> = ({
   headline,
   description,
   items,
@@ -67,7 +36,7 @@ const FAQBlock: React.FC<FAQBlockProps> = ({
   if (!items || items.length === 0) return null;
 
   return (
-    <div className="px-4 pt-8 pb-24">
+    <div className="relative px-4 pt-8 pb-24">
       <DevIndicator componentName="FAQBlock" />
 
       {/* Header */}
@@ -96,4 +65,3 @@ const FAQBlock: React.FC<FAQBlockProps> = ({
   );
 };
 
-export default FAQBlock;

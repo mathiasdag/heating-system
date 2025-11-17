@@ -12,7 +12,7 @@ import CarouselBlock from '@/components/blocks/pages/CarouselBlock';
 import ListBlock from '@/components/blocks/ListBlock';
 import CourseCatalogBlock from '@/components/blocks/pages/CourseCatalogBlock';
 import TextBlock from '@/components/blocks/TextBlock';
-import FAQBlock from '@/components/blocks/FAQBlock';
+import { FAQBlock } from '@/components/blocks/FAQ';
 import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
 import AssetTextBlock from '@/components/blocks/AssetTextBlock';
 import AssetTextContainerBlock from '@/components/blocks/AssetTextContainerBlock';

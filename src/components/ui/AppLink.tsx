@@ -9,6 +9,7 @@ import {
   isEmailAddress,
 } from '@/utils/linkRouter';
 import { useNotification } from '@/hooks/useNotification';
+import { useIsDark } from '@/hooks/useTheme';
 import clsx from 'clsx';
 
 interface AppActionProps {
@@ -33,16 +34,17 @@ const sizeStyles = {
   lg: 'px-4 pt-[1.1em] pb-4',
 };
 
-const baseStyles = {
-  primary:
-    'uppercase bg-text text-bg mix-blend-multiply rounded-md block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
+const getBaseStyles = (isDark: boolean) => ({
+  primary: isDark
+    ? 'uppercase border border-text rounded-md inline-block max-w-full text-center overflow-hidden text-ellipsis whitespace-nowrap'
+    : 'uppercase bg-text text-bg mix-blend-multiply rounded-md block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   secondary:
     'uppercase bg-accent rounded-md block text-center max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   outline:
     'uppercase border border-text rounded-md inline-block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   minimal: 'block max-w-full overflow-hidden text-ellipsis whitespace-nowrap',
   noCSS: '',
-};
+});
 
 export const AppAction: React.FC<AppActionProps> = ({
   href,
@@ -56,6 +58,8 @@ export const AppAction: React.FC<AppActionProps> = ({
   link,
 }) => {
   const { showSuccess, showError } = useNotification();
+  const isDark = useIsDark();
+  const baseStyles = getBaseStyles(isDark);
 
   // Use link router if link prop is provided, otherwise fall back to legacy behavior
   const linkResult = link

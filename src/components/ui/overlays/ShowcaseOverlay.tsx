@@ -81,7 +81,7 @@ const ShowcaseOverlay: React.FC<ShowcaseOverlayProps> = ({
         <header className="absolute top-0 left-0 p-2 flex gap-x-3 z-10 text-offWhite">
           <span className="uppercase">{showcase.title}</span>
           <span>({showcase.year})</span>
-          {showcase.assets && showcase.assets.length > 0 && (
+          {showcase.assets && showcase.assets.length > 1 && (
             <div className="flex gap-x-3 fixed bottom-2 left-2 sm:static">
               <span>
                 {currentAssetIndex + 1}/{showcase.assets.length}

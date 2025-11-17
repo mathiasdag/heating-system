@@ -62,6 +62,12 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Check if we have multiple items for navigation
+  const hasMultipleItems = items && items.length > 1;
+  const isNavigationEnabled =
+    hasMultipleItems &&
+    (enableKeyboardNavigation || enableTouchSwipe || enableClickNavigation);
+
   // Debug logging
   if (debugMode) {
     console.log('ReusableCarousel received items:', items);
@@ -143,7 +149,7 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
 
   // Keyboard navigation
   useEffect(() => {
-    if (!enableKeyboardNavigation) return;
+    if (!enableKeyboardNavigation || !hasMultipleItems) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (debugMode) {
@@ -187,28 +193,35 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [nextSlide, prevSlide, enableKeyboardNavigation, debugMode]);
+  }, [
+    nextSlide,
+    prevSlide,
+    enableKeyboardNavigation,
+    debugMode,
+    hasMultipleItems,
+  ]);
 
   // Touch swipe functionality
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
-      if (!enableTouchSwipe) return;
+      if (!enableTouchSwipe || !hasMultipleItems) return;
       setTouchEnd(null);
       setTouchStart(e.targetTouches[0].clientX);
     },
-    [enableTouchSwipe]
+    [enableTouchSwipe, hasMultipleItems]
   );
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
-      if (!enableTouchSwipe) return;
+      if (!enableTouchSwipe || !hasMultipleItems) return;
       setTouchEnd(e.targetTouches[0].clientX);
     },
-    [enableTouchSwipe]
+    [enableTouchSwipe, hasMultipleItems]
   );
 
   const handleTouchEnd = useCallback(() => {
-    if (!enableTouchSwipe || !touchStart || !touchEnd) return;
+    if (!enableTouchSwipe || !hasMultipleItems || !touchStart || !touchEnd)
+      return;
 
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > swipeThreshold;
@@ -221,6 +234,7 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
     }
   }, [
     enableTouchSwipe,
+    hasMultipleItems,
     touchStart,
     touchEnd,
     swipeThreshold,
@@ -231,7 +245,7 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
   // Click navigation
   const handleCarouselClick = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
-      if (!enableClickNavigation) return;
+      if (!enableClickNavigation || !hasMultipleItems) return;
 
       // Focus the carousel for keyboard navigation
       if (containerRef.current) {
@@ -262,7 +276,14 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
         nextSlide();
       }
     },
-    [enableClickNavigation, currentIndex, items.length, nextSlide, prevSlide]
+    [
+      enableClickNavigation,
+      hasMultipleItems,
+      currentIndex,
+      items.length,
+      nextSlide,
+      prevSlide,
+    ]
   );
 
   if (!items || items.length === 0) {
@@ -282,16 +303,20 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        tabIndex={autoFocus ? 0 : -1}
-        role="button"
-        aria-label="Carousel navigation - use arrow keys, space, or click to navigate"
+        tabIndex={autoFocus && hasMultipleItems ? 0 : -1}
+        role={hasMultipleItems ? 'button' : undefined}
+        aria-label={
+          hasMultipleItems
+            ? 'Carousel navigation - use arrow keys, space, or click to navigate'
+            : undefined
+        }
         style={{
-          cursor: enableClickNavigation ? 'pointer' : 'default',
+          cursor: isNavigationEnabled ? 'pointer' : 'default',
         }}
         ref={containerRef}
       >
         {/* Left navigation area */}
-        {enableClickNavigation && (
+        {enableClickNavigation && hasMultipleItems && (
           <div
             className="absolute left-0 top-0 w-1/2 h-full z-10"
             style={{ cursor: 'w-resize' }}
@@ -303,7 +328,7 @@ const ReusableCarousel: React.FC<ReusableCarouselProps> = ({
         )}
 
         {/* Right navigation area - avoid top-right corner where close button might be */}
-        {enableClickNavigation && (
+        {enableClickNavigation && hasMultipleItems && (
           <div
             className="absolute right-0 top-0 w-1/2 h-full z-10"
             style={{

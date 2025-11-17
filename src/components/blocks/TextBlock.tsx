@@ -45,7 +45,7 @@ export default function TextBlock({
       <RichText
         data={content as never}
         className={richTextClasses}
-        converters={converter}
+        converters={articleConverter}
       />
     </WrapperComponent>
   );

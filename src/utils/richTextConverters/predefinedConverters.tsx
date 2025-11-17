@@ -4,7 +4,7 @@ import { buildConverter } from './converterBuilder';
 export const articleConverter = buildConverter({
   paragraph: 'article',
   blockquote: 'article',
-  heading: 'default',
+  heading: 'article',
   list: 'outlinedBoxes',
   includeBlocks: true,
 });

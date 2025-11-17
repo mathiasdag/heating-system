@@ -49,7 +49,7 @@ const renderItem = (
   if (item.blockType === 'qaGroup') {
     return (
       <div key={index}>
-        <h3 className="text-md text-center mb-4">{item.title}</h3>
+        <h3 className="text-md text-center mb-4 mt-8">{item.title}</h3>
         <div className="space-y-[-1px]">
           {item.items.map((qa, qaIndex) =>
             renderQAItem(qa, qaIndex, layout, 'h4')
@@ -69,4 +69,3 @@ export const QAList: React.FC<QAListProps> = ({ items, layout }) => {
     </div>
   );
 };
-

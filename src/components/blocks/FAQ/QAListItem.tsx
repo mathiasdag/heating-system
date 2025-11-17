@@ -19,9 +19,7 @@ export const QAListItem: React.FC<QAListItemProps> = ({ qa, headingLevel }) => {
       <HeadingTag className="font-sans mb-2">
         {extractPlainText(qa.question)}
       </HeadingTag>
-      <div className="font-mono">
-        <RichText data={qa.answer} />
-      </div>
+      <RichText data={qa.answer} className="font-mono" />
     </ListItem>
   );
 };

@@ -64,4 +64,3 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
     </div>
   );
 };
-

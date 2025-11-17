@@ -52,14 +52,15 @@ export const headingConverters = {
 
     switch (node.tag) {
       case 'h1':
+        // Convert h1 to h2 in articles
         return (
-          <Heading variant="page-header" as="h1">
+          <Heading variant="article-h2" as="h2">
             {text}
           </Heading>
         );
       case 'h2':
         return (
-          <Heading variant="section" as="h2">
+          <Heading variant="article-h2" as="h2">
             {text}
           </Heading>
         );

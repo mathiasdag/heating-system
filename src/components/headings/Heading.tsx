@@ -42,9 +42,13 @@ const variantConfig = {
     className:
       'font-display uppercase text-2xl leading-[0.95em] tracking-[-0.01em] px-4',
   },
+  'article-h2': {
+    defaultAs: 'h2' as const,
+    className: 'px-4 font-display uppercase text-center text-xl mb-2 mt-4',
+  },
   'article-h3': {
     defaultAs: 'h3' as const,
-    className: 'px-4 font-display uppercase text-center text-lg mb-2 mt-4',
+    className: 'px-4 font-sans text-center text-lg mt-4',
   },
   'article-h4': {
     defaultAs: 'h4' as const,

@@ -65,13 +65,13 @@ export const headingConverters = {
         );
       case 'h3':
         return (
-          <Heading variant="subsection" as="h3">
+          <Heading variant="article-h3" as="h3">
             {text}
           </Heading>
         );
       case 'h4':
         return (
-          <Heading variant="small-title" as="h4">
+          <Heading variant="article-h4" as="h4">
             {text}
           </Heading>
         );

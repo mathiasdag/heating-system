@@ -51,17 +51,20 @@ export function extractPlainText(data: {
  * @param data - Lexical rich text data from Payload CMS
  * @returns True if the rich text is empty or contains no text
  */
-export function isRichTextEmpty(data: {
-  root?: {
-    children?: Array<{
-      type: string;
+export function isRichTextEmpty(
+  data?: {
+    root?: {
       children?: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
         text?: string;
-        type?: string;
       }>;
-      text?: string;
-    }>;
-  };
-}): boolean {
+    };
+  } | null
+): boolean {
+  if (!data) return true;
   return extractPlainText(data).trim() === '';
 }

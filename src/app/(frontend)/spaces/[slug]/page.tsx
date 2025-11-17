@@ -11,6 +11,11 @@ import HighlightGridBlock from '@/components/blocks/HighlightGridBlock';
 import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { HighlightGridGeneratorBlock } from '@/components/blocks/HighlightGridGenerator';
+import SpotlightBlock from '@/components/blocks/pages/SpotlightBlock';
+import CardGridBlock from '@/components/blocks/pages/cardGrid/CardGridBlock';
+import RouterBlock from '@/components/blocks/pages/RouterBlock';
+import CarouselBlock from '@/components/blocks/pages/CarouselBlock';
+import { FAQBlock } from '@/components/blocks/FAQ';
 import { SpaceHeader } from '@/components/headers';
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -103,6 +108,8 @@ async function SpacePage({ params }: SpacePageProps) {
                 );
               case 'assetTextContainer':
                 return <AssetTextContainerBlock key={i} {...cleanBlock} />;
+              case 'spotlight':
+                return <SpotlightBlock key={i} {...cleanBlock} />;
               case 'logotype-wall':
                 return <LogotypeWall key={i} {...cleanBlock} />;
               case 'partner-block':
@@ -123,6 +130,14 @@ async function SpacePage({ params }: SpacePageProps) {
                 return <HorizontalMarqueeBlock key={i} {...cleanBlock} />;
               case 'highlightGridGenerator':
                 return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
+              case 'card-grid':
+                return <CardGridBlock key={i} {...cleanBlock} />;
+              case 'router':
+                return <RouterBlock key={i} {...cleanBlock} />;
+              case 'carousel':
+                return <CarouselBlock key={i} {...cleanBlock} />;
+              case 'faq':
+                return <FAQBlock key={i} {...cleanBlock} />;
               default:
                 console.warn(`Unknown block type: ${block.blockType}`);
                 return null;

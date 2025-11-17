@@ -6,6 +6,7 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { AppAction } from '@/components/ui';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 import { useIsDark } from '@/hooks/useTheme';
+import { isRichTextEmpty } from '@/utils/richTextUtils';
 import clsx from 'clsx';
 
 interface CTABlockProps {
@@ -98,9 +99,9 @@ const CTABlock: React.FC<CTABlockProps> = ({
         )}
       >
         <h2 className="text-md">{headline}</h2>
-
-        {description && <RichText data={description} className="font-mono" />}
-
+        {description && !isRichTextEmpty(description as never) && (
+          <RichText data={description as never} className="font-mono" />
+        )}
         {renderLink()}
       </div>
     </div>

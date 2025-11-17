@@ -44,7 +44,7 @@ const variantConfig = {
   },
   'article-h3': {
     defaultAs: 'h3' as const,
-    className: 'px-4 font-display uppercase text-center text-lg',
+    className: 'px-4 font-display uppercase text-center text-lg mb-2 mt-4',
   },
   'article-h4': {
     defaultAs: 'h4' as const,

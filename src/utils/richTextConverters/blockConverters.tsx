@@ -10,6 +10,8 @@ import SignatureBlock from '@/components/blocks/global/SignatureBlock';
 import { LogotypeWall } from '@/components/blocks/pages/logotypeWall';
 import { PartnerCard } from '@/components/blocks/PartnerCard';
 import Model3DBlock from '@/components/blocks/Model3DBlock';
+import SimpleCarouselBlock from '@/components/blocks/SimpleCarouselBlock';
+import CardGridBlock from '@/components/blocks/pages/cardGrid/CardGridBlock';
 
 export const blockConverters = {
   textBlock: ({ node }: any) => (
@@ -65,4 +67,16 @@ export const blockConverters = {
     />
   ),
   signature: ({ node }: any) => <SignatureBlock text={node.fields.text} />,
+  minimalCarousel: ({ node }: any) => (
+    <SimpleCarouselBlock
+      aspectRatio={node.fields.aspectRatio}
+      assets={node.fields.assets}
+    />
+  ),
+  'card-grid': ({ node }: any) => (
+    <CardGridBlock
+      cards={node.fields.cards}
+      backgroundColor={node.fields.backgroundColor}
+    />
+  ),
 };

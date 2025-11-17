@@ -22,6 +22,7 @@ import CalendarBlock from '@/components/blocks/CalendarBlock';
 import HorizontalMarqueeBlock from '@/components/blocks/HorizontalMarqueeBlock';
 import { HighlightGridGeneratorBlock } from '@/components/blocks/HighlightGridGenerator';
 import Model3DBlock from '@/components/blocks/Model3DBlock';
+import ImageBlock from '@/components/blocks/articles/ImageBlock';
 import { notFound } from 'next/navigation';
 import { getPreviewData, isPreviewFromSearchParams } from '@/utils/preview';
 import { processPageLayout } from '@/utils/processDynamicBlocks';
@@ -169,6 +170,8 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
               return <HighlightGridGeneratorBlock key={i} {...cleanBlock} />;
             case '3D':
               return <Model3DBlock key={i} {...cleanBlock} />;
+            case 'image':
+              return <ImageBlock key={i} {...cleanBlock} />;
             // Add more cases for other block types as needed
             default:
               console.warn(`Unknown block type: ${block.blockType}`);

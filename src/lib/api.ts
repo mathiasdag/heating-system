@@ -8,12 +8,7 @@
 import { monitoredFetch } from '@/utils/cacheMonitor';
 
 // Environment configuration - always use external for frontend
-const API_BASE_URL = process.env.NEXT_PUBLIC_PAYLOAD_API_URL;
-if (!API_BASE_URL) {
-  throw new Error(
-    'NEXT_PUBLIC_PAYLOAD_API_URL environment variable is required'
-  );
-}
+const API_BASE_URL = process.env.NEXT_PUBLIC_PAYLOAD_API_URL || 'https://payload.cms.varmeverket.com/api';
 const USE_EXTERNAL_BACKEND = true; // Always use external for frontend
 
 // API response types

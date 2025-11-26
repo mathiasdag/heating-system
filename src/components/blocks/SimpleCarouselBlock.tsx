@@ -137,8 +137,8 @@ const SimpleCarouselBlock: React.FC<SimpleCarouselBlockProps> = ({
       <MediaAsset
         asset={asset.asset}
         variant="gallery"
-        className={`object-cover select-none ${
-          aspectRatio === 'landscape' ? 'object-center' : 'object-cover'
+        className={`object-cover h-full select-none ${
+          aspectRatio === 'landscape' ? 'object-center' : ''
         }`}
         controls={true}
         autoplay={false}

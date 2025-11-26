@@ -221,16 +221,12 @@ async function ArticlePage({ params }: ArticlePageProps) {
       <footer className="font-mono mx-auto w-full max-w-2xl px-4 -mt-24">
         ———
         <div>
-          Ord: &nbsp;
+          Författare: &nbsp;
           {article.author.firstName && article.author.lastName
             ? `${article.author.firstName} ${article.author.lastName}`
             : article.author.email}
         </div>
-        <div>
-          {article.lastModifiedDate
-            ? `Senast uppdaterad: ${formatDate(article.lastModifiedDate)}`
-            : `Publicerad: ${formatDate(article.publishedDate || '')}`}
-        </div>
+        <div>Publicerad: {formatDate(article.publishedDate || '')}</div>
         {article.author?.bylineDescription && (
           <div className="mt-4">{article.author.bylineDescription}</div>
         )}

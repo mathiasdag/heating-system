@@ -96,17 +96,13 @@ export default function ArticleHeaderTextOnly({
         <div className="font-mono">
           {articleData.author && (
             <div className="">
-              Ord:&nbsp;
+              Författare:&nbsp;
               {articleData.author.firstName && articleData.author.lastName
                 ? `${articleData.author.firstName} ${articleData.author.lastName}`
                 : articleData.author.email}
             </div>
           )}
-          <div>
-            {articleData.lastModifiedDate
-              ? `Senast uppdaterad: ${formatDate(articleData.lastModifiedDate)}`
-              : `Publicerad: ${formatDate(articleData.publishedDate || '')}`}
-          </div>
+          <div>Publicerad: {formatDate(articleData.publishedDate || '')}</div>
         </div>
       </div>
     </div>

@@ -134,16 +134,14 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
               <div className="font-mono text-sm">
                 {article.author && (
                   <div className="">
-                    Ord:&nbsp;
+                    Författare:&nbsp;
                     {article.author.firstName && article.author.lastName
                       ? `${article.author.firstName} ${article.author.lastName}`
                       : article.author.email}
                   </div>
                 )}
-                <div className="mt-1">
-                  {article.lastModifiedDate
-                    ? `Senast uppdaterad: ${formatDate(article.lastModifiedDate)}`
-                    : `Publicerad: ${formatDate(article.publishedDate || '')}`}
+                <div>
+                  Publicerad: {formatDate(articleData.publishedDate || '')}
                 </div>
               </div>
 
@@ -180,14 +178,14 @@ const ArticleOverlay: React.FC<ArticleOverlayProps> = ({
           <footer className="font-mono mx-auto w-full max-w-xl px-4 -mt-24">
             ———
             <div>
-              Ord: &nbsp;
+              Författare: &nbsp;
               {article.author?.firstName && article.author?.lastName
                 ? `${article.author.firstName} ${article.author.lastName}`
                 : article.author?.email}
             </div>
             <div>
               {article.lastModifiedDate
-                ? `Senast uppdaterad: ${formatDate(article.lastModifiedDate)}`
+                ? `Publicerad: ${formatDate(article.lastModifiedDate)}`
                 : `Publicerad: ${formatDate(article.publishedDate || '')}`}
             </div>
             {article.author?.bylineDescription && (

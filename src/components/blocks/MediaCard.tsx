@@ -37,6 +37,7 @@ interface MediaCardProps {
   link?: LinkGroup;
   buttonVariant?: 'primary' | 'secondary' | 'outline' | 'onHover';
   className?: string;
+  inCarousel?: boolean; // If true, applies bg-surface (for HorizontalSnapCarousel)
 }
 
 export const MediaCard: React.FC<MediaCardProps> = ({
@@ -47,6 +48,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   link,
   buttonVariant,
   className,
+  inCarousel = false,
 }) => {
   // Use the global link router utility
   const linkResult = link ? routeLink(link) : null;
@@ -144,7 +146,8 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   return (
     <div
       className={clsx(
-        'flex flex-col aspect-window px-1 rounded-lg w-64 sm:w-72 h-full bg-surface',
+        'flex flex-col aspect-window px-1',
+        inCarousel && 'bg-surface rounded-lg w-64 sm:w-72 h-full',
         'relative',
         hasValidLink && buttonVariant === 'primary'
           ? 'pb-11 h-full justify-between'

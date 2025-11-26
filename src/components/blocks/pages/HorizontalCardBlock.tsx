@@ -83,7 +83,12 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
         getItemTitle={index => cards[index]?.title || `Card ${index + 1}`}
       >
         {cards.map((card, index) => (
-          <MediaCard key={index} {...card} buttonVariant="primary" />
+          <MediaCard
+            key={index}
+            {...card}
+            buttonVariant="primary"
+            inCarousel={true}
+          />
         ))}
       </HorizontalSnapCarousel>
     );

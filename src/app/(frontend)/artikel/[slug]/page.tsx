@@ -177,8 +177,6 @@ async function ArticlePage({ params }: ArticlePageProps) {
     }
   }
 
-  console.log(article);
-
   return (
     <div data-content-type="article" className="min-h-screen grid gap-24 pb-36">
       {/* Article Header */}

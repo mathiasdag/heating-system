@@ -43,7 +43,7 @@ const cleanDescriptionForICS = (description: unknown): string => {
  * @returns Unique identifier string
  */
 const generateEventUID = (): string => {
-  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}@heating-system.com`;
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}@varmeverket.com`;
 };
 
 /**

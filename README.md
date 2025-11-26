@@ -41,19 +41,17 @@ Create a `.env` file in the root directory with the following variables:
 
 **Required:**
 
-- `PAYLOAD_SECRET` - Secret key for Payload CMS encryption (generate a strong random string)
-- `DATABASE_URI` - MongoDB connection string (e.g., `mongodb://localhost:27017/varmeverket`)
+- `NEXT_PUBLIC_PAYLOAD_API_URL` - External Payload CMS API URL (e.g., `https://payload.cms.varmeverket.com/api`)
 
 **Optional:**
 
-- `NEXT_PUBLIC_PAYLOAD_API_URL` - External Payload CMS API URL (defaults to `https://payload.cms.varmeverket.com/api`)
 - `PREVIEW_SECRET` - Secret token for preview mode (defaults to `your-preview-secret` - **change this in production!**)
+
+**Note:** This is a frontend-only repository that connects to an external Payload CMS backend. You don't need `PAYLOAD_SECRET` or `DATABASE_URI` unless you're running Payload CMS locally.
 
 **Example `.env` file:**
 
 ```env
-PAYLOAD_SECRET=your-secret-key-here
-DATABASE_URI=mongodb://localhost:27017/varmeverket
 NEXT_PUBLIC_PAYLOAD_API_URL=https://payload.cms.varmeverket.com/api
 PREVIEW_SECRET=your-preview-secret-here
 ```

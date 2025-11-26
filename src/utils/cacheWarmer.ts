@@ -20,12 +20,16 @@ class CacheWarmer {
    */
   async warmup(config: WarmupConfig): Promise<void> {
     if (this.isWarming) {
-      console.log('Cache warming already in progress');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Cache warming already in progress');
+      }
       return;
     }
 
     this.isWarming = true;
-    console.log('🔥 Starting cache warming...');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔥 Starting cache warming...');
+    }
 
     try {
       // High priority: Homepage and navigation
@@ -44,8 +48,11 @@ class CacheWarmer {
         await this.warmupCollections(config.collections);
       }
 
-      console.log('✅ Cache warming completed');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('✅ Cache warming completed');
+      }
     } catch (error) {
+      // Always log errors, even in production
       console.error('❌ Cache warming failed:', error);
     } finally {
       this.isWarming = false;
@@ -57,9 +64,13 @@ class CacheWarmer {
    */
   private async warmupHomepage(): Promise<void> {
     try {
-      console.log('  📄 Warming homepage...');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('  📄 Warming homepage...');
+      }
       await PayloadAPI.findBySlug('pages', 'hem', 10);
-      console.log('  ✅ Homepage warmed');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('  ✅ Homepage warmed');
+      }
     } catch (error) {
       console.error('  ❌ Homepage warming failed:', error);
     }
@@ -70,13 +81,17 @@ class CacheWarmer {
    */
   private async warmupNavigation(): Promise<void> {
     try {
-      console.log('  🧭 Warming navigation...');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('  🧭 Warming navigation...');
+      }
       await PayloadAPI.find({
         collection: 'navigation',
         depth: 3,
         limit: 1,
       });
-      console.log('  ✅ Navigation warmed');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('  ✅ Navigation warmed');
+      }
     } catch (error) {
       console.error('  ❌ Navigation warming failed:', error);
     }
@@ -88,9 +103,13 @@ class CacheWarmer {
   private async warmupPages(pages: string[]): Promise<void> {
     const pagePromises = pages.map(async slug => {
       try {
-        console.log(`  📄 Warming page: ${slug}`);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`  📄 Warming page: ${slug}`);
+        }
         await PayloadAPI.findBySlug('pages', slug, 10);
-        console.log(`  ✅ Page ${slug} warmed`);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`  ✅ Page ${slug} warmed`);
+        }
       } catch (error) {
         console.error(`  ❌ Page ${slug} warming failed:`, error);
       }
@@ -105,13 +124,17 @@ class CacheWarmer {
   private async warmupCollections(collections: string[]): Promise<void> {
     const collectionPromises = collections.map(async collection => {
       try {
-        console.log(`  📚 Warming collection: ${collection}`);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`  📚 Warming collection: ${collection}`);
+        }
         await PayloadAPI.find({
           collection,
           limit: 10,
           depth: 2,
         });
-        console.log(`  ✅ Collection ${collection} warmed`);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`  ✅ Collection ${collection} warmed`);
+        }
       } catch (error) {
         console.error(`  ❌ Collection ${collection} warming failed:`, error);
       }

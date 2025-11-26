@@ -152,6 +152,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
+          storageKey={null}
         >
           <NotificationProvider>
             <UrlBasedTheme>

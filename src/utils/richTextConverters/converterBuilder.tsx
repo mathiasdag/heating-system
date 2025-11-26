@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Lexical node structures are dynamic and vary by block type
 import { JSXConvertersFunction } from '@payloadcms/richtext-lexical/react';
 import { NodeTypes, ConverterOptions } from './types';
 import { paragraphConverters } from './paragraphConverters';

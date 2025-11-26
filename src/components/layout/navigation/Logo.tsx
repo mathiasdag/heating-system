@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import clsx from 'clsx';
 
 import { VarmeverketIcon } from '@/components/icons';
 import { NAV_DIMENSIONS } from './constants';

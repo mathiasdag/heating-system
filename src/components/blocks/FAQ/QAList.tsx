@@ -3,7 +3,7 @@
 import React from 'react';
 import { AccordionItem } from './AccordionItem';
 import { QAListItem } from './QAListItem';
-import type { QAItemOrGroup, QAItem, QAGroup } from './types';
+import type { QAItemOrGroup, QAItem } from './types';
 
 interface QAListProps {
   items: QAItemOrGroup[];

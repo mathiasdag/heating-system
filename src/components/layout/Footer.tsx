@@ -113,7 +113,7 @@ export const Footer: React.FC<FooterProps> = ({ links = [] }) => {
         {/* Bottom row */}
         <GridRow hasBorders>{generateGridColumns(15)}</GridRow>
       </div>
-      <div className="flex flex-col xl:flex-row gap-x-3 p-2 uppercase pb-12 md:pb-2">
+      <div className="flex flex-col md:flex-wrap md:flex-row gap-x-3 p-2 uppercase pb-12 md:pb-2">
         <FooterItem>&copy; {new Date().getFullYear()} Värmeverket</FooterItem>
         <FooterItem>Bredängsvägen 203, 127 34 Skärholmen</FooterItem>
         {links.map((item, index) => {

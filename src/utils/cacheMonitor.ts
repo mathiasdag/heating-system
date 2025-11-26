@@ -122,26 +122,28 @@ export async function monitoredFetch(
   options: RequestInit & { next?: { revalidate?: number } }
 ): Promise<Response> {
   const startTime = Date.now();
-  
+
   try {
     const response = await fetch(url, options);
     const responseTime = Date.now() - startTime;
-    
+
     // Determine if this was likely a cache hit or miss
     // Cache hits are typically much faster (< 50ms)
     const isCacheHit = responseTime < 50;
-    
+
     if (isCacheHit) {
       cacheMonitor.recordHit(responseTime);
     } else {
       cacheMonitor.recordMiss(responseTime);
     }
-    
+
     // Log in development for debugging
     if (process.env.NODE_ENV === 'development') {
-      console.log(`🌐 API Call: ${url} - ${isCacheHit ? 'CACHE HIT' : 'CACHE MISS'} (${responseTime}ms)`);
+      console.log(
+        `🌐 API Call: ${url} - ${isCacheHit ? 'CACHE HIT' : 'CACHE MISS'} (${responseTime}ms)`
+      );
     }
-    
+
     return response;
   } catch (error) {
     const responseTime = Date.now() - startTime;
@@ -156,37 +158,47 @@ export async function monitoredFetch(
  */
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   const originalFetch = window.fetch;
-  
+
   window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
     const startTime = Date.now();
     const url = typeof input === 'string' ? input : input.toString();
-    
+
     try {
       const response = await originalFetch(input, init);
       const responseTime = Date.now() - startTime;
-      
+
       // Only monitor API calls (not static assets)
-      if (url.includes('/api/') || url.includes('payload.cms.varmeverket.com')) {
+      if (
+        url.includes('/api/') ||
+        url.includes('payload.cms.varmeverket.com')
+      ) {
         const isCacheHit = responseTime < 50;
-        
+
         if (isCacheHit) {
           cacheMonitor.recordHit(responseTime);
         } else {
           cacheMonitor.recordMiss(responseTime);
         }
-        
-        console.log(`🌐 Global Fetch: ${url} - ${isCacheHit ? 'CACHE HIT' : 'CACHE MISS'} (${responseTime}ms)`);
+
+        console.log(
+          `🌐 Global Fetch: ${url} - ${isCacheHit ? 'CACHE HIT' : 'CACHE MISS'} (${responseTime}ms)`
+        );
       }
-      
+
       return response;
     } catch (error) {
       const responseTime = Date.now() - startTime;
-      
-      if (url.includes('/api/') || url.includes('payload.cms.varmeverket.com')) {
+
+      if (
+        url.includes('/api/') ||
+        url.includes('payload.cms.varmeverket.com')
+      ) {
         cacheMonitor.recordMiss(responseTime);
-        console.log(`🌐 Global Fetch Error: ${url} - CACHE MISS (${responseTime}ms)`);
+        console.log(
+          `🌐 Global Fetch Error: ${url} - CACHE MISS (${responseTime}ms)`
+        );
       }
-      
+
       throw error;
     }
   };

@@ -1,10 +1,7 @@
 import React from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
-import {
-  defaultConverter,
-  articleConverter,
-} from '@/utils/richTextConverters/index';
+import { articleConverter } from '@/utils/richTextConverters/index';
 
 interface TextBlockProps {
   content: {
@@ -25,9 +22,6 @@ export default function TextBlock({
   content,
   variant = 'default',
 }: TextBlockProps) {
-  // Choose converter and styling based on variant
-  const converter = variant === 'article' ? articleConverter : defaultConverter;
-
   const containerClasses =
     variant === 'article' ? 'relative' : 'relative px-4 lg:px-8 text-center';
 

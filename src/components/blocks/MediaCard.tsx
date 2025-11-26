@@ -35,7 +35,7 @@ interface MediaCardProps {
   };
   image?: { url: string; alt?: string; width?: number; height?: number };
   link?: LinkGroup;
-  buttonVariant?: 'primary' | 'secondary' | 'outline';
+  buttonVariant?: 'primary' | 'secondary' | 'outline' | 'onHover';
   className?: string;
 }
 
@@ -144,11 +144,11 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   return (
     <div
       className={clsx(
-        'flex flex-col aspect-window px-1',
+        'flex flex-col aspect-window px-1 rounded-lg w-64 sm:w-72 h-full bg-surface',
         'relative',
         hasValidLink && buttonVariant === 'primary'
           ? 'pb-11 h-full justify-between'
-          : 'justify-center',
+          : 'pb-4 justify-center',
         className
       )}
     >

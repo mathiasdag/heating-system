@@ -7,6 +7,7 @@ import React, {
   ReactNode,
 } from 'react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
+import clsx from 'clsx';
 
 export interface HorizontalSnapCarouselProps {
   children: ReactNode[];
@@ -125,14 +126,20 @@ const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div
+      className={clsx(
+        'relative',
+        isScrollable ? 'w-screen overflow-hidden' : '',
+        className
+      )}
+    >
       {showDevIndicator && (
         <DevIndicator componentName="HorizontalSnapCarousel" />
       )}
       <div
         ref={scrollContainerRef}
         className={
-          `flex overflow-x-auto space-x-2 pb-4 scrollbar-hide snap-x snap-mandatory scroll-smooth ` +
+          `flex overflow-x-auto space-x-2 pb-4 scrollbar-hide snap-x snap-mandatory scroll-smooth w-full max-w-full ` +
           (isScrollable ? 'px-6' : 'justify-center') +
           ` transition-opacity duration-100` +
           (hasMeasured ? ' opacity-100' : ' opacity-0')
@@ -154,7 +161,7 @@ const HorizontalSnapCarousel: React.FC<HorizontalSnapCarouselProps> = ({
             ref={el => {
               cardRefs.current[idx] = el;
             }}
-            className={`snap-center flex-shrink-0 focus:outline-none aspect-window`}
+            className={`snap-center flex-shrink-0 focus:outline-none max-w-full`}
             onKeyDown={e => handleKeyDown(e, idx)}
             aria-label={getItemTitle(idx)}
           >

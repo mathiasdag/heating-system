@@ -34,7 +34,6 @@ export default function UserCardBlock({ variant, user }: UserCardBlockProps) {
 function extractUserData(user: Record<string, unknown>) {
   const firstName = user.firstName as string | undefined;
   const lastName = user.lastName as string | undefined;
-  const email = user.email as string;
   const bylineDescription = user.bylineDescription as string | undefined;
   const profilePicture = user.profilePicture as
     | {
@@ -60,7 +59,20 @@ function extractUserData(user: Record<string, unknown>) {
 }
 
 // Helper function to render the appropriate card
-function renderCard(variant: string, userData: any) {
+function renderCard(
+  variant: string,
+  userData: {
+    fullName?: string;
+    tags?: Array<{ id: string; name: string }>;
+    profilePicture?: {
+      url?: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
+    bylineDescription?: string;
+  } | null
+) {
   const cardProps = userData
     ? {
         fullName: userData.fullName,

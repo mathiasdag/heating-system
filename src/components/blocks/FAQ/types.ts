@@ -31,4 +31,3 @@ export interface QAGroup {
 }
 
 export type QAItemOrGroup = QAItem | QAGroup;
-

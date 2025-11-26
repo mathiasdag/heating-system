@@ -54,8 +54,6 @@ export default function HomepageHeaderBlock({
     [assets]
   );
 
-  console.log(assets);
-
   const renderBackgroundAsset = useCallback(() => {
     if (!backgroundAsset) return null;
 

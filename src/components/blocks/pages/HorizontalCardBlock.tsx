@@ -6,19 +6,38 @@ import { DevIndicator } from '@/components/dev/DevIndicator';
 import { BlockHeader } from '@/components/blocks/BlockHeader';
 import { AppAction } from '@/components/ui';
 import { HorizontalSnapCarousel } from '@/components/carousels';
-import { InfoOverlay } from '@/components/blocks/overlay';
+import {
+  InfoOverlay,
+  OverlayCard as OverlayCardComponent,
+} from '@/components/blocks/overlay';
 import { routeLink, LinkGroup } from '@/utils/linkRouter';
 
 interface Card {
-  badge?: string;
+  blockType?: 'common-card';
+  tags?: Array<{
+    id: string;
+    name: string;
+    description?: string;
+  }>;
   title: string;
-  description: string;
-  link?: {
-    type?: 'internal' | 'external';
-    text?: string;
-    url?: string;
-    reference?: unknown;
+  body?: {
+    root: {
+      children: Array<{
+        type: string;
+        children?: Array<{
+          text?: string;
+          type?: string;
+        }>;
+      }>;
+    };
   };
+  image?: {
+    url: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+  };
+  link?: LinkGroup;
 }
 
 interface OverlayCard {
@@ -82,7 +101,7 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
         }
       >
         {overlayCards.map((overlayCard, index) => (
-          <OverlayCard
+          <OverlayCardComponent
             key={index}
             overlay={overlayCard}
             index={index}
@@ -110,7 +129,11 @@ const HorizontalCardBlock: React.FC<HorizontalCardBlockProps> = ({
 
       {linkResult?.href && link?.text && (
         <div className="flex justify-center mt-8">
-          <AppAction link={link} variant="primary">
+          <AppAction
+            link={link}
+            variant="minimal"
+            className="font-mono uppercase underline"
+          >
             {link.text}
           </AppAction>
         </div>

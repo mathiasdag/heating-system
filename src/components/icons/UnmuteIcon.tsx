@@ -27,4 +27,3 @@ export const UnmuteIcon: React.FC<IconProps> = ({
     </Icon>
   );
 };
-

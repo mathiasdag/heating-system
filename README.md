@@ -1,16 +1,69 @@
-# Heating System (working title)
+# Värmeverket
 
 ## Overview
 
-This repository marks the initial foundation of the Värmeverket platform — a digital ecosystem designed to support both public-facing communication and member-specific services connected to the building’s infrastructure.
+This repository contains the public-facing frontend for the Värmeverket platform — a digital ecosystem designed to support both public-facing communication and member-specific services connected to the building's infrastructure.
 
-Development began in April 2025. The project will be in active development throughout the year, with new features, integrations, and services rolled out in phases. Ongoing maintenance and improvement will follow to support long-term use and adaptability.
+Development began in April 2025. This version (0.9.0) represents the public-facing interface, with the member portal planned for v1.0.0.
 
 The current focus is on:
 
 - A public information interface for residents and visitors
 - A flexible architecture to support future member functionality
 - Establishing clear design and code licensing practices to enable open collaboration and responsible reuse
+
+## Setup
+
+### Prerequisites
+
+- Node.js 20+
+- npm or yarn
+- MongoDB database (or connection to external Payload CMS instance)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables (see below)
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+**Required:**
+
+- `PAYLOAD_SECRET` - Secret key for Payload CMS encryption (generate a strong random string)
+- `DATABASE_URI` - MongoDB connection string (e.g., `mongodb://localhost:27017/varmeverket`)
+
+**Optional:**
+
+- `NEXT_PUBLIC_PAYLOAD_API_URL` - External Payload CMS API URL (defaults to `https://payload.cms.varmeverket.com/api`)
+- `PREVIEW_SECRET` - Secret token for preview mode (defaults to `your-preview-secret` - **change this in production!**)
+
+**Example `.env` file:**
+
+```env
+PAYLOAD_SECRET=your-secret-key-here
+DATABASE_URI=mongodb://localhost:27017/varmeverket
+NEXT_PUBLIC_PAYLOAD_API_URL=https://payload.cms.varmeverket.com/api
+PREVIEW_SECRET=your-preview-secret-here
+```
+
+### Building for Production
+
+```bash
+npm run build
+npm start
+```
 
 ## License
 

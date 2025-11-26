@@ -14,7 +14,7 @@ export async function GET() {
         timestamp: new Date().toISOString(),
       },
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         success: false,
@@ -34,7 +34,7 @@ export async function POST() {
       success: true,
       message: 'Cache metrics reset successfully',
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         success: false,

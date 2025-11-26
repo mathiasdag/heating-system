@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// RichText data structures from Lexical are dynamic
 'use client';
 
 import React, { useRef } from 'react';
@@ -47,9 +49,6 @@ export default function ArticleHeaderStandard({
     offset: ['start start', 'end start'],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.4], [1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 1.05]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const assetScale = useTransform(scrollYProgress, [0, 0.1], [0.95, 1]);
 
   // Format dates for display

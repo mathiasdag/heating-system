@@ -1,6 +1,6 @@
 {
   "name": "varmeverket",
-  "version": "0.1.0-coupled-db",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "dev": "next dev --hostname local.addd",

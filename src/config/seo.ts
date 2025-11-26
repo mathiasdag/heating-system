@@ -9,7 +9,7 @@
 
 export const seoConfig = {
   // Site name used in page titles and social sharing
-  siteName: 'Heating System',
+  siteName: 'Värmeverket',
 
   // Default title template for pages without custom SEO
   // Use {title} for page title, {siteName} for site name
@@ -17,7 +17,7 @@ export const seoConfig = {
 
   // Default meta description for pages without custom SEO
   defaultDescription:
-    'Discover our heating solutions and services. Professional heating system installation, maintenance, and repair services.',
+    'Värmeverket - En digital plattform för information och tjänster kopplade till byggnadens infrastruktur.',
 
   // Default social sharing image (relative to public folder)
   // This should be a 1200x630px image for optimal social sharing

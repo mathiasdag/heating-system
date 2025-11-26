@@ -44,7 +44,6 @@ function Model({
   modelPath,
   autoRotate = true,
   autoRotateSpeed = 1,
-  onError,
 }: {
   modelPath: string;
   autoRotate?: boolean;

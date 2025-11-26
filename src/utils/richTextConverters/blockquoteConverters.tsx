@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Lexical node structures are dynamic and vary by block type
 import React from 'react';
 
 export const blockquoteConverters = {

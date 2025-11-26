@@ -2,7 +2,6 @@ import React from 'react';
 import HeaderBlockAssetsAbove from './HeaderBlockAssetsAbove';
 import HeaderBlockStandard from './HeaderBlockStandard';
 import HeaderBlockTextOnly from './HeaderBlockTextOnly';
-import HeaderBlockHero from './HeaderBlockHero';
 
 interface Asset {
   type: 'image' | 'mux';
@@ -33,9 +32,6 @@ interface HeaderBlockProps {
 export default function HeaderBlock({
   text,
   assets = [],
-  heroAsset,
-  title,
-  attributes,
   variant = 'text-only',
 }: HeaderBlockProps) {
   // Handle gradient variant
@@ -52,18 +48,14 @@ export default function HeaderBlock({
   const validAssets = assets.filter(asset => {
     if (asset.type === 'image') {
       const hasValidImage = asset.image?.url && asset.image.url.trim() !== '';
-      console.log('Image asset validation:', { asset, hasValidImage });
       return hasValidImage;
     }
     if (asset.type === 'mux') {
       const hasValidMux = asset.mux && asset.mux.trim() !== '';
-      console.log('Mux asset validation:', { asset, hasValidMux });
       return hasValidMux;
     }
     return false;
   });
-
-  console.log('Valid assets:', validAssets);
 
   // Handle assets-before variant
   if (variant === 'assets-before' && validAssets.length > 0) {

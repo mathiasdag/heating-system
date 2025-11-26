@@ -19,7 +19,6 @@ export function MediumCard({
   fullName,
   tags,
   profilePicture,
-  isLoading = false,
 }: MediumCardProps) {
   return (
     <div className="grid gap-2 bg-surface text-center py-10 px-8 rounded-xl w-80">

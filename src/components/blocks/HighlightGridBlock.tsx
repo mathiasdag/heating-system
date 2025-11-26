@@ -120,16 +120,18 @@ const HighlightGridBlock: React.FC<HighlightGridBlockProps> = ({
               >
                 <div className="relative">
                   {/* Image */}
-                  <div className="relative aspect-[4/6] overflow-hidden">
-                    <Image
-                      src={fixImageUrl(image.url)}
-                      alt={
-                        image.alt || highlightData.title || 'Highlight image'
-                      }
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
+                  {image?.url && (
+                    <div className="relative aspect-[4/6] overflow-hidden">
+                      <Image
+                        src={fixImageUrl(image.url)}
+                        alt={
+                          image.alt || highlightData.title || 'Highlight image'
+                        }
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
 
                   {/* Content */}
                   <div className="pt-1 leading-4">

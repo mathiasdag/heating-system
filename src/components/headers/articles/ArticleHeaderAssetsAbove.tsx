@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// RichText data structures from Lexical are dynamic
 'use client';
 
 import React, { useRef } from 'react';

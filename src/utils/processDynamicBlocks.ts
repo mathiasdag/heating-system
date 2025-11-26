@@ -30,33 +30,51 @@ export async function processDynamicBlocks(
       if (block.blockType === 'highlightGridGenerator') {
         try {
           // Extract tag IDs from the relationship data
+          // Payload relationships can be: string ID, { value: string }, { id: string }, or populated object
           const tagIds =
             block.filterTags
-              ?.map(
-                (tag: {
-                  id?: string;
-                  _id?: string;
-                  [key: string]: unknown;
-                }) => {
-                  if (typeof tag === 'string') {
-                    return tag;
-                  } else if (tag && typeof tag === 'object') {
-                    return tag.id || tag._id || tag;
-                  }
-                  return null;
+              ?.map((tag: unknown) => {
+                // If it's already a string, use it directly
+                if (typeof tag === 'string') {
+                  return tag;
                 }
-              )
-              .filter(Boolean) || [];
+                // If it's an object, check for various Payload relationship formats
+                if (tag && typeof tag === 'object') {
+                  const tagObj = tag as Record<string, unknown>;
+                  // Payload relationship format: { value: 'id' }
+                  if (tagObj.value && typeof tagObj.value === 'string') {
+                    return tagObj.value;
+                  }
+                  // Populated relationship format: { id: 'id', name: '...', ... }
+                  if (tagObj.id && typeof tagObj.id === 'string') {
+                    return tagObj.id;
+                  }
+                  // MongoDB format: { _id: 'id' }
+                  if (tagObj._id && typeof tagObj._id === 'string') {
+                    return tagObj._id;
+                  }
+                }
+                return null;
+              })
+              .filter((id): id is string => Boolean(id)) || [];
 
           // If no tags are selected, show all content (tagIds can be empty)
+
+          // Ensure contentTypes is an array
+          const contentTypes = Array.isArray(block.contentTypes)
+            ? block.contentTypes
+            : ['articles'];
 
           // Fetch dynamic content
           const generatedContent = await DynamicContentAPI.getContentByTags(
             tagIds,
-            block.contentTypes || ['articles'],
+            contentTypes,
             {
-              limit: block.maxItems || 6,
-              sort: block.sortBy || '-publishedDate',
+              limit: typeof block.maxItems === 'number' ? block.maxItems : 6,
+              sort:
+                typeof block.sortBy === 'string'
+                  ? block.sortBy
+                  : '-publishedDate',
               depth: 2, // Optimized depth for better performance
             }
           );

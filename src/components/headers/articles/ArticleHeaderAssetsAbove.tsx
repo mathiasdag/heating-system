@@ -176,7 +176,7 @@ export default function ArticleHeaderAssetsAbove({
             )}
             <RichText
               data={text}
-              className="grid gap-3"
+              className="grid gap-3 justify-center"
               converters={defaultConverter}
             />
           </FadeInUp>

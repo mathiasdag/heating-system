@@ -35,7 +35,8 @@
   backdrop-filter: blur(20px);
 }
 
-strong {
+strong,
+em {
   font-weight: 400 !important;
   /*text-transform: uppercase;
   letter-spacing: 0.03em;*/

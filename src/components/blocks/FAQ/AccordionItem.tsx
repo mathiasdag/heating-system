@@ -5,6 +5,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedArrow } from '@/components/ui';
 import { extractPlainText } from '@/utils/richTextUtils';
+import { removeTrailingBreaks } from '@/utils/richTextTransform';
 import type { QAItem } from './types';
 
 interface AccordionItemProps {
@@ -50,8 +51,9 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({ qa }) => {
             className="overflow-hidden"
           >
             <div ref={contentRef} className="px-4 pb-4">
-              <div className="pt-1 font-mono">
-                <RichText data={qa.answer} />
+              <div className="pt-1 pb-2 font-mono">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                <RichText data={removeTrailingBreaks(qa.answer) as any} />
               </div>
             </div>
           </motion.div>
@@ -60,4 +62,3 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({ qa }) => {
     </div>
   );
 };
-

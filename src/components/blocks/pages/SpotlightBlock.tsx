@@ -96,7 +96,7 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
             <div className="h2-style max-w-8xl">{subheadline}</div>
           )}
         </div>
-        <div className="font-mono max-w-5xl mx-auto mt-2">
+        <div className="font-mono max-w-6xl mx-auto mt-2">
           {typeof description === 'string' || description == null ? (
             <div className="whitespace-pre-line">{description}</div>
           ) : (

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { DevIndicator } from '@/components/dev/DevIndicator';
 import { AppAction } from '@/components/ui';
+import { Heading } from '@/components/headings';
 import { routeLink, type LinkGroup } from '@/utils/linkRouter';
 import { useIsDark } from '@/hooks/useTheme';
 import { isRichTextEmpty } from '@/utils/richTextUtils';
@@ -53,7 +54,9 @@ const CTABlock: React.FC<CTABlockProps> = ({
         <DevIndicator componentName="CTABlock (Rotating)" />
 
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-md mb-8">{headline}</h2>
+          <Heading variant="section" as="h2" center className="mb-8">
+            {headline}
+          </Heading>
 
           <div className="flex justify-center">
             <div
@@ -98,7 +101,9 @@ const CTABlock: React.FC<CTABlockProps> = ({
           isDark ? 'border border-text' : ''
         )}
       >
-        <h2 className="text-md">{headline}</h2>
+        <Heading variant="section" as="h2" center>
+          {headline}
+        </Heading>
         {description && !isRichTextEmpty(description as never) && (
           <RichText data={description as never} className="font-mono" />
         )}

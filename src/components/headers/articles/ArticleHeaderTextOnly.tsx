@@ -57,13 +57,13 @@ export default function ArticleHeaderTextOnly({
   };
 
   return (
-    <div className="relative mb-16">
+    <div className="relative">
       <DevIndicator
         componentName="ArticleHeaderTextOnly"
         position="top-right"
       />
 
-      <div className="grid gap-8 justify-center pt-32 pb-16 text-center">
+      <div className="grid gap-8 justify-center pt-32 text-center">
         {/* Tags */}
         <TagList tags={articleData.tags} size="md" className="mb-4" />
 

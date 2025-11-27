@@ -18,13 +18,10 @@ export default function GlobalError({
         <div className="min-h-screen flex items-center justify-center px-4">
           <DevIndicator componentName="GlobalError" />
 
-          <div className="min-h-screen flex items-center justify-center px-4">
-            <DevIndicator componentName="Error" />
-
-            <FadeInUp
-              className="text-center max-w-2xl mx-auto font-mono grid gap-4"
-              timing="normal"
-            >
+          <FadeInUp
+            className="text-center max-w-2xl mx-auto font-mono grid gap-4"
+            timing="normal"
+          >
               <div className="">
                 <h1 className="text-lg font-sans">Något gick fel</h1>
               </div>
@@ -61,8 +58,7 @@ export default function GlobalError({
                   </pre>
                 </details>
               )}
-            </FadeInUp>
-          </div>
+          </FadeInUp>
         </div>
       </body>
     </html>

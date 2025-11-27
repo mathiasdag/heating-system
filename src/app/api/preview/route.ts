@@ -12,10 +12,22 @@ export async function POST(request: NextRequest) {
   try {
     const { slug, collection, secret } = await request.json();
 
-    // Verify the secret token (you should set this in your environment)
-    const previewSecret = process.env.PREVIEW_SECRET || 'your-preview-secret';
+    // Verify the secret token (required in production)
+    const previewSecret = process.env.PREVIEW_SECRET;
+    
+    // In production, require a secret to be set
+    if (process.env.NODE_ENV === 'production' && !previewSecret) {
+      console.error('PREVIEW_SECRET is not set in production environment');
+      return NextResponse.json(
+        { message: 'Preview mode is not configured' },
+        { status: 500 }
+      );
+    }
 
-    if (secret !== previewSecret) {
+    // Use a default only in development
+    const effectiveSecret = previewSecret || 'your-preview-secret';
+
+    if (secret !== effectiveSecret) {
       return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
     }
 

@@ -106,7 +106,7 @@ export default function ArticleHeaderStandard({
             {text && (
               <RichText
                 data={text}
-                className="grid gap-3"
+                className="grid gap-3 justify-center"
                 converters={defaultConverter}
               />
             )}

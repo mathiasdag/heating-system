@@ -88,7 +88,7 @@ const SpotlightBlock: React.FC<SpotlightBlockProps> = ({
             'sticky top-0 inset-x-0 h-screen justify-center items-center'
         )}
       >
-        <div className="pt-8 mx-auto grid max-w-8xl">
+        <div className="pt-8 mx-auto grid max-w-8xl px-2 sm:px-4">
           {headline ? (
             <div className="h2-style uppercase">{headline}</div>
           ) : null}

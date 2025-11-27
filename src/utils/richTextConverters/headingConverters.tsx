@@ -122,4 +122,87 @@ export const headingConverters = {
       </Heading>
     );
   },
+
+  // Convert h1 to h2, keep others as-is
+  h2Only: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    // Convert h1 to h2, keep others as-is
+    const tag = node.tag === 'h1' ? 'h2' : node.tag;
+
+    switch (tag) {
+      case 'h2':
+        return (
+          <Heading variant="section" as="h2">
+            {text}
+          </Heading>
+        );
+      case 'h3':
+        return (
+          <Heading variant="subsection" as="h3">
+            {text}
+          </Heading>
+        );
+      case 'h4':
+        return (
+          <Heading variant="small-title" as="h4">
+            {text}
+          </Heading>
+        );
+      case 'h5':
+      case 'h6':
+        return (
+          <Heading variant="label" as={tag}>
+            {text}
+          </Heading>
+        );
+      default:
+        return (
+          <Heading variant="section" as="h2">
+            {text}
+          </Heading>
+        );
+    }
+  },
+
+  // For AssetTextBlock: convert h1 to h2, but style h2 same as h3
+  assetText: ({ node, nodesToJSX }: any) => {
+    const text = nodesToJSX({ nodes: node.children });
+    // Convert h1 to h2
+    const tag = node.tag === 'h1' ? 'h2' : node.tag;
+
+    switch (tag) {
+      case 'h2':
+        // Style h2 the same as h3 in AssetTextBlock
+        return (
+          <Heading variant="subsection" as="h2">
+            {text}
+          </Heading>
+        );
+      case 'h3':
+        return (
+          <Heading variant="subsection" as="h3">
+            {text}
+          </Heading>
+        );
+      case 'h4':
+        return (
+          <Heading variant="small-title" as="h4">
+            {text}
+          </Heading>
+        );
+      case 'h5':
+      case 'h6':
+        return (
+          <Heading variant="label" as={tag}>
+            {text}
+          </Heading>
+        );
+      default:
+        return (
+          <Heading variant="subsection" as="h2">
+            {text}
+          </Heading>
+        );
+    }
+  },
 };

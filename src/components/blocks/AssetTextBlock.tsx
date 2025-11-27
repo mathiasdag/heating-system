@@ -5,10 +5,7 @@ import { AppAction } from '@/components/ui';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { type LinkGroup } from '@/utils/linkRouter';
 import { transformRichTextLinks } from '@/utils/richTextTransform';
-import {
-  assetTextConverter,
-  spaceConverter,
-} from '@/utils/richTextConverters/index';
+import { buildConverter } from '@/utils/richTextConverters/converterBuilder';
 import MediaAsset from '@/components/common/MediaAsset';
 import clsx from 'clsx';
 
@@ -51,8 +48,14 @@ const AssetTextBlock: React.FC<AssetTextBlockProps> = ({
   const isTextLeft = textPosition === 'left';
   const isStandalone = variant === 'standalone';
 
-  // Choose converter based on page type
-  const converter = pageType === 'space' ? spaceConverter : assetTextConverter;
+  // Create custom converter with assetText heading converter
+  // Converts h1 to h2, styles h2 same as h3
+  const converter = buildConverter({
+    paragraph: pageType === 'space' ? 'space' : 'default',
+    blockquote: pageType === 'space' ? 'default' : 'default',
+    heading: 'assetText', // Convert h1 to h2, style h2 same as h3
+    list: pageType === 'space' ? 'default' : 'default',
+  });
 
   return (
     <FadeIn
